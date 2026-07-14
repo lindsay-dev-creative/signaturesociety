@@ -123,16 +123,6 @@ header.top{border-bottom:1px solid var(--pri700);background:var(--pri900)}
 .icon-btn:hover{border-color:var(--acc400);color:var(--acc400)}
 .today-btn{margin-left:4px}
 
-/* ---- legend ---- */
-.legend{display:flex;flex-wrap:wrap;gap:14px 20px;padding:4px 0 24px;font-size:12.5px;color:var(--light700)}
-.legend .item{display:flex;align-items:center;gap:8px}
-.legend .sw{width:16px;height:12px;border-radius:2px;border-left:2px solid var(--acc500)}
-.legend .sw.p1{background:var(--pri700)} .legend .sw.p2{background:var(--sec700)}
-.legend .sw.p3{background:var(--ter700)} .legend .sw.p4{background:var(--pri600)}
-.legend .sw.p5{background:var(--sec600)} .legend .sw.p6{background:var(--ter600)}
-.legend .sw.ms{background:var(--acc500);border-left:none;transform:rotate(45deg);width:11px;height:11px}
-.legend .sw.ci{background:transparent;border:1px solid var(--acc500);border-radius:20px}
-
 /* ============ MONTH VIEW ============ */
 .month-grid{border:1px solid var(--pri700);border-radius:4px;overflow:hidden;background:var(--pri900)}
 .mv-weekdays{display:grid;grid-template-columns:repeat(7,1fr);background:var(--pri800)}
@@ -279,7 +269,6 @@ header.top{border-bottom:1px solid var(--pri700);background:var(--pri900)}
   .toolbar{flex-direction:column;align-items:stretch}
   .nav-group{justify-content:space-between}
   .nav-group .period{min-width:0;flex:1}
-  .legend{font-size:12px}
 }
 </style>
 </head>
@@ -319,17 +308,6 @@ header.top{border-bottom:1px solid var(--pri700);background:var(--pri900)}
       <button class="icon-btn" id="nextBtn" aria-label="Next">&#8250;</button>
       <button class="btn btn-secondary today-btn" id="todayBtn">Today</button>
     </div>
-  </div>
-
-  <div class="legend">
-    <div class="item"><span class="sw p1"></span>Foundation &amp; Assets</div>
-    <div class="item"><span class="sw p2"></span>Design</div>
-    <div class="item"><span class="sw p3"></span>Content Production</div>
-    <div class="item"><span class="sw p4"></span>Shopify Build</div>
-    <div class="item"><span class="sw p5"></span>Testing &amp; Launch</div>
-    <div class="item"><span class="sw p6"></span>The Journal &amp; The Society</div>
-    <div class="item"><span class="sw ms"></span>Milestone</div>
-    <div class="item"><span class="sw ci"></span>Bi-Weekly Check-In</div>
   </div>
 
   <!-- MONTH VIEW -->
