@@ -85,10 +85,10 @@ button{font-family:var(--body);cursor:pointer;border:none;background:none}
 .btn-secondary:active{color:var(--acc400);border-color:var(--acc400)}
 
 /* ============ LAYOUT ============ */
-.wrap{max-width:1440px;margin:0 auto;padding:0 32px}
+.wrap{max-width:1440px;margin:0 auto;padding:0 80px}
 
 header.top{border-bottom:1px solid var(--pri700);background:var(--pri900)}
-.top-inner{padding:34px 0 30px}
+.top-inner{padding-top:34px;padding-bottom:30px}
 .top h1{font-size:var(--fs-title);letter-spacing:.01em;margin-bottom:6px}
 .brand-logo{height:clamp(84px,9vw,124px);width:auto;max-width:100%;display:block;margin-bottom:10px}
 .top .subtitle{font-family:var(--display);font-style:italic;color:var(--acc400);font-size:var(--fs-accent);margin-bottom:26px}
@@ -200,8 +200,8 @@ header.top{border-bottom:1px solid var(--pri700);background:var(--pri900)}
 .pg-head .pg-range{margin-left:auto;font-size:12.5px;color:var(--light700);font-variant-numeric:tabular-nums}
 .pg-body{display:none}
 .phase-group.open .pg-body{display:block}
-.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
-.tbl th{text-align:left;font-weight:300;color:var(--light700);font-size:11px;letter-spacing:.12em;padding:10px 14px;border-bottom:1px solid var(--pri700)}
+.tbl{width:100%;border-collapse:collapse;font-size:15px}
+.tbl th{text-align:left;font-weight:300;color:var(--light700);font-size:15px;letter-spacing:.08em;padding:10px 14px;border-bottom:1px solid var(--pri700)}
 .tbl td{padding:12px 14px;border-bottom:1px solid var(--pri800);color:var(--light600);vertical-align:top}
 .tbl tr{cursor:pointer;transition:background .14s}
 .tbl tbody tr:hover{background:var(--pri800)}
@@ -244,11 +244,11 @@ header.top{border-bottom:1px solid var(--pri700);background:var(--pri900)}
 
 /* ============ RESPONSIVE ============ */
 @media(max-width:1024px){
-  .wrap{padding:0 22px}
   .week-grid{gap:7px}
   .wv-card .c-desc{-webkit-line-clamp:3}
 }
 @media(max-width:768px){
+  .wrap{padding-left:32px;padding-right:32px}
   body{line-height:1.7}
   .launch-card{margin-left:0;text-align:left;width:100%}
   .drawer{width:100%;max-width:100%}
@@ -256,6 +256,7 @@ header.top{border-bottom:1px solid var(--pri700);background:var(--pri900)}
   .nav-group .period{min-width:150px;font-size:17px}
 }
 @media(max-width:640px){
+  .wrap{padding-left:24px;padding-right:24px}
   .month-grid{display:none}
   .month-agenda{display:block}
   .week-grid{grid-template-columns:1fr;gap:10px}
