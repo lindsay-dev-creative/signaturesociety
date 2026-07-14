@@ -196,10 +196,6 @@ header.top{border-bottom:1px solid var(--pri700);background:var(--pri900)}
 .pg-head{display:flex;align-items:center;gap:14px;padding:16px 18px;cursor:pointer;background:var(--pri800)}
 .pg-head .chev{color:var(--light700);transition:transform .2s;font-size:12px}
 .phase-group.open .pg-head .chev{transform:rotate(90deg)}
-.pg-swatch{width:14px;height:14px;border-radius:2px;border-left:2px solid var(--acc500)}
-.pg-swatch.p1{background:var(--pri700)} .pg-swatch.p2{background:var(--sec700)}
-.pg-swatch.p3{background:var(--ter700)} .pg-swatch.p4{background:var(--pri600)}
-.pg-swatch.p5{background:var(--sec600)} .pg-swatch.p6{background:var(--ter600)}
 .pg-head .pg-name{font-family:var(--display);color:var(--light500);font-size:var(--fs-phase);font-weight:600;letter-spacing:.03em}
 .pg-head .pg-range{margin-left:auto;font-size:12.5px;color:var(--light700);font-variant-numeric:tabular-nums}
 .pg-body{display:none}
@@ -698,7 +694,7 @@ function renderList(){
     rows.forEach(function(t){ const s=sched[t.id].start,e=sched[t.id].end; if(!mn||s<mn)mn=s; if(!mx||e>mx)mx=e; });
     const openCls = openPhases[ph] ? " open":"";
     html+='<div class="phase-group'+openCls+'" data-ph="'+ph+'">';
-    html+='<div class="pg-head"><span class="chev">▶</span><span class="pg-swatch p'+ph+'"></span><span class="pg-name">'+escapeHtml(PHASES[ph].name)+'</span><span class="pg-range">'+fmtShort(mn)+" – "+fmtShort(mx)+'</span></div>';
+    html+='<div class="pg-head"><span class="chev">▶</span><span class="pg-name">'+escapeHtml(PHASES[ph].name)+'</span><span class="pg-range">'+fmtShort(mn)+" – "+fmtShort(mx)+'</span></div>';
     html+='<div class="pg-body"><table class="tbl"><thead><tr><th>Phase</th><th>Detail</th><th>Assignee</th><th>Start</th><th>Due</th><th style="text-align:right">Duration</th></tr></thead><tbody>';
     rows.forEach(function(t){
       const s=sched[t.id].start, e=sched[t.id].end;
