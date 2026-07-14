@@ -195,6 +195,32 @@ input[type=date]{color-scheme:light;border-radius:0}
 .agenda-date .ad-day{font-family:"hatton","Hatton",Georgia,serif;font-size:1.3rem;color:var(--blue700);display:block}
 .agenda-items{display:flex;flex-direction:column;gap:5px}
 
+/* ============ GANTT / OVERVIEW (Jul–Nov) ============ */
+.gantt{--glabel:230px;padding:0}
+.gantt-scroll{overflow-x:auto}
+.gantt-inner{min-width:960px;position:relative}
+.gantt-head{display:flex;align-items:stretch;border-bottom:1px solid var(--light400);position:sticky;top:0;background:var(--light100);z-index:3}
+.gantt-label-col{flex:0 0 var(--glabel);width:var(--glabel);padding:9px 14px;font-size:12px;color:var(--light800);border-right:1px solid var(--light400);box-sizing:border-box}
+.gantt-track{position:relative;flex:1 1 auto;min-height:26px}
+.gantt-months{display:flex}
+.gantt-months .gmonth{border-right:1px solid var(--light400);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--light800);font-weight:500;padding:9px 8px;box-sizing:border-box;overflow:hidden}
+.gantt-months .gmonth:last-child{border-right:none}
+.gantt-phase{display:flex;background:var(--light300);border-bottom:1px solid var(--light400)}
+.gantt-phase .gantt-label-col{font-family:"hatton","Hatton",Georgia,serif;font-size:13px;color:var(--blue700);font-weight:400;padding-top:7px;padding-bottom:7px}
+.gantt-row{display:flex;align-items:stretch;border-bottom:1px solid var(--light300)}
+.gantt-row:hover{background:var(--light200)}
+.gantt-row .gantt-label-col{font-size:12.5px;color:var(--blue700);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-top:7px;padding-bottom:7px;cursor:pointer}
+.gantt-row .gantt-track{padding:5px 0}
+.gbar{position:absolute;top:5px;height:16px;border-radius:3px;color:var(--light100);font-size:10.5px;line-height:16px;padding:0 6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;box-shadow:0 1px 2px rgba(0,0,0,.15);box-sizing:border-box}
+.gbar:hover{filter:brightness(1.1)}
+.gbar.p1{background:var(--ph1)}.gbar.p2{background:var(--ph2)}.gbar.p3{background:var(--ph3)}
+.gbar.p4{background:var(--ph4)}.gbar.p5{background:var(--ph5)}.gbar.p6{background:var(--ph6)}
+.gbar.milestone{background:var(--orange500);font-weight:500;min-width:16px}
+.gantt-overlay{position:absolute;top:0;bottom:0;width:1px;background:var(--light400);pointer-events:none;z-index:1}
+.gantt-today{position:absolute;top:0;bottom:0;width:2px;background:var(--orange500);opacity:.75;pointer-events:none;z-index:2}
+.gantt-today::before{content:"Today";position:absolute;top:3px;left:4px;font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--orange600);white-space:nowrap;font-weight:500}
+.gantt-empty{padding:16px;color:var(--light800);font-size:13px}
+
 /* ============ LIST VIEW ============ */
 .listview{margin-top:30px}
 .listview-head{display:flex;align-items:center;gap:12px;user-select:none;padding:10px 0;border-bottom:1px solid var(--blue800)}
@@ -231,6 +257,16 @@ input[type=date]{color-scheme:light;border-radius:0}
 .comment-btn{display:inline-flex;align-items:center;justify-content:center;gap:4px;background:rgba(255,255,255,.05);border:1px solid var(--blue700);color:var(--light500);padding:4px 7px;cursor:pointer;line-height:1;text-transform:none;font-size:11px;font-weight:500}
 .comment-btn:hover{background:rgba(255,255,255,.12);color:var(--light100)}
 .comment-btn svg{width:14px;height:14px;display:block}
+/* delete (trash) button */
+.tbl .c-delete{text-align:center;white-space:nowrap}
+.delete-btn{display:inline-flex;align-items:center;justify-content:center;background:transparent;border:1px solid var(--red400);color:var(--red300);padding:4px 7px;cursor:pointer;line-height:1;text-transform:none}
+.delete-btn:hover{background:var(--red500);border-color:var(--red400);color:var(--light200)}
+.delete-btn svg{width:14px;height:14px;display:block}
+.tbl tr.completed .delete-btn{text-decoration:none}
+/* danger button in drawer */
+.btn-danger{background:transparent;color:var(--red300);border:1px solid var(--red400);font-weight:500;font-size:13px;letter-spacing:.02em;padding:.72em 1.4em;border-radius:0;display:inline-flex;align-items:center;gap:.5em;text-transform:uppercase;transition:background .15s,color .15s}
+.btn-danger:hover{background:var(--red500);color:var(--light100)}
+.btn-danger svg{width:15px;height:15px}
 .tag-ms{display:inline-block;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--orange400);border:1px solid var(--orange500);border-radius:20px;padding:1px 7px;margin-left:6px;vertical-align:middle}
 .tag-fixed{display:inline-block;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--light700);border:1px solid var(--light800);border-radius:20px;padding:1px 7px;margin-left:6px;vertical-align:middle}
 
@@ -325,6 +361,7 @@ input[type=date]{color-scheme:light;border-radius:0}
     <div class="segmented" id="segmented">
       <button data-view="month" class="active">Month</button>
       <button data-view="week">Week</button>
+      <button data-view="timeline">Jul&ndash;Nov</button>
     </div>
     <div class="navgroup">
       <button class="btn-inline on-dark sm" id="prevBtn" aria-label="Previous">&#8249;</button>
@@ -677,9 +714,78 @@ function renderWeek(){
 }
 function snippet(s){s=s||"";return s.length>90? s.slice(0,88)+"…" : s;}
 
+/* ============ RENDER: OVERVIEW (Jul–Nov Gantt) ============ */
+var OVERVIEW_MONTHS = 5; // project-start month + 4 -> Jul..Nov for a July start
+function renderOverview(){
+  var s0=parseISO(state.start);
+  var y=s0.getFullYear(), m0=s0.getMonth();
+  var rangeStart=new Date(y,m0,1);
+  var rangeEnd=new Date(y,m0+OVERVIEW_MONTHS,0); // last day of the final month
+  var totalDays=dayDiff(rangeStart,rangeEnd)+1;
+  var y0=rangeStart.getFullYear(), y1=rangeEnd.getFullYear();
+  document.getElementById("periodTitle").textContent =
+    MON[rangeStart.getMonth()]+(y0!==y1?" "+y0:"")+" – "+MON[rangeEnd.getMonth()]+" "+y1;
+
+  function factor(d){var f=dayDiff(rangeStart,d)/totalDays; return f<0?0:(f>1?1:f);}
+  function offsetCalc(f){return "calc(var(--glabel) + (100% - var(--glabel)) * "+f.toFixed(5)+")";}
+
+  var today=new Date();
+
+  // month header cells
+  var monthsHTML="";
+  for(var i=0;i<OVERVIEW_MONTHS;i++){
+    var dim=new Date(y,m0+i+1,0).getDate();
+    monthsHTML+='<div class="gmonth" style="width:'+(dim/totalDays*100).toFixed(4)+'%">'+MON[(m0+i)%12]+(((m0+i)>=12)?" "+(y+1):"")+'</div>';
+  }
+
+  var rowsHTML="";
+  for(var ph=1;ph<=6;ph++){
+    var tasks=state.tasks.filter(function(t){
+      if(t.phase!==ph) return false;
+      var st=taskStart(t), en=taskEnd(t);
+      return en>=rangeStart && st<=rangeEnd;
+    });
+    if(!tasks.length) continue;
+    rowsHTML+='<div class="gantt-phase"><div class="gantt-label-col">Phase '+ph+': '+esc(PHASE_NAMES[ph])+'</div><div class="gantt-track"></div></div>';
+    tasks.forEach(function(t){
+      var st=taskStart(t), en=taskEnd(t);
+      var lf=factor(st), rf=factor(addBusinessDays(en,1)); // include the end day
+      if(rf<=lf) rf=factor(en)+ (1/totalDays); // guard for same-day
+      var leftPct=(lf*100).toFixed(4), widthPct=Math.max(0,(rf-lf)*100).toFixed(4);
+      var cls="gbar "+(t.milestone?"milestone":"p"+t.phase);
+      var title=esc(t.name)+" — "+esc(t.assignee)+" ("+fmtShort(st)+(t.days>1||t.fixedDate?" – "+fmtShort(en):"")+")";
+      rowsHTML+='<div class="gantt-row">'+
+        '<div class="gantt-label-col" data-id="'+t.id+'">'+esc(t.name)+'</div>'+
+        '<div class="gantt-track"><div class="'+cls+'" style="left:'+leftPct+'%;width:'+widthPct+'%" data-id="'+t.id+'" title="'+title+'"></div></div>'+
+        '</div>';
+    });
+  }
+  if(!rowsHTML) rowsHTML='<div class="gantt-empty">Nothing scheduled in this window.</div>';
+
+  // overlays: month gridlines + today
+  var overlays="";
+  for(var g=1;g<OVERVIEW_MONTHS;g++){
+    var bf=dayDiff(rangeStart,new Date(y,m0+g,1))/totalDays;
+    overlays+='<div class="gantt-overlay" style="left:'+offsetCalc(bf)+'"></div>';
+  }
+  if(today>=rangeStart && today<=rangeEnd){
+    overlays+='<div class="gantt-today" style="left:'+offsetCalc(factor(today))+'"></div>';
+  }
+
+  var html='<div class="calendar gantt"><div class="gantt-scroll"><div class="gantt-inner">'+
+    '<div class="gantt-head"><div class="gantt-label-col">Phase / Subphase</div><div class="gantt-track gantt-months">'+monthsHTML+'</div></div>'+
+    rowsHTML+overlays+
+    '</div></div></div>';
+  document.getElementById("calArea").innerHTML=html;
+  bindBars();
+}
+
 /* ============ RENDER: LIST ============ */
 function commentIconSVG(){
   return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>';
+}
+function trashIconSVG(){
+  return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>';
 }
 function renderList(){
   var html="";
@@ -698,6 +804,7 @@ function renderList(){
       '<th style="width:96px">Duration</th>'+
       '<th style="width:80px;text-align:center">Comment</th>'+
       '<th style="width:86px;text-align:center">Complete</th>'+
+      '<th style="width:74px;text-align:center">Delete</th>'+
       '</tr></thead><tbody>';
     tasks.forEach(function(t){
       var s=taskStart(t), e=taskEnd(t);
@@ -714,6 +821,7 @@ function renderList(){
         '<td class="c-dur">'+dur+'</td>'+
         '<td class="c-comment"><button type="button" class="comment-btn" data-comment="'+t.id+'" title="Comments" aria-label="Comments">'+commentIconSVG()+badge+'</button></td>'+
         '<td class="c-complete"><input type="checkbox" class="row-complete" data-complete="'+t.id+'"'+(t.complete?' checked':'')+' aria-label="Mark complete"></td>'+
+        '<td class="c-delete"><button type="button" class="delete-btn" data-delete="'+t.id+'" title="Delete subphase" aria-label="Delete subphase">'+trashIconSVG()+'</button></td>'+
         '</tr>';
     });
     html+='</tbody></table></div>';
@@ -723,6 +831,7 @@ function renderList(){
   bindPhaseHeads();
   bindCompleteBoxes();
   bindCommentBtns();
+  bindDeleteBtns();
 }
 function snippet2(s){s=s||"";return s.length>120? s.slice(0,118)+"…" : s;}
 
@@ -763,9 +872,11 @@ function openEditor(id, focusComments){
   document.getElementById("cAddBtn").onclick=function(){ addComment(t); };
   document.getElementById("drawerFoot").innerHTML =
     '<button class="btn-primary" id="saveBtn">Save changes</button>'+
-    '<button class="btn-secondary" id="cancelBtn">Cancel</button>';
+    '<button class="btn-secondary" id="cancelBtn">Cancel</button>'+
+    '<button class="btn-danger" id="deleteBtn" style="margin-left:auto" title="Delete subphase">'+trashIconSVG()+'Delete</button>';
   document.getElementById("saveBtn").onclick=saveEdit;
   document.getElementById("cancelBtn").onclick=closeEditor;
+  document.getElementById("deleteBtn").onclick=function(){ confirmDelete(editingId); };
   showDrawer();
   if(focusComments){
     var cl=document.getElementById("commentsList"); if(cl) cl.scrollIntoView({block:"nearest"});
@@ -845,7 +956,7 @@ function bindBars(){
 function bindRows(){
   Array.prototype.forEach.call(document.querySelectorAll(".tbl tr[data-id]"),function(tr){
     tr.onclick=function(e){
-      if(e.target.closest(".row-complete")||e.target.closest(".comment-btn")) return;
+      if(e.target.closest(".row-complete")||e.target.closest(".comment-btn")||e.target.closest(".delete-btn")) return;
       openEditor(tr.getAttribute("data-id"));
     };
   });
@@ -874,12 +985,36 @@ function bindCommentBtns(){
     b.onclick=function(e){ e.stopPropagation(); openEditor(b.getAttribute("data-comment"), true); };
   });
 }
+function bindDeleteBtns(){
+  Array.prototype.forEach.call(document.querySelectorAll(".delete-btn"),function(b){
+    b.onclick=function(e){ e.stopPropagation(); confirmDelete(b.getAttribute("data-delete")); };
+  });
+}
+function confirmDelete(id){
+  var t=byId[id]; if(!t) return;
+  if(!confirm("Are you sure you want to delete this subphase?")) return;
+  deleteTask(id);
+}
+function deleteTask(id){
+  state.tasks = state.tasks.filter(function(t){return t.id!==id;});
+  // drop the deleted id from any remaining dependency chains
+  state.tasks.forEach(function(t){ if(t.after && t.after.length) t.after = t.after.filter(function(a){return a!==id;}); });
+  if(editingId===id) closeEditor();
+  clearMemo(); reindexIfNeeded(); save(); rerender();
+}
 
 /* ============ RERENDER ============ */
 function rerender(){
   reindexIfNeeded();
   renderLaunch();
-  if(view==="month") renderMonth(); else renderWeek();
+  var timeline = (view==="timeline");
+  // prev/next/today only make sense for the paged month & week views
+  ["prevBtn","nextBtn","todayBtn"].forEach(function(id){
+    var el=document.getElementById(id); if(el) el.style.display = timeline ? "none" : "";
+  });
+  if(view==="month") renderMonth();
+  else if(view==="week") renderWeek();
+  else renderOverview();
   renderList();
 }
 function reindexIfNeeded(){ byId={}; state.tasks.forEach(function(t){byId[t.id]=t;}); }
