@@ -107,8 +107,9 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 
 /* ============ LAYOUT ============ */
 .wrap{max-width:1440px;margin:0 auto}
-.brand-logo{height:clamp(72px,8vw,110px);width:auto;max-width:100%;display:block;margin-bottom:14px}
-header.masthead{margin-bottom:26px;border-bottom:1px solid var(--blue800);padding-bottom:22px}
+.brand-logo{height:clamp(72px,8vw,110px);width:auto;max-width:100%;display:block}
+header.masthead{margin-bottom:26px;border-bottom:1px solid var(--blue800);padding-bottom:22px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:nowrap}
+header.masthead h5{text-align:right;margin:0}
 .subtitle{color:var(--light700);margin-top:4px;letter-spacing:.02em}
 
 /* Top control bar */
@@ -136,18 +137,18 @@ input[type=date]{color-scheme:light}
 
 /* ============ CALENDAR (light surface) ============ */
 .calendar{background:var(--light100);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow);color:var(--blue700);overflow:hidden}
-.dow{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:8px}
+.dow{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:8px}
 .dow div{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--light800);font-weight:500;text-align:center;padding:4px 0}
 .month-grid{display:flex;flex-direction:column;gap:6px}
 .week-row{border:1px solid var(--light400);border-radius:var(--radius-sm);overflow:hidden;background:var(--light200)}
-.week-dates{display:grid;grid-template-columns:repeat(7,1fr)}
+.week-dates{display:grid;grid-template-columns:repeat(5,1fr)}
 .week-dates .daycell{padding:5px 7px;font-size:12px;min-height:26px;border-right:1px solid var(--light400);color:var(--light800)}
 .week-dates .daycell:last-child{border-right:none}
 .week-dates .daycell.other{color:var(--light600);background:var(--light300)}
 .week-dates .daycell.weekend{background:var(--light300)}
 .week-dates .daycell.today{color:var(--orange600);font-weight:700}
 .week-dates .daycell.today .dnum{background:var(--orange500);color:#fff;border-radius:50%;padding:1px 6px}
-.week-bars{display:grid;grid-template-columns:repeat(7,1fr);gap:3px 0;padding:4px 4px 8px}
+.week-bars{display:grid;grid-template-columns:repeat(5,1fr);gap:3px 0;padding:4px 4px 8px}
 .bar{grid-row:auto;margin:1px 2px;height:22px;border-radius:4px;font-size:11.5px;line-height:22px;color:var(--light100);
   padding:0 8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;font-weight:400;
   transition:filter .12s,transform .05s;position:relative}
@@ -164,7 +165,7 @@ input[type=date]{color-scheme:light}
 .bar.checkin::before{content:"\25CB";margin-right:4px}
 
 /* ============ WEEK VIEW ============ */
-.week-view{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
+.week-view{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
 .wv-col{background:var(--light200);border:1px solid var(--light400);border-radius:var(--radius-sm);min-height:200px;display:flex;flex-direction:column}
 .wv-col.weekend{background:var(--light300)}
 .wv-head{padding:8px;border-bottom:1px solid var(--light400);text-align:center}
@@ -243,6 +244,9 @@ input[type=date]{color-scheme:light}
 }
 @media (max-width:480px){
   body{line-height:1.7}
+  header.masthead{flex-direction:column;align-items:flex-start;gap:12px}
+  header.masthead h5{text-align:left}
+  .brand-logo{margin-bottom:2px}
   .desktop-cal{display:none}
   .only-mobile{display:block}
   .week-view{grid-template-columns:1fr}
@@ -458,6 +462,7 @@ function allItems(){
 var MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 var MONFULL=["January","February","March","April","May","June","July","August","September","October","November","December"];
 var DOW=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+var WEEKDAYS=["Mon","Tue","Wed","Thu","Fri"];
 function fmtNice(d){return DOW[d.getDay()]+", "+MON[d.getMonth()]+" "+d.getDate()+", "+d.getFullYear();}
 function fmtShort(d){return MON[d.getMonth()]+" "+d.getDate();}
 function sameDay(a,b){return a.getFullYear()===b.getFullYear()&&a.getMonth()===b.getMonth()&&a.getDate()===b.getDate();}
@@ -478,17 +483,18 @@ function renderLaunch(){
 
 /* ============ RENDER: MONTH ============ */
 function buildMonthWeeks(year,month){
-  // weeks starting Sunday covering the month
-  var first=new Date(year,month,1);
-  var startGrid=new Date(year,month,1-first.getDay());
-  var weeks=[], cur=new Date(startGrid);
+  // weeks of five weekdays (Mon-Fri) covering the month; weekends excluded
+  var start=new Date(year,month,1);
+  var dow=start.getDay();               // 0 Sun .. 6 Sat
+  var offsetToMon=(dow===0)?-6:(1-dow); // step back to the Monday on/before the 1st
+  start.setDate(start.getDate()+offsetToMon);
   var lastOfMonth=new Date(year,month+1,0);
-  // continue until we've passed the last day of the month and completed the week
-  while(cur<=lastOfMonth || cur.getDay()!==0){
+  var weeks=[], cur=new Date(start);
+  while(cur<=lastOfMonth){
     var week=[];
-    for(var i=0;i<7;i++){week.push(new Date(cur));cur.setDate(cur.getDate()+1);}
+    for(var i=0;i<5;i++){week.push(new Date(cur));cur.setDate(cur.getDate()+1);}
+    cur.setDate(cur.getDate()+2); // skip Sat + Sun to the next Monday
     weeks.push(week);
-    if(cur>lastOfMonth && cur.getDay()===0) break;
   }
   return weeks;
 }
@@ -520,17 +526,16 @@ function renderMonth(){
 
   var weeks=buildMonthWeeks(year,month);
   var html='<div class="calendar desktop-cal"><div class="dow">';
-  DOW.forEach(function(d){html+="<div>"+d+"</div>";});
+  WEEKDAYS.forEach(function(d){html+="<div>"+d+"</div>";});
   html+='</div><div class="month-grid">';
 
   weeks.forEach(function(week){
-    var wStart=week[0], wEnd=week[6];
+    var wStart=week[0], wEnd=week[4];
     // dates row
     html+='<div class="week-row"><div class="week-dates">';
     week.forEach(function(d){
       var cls="daycell";
       if(d.getMonth()!==month) cls+=" other";
-      if(d.getDay()===0||d.getDay()===6) cls+=" weekend";
       if(sameDay(d,today)) cls+=" today";
       html+='<div class="'+cls+'"><span class="dnum">'+d.getDate()+'</span></div>';
     });
@@ -540,8 +545,8 @@ function renderMonth(){
     items.forEach(function(it){
       if(it.end<wStart || it.start>wEnd) return;
       var cs=Math.max(0, dayDiff(wStart, it.start));
-      var ce=Math.min(6, dayDiff(wStart, it.end));
-      if(cs<0)cs=0; if(ce>6)ce=6;
+      var ce=Math.min(4, dayDiff(wStart, it.end));
+      if(cs<0)cs=0; if(ce>4)ce=4;
       wItems.push({it:it,colStart:cs,colEnd:ce,
         continL: it.start<wStart, continR: it.end>wEnd});
     });
@@ -601,9 +606,11 @@ function renderAgenda(year,month,items){
 /* ============ RENDER: WEEK ============ */
 function renderWeek(){
   var wStart=new Date(cursor);
-  wStart.setDate(wStart.getDate()-wStart.getDay()); // Sunday
-  var days=[];for(var i=0;i<7;i++){var d=new Date(wStart);d.setDate(d.getDate()+i);days.push(d);}
-  var wEnd=days[6];
+  var dw=wStart.getDay();                 // 0 Sun .. 6 Sat
+  var off=(dw===0)?-6:(1-dw);             // step back to Monday
+  wStart.setDate(wStart.getDate()+off);
+  var days=[];for(var i=0;i<5;i++){var d=new Date(wStart);d.setDate(d.getDate()+i);days.push(d);}
+  var wEnd=days[4];
   document.getElementById("periodTitle").textContent = fmtShort(days[0])+" – "+fmtShort(wEnd)+", "+wEnd.getFullYear();
   var items=allItems();
   var today=new Date();
