@@ -202,13 +202,12 @@ input[type=date]{color-scheme:light}
 .list-body{margin-top:16px}
 .phase-group{margin-bottom:22px}
 .phase-group>h4{display:flex;align-items:center;gap:10px;margin-bottom:10px;padding-bottom:6px;border-bottom:1px dashed var(--blue800);color:var(--light300)}
-.phase-swatch{width:12px;height:12px;border-radius:3px;flex:none}
 .tbl{width:100%;border-collapse:collapse;font-size:14px}
 .tbl th{text-align:left;font-weight:500;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--light700);padding:6px 20px;border-bottom:1px solid var(--blue800)}
 .tbl td{padding:9px 20px;border-bottom:1px solid var(--blue900);vertical-align:top;color:var(--light500)}
 .tbl tr{cursor:pointer;transition:background .12s}
 .tbl tr:hover td{background:rgba(255,255,255,.03)}
-.tbl .c-phase{font-weight:500;color:var(--light300);max-width:316px;white-space:normal}
+.tbl .c-phase{font-weight:500;color:var(--light300);max-width:316px;white-space:normal;font-size:15px}
 .tbl .c-detail{width:100%;max-width:none}
 .tbl .c-detail .d-desc{color:var(--light700);font-size:15px;margin-top:2px;line-height:1.5}
 .tbl .c-date,.tbl .c-dur{white-space:nowrap;color:var(--light600)}
@@ -645,7 +644,7 @@ function renderList(){
   for(var ph=1;ph<=6;ph++){
     var tasks=state.tasks.filter(function(t){return t.phase===ph;});
     if(!tasks.length) continue;
-    html+='<div class="phase-group"><h4><span class="phase-swatch" style="background:var(--ph'+ph+')"></span>Phase '+ph+': '+esc(PHASE_NAMES[ph])+'</h4>';
+    html+='<div class="phase-group"><h4>Phase '+ph+': '+esc(PHASE_NAMES[ph])+'</h4>';
     html+='<table class="tbl"><thead><tr><th>Phase</th><th>Detail</th><th class="hide-sm">Assignee</th><th class="hide-sm">Start</th><th>Due</th><th>Duration</th></tr></thead><tbody>';
     tasks.forEach(function(t){
       var s=taskStart(t), e=taskEnd(t);
