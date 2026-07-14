@@ -104,6 +104,9 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .btn-inline.on-light:hover{background:rgba(15,19,64,.11);color:var(--blue500)}
 .btn-inline.on-light:active{background:rgba(15,19,64,.16);transform:translateY(1px)}
 .btn-inline.on-light.active{background:var(--blue500);color:var(--light100)}
+/* Uppercase, 13px, weight 500 across all buttons */
+button{text-transform:uppercase;font-size:13px;font-weight:500;letter-spacing:.04em}
+.btn-primary,.btn-secondary,.btn-inline,.btn-inline.md,.btn-inline.sm,.segmented button{font-size:13px;font-weight:500;text-transform:uppercase}
 
 /* ============ LAYOUT ============ */
 .wrap{max-width:1440px;margin:0 auto}
@@ -120,8 +123,8 @@ input[type=date],input[type=text],input[type=number],textarea{
   font-family:inherit;font-size:1rem;color:var(--blue700);background:var(--light100);
   border:1px solid var(--light600);border-radius:var(--radius-sm);padding:.55em .7em;
 }
-input[type=date]{color-scheme:light}
-.launch-card{margin-left:auto;text-align:right;background:linear-gradient(135deg,var(--orange700),var(--orange500));padding:14px 20px;border-radius:var(--radius);box-shadow:var(--shadow)}
+input[type=date]{color-scheme:light;border-radius:0}
+.launch-card{margin-left:auto;text-align:right;background:var(--orange500);padding:14px 20px;border-radius:0;box-shadow:var(--shadow)}
 .launch-card .lc-label{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--orange100);font-weight:500}
 .launch-card .lc-date{font-family:"hatton","Hatton",Georgia,serif;font-size:clamp(1.5rem,3vw,2.1rem);color:var(--light100);line-height:1.1;margin-top:2px}
 .launch-card .lc-sub{font-size:12px;color:var(--orange100);margin-top:2px;opacity:.9}
@@ -132,7 +135,7 @@ input[type=date]{color-scheme:light}
 .segmented button{padding:.5em 1.1em;border-radius:0;font-size:14px;font-weight:500;color:var(--light600)}
 .segmented button.active{background:var(--orange500);color:var(--light100)}
 .navgroup{display:inline-flex;gap:8px;align-items:center}
-.period-title{font-family:"hatton","Hatton",Georgia,serif;font-size:1.25rem;color:var(--light200);min-width:180px}
+.period-title{font-family:"hatton","Hatton",Georgia,serif;font-size:1.25rem;color:var(--light200);min-width:180px;text-align:center}
 .spacer{flex:1}
 
 /* ============ CALENDAR (light surface) ============ */
@@ -194,23 +197,40 @@ input[type=date]{color-scheme:light}
 
 /* ============ LIST VIEW ============ */
 .listview{margin-top:30px}
-.listview-head{display:flex;align-items:center;gap:12px;cursor:pointer;user-select:none;padding:10px 0;border-bottom:1px solid var(--blue800)}
+.listview-head{display:flex;align-items:center;gap:12px;user-select:none;padding:10px 0;border-bottom:1px solid var(--blue800)}
 .listview-head h3{color:var(--light300)}
-.chev{transition:transform .2s;color:var(--light600)}
-.listview.collapsed .chev{transform:rotate(-90deg)}
-.listview.collapsed .list-body{display:none}
 .list-body{margin-top:16px}
 .phase-group{margin-bottom:22px}
-.phase-group>h4{display:flex;align-items:center;gap:10px;margin-bottom:10px;padding-bottom:6px;border-bottom:1px dashed var(--blue800);color:var(--light300)}
-.tbl{width:100%;border-collapse:collapse;font-size:14px}
+.phase-group>h4{display:flex;align-items:center;gap:10px;margin-bottom:10px;padding-bottom:6px;border-bottom:1px dashed var(--blue800);color:var(--light300);cursor:pointer;user-select:none}
+.phase-group>h4 .chev{transition:transform .2s;color:var(--light600);font-size:.7em}
+.phase-group.collapsed>h4 .chev{transform:rotate(-90deg)}
+.phase-group.collapsed table{display:none}
+/* Resources & Links card */
+.resources-card{background:var(--blue900);border:1px solid var(--blue800);border-radius:0;padding:16px 20px;margin:22px 0 4px;box-shadow:var(--shadow)}
+.resources-card h6{margin-bottom:10px}
+.resources-card ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.resources-card li a{display:inline-flex;align-items:center;gap:8px;color:var(--orange400);text-decoration:none;font-size:14px}
+.resources-card li a:hover{color:var(--orange300);text-decoration:underline}
+.resources-card li a::before{content:"\2197";color:var(--light700)}
+.tbl{width:100%;border-collapse:collapse;font-size:14px;table-layout:fixed}
 .tbl th{text-align:left;font-weight:500;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--light700);padding:6px 20px;border-bottom:1px solid var(--blue800)}
-.tbl td{padding:9px 20px;border-bottom:1px solid var(--blue900);vertical-align:top;color:var(--light500)}
+.tbl td{padding:9px 20px;border-bottom:1px solid var(--blue900);vertical-align:top;color:var(--light500);word-wrap:break-word;overflow-wrap:break-word}
 .tbl tr{cursor:pointer;transition:background .12s}
 .tbl tr:hover td{background:rgba(255,255,255,.03)}
-.tbl .c-phase{font-weight:500;color:var(--light300);width:316px;max-width:316px;white-space:normal;font-size:15px}
-.tbl .c-detail{width:100%;max-width:none}
+.tbl .c-phase{font-weight:500;color:var(--light300);white-space:normal;font-size:15px}
 .tbl .c-detail .d-desc{color:var(--light700);font-size:15px;margin-top:2px;line-height:1.5}
 .tbl .c-date,.tbl .c-dur{white-space:nowrap;color:var(--light600)}
+.tbl .c-comment,.tbl .c-complete{text-align:center;white-space:nowrap}
+/* completed row -> strike through all text */
+.tbl tr.completed td{text-decoration:line-through;color:var(--light700)}
+.tbl tr.completed .d-desc{color:var(--light800)}
+.tbl tr.completed .comment-btn,.tbl tr.completed .row-complete{text-decoration:none}
+/* complete checkbox */
+.row-complete{width:18px;height:18px;cursor:pointer;accent-color:var(--orange500);margin:0;vertical-align:middle}
+/* comment icon button */
+.comment-btn{display:inline-flex;align-items:center;justify-content:center;gap:4px;background:rgba(255,255,255,.05);border:1px solid var(--blue700);color:var(--light500);padding:4px 7px;cursor:pointer;line-height:1;text-transform:none;font-size:11px;font-weight:500}
+.comment-btn:hover{background:rgba(255,255,255,.12);color:var(--light100)}
+.comment-btn svg{width:14px;height:14px;display:block}
 .tag-ms{display:inline-block;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--orange400);border:1px solid var(--orange500);border-radius:20px;padding:1px 7px;margin-left:6px;vertical-align:middle}
 .tag-fixed{display:inline-block;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--light700);border:1px solid var(--light800);border-radius:20px;padding:1px 7px;margin-left:6px;vertical-align:middle}
 
@@ -231,6 +251,18 @@ input[type=date]{color-scheme:light}
 .drawer-meta b{color:var(--light400);font-weight:500}
 .drawer-foot{padding:16px 22px;border-top:1px solid var(--blue800);display:flex;gap:10px}
 .readonly-note{font-size:13px;color:var(--light700);font-style:italic}
+/* comments in drawer */
+.comments-wrap{display:flex;flex-direction:column;gap:10px}
+.comments-list{display:flex;flex-direction:column;gap:8px;max-height:240px;overflow-y:auto}
+.comment-item{background:rgba(255,255,255,.03);border-left:2px solid var(--orange500);padding:8px 10px}
+.comment-item .cm-head{display:flex;justify-content:space-between;gap:8px;font-size:11px;color:var(--light700);margin-bottom:3px}
+.comment-item .cm-author{color:var(--orange400);font-weight:500}
+.comment-item .cm-text{font-size:13px;color:var(--light400);line-height:1.5;white-space:pre-wrap;word-wrap:break-word}
+.comments-empty{font-size:13px;color:var(--light800);font-style:italic}
+.comment-add textarea{min-height:64px;width:100%}
+.comment-add .ca-row{display:flex;gap:8px;margin-top:8px;align-items:stretch}
+.comment-add .ca-row input{flex:1 1 42%;min-width:0}
+.comment-add .ca-row button{white-space:nowrap}
 
 /* ============ RESPONSIVE ============ */
 .only-mobile{display:none}
@@ -267,6 +299,13 @@ input[type=date]{color-scheme:light}
     <h5>Shopify Website Development Project Timeline</h5>
   </header>
 
+  <section class="resources-card">
+    <h6>Resources &amp; Links</h6>
+    <ul>
+      <li><a href="https://docs.google.com/spreadsheets/d/19bja2JXHV_TU48Ek6kvphBd2c8Aisc2bk62aUVEsGjM/edit?gid=0#gid=0" target="_blank" rel="noopener">Products Launching Sheet</a></li>
+    </ul>
+  </section>
+
   <div class="topbar">
     <div class="field">
       <label for="startDate">Project Start</label>
@@ -299,10 +338,8 @@ input[type=date]{color-scheme:light}
   <div id="calArea"></div>
 
   <section class="listview" id="listview">
-    <div class="listview-head" id="listToggle">
-      <span class="chev">&#9660;</span>
+    <div class="listview-head">
       <h3>Full schedule</h3>
-      <span class="readonly-note" style="margin-left:auto">Click any row to edit</span>
     </div>
     <div class="list-body" id="listBody"></div>
   </section>
@@ -335,14 +372,11 @@ var ORIGINAL_DATA = [
   {id:"p1-sku",phase:1,name:"SKU & materials intake",description:"Colors and materials list for all 5 to 6 launch SKUs. This drives product page structure, variant setup, and how many templates we need.",assignee:"Matt",days:5,after:[]},
   {id:"p1-assets",phase:1,name:"Brand asset collection",description:"All logo files and existing brand assets uploaded to the shared Google Drive. Single source of truth before design work starts.",assignee:"Morgan",days:5,after:[]},
   {id:"p1-copywriter",phase:1,name:"Copywriter confirmed",description:"Formal confirmation of who is writing copy, likely Matt with LeFleur reviewing.",assignee:"Angel / Matt",days:5,after:[]},
-  {id:"p1-color",phase:1,name:"Color palette refinement",description:"Estate Green, Midnight Ink, and Aged Cognac darkened by half to two shades, palette shifted to cool blue undertones. Reserve Merlot confirmed as secondary.",assignee:"Lindsay",days:5,after:["p1-sku"]},
-  {id:"p1-photo-timeline",phase:1,name:"Product photography timeline confirmed",description:"A firm shoot schedule for products arriving in phases. Biggest unknown in the timeline.",assignee:"Morgan / Matt",days:5,after:["p1-sku"]},
+  {id:"p1-color",phase:1,name:"Color palette refinement",description:"Estate Green, Midnight Ink, and Aged Cognac darkened by half to two shades, palette shifted to cool blue undertones. Reserve Merlot confirmed as secondary.",assignee:"Lindsay",days:10,after:[]},
   {id:"p1-color-docs",phase:1,name:"Web color documentation",description:"Final web hex codes documented and added to the brand Bible.",assignee:"Morgan",days:5,after:["p1-color"]},
-  {id:"p1-videographer",phase:1,name:"Videographer confirmed & booked",description:"One of three options locked in, including the Nashville cinematography company.",assignee:"Morgan",days:5,after:["p1-color"]},
-  {id:"p1-sitemap",phase:1,name:"Sitemap & navigation approved",description:"Simplified main nav locked. The House and The Philosophy consolidated into one page with section anchors and a sticky sub-nav.",assignee:"Lindsay",days:5,after:["p1-color"]},
 
   // PHASE 2: DESIGN
-  {id:"p2-home",phase:2,name:"Homepage design delivered",description:"High-fidelity mockup with full-screen hero video, no text overlay, prominent search bar, 100vh sections. Gray placeholder boxes for all imagery.",assignee:"Lindsay",days:10,after:["p1-sitemap"]},
+  {id:"p2-home",phase:2,name:"Homepage design delivered",description:"High-fidelity mockup with full-screen hero video, no text overlay, prominent search bar, 100vh sections. Gray placeholder boxes for all imagery.",assignee:"Lindsay",days:10,after:["p1-color-docs"]},
   {id:"p2-home-fb",phase:2,name:"Homepage feedback due",description:"Consolidated feedback in one pass. Two rounds of revision are built in, a third is not.",assignee:"Angel / Morgan",days:5,after:["p2-home"]},
   {id:"p2-coll",phase:2,name:"The Collection design delivered",description:"Product grid and detail templates. Vertical scroll only, hover-to-enlarge on grid, back nav returns to scroll position. No horizontal swiping.",assignee:"Lindsay",days:5,after:["p2-home-fb"]},
   {id:"p2-coll-fb",phase:2,name:"The Collection feedback due",description:"Consolidated feedback in one pass.",assignee:"Angel / Morgan",days:5,after:["p2-coll"]},
@@ -390,7 +424,7 @@ var ORIGINAL_DATA = [
 var PHASE_NAMES = {1:"Foundation & Assets",2:"Design",3:"Content Production",4:"Shopify Build",5:"Testing & Launch",6:"The Journal & The Society"};
 
 /* ============ STATE ============ */
-var STORE_KEY = "ss_shopify_timeline_v1";
+var STORE_KEY = "ss_shopify_timeline_v2";
 var state = load();
 function freshState(){
   return {start: ORIGINAL_START, tasks: JSON.parse(JSON.stringify(ORIGINAL_DATA))};
@@ -418,16 +452,18 @@ function addBusinessDays(date,n){
 var byId={}, memoStart={}, memoEnd={};
 function reindex(){byId={};state.tasks.forEach(function(t){byId[t.id]=t;});clearMemo();}
 function clearMemo(){memoStart={};memoEnd={};}
+function chainStart(t){
+  if(!t.after || t.after.length===0){ return parseISO(state.start); }
+  var mx=null;
+  t.after.forEach(function(id){var p=byId[id];if(!p)return;var e=taskEnd(p);if(!mx||e>mx)mx=e;});
+  return mx ? addBusinessDays(mx,1) : parseISO(state.start);
+}
 function taskStart(t){
   if(memoStart[t.id]) return memoStart[t.id];
-  if(t.fixedDate) return memoStart[t.id]=parseISO(t.fixedDate);
   var r;
-  if(!t.after || t.after.length===0){ r=parseISO(state.start); }
-  else{
-    var mx=null;
-    t.after.forEach(function(id){var e=taskEnd(byId[id]);if(!mx||e>mx)mx=e;});
-    r=addBusinessDays(mx,1);
-  }
+  if(t.fixedDate) r=parseISO(t.fixedDate);
+  else if(t.startOverride) r=parseISO(t.startOverride);
+  else r=chainStart(t);
   return memoStart[t.id]=r;
 }
 function taskEnd(t){
@@ -474,12 +510,15 @@ var view="month";
 var cursor;
 (function initCursor(){var s=parseISO(state.start);cursor=new Date(s.getFullYear(),s.getMonth(),1);})();
 var isMobile = window.matchMedia("(max-width:480px)");
+var collapsedPhases={};
+var commentAuthor=(function(){try{return localStorage.getItem("ss_comment_author")||"";}catch(e){return "";}})();
 
 /* ============ RENDER: TOP / LAUNCH ============ */
+function fmtLaunch(d){return (MON[d.getMonth()]+" "+d.getDate()+", "+d.getFullYear()).toUpperCase();}
 function renderLaunch(){
   var live = byId["p5-live"];
   var d = taskEnd(live);
-  document.getElementById("launchDate").textContent = fmtNice(d);
+  document.getElementById("launchDate").textContent = fmtLaunch(d);
 }
 
 /* ============ RENDER: MONTH ============ */
@@ -639,44 +678,71 @@ function renderWeek(){
 function snippet(s){s=s||"";return s.length>90? s.slice(0,88)+"…" : s;}
 
 /* ============ RENDER: LIST ============ */
+function commentIconSVG(){
+  return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>';
+}
 function renderList(){
   var html="";
   for(var ph=1;ph<=6;ph++){
     var tasks=state.tasks.filter(function(t){return t.phase===ph;});
     if(!tasks.length) continue;
-    html+='<div class="phase-group"><h4>Phase '+ph+': '+esc(PHASE_NAMES[ph])+'</h4>';
-    html+='<table class="tbl"><thead><tr><th>Phase</th><th>Detail</th><th class="hide-sm">Assignee</th><th class="hide-sm">Start</th><th>Due</th><th>Duration</th></tr></thead><tbody>';
+    var collapsed = collapsedPhases[ph] ? " collapsed" : "";
+    html+='<div class="phase-group'+collapsed+'" data-phase="'+ph+'">'+
+      '<h4 class="phase-head" data-phase="'+ph+'"><span class="chev">&#9660;</span>Phase '+ph+': '+esc(PHASE_NAMES[ph])+'</h4>';
+    html+='<table class="tbl"><thead><tr>'+
+      '<th style="width:230px">Phase</th>'+
+      '<th>Detail</th>'+
+      '<th class="hide-sm" style="width:120px">Assignee</th>'+
+      '<th class="hide-sm" style="width:84px">Start</th>'+
+      '<th style="width:84px">Due</th>'+
+      '<th style="width:96px">Duration</th>'+
+      '<th style="width:80px;text-align:center">Comment</th>'+
+      '<th style="width:86px;text-align:center">Complete</th>'+
+      '</tr></thead><tbody>';
     tasks.forEach(function(t){
       var s=taskStart(t), e=taskEnd(t);
       var tag = t.milestone ? '<span class="tag-ms">Milestone</span>' : (t.fixedDate ? '<span class="tag-fixed">Fixed date</span>' : '');
       var dur = t.fixedDate ? "Fixed" : t.days+" day"+(t.days===1?"":"s");
-      html+='<tr data-id="'+t.id+'">'+
+      var count = (t.comments && t.comments.length) ? t.comments.length : 0;
+      var badge = count ? '<span class="cc">'+count+'</span>' : '';
+      html+='<tr data-id="'+t.id+'"'+(t.complete?' class="completed"':'')+'>'+
         '<td class="c-phase">'+esc(t.name)+tag+'</td>'+
         '<td class="c-detail"><div class="d-desc">'+esc(t.description)+'</div></td>'+
         '<td class="c-date hide-sm">'+esc(t.assignee)+'</td>'+
         '<td class="c-date hide-sm">'+fmtShort(s)+'</td>'+
         '<td class="c-date">'+fmtShort(e)+'</td>'+
-        '<td class="c-dur">'+dur+'</td></tr>';
+        '<td class="c-dur">'+dur+'</td>'+
+        '<td class="c-comment"><button type="button" class="comment-btn" data-comment="'+t.id+'" title="Comments" aria-label="Comments">'+commentIconSVG()+badge+'</button></td>'+
+        '<td class="c-complete"><input type="checkbox" class="row-complete" data-complete="'+t.id+'"'+(t.complete?' checked':'')+' aria-label="Mark complete"></td>'+
+        '</tr>';
     });
     html+='</tbody></table></div>';
   }
   document.getElementById("listBody").innerHTML=html;
   bindRows();
+  bindPhaseHeads();
+  bindCompleteBoxes();
+  bindCommentBtns();
 }
 function snippet2(s){s=s||"";return s.length>120? s.slice(0,118)+"…" : s;}
 
 /* ============ EDIT DRAWER ============ */
 var editingId=null;
-function openEditor(id){
+var editingNaturalStart=null;
+function openEditor(id, focusComments){
   var t=byId[id]; if(!t){ // maybe checkin
     var c=CHECKINS.filter(function(x){return x.id===id;})[0];
     if(c){ openCheckin(c); } return;
   }
   editingId=id;
+  if(!t.comments) t.comments=[];
   document.getElementById("dPhase").textContent = "Phase "+t.phase+" · "+PHASE_NAMES[t.phase];
   document.getElementById("dTitle").textContent = t.milestone?"Milestone":"Edit phase";
   var s=taskStart(t), e=taskEnd(t);
+  editingNaturalStart = t.fixedDate ? null : toISO(chainStart(t));
   var body=document.getElementById("drawerBody");
+  var startField = t.fixedDate ? "" :
+    '<div class="field"><label for="fStart">Start date</label><input type="date" id="fStart" value="'+toISO(s)+'"><span class="readonly-note">Set a date to pin this start, or match the auto date to let it flow from the chain.</span></div>';
   var durField = t.fixedDate ? "" :
     '<div class="field"><label for="fDays">Duration (business days)</label><input type="number" min="1" id="fDays" value="'+t.days+'"></div>';
   var fixedNote = t.fixedDate ? '<div class="drawer-meta">This item holds a fixed calendar date ('+fmtNice(parseISO(t.fixedDate))+') and ignores the dependency chain. Duration is not applicable.</div>' : '';
@@ -684,14 +750,53 @@ function openEditor(id){
     '<div class="field"><label for="fName">Name</label><input type="text" id="fName" value="'+escAttr(t.name)+'"></div>'+
     '<div class="field"><label for="fDesc">Description</label><textarea id="fDesc">'+esc(t.description)+'</textarea></div>'+
     '<div class="field"><label for="fAssignee">Assignee</label><input type="text" id="fAssignee" value="'+escAttr(t.assignee)+'"></div>'+
-    durField + fixedNote +
-    '<div class="drawer-meta"><b>Start</b> '+fmtNice(s)+'<br><b>Due</b> '+fmtNice(e)+'</div>';
+    startField + durField + fixedNote +
+    '<div class="drawer-meta"><b>Start</b> '+fmtNice(s)+'<br><b>Due</b> '+fmtNice(e)+'</div>'+
+    '<div class="field comments-wrap"><label>Comments</label>'+
+      '<div class="comments-list" id="commentsList"></div>'+
+      '<div class="comment-add">'+
+        '<textarea id="cAdd" placeholder="Leave a comment..."></textarea>'+
+        '<div class="ca-row"><input type="text" id="cAuthor" placeholder="Your name" value="'+escAttr(commentAuthor)+'">'+
+        '<button type="button" class="btn-inline on-dark md" id="cAddBtn">Add comment</button></div>'+
+      '</div></div>';
+  renderComments(t);
+  document.getElementById("cAddBtn").onclick=function(){ addComment(t); };
   document.getElementById("drawerFoot").innerHTML =
     '<button class="btn-primary" id="saveBtn">Save changes</button>'+
     '<button class="btn-secondary" id="cancelBtn">Cancel</button>';
   document.getElementById("saveBtn").onclick=saveEdit;
   document.getElementById("cancelBtn").onclick=closeEditor;
   showDrawer();
+  if(focusComments){
+    var cl=document.getElementById("commentsList"); if(cl) cl.scrollIntoView({block:"nearest"});
+    var ca=document.getElementById("cAdd"); if(ca) ca.focus();
+  }
+}
+function renderComments(t){
+  var wrap=document.getElementById("commentsList"); if(!wrap) return;
+  var cs=t.comments||[];
+  if(!cs.length){ wrap.innerHTML='<div class="comments-empty">No comments yet.</div>'; return; }
+  wrap.innerHTML = cs.map(function(c){
+    return '<div class="comment-item"><div class="cm-head"><span class="cm-author">'+esc(c.author||"Anonymous")+'</span><span>'+esc(c.when||"")+'</span></div><div class="cm-text">'+esc(c.text)+'</div></div>';
+  }).join("");
+}
+function commentStamp(){
+  var d=new Date();
+  var h=d.getHours(), mi=d.getMinutes();
+  return MON[d.getMonth()]+" "+d.getDate()+", "+d.getFullYear()+" "+((h%12)||12)+":"+(mi<10?"0":"")+mi+(h<12?"am":"pm");
+}
+function addComment(t){
+  var ta=document.getElementById("cAdd"), au=document.getElementById("cAuthor");
+  if(!ta) return;
+  var text=(ta.value||"").trim(); if(!text) return;
+  var author=(au&&au.value?au.value:"").trim()||"Anonymous";
+  commentAuthor=author; try{localStorage.setItem("ss_comment_author",author);}catch(e){}
+  if(!t.comments) t.comments=[];
+  t.comments.push({author:author, text:text, when:commentStamp()});
+  save();
+  ta.value="";
+  renderComments(t);
+  renderList();
 }
 function openCheckin(c){
   editingId=null;
@@ -711,6 +816,11 @@ function saveEdit(){
   t.assignee=document.getElementById("fAssignee").value.trim()||t.assignee;
   var df=document.getElementById("fDays");
   if(df){var v=parseInt(df.value,10);if(!isNaN(v)&&v>=1)t.days=v;}
+  var sf=document.getElementById("fStart");
+  if(sf){
+    if(sf.value && sf.value!==editingNaturalStart){ t.startOverride=sf.value; }
+    else { delete t.startOverride; }
+  }
   clearMemo(); save(); rerender(); closeEditor();
 }
 function showDrawer(){
@@ -734,7 +844,34 @@ function bindBars(){
 }
 function bindRows(){
   Array.prototype.forEach.call(document.querySelectorAll(".tbl tr[data-id]"),function(tr){
-    tr.onclick=function(){openEditor(tr.getAttribute("data-id"));};
+    tr.onclick=function(e){
+      if(e.target.closest(".row-complete")||e.target.closest(".comment-btn")) return;
+      openEditor(tr.getAttribute("data-id"));
+    };
+  });
+}
+function bindPhaseHeads(){
+  Array.prototype.forEach.call(document.querySelectorAll(".phase-head"),function(h){
+    h.onclick=function(){
+      var ph=+h.getAttribute("data-phase");
+      collapsedPhases[ph]=!collapsedPhases[ph];
+      h.parentNode.classList.toggle("collapsed", !!collapsedPhases[ph]);
+    };
+  });
+}
+function bindCompleteBoxes(){
+  Array.prototype.forEach.call(document.querySelectorAll(".row-complete"),function(cb){
+    cb.onclick=function(e){ e.stopPropagation(); };
+    cb.onchange=function(){
+      var t=byId[cb.getAttribute("data-complete")]; if(!t) return;
+      t.complete=cb.checked; save();
+      var tr=cb.closest("tr"); if(tr) tr.classList.toggle("completed", cb.checked);
+    };
+  });
+}
+function bindCommentBtns(){
+  Array.prototype.forEach.call(document.querySelectorAll(".comment-btn"),function(b){
+    b.onclick=function(e){ e.stopPropagation(); openEditor(b.getAttribute("data-comment"), true); };
   });
 }
 
@@ -785,9 +922,7 @@ document.getElementById("resetBtn").onclick=function(){
 document.getElementById("drawerClose").onclick=closeEditor;
 document.getElementById("scrim").onclick=closeEditor;
 document.addEventListener("keydown",function(e){if(e.key==="Escape")closeEditor();});
-document.getElementById("listToggle").onclick=function(){
-  document.getElementById("listview").classList.toggle("collapsed");
-};
+/* full-schedule collapse removed; each phase now has its own toggle */
 isMobile.addEventListener?isMobile.addEventListener("change",rerender):isMobile.addListener(rerender);
 var rt;window.addEventListener("resize",function(){clearTimeout(rt);rt=setTimeout(rerender,150);});
 
