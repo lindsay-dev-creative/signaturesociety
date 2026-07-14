@@ -204,13 +204,13 @@ input[type=date]{color-scheme:light}
 .phase-group>h4{display:flex;align-items:center;gap:10px;margin-bottom:10px;padding-bottom:6px;border-bottom:1px dashed var(--blue800);color:var(--light300)}
 .phase-swatch{width:12px;height:12px;border-radius:3px;flex:none}
 .tbl{width:100%;border-collapse:collapse;font-size:14px}
-.tbl th{text-align:left;font-weight:500;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--light700);padding:6px 10px;border-bottom:1px solid var(--blue800)}
-.tbl td{padding:9px 10px;border-bottom:1px solid var(--blue900);vertical-align:top;color:var(--light500)}
+.tbl th{text-align:left;font-weight:500;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--light700);padding:6px 20px;border-bottom:1px solid var(--blue800)}
+.tbl td{padding:9px 20px;border-bottom:1px solid var(--blue900);vertical-align:top;color:var(--light500)}
 .tbl tr{cursor:pointer;transition:background .12s}
 .tbl tr:hover td{background:rgba(255,255,255,.03)}
-.tbl .c-phase{font-weight:500;color:var(--light300);white-space:nowrap}
-.tbl .c-detail{max-width:34ch}
-.tbl .c-detail .d-desc{color:var(--light700);font-size:12.5px;margin-top:2px;line-height:1.4}
+.tbl .c-phase{font-weight:500;color:var(--light300);max-width:316px;white-space:normal}
+.tbl .c-detail{width:100%;max-width:none}
+.tbl .c-detail .d-desc{color:var(--light700);font-size:15px;margin-top:2px;line-height:1.5}
 .tbl .c-date,.tbl .c-dur{white-space:nowrap;color:var(--light600)}
 .tag-ms{display:inline-block;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--orange400);border:1px solid var(--orange500);border-radius:20px;padding:1px 7px;margin-left:6px;vertical-align:middle}
 .tag-fixed{display:inline-block;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--light700);border:1px solid var(--light800);border-radius:20px;padding:1px 7px;margin-left:6px;vertical-align:middle}
@@ -253,6 +253,8 @@ input[type=date]{color-scheme:light}
   .wv-col{min-height:0}
   .drawer{width:100vw;height:100%;border-left:none}
   .tbl th.hide-sm,.tbl td.hide-sm{display:none}
+  .tbl th,.tbl td{padding-left:12px;padding-right:12px}
+  .tbl .c-phase{max-width:none}
   .topbar{gap:14px}
   .field{width:100%}
   input[type=date]{width:100%}
@@ -651,7 +653,7 @@ function renderList(){
       var dur = t.fixedDate ? "Fixed" : t.days+" day"+(t.days===1?"":"s");
       html+='<tr data-id="'+t.id+'">'+
         '<td class="c-phase">'+esc(t.name)+tag+'</td>'+
-        '<td class="c-detail"><div class="d-desc">'+esc(snippet2(t.description))+'</div></td>'+
+        '<td class="c-detail"><div class="d-desc">'+esc(t.description)+'</div></td>'+
         '<td class="c-date hide-sm">'+esc(t.assignee)+'</td>'+
         '<td class="c-date hide-sm">'+fmtShort(s)+'</td>'+
         '<td class="c-date">'+fmtShort(e)+'</td>'+
