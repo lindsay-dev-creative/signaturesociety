@@ -1,0 +1,82 @@
+{%- doc -%}
+  This snippet is used to output a collection promo block inside a collection template.
+
+  @param {object} block - the section block object containing settings and other attributes
+  @param {boolean} reveal - whether to add the reveal-on-scroll attribute for scroll animations
+{%- enddoc -%}
+
+{%- liquid
+  assign has_media = false
+
+  if block.settings.media_type == 'image' and block.settings.image != blank
+    assign has_media = true
+  elsif block.settings.media_type == 'video' and block.settings.video != blank
+    assign has_media = true
+  endif
+-%}
+
+<div
+  class="product-list__promo"
+  {% if reveal %}
+    reveal-on-scroll="true"
+  {% endif %}
+  style="--product-list-promo-column-span: {{ block.settings.size }};"
+  {{ block.shopify_attributes }}
+>
+  <div
+    class="content-over-media h-full color-scheme color-scheme--{{ block.settings.color_scheme.id }} {% if block.settings.bordered %}border{% endif %}"
+    {% if has_media %}
+      style="--content-over-media-overlay: {{ block.settings.overlay_color.rgb }} / {{ block.settings.overlay_color.alpha }};"
+    {% endif %}
+  >
+    {%- case block.settings.media_type -%}
+      {%- when 'image' -%}
+        {%- if block.settings.image != blank -%}
+          <picture>
+            {%- if block.settings.mobile_image != blank -%}
+              <source
+                media="(max-width: 699px)"
+                srcset="{{ block.settings.mobile_image | image_url: width: 800 }} 800w, {{ block.settings.mobile_image | image_url: width: 1000 }} 1000w, {{ block.settings.mobile_image | image_url: width: 1200 }} 1200w"
+                width="{{ block.settings.mobile_image.width }}"
+                height="{{ block.settings.mobile_image.height }}"
+              >
+            {%- endif -%}
+
+            {%- capture sizes -%}(max-width: 700px) 100vw, {% if block.settings.size == '1' %}(max-width: 1000px)calc(100vw / 3), 25vw{% else %}(max-width: 1000px)calc((100vw / 1.5)), 50vw{% endif %}{%- endcapture -%}
+
+            {{- block.settings.image | image_url: width: block.settings.image.width | image_tag: loading: 'lazy', sizes: sizes, widths: '800,1200,1800,2400,2800,3200' -}}
+          </picture>
+        {%- endif -%}
+
+      {%- when 'video' -%}
+        {%- liquid
+          if block.settings.video != blank
+            if block.settings.mobile_video == blank
+              render 'media', media: block.settings.video, autoplay: true, loop: true, controls: false
+            else
+              render 'media', media: block.settings.video, autoplay: true, loop: true, controls: false, class: 'hidden sm:block'
+              render 'media', media: block.settings.mobile_video, autoplay: true, loop: true, controls: false, class: 'sm:hidden'
+            endif
+          endif
+        -%}
+    {%- endcase -%}
+
+    {%- if block.settings.subheading != blank or block.settings.heading != blank or block.settings.link_text != blank -%}
+      <div class="content w-full {{ block.settings.content_position }} text-{{ block.settings.alignment | replace: 'right', 'end' | replace: 'left', 'start' }}">
+        <div class="prose">
+          {%- if block.settings.subheading != blank -%}
+            <p class="h6">{{ block.settings.subheading }}</p>
+          {%- endif -%}
+
+          {%- if block.settings.heading != blank -%}
+            <p class="{{ block.settings.heading_tag }}">{{ block.settings.heading }}</p>
+          {%- endif -%}
+
+          {%- if block.settings.link_text != blank -%}
+            {%- render 'button', content: block.settings.link_text, href: block.settings.url, style: block.settings.style -%}
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</div>

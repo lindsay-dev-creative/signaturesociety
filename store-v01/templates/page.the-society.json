@@ -1,0 +1,372 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "color_scheme": "",
+        "show_title": true,
+        "page_width": "xs"
+      }
+    },
+    "image_with_text_3xCf8V": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_UwWe44": {
+          "type": "heading",
+          "settings": {
+            "text": "FOR WOMEN ON THE GO. EFFORTLESSLY.",
+            "heading_tag": "h1"
+          }
+        },
+        "button_mNFp7f": {
+          "type": "button",
+          "settings": {
+            "style": "solid",
+            "text": "JOIN THE SOCIETY",
+            "url": "",
+            "background": "",
+            "text_color": ""
+          }
+        },
+        "subheading_gDWD6J": {
+          "type": "subheading",
+          "disabled": true,
+          "settings": {
+            "text": "Subheading"
+          }
+        },
+        "richtext_j3dnrC": {
+          "type": "richtext",
+          "disabled": true,
+          "settings": {
+            "content": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_UwWe44",
+        "button_mNFp7f",
+        "subheading_gDWD6J",
+        "richtext_j3dnrC"
+      ],
+      "name": "t:sections.image_with_text.presets.image_with_text.name",
+      "settings": {
+        "color_scheme": "",
+        "separate_section_with_border": true,
+        "image": "shopify://shop_images/Frame_202.png",
+        "reveal_on_scroll": true,
+        "image_position": "start",
+        "content_width": "sm",
+        "remove_vertical_spacing": true
+      }
+    },
+    "image_with_text_overlay_gNV6nC": {
+      "type": "image-with-text-overlay",
+      "blocks": {
+        "heading_LF6ihV": {
+          "type": "heading",
+          "settings": {
+            "text": "Signature society",
+            "heading_tag": "h4"
+          }
+        },
+        "richtext_YHjkrd": {
+          "type": "richtext",
+          "settings": {
+            "content": "<p>is your chic-est friend, a downright girl’s girl with the quick-witted responses in the group chat.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_LF6ihV",
+        "richtext_YHjkrd"
+      ],
+      "name": "t:sections.image_with_text_overlay.presets.image_with_text_overlay.name",
+      "settings": {
+        "color_scheme": "",
+        "image_size": "lg",
+        "image": "shopify://shop_images/image_103.png",
+        "allow_transparent_header": false,
+        "reveal_on_scroll": true,
+        "remove_vertical_spacing": true,
+        "content_width": "md",
+        "mobile_text_position": "place-self-center text-center",
+        "desktop_text_position": "sm:place-self-center sm:text-center",
+        "overlay_color": "#000000",
+        "overlay_opacity": 30
+      }
+    },
+    "image_with_text_WXrkPy": {
+      "type": "image-with-text",
+      "blocks": {
+        "subheading_R6FnzK": {
+          "type": "subheading",
+          "disabled": true,
+          "settings": {
+            "text": "Subheading"
+          }
+        },
+        "heading_qteWnh": {
+          "type": "heading",
+          "settings": {
+            "text": "She orders off a French wine menu with ease, and she’ll never say no to a spontaneous weekend getaway.",
+            "heading_tag": "h1"
+          }
+        },
+        "richtext_qNM3BU": {
+          "type": "richtext",
+          "disabled": true,
+          "settings": {
+            "content": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "subheading_R6FnzK",
+        "heading_qteWnh",
+        "richtext_qNM3BU"
+      ],
+      "name": "t:sections.image_with_text.presets.image_with_text.name",
+      "settings": {
+        "color_scheme": "",
+        "separate_section_with_border": true,
+        "image": "shopify://shop_images/Frame_202.png",
+        "reveal_on_scroll": true,
+        "image_position": "start",
+        "content_width": "sm",
+        "remove_vertical_spacing": true
+      }
+    },
+    "image_with_text_grLg3y": {
+      "type": "image-with-text",
+      "blocks": {
+        "subheading_bhpL7t": {
+          "type": "subheading",
+          "disabled": true,
+          "settings": {
+            "text": "Subheading"
+          }
+        },
+        "heading_dhrb7j": {
+          "type": "heading",
+          "settings": {
+            "text": "SHE ALWAYS VOTES 'YES' TO THE LAVISH PURCHASES YOU'RE CONSIDERING",
+            "heading_tag": "h1"
+          }
+        },
+        "richtext_fQBrpX": {
+          "type": "richtext",
+          "disabled": true,
+          "settings": {
+            "content": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "subheading_bhpL7t",
+        "heading_dhrb7j",
+        "richtext_fQBrpX"
+      ],
+      "name": "t:sections.image_with_text.presets.image_with_text.name",
+      "settings": {
+        "color_scheme": "",
+        "separate_section_with_border": true,
+        "image": "shopify://shop_images/Frame_216.png",
+        "reveal_on_scroll": true,
+        "image_position": "end",
+        "content_width": "sm",
+        "remove_vertical_spacing": true
+      }
+    },
+    "image_with_text_UYrRFE": {
+      "type": "image-with-text",
+      "blocks": {
+        "subheading_968NgH": {
+          "type": "subheading",
+          "disabled": true,
+          "settings": {
+            "text": "Subheading"
+          }
+        },
+        "heading_mAdMTP": {
+          "type": "heading",
+          "settings": {
+            "text": "She’s busy. She catches that 6am pilates class, works late, and still makes it to your birthday party that night, thoughtful gift in hand.",
+            "heading_tag": "h1"
+          }
+        },
+        "richtext_YXjPed": {
+          "type": "richtext",
+          "disabled": true,
+          "settings": {
+            "content": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "subheading_968NgH",
+        "heading_mAdMTP",
+        "richtext_YXjPed"
+      ],
+      "name": "t:sections.image_with_text.presets.image_with_text.name",
+      "settings": {
+        "color_scheme": "",
+        "separate_section_with_border": true,
+        "image": "shopify://shop_images/Frame_217.png",
+        "reveal_on_scroll": true,
+        "image_position": "start",
+        "content_width": "sm",
+        "remove_vertical_spacing": true
+      }
+    },
+    "image_with_text_nrEpMH": {
+      "type": "image-with-text",
+      "blocks": {
+        "subheading_C6yjyp": {
+          "type": "subheading",
+          "disabled": true,
+          "settings": {
+            "text": "Subheading"
+          }
+        },
+        "heading_CFxFXY": {
+          "type": "heading",
+          "settings": {
+            "text": "SHE TELLS YOU TO BOOK THE MASSAGE APPOINTMENT",
+            "heading_tag": "h1"
+          }
+        },
+        "richtext_WMPyiM": {
+          "type": "richtext",
+          "disabled": true,
+          "settings": {
+            "content": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "subheading_C6yjyp",
+        "heading_CFxFXY",
+        "richtext_WMPyiM"
+      ],
+      "name": "t:sections.image_with_text.presets.image_with_text.name",
+      "settings": {
+        "color_scheme": "",
+        "separate_section_with_border": true,
+        "image": "shopify://shop_images/Frame_218.png",
+        "reveal_on_scroll": true,
+        "image_position": "end",
+        "content_width": "sm",
+        "remove_vertical_spacing": true
+      }
+    },
+    "rich_text_zy6kyw": {
+      "type": "rich-text",
+      "blocks": {
+        "subheading_3ie7Y3": {
+          "type": "subheading",
+          "disabled": true,
+          "settings": {
+            "text": "Subheading"
+          }
+        },
+        "heading_jLdf7L": {
+          "type": "heading",
+          "settings": {
+            "text": "Being friends with her reminds you that a well-lived life isn’t just about how it looks, but how it FEELS.",
+            "heading_tag": "h1"
+          }
+        },
+        "button_CcMTwK": {
+          "type": "button",
+          "settings": {
+            "style": "solid",
+            "text": "JOIN THE SOCIETY",
+            "url": "",
+            "background": "",
+            "text_color": ""
+          }
+        },
+        "richtext_gxtDgX": {
+          "type": "richtext",
+          "disabled": true,
+          "settings": {
+            "content": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "subheading_3ie7Y3",
+        "heading_jLdf7L",
+        "button_CcMTwK",
+        "richtext_gxtDgX"
+      ],
+      "name": "t:sections.rich_text.presets.rich_text.name",
+      "settings": {
+        "color_scheme": "",
+        "separate_section_with_border": true,
+        "content_width": "sm",
+        "text_position": "center",
+        "remove_vertical_spacing": false
+      }
+    },
+    "image_with_text_overlay_4Pj4dW": {
+      "type": "image-with-text-overlay",
+      "blocks": {
+        "heading_mKyBFb": {
+          "type": "heading",
+          "disabled": true,
+          "settings": {
+            "text": "Image with text overlay",
+            "heading_tag": "h4"
+          }
+        },
+        "richtext_xmt3FN": {
+          "type": "richtext",
+          "disabled": true,
+          "settings": {
+            "content": "<p>Add your own custom content to give more information about your store, availability details...</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_mKyBFb",
+        "richtext_xmt3FN"
+      ],
+      "name": "t:sections.image_with_text_overlay.presets.image_with_text_overlay.name",
+      "settings": {
+        "color_scheme": "",
+        "image_size": "auto",
+        "image": "shopify://shop_images/Frame_192.png",
+        "allow_transparent_header": false,
+        "reveal_on_scroll": true,
+        "remove_vertical_spacing": true,
+        "content_width": "md",
+        "mobile_text_position": "place-self-center text-center",
+        "desktop_text_position": "sm:place-self-center sm:text-center",
+        "overlay_color": "#000000",
+        "overlay_opacity": 0
+      }
+    }
+  },
+  "order": [
+    "main",
+    "image_with_text_3xCf8V",
+    "image_with_text_overlay_gNV6nC",
+    "image_with_text_WXrkPy",
+    "image_with_text_grLg3y",
+    "image_with_text_UYrRFE",
+    "image_with_text_nrEpMH",
+    "rich_text_zy6kyw",
+    "image_with_text_overlay_4Pj4dW"
+  ]
+}

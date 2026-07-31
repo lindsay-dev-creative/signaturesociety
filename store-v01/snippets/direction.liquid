@@ -1,0 +1,8 @@
+{%- assign language_code = request.locale.iso_code | split: '-' | first -%}
+
+{%- case language_code -%}
+  {%- when 'ae', 'ar', 'arc', 'bcc', 'bqi', 'ckb', 'dv', 'fa', 'glk', 'ha', 'he', 'kwh', 'ks', 'ku', 'mzn', 'nqo', 'pnb', 'ps', 'sd', 'ug', 'ur', 'yi' -%}
+    rtl
+  {%- else -%}
+    ltr
+{%- endcase -%}

@@ -1,0 +1,27 @@
+{%- doc -%}
+  This component renders a section header, which is a pattern in many sections of the theme.
+
+  @param {string} [subheading] - the subheading (if any)
+  @param {string} heading - the heading to show
+  @param {string} [heading_style] - the heading style to use (supports "h1", "h2", "h3", "h4", "h5" or "h6") - defaults to "h2"
+  @param {string} [content] - an optional content to show
+  @param {string} [text_alignment] - alignment of the header's text (supports "start", "center" or "end") - defaults to centered
+{%- enddoc -%}
+
+{% if subheading != blank or heading != blank or content != blank %}
+  <div class="section-header justify-self-{{ text_alignment | default: 'center' }} text-{{ text_alignment | default: 'center' }}">
+    {%- if subheading != blank or heading != blank or content != blank -%}
+      <div class="prose">
+        {%- if subheading != blank -%}
+          <p class="h6">{{- subheading -}}</p>
+        {%- endif -%}
+
+        {%- if heading != blank -%}
+          <h2 class="{{ heading_style | default: 'h2' }}">{{- heading -}}</h2>
+        {%- endif -%}
+
+        {{- content -}}
+      </div>
+    {%- endif -%}
+  </div>
+{%- endif -%}

@@ -1,0 +1,337 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "rating_iVhgeF": {
+          "type": "rating",
+          "settings": {
+            "show_empty": true,
+            "rating_mode": "rating"
+          }
+        },
+        "vendor": {
+          "type": "vendor",
+          "settings": {}
+        },
+        "title": {
+          "type": "title",
+          "settings": {
+            "heading_tag": "h3"
+          }
+        },
+        "price": {
+          "type": "price",
+          "settings": {
+            "show_taxes_notice": false
+          }
+        },
+        "payment_terms": {
+          "type": "payment_terms",
+          "settings": {}
+        },
+        "separator": {
+          "type": "separator",
+          "settings": {}
+        },
+        "description": {
+          "type": "description",
+          "settings": {
+            "collapse_content": false,
+            "show_below_gallery": false
+          }
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "hide_sold_out_variants": false,
+            "selector_style": "block",
+            "swatch_selector_style": "swatch",
+            "variant_image_options": "",
+            "variant_image_show_underline": false,
+            "size_chart_page": ""
+          }
+        },
+        "quantity_selector": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_payment_button": true,
+            "show_gift_card_recipient": true,
+            "atc_button_background": "",
+            "atc_button_text_color": "",
+            "payment_button_background": "",
+            "payment_button_text_color": ""
+          }
+        },
+        "accordion_4ETbUg": {
+          "type": "accordion",
+          "disabled": true,
+          "settings": {
+            "show_below_gallery": true,
+            "icon": "none",
+            "title": "PRODUCT DETAILS",
+            "content": "<p>Share some content to your customers about your products.</p>",
+            "liquid": "",
+            "page": ""
+          }
+        },
+        "complementary_products": {
+          "type": "complementary_products",
+          "settings": {
+            "title": "Pairs well with",
+            "products_count": 2,
+            "show_below_gallery": true,
+            "stack_products": true,
+            "show_quick_buy": true
+          }
+        }
+      },
+      "block_order": [
+        "rating_iVhgeF",
+        "vendor",
+        "title",
+        "price",
+        "payment_terms",
+        "separator",
+        "description",
+        "variant_picker",
+        "quantity_selector",
+        "buy_buttons",
+        "accordion_4ETbUg",
+        "complementary_products"
+      ],
+      "settings": {
+        "color_scheme": "scheme-bc6e41a6-3e45-4bc2-96bd-51d1abf61a4b",
+        "allow_transparent_header": false,
+        "transparent_header_use_primary_colors": false,
+        "container_size": "lg",
+        "product_info_size": 35,
+        "show_sticky_add_to_cart": true,
+        "center_basic_info": false,
+        "desktop_media_layout": "grid",
+        "desktop_media_grid_gap": 30,
+        "mobile_controls": "dots",
+        "enable_media_autoplay": false,
+        "enable_video_looping": true,
+        "enable_image_zoom": true,
+        "max_image_zoom_level": 3
+      }
+    },
+    "multi_column_PPRf8D": {
+      "type": "multi-column",
+      "blocks": {
+        "image_with_text_hh3d6X": {
+          "type": "image_with_text",
+          "settings": {
+            "image": "{{ product.metafields.custom.key_feature_1_image.value }}",
+            "title": "{{ product.metafields.custom.key_feature_1_headline.value }}",
+            "heading_tag": "h3",
+            "content": "<p>{{ product.metafields.custom.key_feature_1_description | metafield_tag }}</p>",
+            "link_url": "",
+            "link_text": ""
+          }
+        },
+        "image_with_text_jy6AKm": {
+          "type": "image_with_text",
+          "settings": {
+            "image": "{{ product.metafields.custom.key_feature_2_image.value }}",
+            "title": "{{ product.metafields.custom.key_feature_2_headline.value }}",
+            "heading_tag": "h3",
+            "content": "<p>{{ product.metafields.custom.key_feature_2_description | metafield_tag }}</p>",
+            "link_url": "",
+            "link_text": ""
+          }
+        },
+        "image_with_text_E7jAjk": {
+          "type": "image_with_text",
+          "settings": {
+            "image": "{{ product.metafields.custom.key_feature_3_image.value }}",
+            "title": "{{ product.metafields.custom.key_feature_3_headline.value }}",
+            "heading_tag": "h3",
+            "content": "<p>{{ product.metafields.custom.key_feature_3_description | metafield_tag }}</p>",
+            "link_url": "",
+            "link_text": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_with_text_hh3d6X",
+        "image_with_text_jy6AKm",
+        "image_with_text_E7jAjk"
+      ],
+      "name": "t:sections.multi_column.presets.multi_column.name",
+      "settings": {
+        "color_scheme": "scheme-bc6e41a6-3e45-4bc2-96bd-51d1abf61a4b",
+        "separate_section_with_border": true,
+        "columns_per_row": 3,
+        "stack_on_mobile": false,
+        "overlap_image": false,
+        "content_alignment": "center",
+        "text_alignment": "center",
+        "spacing": "md",
+        "subheading": "",
+        "title": "The technical details",
+        "heading_style": "h2",
+        "content": ""
+      }
+    },
+    "tabs_aEY8BV": {
+      "type": "tabs",
+      "blocks": {
+        "tab_9gtyQa": {
+          "type": "tab",
+          "settings": {
+            "title": "Tab 1",
+            "content": "<p>Use this text to share information about your brand with your customers.</p>",
+            "page": "",
+            "open_on_mobile": false
+          }
+        },
+        "tab_pgyktQ": {
+          "type": "tab",
+          "settings": {
+            "title": "Tab 2",
+            "content": "<p>Describe a product, share announcements, or welcome customers to your store.</p>",
+            "page": "",
+            "open_on_mobile": false
+          }
+        },
+        "tab_jWgnBa": {
+          "type": "tab",
+          "settings": {
+            "title": "Tab 3",
+            "content": "<p>Share information about your shipping rates, return policy or contact information.</p>",
+            "page": "",
+            "open_on_mobile": false
+          }
+        }
+      },
+      "block_order": [
+        "tab_9gtyQa",
+        "tab_pgyktQ",
+        "tab_jWgnBa"
+      ],
+      "disabled": true,
+      "name": "t:sections.tabs.presets.tab.name",
+      "settings": {
+        "color_scheme": "",
+        "separate_section_with_border": true,
+        "subheading": "Subheading",
+        "title": "Heading",
+        "heading_style": "h2",
+        "text_alignment": "center"
+      }
+    },
+    "faq_3RxA7q": {
+      "type": "faq",
+      "blocks": {
+        "category_c9BDiP": {
+          "type": "category",
+          "disabled": true,
+          "settings": {
+            "title": "Order",
+            "icon": "none",
+            "icon_width": 16
+          }
+        },
+        "question_ANjEQM": {
+          "type": "question",
+          "settings": {
+            "question": "Do you ship overseas?",
+            "answer": "<p>Yes, we ship all over the world. Shipping costs will apply, and will be added at checkout. We run discounts and promotions all year, so stay tuned for exclusive deals.</p>"
+          }
+        },
+        "question_z9Kcb8": {
+          "type": "question",
+          "settings": {
+            "question": "How long will it take to get my orders?",
+            "answer": "<p>It depends on where you are. Orders processed here will take 5-7 business days to arrive. Overseas deliveries can take anywhere from 7-16 days. Delivery details will be provided in your confirmation email.</p>"
+          }
+        },
+        "question_XXpHkY": {
+          "type": "question",
+          "settings": {
+            "question": "Any question?",
+            "answer": "<p>You can contact us through our contact page! We will be happy to assist you.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "category_c9BDiP",
+        "question_ANjEQM",
+        "question_z9Kcb8",
+        "question_XXpHkY"
+      ],
+      "name": "t:sections.faq.presets.faq.name",
+      "settings": {
+        "color_scheme": "scheme-bc6e41a6-3e45-4bc2-96bd-51d1abf61a4b",
+        "separate_section_with_border": true,
+        "show_categories": false,
+        "subheading": "",
+        "title": "Frequently Asked Questions",
+        "heading_style": "h2",
+        "content": ""
+      }
+    },
+    "related_products_TL3LMJ": {
+      "type": "related-products",
+      "disabled": true,
+      "name": "t:sections.related_products.presets.related_products.name",
+      "settings": {
+        "color_scheme": "scheme-bc6e41a6-3e45-4bc2-96bd-51d1abf61a4b",
+        "separate_section_with_border": true,
+        "hide_product_information": false,
+        "stack_products": false,
+        "recommendations_count": 10,
+        "products_per_row_mobile": "2",
+        "products_per_row_desktop": 4,
+        "horizontal_spacing_factor": 1,
+        "vertical_spacing_factor": 1,
+        "subheading": "",
+        "title": "Related products",
+        "heading_style": "h2",
+        "content": ""
+      }
+    },
+    "recently_viewed_products_qnqWxe": {
+      "type": "recently-viewed-products",
+      "name": "t:sections.recently_viewed_products.presets.recently_viewed_products.name",
+      "settings": {
+        "separate_section_with_border": true,
+        "color_scheme": "scheme-bc6e41a6-3e45-4bc2-96bd-51d1abf61a4b",
+        "hide_product_information": false,
+        "stack_products": false,
+        "products_count": 9,
+        "products_per_row_mobile": "2",
+        "products_per_row_desktop": 4,
+        "horizontal_spacing_factor": 1,
+        "vertical_spacing_factor": 1,
+        "subheading": "",
+        "title": "Recently viewed products",
+        "heading_style": "h2",
+        "content": ""
+      }
+    }
+  },
+  "order": [
+    "main",
+    "multi_column_PPRf8D",
+    "tabs_aEY8BV",
+    "faq_3RxA7q",
+    "related_products_TL3LMJ",
+    "recently_viewed_products_qnqWxe"
+  ]
+}
