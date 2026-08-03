@@ -1,0 +1,1555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Signature Society · Brand Guidelines (Internal)</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="https://use.typekit.net/hqq5dii.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap">
+<style>
+/* ============================================================
+   SIGNATURE SOCIETY · TYPE + COLOR TOKENS
+   Everything below is the live system. This document is set
+   in its own tokens, so the specimens are the real thing.
+   ============================================================ */
+
+:root {
+  /* ---- Typefaces ---------------------------------------- */
+  --face-display:  "kepler-std-display", Georgia, "Times New Roman", serif;
+  --face-subhead:  "kepler-std-subhead", Georgia, "Times New Roman", serif;
+  --face-regular:  "kepler-std", Georgia, "Times New Roman", serif;
+  --face-caption:  "kepler-std-caption", Georgia, "Times New Roman", serif;
+  --face-sec:      "Inter", "inter-18pt", -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* ---- Primary scale · DESKTOP (1024px and up) ----------
+     Base 18px, ratio 1.2, 10 steps up, 2 steps down.       */
+  --font-primary-9x:   111px;
+  --font-primary-8x:    93px;
+  --font-primary-7x:    77px;
+  --font-primary-6x:    64px;
+  --font-primary-5x:    54px;
+  --font-primary-4x:    45px;
+  --font-primary-3x:    37px;
+  --font-primary-2x:    31px;
+  --font-primary-1x:    26px;
+  --font-primary-lg:    22px;
+  --font-primary-base:  18px;
+  --font-primary-sm:    15px;
+  --font-primary-xs:    13px;
+
+  /* ---- Primary line heights ----------------------------- */
+  --lh-primary-9x: 1.00;  --lh-primary-8x: 1.02;  --lh-primary-7x: 1.05;
+  --lh-primary-6x: 1.06;  --lh-primary-5x: 1.08;  --lh-primary-4x: 1.10;
+  --lh-primary-3x: 1.12;  --lh-primary-2x: 1.18;  --lh-primary-1x: 1.22;
+  --lh-primary-lg: 1.30;  --lh-primary-base: 1.60;
+  --lh-primary-sm: 1.55;  --lh-primary-xs: 1.50;
+
+  /* ---- Primary tracking --------------------------------- */
+  --ls-display: -0.01em;   /* 4x and up, uppercase Display  */
+  --ls-subhead:  0.01em;   /* lg to 3x, uppercase Subhead   */
+  --ls-text:     0;        /* base and below, sentence case */
+
+  /* ---- Secondary scale (Inter 400) ----------------------
+     Base 15px. No steps above base, all breakpoints.       */
+  --font-sec-base: 15px;
+  --font-sec-sm:   13px;
+  --font-sec-xs:   10px;
+  --lh-sec-base: 1.60;
+  --lh-sec-sm:   1.55;
+  --lh-sec-xs:   1.50;
+  --ls-sec-xs:   0.04em;
+
+  /* ---- Button type -------------------------------------- */
+  --font-btn-primary:   14px;
+  --ls-btn-primary:     0.084em;
+  --font-btn-secondary: 14px;
+  --ls-btn-secondary:   0.02em;
+
+  /* ---- Color: Primary ----------------------------------- */
+  --primary-110: #0B0D23;
+  --primary-100: #141A44;   /* BRAND */
+  --primary-90:  #282F66;
+  --primary-80:  #424A88;
+  --primary-70:  #626BAA;
+  --primary-60:  #8991CC;
+  --primary-50:  #B6BDEE;
+  --primary-40:  #CBD0F7;
+  --primary-30:  #DEE2FF;
+  --primary-20:  #EBEEFF;
+  --primary-10:  #F9F9FF;
+
+  /* ---- Color: Secondary (Figma variable group "Red") ---- */
+  --secondary-110: #25090A;
+  --secondary-100: #451113;  /* BRAND */
+  --secondary-90:  #672224;
+  --secondary-80:  #89383B;
+  --secondary-70:  #AB5356;
+  --secondary-60:  #CD7477;
+  --secondary-50:  #EF9A9D;
+  --secondary-40:  #FBB6B8;
+  --secondary-30:  #FFCDCE;
+  --secondary-20:  #FFE1E2;
+  --secondary-10:  #FFF6F6;
+
+  /* ---- Color: Green ------------------------------------- */
+  --green-110: #0C2718;
+  --green-100: #16482C;      /* BRAND */
+  --green-90:  #2A6A46;
+  --green-80:  #448C63;
+  --green-70:  #64AE84;
+  --green-60:  #8BD0A9;
+  --green-50:  #B8F2D1;
+  --green-40:  #CDFBE1;
+  --green-30:  #DDFFEC;
+  --green-20:  #EBFFF4;
+  --green-10:  #F9FFFB;
+
+  /* ---- Color: Orange ------------------------------------ */
+  --orange-110: #2D1606;
+  --orange-100: #50270C;     /* BRAND */
+  --orange-90:  #643516;
+  --orange-80:  #864D28;
+  --orange-70:  #A8693E;
+  --orange-60:  #CA875A;
+  --orange-50:  #ECA87A;
+  --orange-40:  #FCC39E;
+  --orange-30:  #FFD6BB;
+  --orange-20:  #FFE7D7;
+  --orange-10:  #FFF7F2;
+
+  /* ---- Color: Tan --------------------------------------- */
+  --tan-110: #302B21;
+  --tan-100: #473F31;        /* BRAND */
+  --tan-90:  #615644;
+  --tan-80:  #7A6E59;
+  --tan-70:  #93866E;
+  --tan-60:  #AD9E85;
+  --tan-50:  #C7B79D;
+  --tan-40:  #E0D0B5;
+  --tan-30:  #FAE9CF;
+  --tan-20:  #FDF4E6;
+  --tan-10:  #FEFBF6;
+
+  /* ---- Color: Neutral ----------------------------------- */
+  --neutral-110: #2F2D27;
+  --neutral-100: #47433B;    /* BRAND */
+  --neutral-90:  #5B574D;
+  --neutral-80:  #706B61;
+  --neutral-70:  #847F74;
+  --neutral-60:  #989389;
+  --neutral-50:  #ADA89E;
+  --neutral-40:  #C1BDB4;
+  --neutral-30:  #D6D2CA;
+  --neutral-20:  #EAE7E1;
+  --neutral-10:  #FEFCF9;
+
+  --white: #FFFFFF;
+
+  /* ---- Document surface --------------------------------- */
+  --ink:     var(--primary-100);
+  --ground:  var(--neutral-10);
+  --rule:    var(--tan-40);
+  --rule-faint: var(--tan-30);
+  --muted:   var(--neutral-80);
+}
+
+/* ============================================================
+   RESPONSIVE PRIMARY SCALE
+   Base stays 18px at every breakpoint. Steps 3x and below are
+   identical across desktop, tablet and mobile, so body copy never
+   shifts. Only the Display steps (4x through 9x) step down.
+   The secondary scale and form scale never change.
+   ============================================================ */
+
+/* TABLET · 768px to 1023px */
+@media (max-width: 1023px) {
+  :root {
+    --font-primary-9x: 86px;
+    --font-primary-8x: 74px;
+    --font-primary-7x: 65px;
+    --font-primary-6x: 56px;
+    --font-primary-5x: 49px;
+    --font-primary-4x: 43px;
+  }
+}
+
+/* MOBILE · below 768px */
+@media (max-width: 767px) {
+  :root {
+    --font-primary-9x: 65px;
+    --font-primary-8x: 60px;
+    --font-primary-7x: 54px;
+    --font-primary-6x: 49px;
+    --font-primary-5x: 45px;
+    --font-primary-4x: 41px;
+  }
+}
+
+/* ============================================================
+   TEXT STYLE CLASSES · the shipping API
+   ============================================================ */
+
+/* Primary, Display optical size, uppercase, 32px and above */
+.font-primary-9x, .font-primary-8x, .font-primary-7x,
+.font-primary-6x, .font-primary-5x, .font-primary-4x {
+  font-family: var(--face-display);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: var(--ls-display);
+}
+.font-primary-9x { font-size: var(--font-primary-9x); line-height: var(--lh-primary-9x); }
+.font-primary-8x { font-size: var(--font-primary-8x); line-height: var(--lh-primary-8x); }
+.font-primary-7x { font-size: var(--font-primary-7x); line-height: var(--lh-primary-7x); }
+.font-primary-6x { font-size: var(--font-primary-6x); line-height: var(--lh-primary-6x); }
+.font-primary-5x { font-size: var(--font-primary-5x); line-height: var(--lh-primary-5x); }
+.font-primary-4x { font-size: var(--font-primary-4x); line-height: var(--lh-primary-4x); }
+
+/* Primary, Subhead optical size, uppercase, 18px to 32px */
+.font-primary-3x, .font-primary-2x,
+.font-primary-1x, .font-primary-lg {
+  font-family: var(--face-subhead);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: var(--ls-subhead);
+}
+.font-primary-3x { font-size: var(--font-primary-3x); line-height: var(--lh-primary-3x); }
+.font-primary-2x { font-size: var(--font-primary-2x); line-height: var(--lh-primary-2x); }
+.font-primary-1x { font-size: var(--font-primary-1x); line-height: var(--lh-primary-1x); }
+.font-primary-lg { font-size: var(--font-primary-lg); line-height: var(--lh-primary-lg); }
+
+/* Primary, Regular optical size, 15px to 17px band plus 18px base */
+.font-primary-base {
+  font-family: var(--face-regular); font-weight: 400;
+  font-size: var(--font-primary-base); line-height: var(--lh-primary-base);
+  letter-spacing: var(--ls-text);
+}
+.font-primary-sm {
+  font-family: var(--face-regular); font-weight: 400;
+  font-size: var(--font-primary-sm); line-height: var(--lh-primary-sm);
+  letter-spacing: var(--ls-text);
+}
+/* Primary, Caption optical size, 14px and below */
+.font-primary-xs {
+  font-family: var(--face-caption); font-weight: 400;
+  font-size: var(--font-primary-xs); line-height: var(--lh-primary-xs);
+  letter-spacing: var(--ls-text);
+}
+
+/* Secondary, Inter 400 */
+.font-sec-base {
+  font-family: var(--face-sec); font-weight: 400;
+  font-size: var(--font-sec-base); line-height: var(--lh-sec-base);
+}
+.font-sec-sm {
+  font-family: var(--face-sec); font-weight: 400;
+  font-size: var(--font-sec-sm); line-height: var(--lh-sec-sm);
+}
+.font-sec-xs {
+  font-family: var(--face-sec); font-weight: 400;
+  font-size: var(--font-sec-xs); line-height: var(--lh-sec-xs);
+  letter-spacing: var(--ls-sec-xs);
+}
+
+/* Button type */
+.font-btn-primary {
+  font-family: var(--face-caption); font-weight: 500;
+  font-size: var(--font-btn-primary); line-height: 1;
+  letter-spacing: var(--ls-btn-primary); text-transform: uppercase;
+}
+.font-btn-secondary {
+  font-family: var(--face-sec); font-weight: 500;
+  font-size: var(--font-btn-secondary); line-height: 1;
+  letter-spacing: var(--ls-btn-secondary);
+}
+
+/* Form type · all Inter */
+.font-form-legend {
+  font-family: var(--face-sec); font-weight: 500;
+  font-size: var(--font-sec-base); line-height: 1.4;
+}
+.font-form-label {
+  font-family: var(--face-sec); font-weight: 500;
+  font-size: var(--font-sec-sm); line-height: 1.4; letter-spacing: 0.01em;
+}
+.font-form-input,
+.font-form-placeholder {
+  font-family: var(--face-sec); font-weight: 400;
+  font-size: var(--font-sec-base); line-height: 1.4;
+}
+.font-form-helper {
+  font-family: var(--face-sec); font-weight: 400;
+  font-size: var(--font-sec-sm); line-height: 1.5;
+}
+.font-form-error {
+  font-family: var(--face-sec); font-weight: 500;
+  font-size: var(--font-sec-sm); line-height: 1.5;
+}
+.font-form-optional {
+  font-family: var(--face-sec); font-weight: 400;
+  font-size: var(--font-sec-xs); line-height: 1.4;
+  letter-spacing: 0.08em; text-transform: uppercase;
+}
+
+/* ============================================================
+   DOCUMENT
+   ============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+/* Long tokens, hex values and font URLs break rather than push the page
+   wider than the viewport. No overflow-x guard is used, because it would
+   turn the root into a scroll container and break the sticky headers. */
+.face-css, .family-tag, .spec-facts { overflow-wrap: anywhere; }
+
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--face-regular);
+  font-size: var(--font-primary-base);
+  line-height: var(--lh-primary-base);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Faint warm grain so the ground is not a flat fill */
+body::before {
+  content: "";
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  opacity: 0.5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+}
+
+.wrap { position: relative; z-index: 1; max-width: 1240px; margin: 0 auto; padding: 0 40px; }
+@media (max-width: 767px) { .wrap { padding: 0 20px; } }
+
+/* ---- Masthead ------------------------------------------- */
+
+.masthead { padding: 96px 0 64px; border-bottom: 1px solid var(--rule); }
+@media (max-width: 767px) { .masthead { padding: 56px 0 40px; } }
+
+.eyebrow-row {
+  display: flex; justify-content: space-between; align-items: baseline;
+  gap: 24px; flex-wrap: wrap; margin-bottom: 56px;
+}
+.internal-flag {
+  font-family: var(--face-caption); font-weight: 500;
+  font-size: 14px; letter-spacing: 0.084em; text-transform: uppercase;
+  color: var(--secondary-90);
+}
+.doc-meta { color: var(--muted); }
+
+.masthead h1 { margin: 0; }
+.masthead .lede {
+  margin: 32px 0 0; max-width: 62ch; color: var(--neutral-100);
+}
+
+/* ---- Sections ------------------------------------------- */
+
+section { padding: 88px 0; border-bottom: 1px solid var(--rule); }
+@media (max-width: 767px) { section { padding: 56px 0; } }
+
+.sec-head { display: flex; gap: 28px; align-items: baseline; margin-bottom: 48px; }
+.sec-num {
+  font-family: var(--face-display); font-size: 22px; line-height: 1;
+  color: var(--tan-60); flex: none; font-variant-numeric: lining-nums;
+}
+.sec-head h2 { margin: 0; }
+.sec-note { max-width: 68ch; color: var(--muted); margin: -24px 0 44px 50px; }
+@media (max-width: 767px) { .sec-note { margin-left: 0; } }
+
+h3 {
+  margin: 56px 0 20px;
+  font-family: var(--face-subhead); font-weight: 400;
+  font-size: var(--font-primary-lg); line-height: var(--lh-primary-lg);
+  letter-spacing: var(--ls-subhead); text-transform: uppercase;
+}
+h3:first-of-type { margin-top: 0; }
+
+/* ---- Breakpoint indicator ------------------------------- */
+
+.bp-live {
+  position: sticky; top: 0; z-index: 20;
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 16px; padding: 10px 40px;
+  background: var(--primary-100); color: var(--primary-30);
+  font-family: var(--face-sec); font-weight: 500;
+  font-size: 11px; letter-spacing: 0.09em; text-transform: uppercase;
+}
+@media (max-width: 767px) { .bp-live { padding: 10px 20px; } }
+.bp-live b { color: var(--tan-40); font-weight: 500; }
+.bp-d, .bp-t, .bp-m { display: none; }
+@media (min-width: 1024px) { .bp-d { display: inline; } }
+@media (min-width: 768px) and (max-width: 1023px) { .bp-t { display: inline; } }
+@media (max-width: 767px) { .bp-m { display: inline; } }
+
+/* ---- Specimen rows -------------------------------------- */
+
+.spec {
+  display: grid; grid-template-columns: 210px 1fr; gap: 32px;
+  padding: 34px 0; border-top: 1px solid var(--rule-faint);
+  align-items: start;
+}
+.spec:last-child { border-bottom: 1px solid var(--rule-faint); }
+@media (max-width: 767px) {
+  .spec { grid-template-columns: 1fr; gap: 14px; padding: 26px 0; }
+}
+
+.spec-key { position: sticky; top: 56px; }
+.token {
+  font-family: var(--face-sec); font-weight: 500; font-size: 13px;
+  color: var(--primary-90); word-break: break-all;
+}
+.spec-facts {
+  margin: 8px 0 0; font-family: var(--face-sec); font-weight: 400;
+  font-size: 11px; line-height: 1.85; color: var(--muted);
+  letter-spacing: 0.01em;
+}
+.spec-facts .k { color: var(--neutral-60); }
+.sizes { display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
+.size-chip {
+  font-family: var(--face-sec); font-weight: 500; font-size: 10px;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 4px 7px; border: 1px solid var(--rule);
+  color: var(--neutral-80); white-space: nowrap;
+}
+.size-chip.on { background: var(--primary-100); border-color: var(--primary-100); color: var(--tan-30); }
+.size-chip i { font-style: normal; color: var(--neutral-60); }
+.size-chip.on i { color: var(--primary-50); }
+
+.spec-render { min-width: 0; overflow-wrap: anywhere; }
+
+/* Highlight the live chip per breakpoint */
+@media (max-width: 1023px) {
+  .size-chip.on { background: transparent; border-color: var(--rule); color: var(--neutral-80); }
+  .size-chip.on i { color: var(--neutral-60); }
+  .size-chip.chip-t { background: var(--primary-100); border-color: var(--primary-100); color: var(--tan-30); }
+  .size-chip.chip-t i { color: var(--primary-50); }
+}
+@media (max-width: 767px) {
+  .size-chip.chip-t { background: transparent; border-color: var(--rule); color: var(--neutral-80); }
+  .size-chip.chip-t i { color: var(--neutral-60); }
+  .size-chip.chip-m { background: var(--primary-100); border-color: var(--primary-100); color: var(--tan-30); }
+  .size-chip.chip-m i { color: var(--primary-50); }
+}
+
+/* ---- Typeface cards ------------------------------------- */
+
+/* Hairlines are drawn per card, not by gap bleed, so a short final row
+   leaves ground colour rather than a slab of rule colour. */
+.faces {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(216px, 1fr));
+  gap: 0; background: var(--ground);
+  border-top: 1px solid var(--rule); border-left: 1px solid var(--rule);
+}
+.face-card {
+  padding: 30px 24px 26px;
+  border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+}
+.face-card .glyphs { font-size: 52px; line-height: 1.1; margin-bottom: 22px; color: var(--primary-100); }
+.face-name { font-family: var(--face-sec); font-weight: 500; font-size: 13px; letter-spacing: 0.02em; }
+.face-css { font-family: var(--face-sec); font-weight: 400; font-size: 11px; color: var(--muted); margin-top: 6px; line-height: 1.7; }
+.face-use { font-family: var(--face-sec); font-weight: 400; font-size: 12px; color: var(--neutral-90); margin-top: 14px; line-height: 1.6; }
+
+/* ---- Callout -------------------------------------------- */
+
+.callout {
+  border-left: 3px solid var(--orange-70);
+  background: var(--orange-20);
+  padding: 20px 24px; margin: 28px 0;
+}
+.callout-title {
+  font-family: var(--face-sec); font-weight: 500; font-size: 11px;
+  letter-spacing: 0.09em; text-transform: uppercase; color: var(--orange-90);
+  margin-bottom: 8px;
+}
+.callout p {
+  margin: 0; font-family: var(--face-sec); font-weight: 400; font-size: 14px;
+  line-height: 1.65; color: var(--neutral-100); overflow-wrap: anywhere;
+}
+.callout p + p { margin-top: 10px; }
+.callout code {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12.5px;
+  background: var(--orange-30); padding: 1px 5px; overflow-wrap: anywhere;
+}
+
+.callout.note { border-left-color: var(--primary-70); background: var(--primary-20); }
+.callout.note .callout-title { color: var(--primary-90); }
+.callout.note code { background: var(--primary-30); }
+
+/* ---- Buttons -------------------------------------------- */
+
+.btn-row { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; margin-bottom: 8px; }
+.btn {
+  border: 1px solid transparent; cursor: pointer;
+  padding: 17px 34px; transition: background .25s ease, color .25s ease, border-color .25s ease;
+}
+.btn-primary { background: var(--primary-100); color: var(--tan-20); }
+.btn-primary:hover { background: var(--primary-90); }
+.btn-secondary { background: transparent; color: var(--primary-100); border-color: var(--primary-100); padding: 17px 30px; }
+.btn-secondary:hover { background: var(--primary-100); color: var(--tan-20); }
+
+/* ---- Form demo ------------------------------------------ */
+
+.form-demo { max-width: 460px; margin-top: 8px; }
+.field { margin-bottom: 26px; }
+.field-label-row { display: flex; align-items: baseline; gap: 10px; margin-bottom: 8px; }
+.field label { color: var(--primary-100); }
+.optional { color: var(--neutral-60); }
+.field input, .field select, .field textarea {
+  width: 100%; padding: 13px 15px;
+  border: 1px solid var(--neutral-40); background: var(--white);
+  color: var(--primary-100); border-radius: 0;
+  font-family: var(--face-sec); font-weight: 400; font-size: var(--font-sec-base); line-height: 1.4;
+}
+.field input:focus, .field select:focus, .field textarea:focus {
+  outline: 2px solid var(--primary-70); outline-offset: 1px; border-color: var(--primary-100);
+}
+.field input::placeholder, .field textarea::placeholder { color: var(--neutral-60); }
+.helper { color: var(--neutral-80); margin-top: 7px; }
+.error-msg { color: var(--secondary-90); margin-top: 7px; }
+.field.is-error input { border-color: var(--secondary-80); }
+
+/* ---- Color ---------------------------------------------- */
+
+.families { display: flex; flex-direction: column; gap: 46px; }
+.family-name {
+  display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap;
+  margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--rule);
+}
+.family-name h3 { margin: 0; }
+.family-tag {
+  font-family: var(--face-sec); font-weight: 400; font-size: 11px;
+  letter-spacing: 0.05em; text-transform: uppercase; color: var(--neutral-70);
+}
+.ramp { display: grid; grid-template-columns: repeat(11, 1fr); gap: 1px; }
+@media (max-width: 1023px) { .ramp { grid-template-columns: repeat(6, 1fr); gap: 2px; } }
+@media (max-width: 560px)  { .ramp { grid-template-columns: repeat(3, 1fr); gap: 2px; } }
+
+.swatch {
+  border: none; padding: 0; cursor: pointer; text-align: left;
+  display: flex; flex-direction: column; background: none; font: inherit;
+}
+.chip { height: 82px; width: 100%; position: relative; }
+.chip.brand::after {
+  content: ""; position: absolute; inset: 6px;
+  border: 1px solid rgba(255,255,255,0.55);
+}
+.chip.dark-mark.brand::after { border-color: rgba(255,255,255,0.5); }
+.swatch-meta { display: block; padding: 9px 2px 0; }
+.step {
+  display: block;
+  font-family: var(--face-sec); font-weight: 500; font-size: 11px;
+  letter-spacing: 0.04em; color: var(--primary-100);
+}
+.step .brand-dot { color: var(--orange-80); }
+.hex {
+  display: block;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 10.5px;
+  color: var(--neutral-70); margin-top: 3px; text-transform: uppercase;
+}
+.swatch:hover .hex { color: var(--primary-90); }
+.swatch.copied .hex { color: var(--green-90); }
+.swatch.copied .hex::after { content: " copied"; }
+
+/* ---- Token export --------------------------------------- */
+
+.tabs { display: flex; gap: 0; border-bottom: 1px solid var(--rule); margin-bottom: 0; }
+.tab {
+  border: none; background: none; cursor: pointer; padding: 12px 22px;
+  font-family: var(--face-sec); font-weight: 500; font-size: 12px;
+  letter-spacing: 0.06em; text-transform: uppercase; color: var(--neutral-70);
+  border-bottom: 2px solid transparent; margin-bottom: -1px;
+}
+.tab[aria-selected="true"] { color: var(--primary-100); border-bottom-color: var(--primary-100); }
+
+.code-wrap { position: relative; background: var(--primary-110); }
+.code-wrap pre {
+  margin: 0; padding: 28px 26px; overflow-x: auto; max-height: 520px;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 12px; line-height: 1.75; color: var(--tan-40);
+  tab-size: 2;
+}
+.copy-code {
+  position: absolute; top: 14px; right: 14px;
+  border: 1px solid var(--primary-80); background: var(--primary-100); color: var(--tan-30);
+  cursor: pointer; padding: 7px 13px;
+  font-family: var(--face-sec); font-weight: 500; font-size: 10px;
+  letter-spacing: 0.08em; text-transform: uppercase;
+}
+.copy-code:hover { background: var(--primary-90); }
+[hidden] { display: none !important; }
+
+/* ---- Footer --------------------------------------------- */
+
+footer { padding: 56px 0 88px; color: var(--muted); }
+footer p { margin: 0 0 8px; }
+
+/* ---- Print ---------------------------------------------- */
+@media print {
+  .bp-live, .copy-code, .tabs { display: none; }
+  section { break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+
+<div class="bp-live">
+  <span>Signature Society · Type + Color</span>
+  <span>
+    Active scale:
+    <b class="bp-d">Desktop · 1024px and up</b>
+    <b class="bp-t">Tablet · 768&ndash;1023px</b>
+    <b class="bp-m">Mobile · below 768px</b>
+  </span>
+</div>
+
+<div class="wrap">
+
+  <!-- ==================== MASTHEAD ==================== -->
+  <header class="masthead">
+    <div class="eyebrow-row">
+      <span class="internal-flag">Internal use only</span>
+      <span class="doc-meta font-sec-sm">Version 1.0 · August 2026</span>
+    </div>
+    <h1 class="font-primary-7x">Signature<br>Society</h1>
+    <p class="lede font-primary-base">
+      Brand guidelines covering the typographic system and the colour system. Every
+      specimen on this page is rendered in the live token it documents, so what you
+      see is what ships. Resize the window to watch the responsive scale change.
+    </p>
+  </header>
+
+  <!-- ==================== 01 TYPEFACES ==================== -->
+  <section id="typefaces">
+    <div class="sec-head">
+      <span class="sec-num">01</span>
+      <h2 class="font-primary-3x">Typefaces</h2>
+    </div>
+    <p class="sec-note font-sec-base">
+      Kepler Std carries the brand voice and is used at four optical sizes. Choosing
+      the optical size by point size is not optional: it is what keeps the letterforms
+      correct at scale. Inter is the secondary face, used for interface copy, forms
+      and the secondary button.
+    </p>
+
+    <div class="faces">
+      <div class="face-card">
+        <div class="glyphs" style="font-family:var(--face-display); text-transform:uppercase; letter-spacing:-0.01em;">Aa</div>
+        <div class="face-name">Kepler Std Display</div>
+        <div class="face-css">font-family: "kepler-std-display"<br>weight 400 · roman and italic</div>
+        <div class="face-use">Headings 32px and above. Always uppercase.</div>
+      </div>
+      <div class="face-card">
+        <div class="glyphs" style="font-family:var(--face-subhead); text-transform:uppercase; letter-spacing:0.01em;">Aa</div>
+        <div class="face-name">Kepler Std Subhead</div>
+        <div class="face-css">font-family: "kepler-std-subhead"<br>weight 400 · roman and italic</div>
+        <div class="face-use">Headings 18px to 32px. Always uppercase.</div>
+      </div>
+      <div class="face-card">
+        <div class="glyphs" style="font-family:var(--face-regular);">Aa</div>
+        <div class="face-name">Kepler Std Regular</div>
+        <div class="face-css">font-family: "kepler-std"<br>weight 300 and 400 · roman and italic</div>
+        <div class="face-use">Primary body copy. 15px to 18px.</div>
+      </div>
+      <div class="face-card">
+        <div class="glyphs" style="font-family:var(--face-caption);">Aa</div>
+        <div class="face-name">Kepler Std Caption</div>
+        <div class="face-css">font-family: "kepler-std-caption"<br>weight 400 published · 500 pending</div>
+        <div class="face-use">14px and below, plus the primary button.</div>
+      </div>
+      <div class="face-card">
+        <div class="glyphs" style="font-family:var(--face-sec); font-weight:400;">Aa</div>
+        <div class="face-name">Inter</div>
+        <div class="face-css">font-family: "Inter"<br>weight 400 and 500</div>
+        <div class="face-use">Secondary body, forms, secondary button.</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-title">Font loading · two stylesheets</div>
+      <p>Kepler Std comes from the Adobe kit <code>hqq5dii</code>. Inter is loaded from Google Fonts
+         because the Adobe kit publishes <code>inter-18pt</code> at weight 400 only, and the system
+         needs a real weight 500 for the secondary button and form labels.</p>
+      <p><code>&lt;link rel="stylesheet" href="https://use.typekit.net/hqq5dii.css"&gt;</code><br>
+         <code>&lt;link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&amp;display=swap"&gt;</code></p>
+    </div>
+
+    <div class="callout">
+      <div class="callout-title">Action required · Kepler Std Medium Caption</div>
+      <p>The primary button is specified as <code>kepler-std-caption</code> at weight 500. That face is
+         not yet published in kit <code>hqq5dii</code>, which currently carries Caption at weight 400 only.
+         Until it is added in Adobe Fonts the browser will synthesise the weight, which is not the
+         real Medium Caption drawing. Add it to the kit before launch.</p>
+    </div>
+  </section>
+
+  <!-- ==================== 02 PRIMARY SCALE ==================== -->
+  <section id="primary-scale">
+    <div class="sec-head">
+      <span class="sec-num">02</span>
+      <h2 class="font-primary-3x">Primary type scale</h2>
+    </div>
+    <p class="sec-note font-sec-base">
+      Kepler Std. Base 18px, ratio 1.2, ten steps above the base and two below.
+      Sizes are rounded to whole pixels. The base holds at 18px across every
+      breakpoint, and steps 3x and below are identical on desktop, tablet and
+      mobile, so body copy never shifts. Only the Display steps, 4x through 9x,
+      step down on smaller screens. The highlighted chip is the value in force
+      at your current window width.
+    </p>
+
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">font-primary-9x</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> Kepler Std Display<br>
+          <span class="k">Case</span> Uppercase<br>
+          <span class="k">Line height</span> 1.0<br>
+          <span class="k">Tracking</span> &minus;0.01em
+        </div>
+        <div class="sizes">
+          <span class="size-chip on"><i>D</i> 111</span>
+          <span class="size-chip chip-t"><i>T</i> 86</span>
+          <span class="size-chip chip-m"><i>M</i> 65</span>
+        </div>
+      </div>
+      <div class="spec-render"><div class="font-primary-9x">Ritual</div></div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">font-primary-8x</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> Kepler Std Display<br>
+          <span class="k">Case</span> Uppercase<br>
+          <span class="k">Line height</span> 1.02<br>
+          <span class="k">Tracking</span> &minus;0.01em
+        </div>
+        <div class="sizes">
+          <span class="size-chip on"><i>D</i> 93</span>
+          <span class="size-chip chip-t"><i>T</i> 74</span>
+          <span class="size-chip chip-m"><i>M</i> 60</span>
+        </div>
+      </div>
+      <div class="spec-render"><div class="font-primary-8x">Rare form</div></div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">font-primary-7x</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> Kepler Std Display<br>
+          <span class="k">Case</span> Uppercase<br>
+          <span class="k">Line height</span> 1.05<br>
+          <span class="k">Tracking</span> &minus;0.01em
+        </div>
+        <div class="sizes">
+          <span class="size-chip on"><i>D</i> 77</span>
+          <span class="size-chip chip-t"><i>T</i> 65</span>
+          <span class="size-chip chip-m"><i>M</i> 54</span>
+        </div>
+      </div>
+      <div class="spec-render"><div class="font-primary-7x">The quiet luxury</div></div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">font-primary-6x</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> Kepler Std Display<br>
+          <span class="k">Case</span> Uppercase<br>
+          <span class="k">Line height</span> 1.06<br>
+          <span class="k">Tracking</span> &minus;0.01em
+        </div>
+        <div class="sizes">
+          <span class="size-chip on"><i>D</i> 64</span>
+          <span class="size-chip chip-t"><i>T</i> 56</span>
+          <span class="size-chip chip-m"><i>M</i> 49</span>
+        </div>
+      </div>
+      <div class="spec-render"><div class="font-primary-6x">Considered by hand</div></div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">font-primary-5x</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> Kepler Std Display<br>
+          <span class="k">Case</span> Uppercase<br>
+          <span class="k">Line height</span> 1.08<br>
+          <span class="k">Tracking</span> &minus;0.01em
+        </div>
+        <div class="sizes">
+          <span class="size-chip on"><i>D</i> 54</span>
+          <span class="size-chip chip-t"><i>T</i> 49</span>
+          <span class="size-chip chip-m"><i>M</i> 45</span>
+        </div>
+      </div>
+      <div class="spec-render"><div class="font-primary-5x">A signature is earned</div></div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">font-primary-4x</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> Kepler Std Display<br>
+          <span class="k">Case</span> Uppercase<br>
+          <span class="k">Line height</span> 1.10<br>
+          <span class="k">Tracking</span> &minus;0.01em
+        </div>
+        <div class="sizes">
+          <span class="size-chip on"><i>D</i> 45</span>
+          <span class="size-chip chip-t"><i>T</i> 43</span>
+          <span class="size-chip chip-m"><i>M</i> 41</span>
+        </div>
+      </div>
+      <div class="spec-render"><div class="font-primary-4x">Formulated in small batches</div></div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">font-primary-3x</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> Kepler Std Subhead<br>
+          <span class="k">Case</span> Uppercase<br>
+          <span class="k">Line height</span> 1.12<br>
+          <span class="k">Tracking</span> 0.01em
+        </div>
+        <div class="sizes">
+          <span class="size-chip on"><i>D</i> 37</span>
+          <span class="size-chip chip-t"><i>T</i> 37</span>
+          <span class="size-chip chip-m"><i>M</i> 37</span>
+        </div>
+      </div>
+      <div class="spec-render"><div class="font-primary-3x">The last step below Display</div></div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">font-primary-2x</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> Kepler Std Subhead<br>
+          <span class="k">Case</span> Uppercase<br>
+          <span class="k">Line height</span> 1.18<br>
+          <span class="k">Tracking</span> 0.01em
+        </div>
+        <div class="sizes">
+          <span class="size-chip on"><i>D</i> 31</span>
+          <span class="size-chip chip-t"><i>T</i> 31</span>
+          <span class="size-chip chip-m"><i>M</i> 31</span>
+        </div>
+      </div>
+      <div class="spec-render"><div class="font-primary-2x">Section headings and category titles</div></div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">font-primary-1x</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> Kepler Std Subhead<br>
+          <span class="k">Case</span> Uppercase<br>
+          <span class="k">Line height</span> 1.22<br>
+          <span class="k">Tracking</span> 0.01em
+        </div>
+        <div class="sizes">
+          <span class="size-chip on"><i>D</i> 26</span>
+          <span class="size-chip chip-t"><i>T</i> 26</span>
+          <span class="size-chip chip-m"><i>M</i> 26</span>
+        </div>
+      </div>
+      <div class="spec-render"><div class="font-primary-1x">Product names and card titles</div></div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">font-primary-lg</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> Kepler Std Subhead<br>
+          <span class="k">Case</span> Uppercase<br>
+          <span class="k">Line height</span> 1.30<br>
+          <span class="k">Tracking</span> 0.01em
+        </div>
+        <div class="sizes">
+          <span class="size-chip on"><i>D</i> 22</span>
+          <span class="size-chip chip-t"><i>T</i> 22</span>
+          <span class="size-chip chip-m"><i>M</i> 22</span>
+        </div>
+      </div>
+      <div class="spec-render"><div class="font-primary-lg">The smallest heading step, and the last uppercase one</div></div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">font-primary-base</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> Kepler Std Regular<br>
+          <span class="k">Case</span> Sentence<br>
+          <span class="k">Line height</span> 1.60<br>
+          <span class="k">Tracking</span> 0
+        </div>
+        <div class="sizes">
+          <span class="size-chip on"><i>D</i> 18</span>
+          <span class="size-chip chip-t"><i>T</i> 18</span>
+          <span class="size-chip chip-m"><i>M</i> 18</span>
+        </div>
+      </div>
+      <div class="spec-render">
+        <p class="font-primary-base" style="margin:0; max-width:60ch;">
+          The primary body style. Every long-form passage on the site is set here:
+          product stories, ingredient notes, the journal. Eighteen pixels of Kepler
+          Std Regular reads warm and unhurried, which is the point.
+        </p>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">font-primary-sm</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> Kepler Std Regular<br>
+          <span class="k">Case</span> Sentence<br>
+          <span class="k">Line height</span> 1.55<br>
+          <span class="k">Tracking</span> 0
+        </div>
+        <div class="sizes">
+          <span class="size-chip on"><i>D</i> 15</span>
+          <span class="size-chip chip-t"><i>T</i> 15</span>
+          <span class="size-chip chip-m"><i>M</i> 15</span>
+        </div>
+      </div>
+      <div class="spec-render">
+        <p class="font-primary-sm" style="margin:0; max-width:64ch;">
+          One step below the base. Fifteen pixels sits inside the Regular optical
+          size band of 15px to 17px, so it stays in Kepler Std Regular rather than
+          dropping to Caption. Use it for supporting copy and secondary detail.
+        </p>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">font-primary-xs</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> Kepler Std Caption<br>
+          <span class="k">Case</span> Sentence<br>
+          <span class="k">Line height</span> 1.50<br>
+          <span class="k">Tracking</span> 0
+        </div>
+        <div class="sizes">
+          <span class="size-chip on"><i>D</i> 13</span>
+          <span class="size-chip chip-t"><i>T</i> 13</span>
+          <span class="size-chip chip-m"><i>M</i> 13</span>
+        </div>
+      </div>
+      <div class="spec-render">
+        <p class="font-primary-xs" style="margin:0; max-width:70ch;">
+          Two steps below the base. Thirteen pixels crosses into the Caption optical
+          size, which is drawn with the open counters and sturdier strokes that hold
+          up at small sizes. Captions, footnotes, ingredient lists.
+        </p>
+      </div>
+    </div>
+
+    <div class="callout note">
+      <div class="callout-title">Where the optical size changes</div>
+      <p>The 32px boundary falls cleanly between two steps. <code>font-primary-2x</code> at
+         31px is the largest Subhead, and <code>font-primary-3x</code> at 37px is the smallest
+         Display. No step straddles the boundary, so the rule never needs a judgement call.</p>
+    </div>
+  </section>
+
+  <!-- ==================== 03 SECONDARY SCALE ==================== -->
+  <section id="secondary-scale">
+    <div class="sec-head">
+      <span class="sec-num">03</span>
+      <h2 class="font-primary-3x">Secondary type scale</h2>
+    </div>
+    <p class="sec-note font-sec-base">
+      Inter at weight 400, base 15px. There are no steps above the base: anything
+      larger belongs to Kepler Std. This scale does not change across breakpoints.
+      Use it for interface copy that should recede, and anywhere Kepler would feel
+      too editorial.
+    </p>
+
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">font-sec-base</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> Inter<br>
+          <span class="k">Weight</span> 400<br>
+          <span class="k">Line height</span> 1.60<br>
+          <span class="k">Tracking</span> 0
+        </div>
+        <div class="sizes"><span class="size-chip on"><i>All</i> 15</span></div>
+      </div>
+      <div class="spec-render">
+        <p class="font-sec-base" style="margin:0; max-width:62ch;">
+          The secondary body style. Interface copy, navigation, order summaries,
+          shipping detail and anything else that should stay quiet and legible
+          without carrying the brand voice.
+        </p>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">font-sec-sm</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> Inter<br>
+          <span class="k">Weight</span> 400<br>
+          <span class="k">Line height</span> 1.55<br>
+          <span class="k">Tracking</span> 0
+        </div>
+        <div class="sizes"><span class="size-chip on"><i>All</i> 13</span></div>
+      </div>
+      <div class="spec-render">
+        <p class="font-sec-sm" style="margin:0; max-width:68ch;">
+          Supporting interface text. Helper copy under a field, table cells, metadata,
+          timestamps and inline notes.
+        </p>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">font-sec-xs</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> Inter<br>
+          <span class="k">Weight</span> 400<br>
+          <span class="k">Line height</span> 1.50<br>
+          <span class="k">Tracking</span> 0.04em
+        </div>
+        <div class="sizes"><span class="size-chip on"><i>All</i> 10</span></div>
+      </div>
+      <div class="spec-render">
+        <p class="font-sec-xs" style="margin:0; max-width:80ch;">
+          The floor of the system. Legal lines, disclaimers, optional-field markers
+          and badge text. Extra tracking is applied because ten pixels needs the air.
+          Never set a full sentence of reading copy at this size.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 04 BUTTONS ==================== -->
+  <section id="buttons">
+    <div class="sec-head">
+      <span class="sec-num">04</span>
+      <h2 class="font-primary-3x">Button type</h2>
+    </div>
+    <p class="sec-note font-sec-base">
+      Two button type styles. The primary carries Kepler Std, the secondary carries
+      Inter, and both sit at 14px so a side-by-side pair aligns on the same optical
+      line. Neither changes across breakpoints.
+    </p>
+
+    <div class="btn-row">
+      <button type="button" class="btn btn-primary font-btn-primary">Add to ritual</button>
+      <button type="button" class="btn btn-secondary font-btn-secondary">View details</button>
+    </div>
+
+    <div class="spec" style="margin-top:36px;">
+      <div class="spec-key">
+        <div class="token">font-btn-primary</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> Kepler Std Medium Caption<br>
+          <span class="k">Weight</span> 500<br>
+          <span class="k">Size</span> 14px<br>
+          <span class="k">Tracking</span> 0.084em<br>
+          <span class="k">Case</span> Uppercase<br>
+          <span class="k">Line height</span> 1
+        </div>
+      </div>
+      <div class="spec-render">
+        <div class="font-btn-primary" style="color:var(--primary-100);">Add to ritual · Checkout · Subscribe</div>
+        <p class="font-sec-sm" style="margin:16px 0 0; color:var(--muted); max-width:62ch;">
+          The single most branded piece of interface type. The wide 0.084em tracking is
+          what makes it read as considered rather than generic, so it must not be reduced.
+        </p>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">font-btn-secondary</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> Inter<br>
+          <span class="k">Weight</span> 500<br>
+          <span class="k">Size</span> 14px<br>
+          <span class="k">Tracking</span> 0.02em<br>
+          <span class="k">Case</span> Sentence<br>
+          <span class="k">Line height</span> 1
+        </div>
+      </div>
+      <div class="spec-render">
+        <div class="font-btn-secondary" style="color:var(--primary-100);">View details · Continue shopping · Cancel</div>
+        <p class="font-sec-sm" style="margin:16px 0 0; color:var(--muted); max-width:62ch;">
+          Deliberately plainer than the primary. Sentence case and Inter keep it
+          subordinate, so the primary action never has to compete.
+        </p>
+      </div>
+    </div>
+
+    <div class="callout note">
+      <div class="callout-title">Proposed, not specified</div>
+      <p>The 14px size, 0.02em tracking and sentence case on the secondary button were
+         chosen to pair with the primary. The brief fixed only the face and weight,
+         so these three are open to revision.</p>
+    </div>
+  </section>
+
+  <!-- ==================== 05 FORMS ==================== -->
+  <section id="forms">
+    <div class="sec-head">
+      <span class="sec-num">05</span>
+      <h2 class="font-primary-3x">Form typography</h2>
+    </div>
+    <p class="sec-note font-sec-base">
+      Forms are entirely Inter. Kepler Std is never used inside a form control:
+      checkout is a task, not a place for the brand voice. The form styles are built
+      from the secondary scale and do not change across breakpoints.
+    </p>
+
+    <form class="form-demo" onsubmit="return false;">
+      <div class="field">
+        <div class="field-label-row">
+          <label class="font-form-label" for="demo-email">Email address</label>
+        </div>
+        <input class="font-form-input" id="demo-email" type="email" placeholder="you@example.com">
+        <div class="helper font-form-helper">Order confirmations and shipping updates only.</div>
+      </div>
+
+      <div class="field">
+        <div class="field-label-row">
+          <label class="font-form-label" for="demo-apt">Apartment or suite</label>
+          <span class="optional font-form-optional">Optional</span>
+        </div>
+        <input class="font-form-input" id="demo-apt" type="text" placeholder="Unit 4B">
+      </div>
+
+      <div class="field is-error">
+        <div class="field-label-row">
+          <label class="font-form-label" for="demo-post">Postal code</label>
+        </div>
+        <input class="font-form-input" id="demo-post" type="text" value="0000" aria-invalid="true" aria-describedby="demo-post-err">
+        <div class="error-msg font-form-error" id="demo-post-err">Enter a valid postal code.</div>
+      </div>
+    </form>
+
+    <div class="spec" style="margin-top:44px;">
+      <div class="spec-key"><div class="token">font-form-legend</div></div>
+      <div class="spec-render">
+        <div class="font-form-legend" style="color:var(--primary-100);">Shipping address</div>
+        <p class="font-sec-sm" style="margin:8px 0 0; color:var(--muted);">Inter 500 · 15px · line height 1.4. Fieldset and step headings inside a form.</p>
+      </div>
+    </div>
+    <div class="spec">
+      <div class="spec-key"><div class="token">font-form-label</div></div>
+      <div class="spec-render">
+        <div class="font-form-label" style="color:var(--primary-100);">Email address</div>
+        <p class="font-sec-sm" style="margin:8px 0 0; color:var(--muted);">Inter 500 · 13px · tracking 0.01em. Always visible, never replaced by a placeholder.</p>
+      </div>
+    </div>
+    <div class="spec">
+      <div class="spec-key"><div class="token">font-form-input</div></div>
+      <div class="spec-render">
+        <div class="font-form-input" style="color:var(--primary-100);">you@example.com</div>
+        <p class="font-sec-sm" style="margin:8px 0 0; color:var(--muted);">Inter 400 · 15px. Value text inside inputs, selects and textareas.</p>
+      </div>
+    </div>
+    <div class="spec">
+      <div class="spec-key"><div class="token">font-form-placeholder</div></div>
+      <div class="spec-render">
+        <div class="font-form-placeholder" style="color:var(--neutral-60);">Unit 4B</div>
+        <p class="font-sec-sm" style="margin:8px 0 0; color:var(--muted);">Same size and weight as the input value, set in Neutral/60 so it is clearly not filled in.</p>
+      </div>
+    </div>
+    <div class="spec">
+      <div class="spec-key"><div class="token">font-form-helper</div></div>
+      <div class="spec-render">
+        <div class="font-form-helper" style="color:var(--neutral-80);">Order confirmations and shipping updates only.</div>
+        <p class="font-sec-sm" style="margin:8px 0 0; color:var(--muted);">Inter 400 · 13px · Neutral/80. Sits below the field, before any error.</p>
+      </div>
+    </div>
+    <div class="spec">
+      <div class="spec-key"><div class="token">font-form-error</div></div>
+      <div class="spec-render">
+        <div class="font-form-error" style="color:var(--secondary-90);">Enter a valid postal code.</div>
+        <p class="font-sec-sm" style="margin:8px 0 0; color:var(--muted);">Inter 500 · 13px · Secondary/90. The added weight is what separates it from helper copy.</p>
+      </div>
+    </div>
+    <div class="spec">
+      <div class="spec-key"><div class="token">font-form-optional</div></div>
+      <div class="spec-render">
+        <div class="font-form-optional" style="color:var(--neutral-60);">Optional</div>
+        <p class="font-sec-sm" style="margin:8px 0 0; color:var(--muted);">Inter 400 · 10px · tracking 0.08em · uppercase. Mark optional fields, never required ones.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 06 COLOR ==================== -->
+  <section id="color">
+    <div class="sec-head">
+      <span class="sec-num">06</span>
+      <h2 class="font-primary-3x">Colour system</h2>
+    </div>
+    <p class="sec-note font-sec-base">
+      Six families, eleven steps each, running 110 at the darkest to 10 at the
+      lightest. The brand swatch for every family is the 100 step, marked with an
+      inset rule and a bullet. Click any swatch to copy its hex.
+    </p>
+
+    <div class="families">
+
+      <div class="family">
+        <div class="family-name">
+          <h3>Primary</h3>
+          <span class="family-tag">Brand · Primary/100 · #141A44</span>
+        </div>
+        <div class="ramp" data-family="primary"></div>
+      </div>
+
+      <div class="family">
+        <div class="family-name">
+          <h3>Secondary</h3>
+          <span class="family-tag">Brand · Secondary/100 · #451113 · Figma variable group &ldquo;Red&rdquo;</span>
+        </div>
+        <div class="ramp" data-family="secondary"></div>
+      </div>
+
+      <div class="family">
+        <div class="family-name">
+          <h3>Green</h3>
+          <span class="family-tag">Brand · Green/100 · #16482C</span>
+        </div>
+        <div class="ramp" data-family="green"></div>
+      </div>
+
+      <div class="family">
+        <div class="family-name">
+          <h3>Orange</h3>
+          <span class="family-tag">Brand · Orange/100 · #50270C</span>
+        </div>
+        <div class="ramp" data-family="orange"></div>
+      </div>
+
+      <div class="family">
+        <div class="family-name">
+          <h3>Tan</h3>
+          <span class="family-tag">Brand · Tan/100 · #473F31</span>
+        </div>
+        <div class="ramp" data-family="tan"></div>
+      </div>
+
+      <div class="family">
+        <div class="family-name">
+          <h3>Neutral</h3>
+          <span class="family-tag">Brand · Neutral/100 · #47433B</span>
+        </div>
+        <div class="ramp" data-family="neutral"></div>
+      </div>
+
+    </div>
+
+    <div class="callout">
+      <div class="callout-title">Two inconsistencies carried over from Figma</div>
+      <p>The swatch layers on the <em>Brand Color Scale</em> frame are named 110 through 10, but the
+         underlying Figma variables name the darkest step <code>/150</code>, not <code>/110</code>. This document
+         uses the layer naming, so <code>Green/110</code> here is the variable <code>Green/150</code> in Figma.</p>
+      <p>The Secondary family is named <code>Red</code> in the Figma variable collection. This document uses
+         <code>Secondary</code> throughout, since that is the role it plays in the brand.</p>
+      <p><code>Primary/110</code> and <code>Neutral/110</code> are raw fills on the frame with no variable bound to
+         them. Both need variables created before the scale is complete.</p>
+    </div>
+
+    <div class="callout note">
+      <div class="callout-title">One value outside the scale</div>
+      <p>Pure white, <code>#FFFFFF</code>, exists as <code>color/white</code> in Figma and is kept as a token here.
+         It is not part of any family ramp. Note that it is not the same as <code>Neutral/10</code> (<code>#FEFCF9</code>),
+         which is the warm off-white used as the page ground.</p>
+    </div>
+  </section>
+
+  <!-- ==================== 07 TOKENS ==================== -->
+  <section id="tokens">
+    <div class="sec-head">
+      <span class="sec-num">07</span>
+      <h2 class="font-primary-3x">Token export</h2>
+    </div>
+    <p class="sec-note font-sec-base">
+      The full system, ready to paste. The CSS block is the exact source this page
+      runs on, media queries included.
+    </p>
+
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" aria-selected="true" data-panel="panel-css">CSS custom properties</button>
+      <button class="tab" role="tab" aria-selected="false" data-panel="panel-json">JSON</button>
+    </div>
+
+    <div class="code-wrap">
+      <button class="copy-code" type="button">Copy</button>
+      <pre id="panel-css" role="tabpanel"><code>:root {
+  /* Typefaces */
+  --face-display: "kepler-std-display", Georgia, serif;
+  --face-subhead: "kepler-std-subhead", Georgia, serif;
+  --face-regular: "kepler-std", Georgia, serif;
+  --face-caption: "kepler-std-caption", Georgia, serif;
+  --face-sec:     "Inter", "inter-18pt", sans-serif;
+
+  /* Primary scale: desktop, 1024px and up */
+  --font-primary-9x:   111px;  --lh-primary-9x:   1.00;
+  --font-primary-8x:    93px;  --lh-primary-8x:   1.02;
+  --font-primary-7x:    77px;  --lh-primary-7x:   1.05;
+  --font-primary-6x:    64px;  --lh-primary-6x:   1.06;
+  --font-primary-5x:    54px;  --lh-primary-5x:   1.08;
+  --font-primary-4x:    45px;  --lh-primary-4x:   1.10;
+  --font-primary-3x:    37px;  --lh-primary-3x:   1.12;
+  --font-primary-2x:    31px;  --lh-primary-2x:   1.18;
+  --font-primary-1x:    26px;  --lh-primary-1x:   1.22;
+  --font-primary-lg:    22px;  --lh-primary-lg:   1.30;
+  --font-primary-base:  18px;  --lh-primary-base: 1.60;
+  --font-primary-sm:    15px;  --lh-primary-sm:   1.55;
+  --font-primary-xs:    13px;  --lh-primary-xs:   1.50;
+
+  /* Primary tracking */
+  --ls-display: -0.01em;   /* 4x and up   */
+  --ls-subhead:  0.01em;   /* lg to 3x    */
+  --ls-text:     0;        /* base, sm, xs */
+
+  /* Secondary scale: all breakpoints */
+  --font-sec-base: 15px;  --lh-sec-base: 1.60;
+  --font-sec-sm:   13px;  --lh-sec-sm:   1.55;
+  --font-sec-xs:   10px;  --lh-sec-xs:   1.50;  --ls-sec-xs: 0.04em;
+
+  /* Buttons: all breakpoints */
+  --font-btn-primary:   14px;  --ls-btn-primary:   0.084em;
+  --font-btn-secondary: 14px;  --ls-btn-secondary: 0.02em;
+
+  /* Colour: Primary */
+  --primary-110: #0B0D23;  --primary-100: #141A44;  --primary-90: #282F66;
+  --primary-80:  #424A88;  --primary-70:  #626BAA;  --primary-60: #8991CC;
+  --primary-50:  #B6BDEE;  --primary-40:  #CBD0F7;  --primary-30: #DEE2FF;
+  --primary-20:  #EBEEFF;  --primary-10:  #F9F9FF;
+
+  /* Colour: Secondary */
+  --secondary-110: #25090A;  --secondary-100: #451113;  --secondary-90: #672224;
+  --secondary-80:  #89383B;  --secondary-70:  #AB5356;  --secondary-60: #CD7477;
+  --secondary-50:  #EF9A9D;  --secondary-40:  #FBB6B8;  --secondary-30: #FFCDCE;
+  --secondary-20:  #FFE1E2;  --secondary-10:  #FFF6F6;
+
+  /* Colour: Green */
+  --green-110: #0C2718;  --green-100: #16482C;  --green-90: #2A6A46;
+  --green-80:  #448C63;  --green-70:  #64AE84;  --green-60: #8BD0A9;
+  --green-50:  #B8F2D1;  --green-40:  #CDFBE1;  --green-30: #DDFFEC;
+  --green-20:  #EBFFF4;  --green-10:  #F9FFFB;
+
+  /* Colour: Orange */
+  --orange-110: #2D1606;  --orange-100: #50270C;  --orange-90: #643516;
+  --orange-80:  #864D28;  --orange-70:  #A8693E;  --orange-60: #CA875A;
+  --orange-50:  #ECA87A;  --orange-40:  #FCC39E;  --orange-30: #FFD6BB;
+  --orange-20:  #FFE7D7;  --orange-10:  #FFF7F2;
+
+  /* Colour: Tan */
+  --tan-110: #302B21;  --tan-100: #473F31;  --tan-90: #615644;
+  --tan-80:  #7A6E59;  --tan-70:  #93866E;  --tan-60: #AD9E85;
+  --tan-50:  #C7B79D;  --tan-40:  #E0D0B5;  --tan-30: #FAE9CF;
+  --tan-20:  #FDF4E6;  --tan-10:  #FEFBF6;
+
+  /* Colour: Neutral */
+  --neutral-110: #2F2D27;  --neutral-100: #47433B;  --neutral-90: #5B574D;
+  --neutral-80:  #706B61;  --neutral-70:  #847F74;  --neutral-60: #989389;
+  --neutral-50:  #ADA89E;  --neutral-40:  #C1BDB4;  --neutral-30: #D6D2CA;
+  --neutral-20:  #EAE7E1;  --neutral-10:  #FEFCF9;
+
+  --white: #FFFFFF;
+}
+
+/* TABLET: 768px to 1023px. Display steps only. */
+@media (max-width: 1023px) {
+  :root {
+    --font-primary-9x: 86px;
+    --font-primary-8x: 74px;
+    --font-primary-7x: 65px;
+    --font-primary-6x: 56px;
+    --font-primary-5x: 49px;
+    --font-primary-4x: 43px;
+  }
+}
+
+/* MOBILE: below 768px. Display steps only. */
+@media (max-width: 767px) {
+  :root {
+    --font-primary-9x: 65px;
+    --font-primary-8x: 60px;
+    --font-primary-7x: 54px;
+    --font-primary-6x: 49px;
+    --font-primary-5x: 45px;
+    --font-primary-4x: 41px;
+  }
+}</code></pre>
+
+      <pre id="panel-json" role="tabpanel" hidden><code>{
+  "typeface": {
+    "display": "kepler-std-display",
+    "subhead": "kepler-std-subhead",
+    "regular": "kepler-std",
+    "caption": "kepler-std-caption",
+    "secondary": "Inter"
+  },
+  "typography": {
+    "primary": {
+      "base": 18,
+      "ratio": 1.2,
+      "steps": {
+        "font-primary-9x":   { "desktop": 111, "tablet": 86, "mobile": 65, "lineHeight": 1.00, "face": "display", "case": "uppercase", "tracking": "-0.01em" },
+        "font-primary-8x":   { "desktop":  93, "tablet": 74, "mobile": 60, "lineHeight": 1.02, "face": "display", "case": "uppercase", "tracking": "-0.01em" },
+        "font-primary-7x":   { "desktop":  77, "tablet": 65, "mobile": 54, "lineHeight": 1.05, "face": "display", "case": "uppercase", "tracking": "-0.01em" },
+        "font-primary-6x":   { "desktop":  64, "tablet": 56, "mobile": 49, "lineHeight": 1.06, "face": "display", "case": "uppercase", "tracking": "-0.01em" },
+        "font-primary-5x":   { "desktop":  54, "tablet": 49, "mobile": 45, "lineHeight": 1.08, "face": "display", "case": "uppercase", "tracking": "-0.01em" },
+        "font-primary-4x":   { "desktop":  45, "tablet": 43, "mobile": 41, "lineHeight": 1.10, "face": "display", "case": "uppercase", "tracking": "-0.01em" },
+        "font-primary-3x":   { "desktop":  37, "tablet": 37, "mobile": 37, "lineHeight": 1.12, "face": "subhead", "case": "uppercase", "tracking": "0.01em" },
+        "font-primary-2x":   { "desktop":  31, "tablet": 31, "mobile": 31, "lineHeight": 1.18, "face": "subhead", "case": "uppercase", "tracking": "0.01em" },
+        "font-primary-1x":   { "desktop":  26, "tablet": 26, "mobile": 26, "lineHeight": 1.22, "face": "subhead", "case": "uppercase", "tracking": "0.01em" },
+        "font-primary-lg":   { "desktop":  22, "tablet": 22, "mobile": 22, "lineHeight": 1.30, "face": "subhead", "case": "uppercase", "tracking": "0.01em" },
+        "font-primary-base": { "desktop":  18, "tablet": 18, "mobile": 18, "lineHeight": 1.60, "face": "regular", "case": "sentence", "tracking": "0" },
+        "font-primary-sm":   { "desktop":  15, "tablet": 15, "mobile": 15, "lineHeight": 1.55, "face": "regular", "case": "sentence", "tracking": "0" },
+        "font-primary-xs":   { "desktop":  13, "tablet": 13, "mobile": 13, "lineHeight": 1.50, "face": "caption", "case": "sentence", "tracking": "0" }
+      }
+    },
+    "secondary": {
+      "base": 15,
+      "steps": {
+        "font-sec-base": { "size": 15, "weight": 400, "lineHeight": 1.60, "tracking": "0" },
+        "font-sec-sm":   { "size": 13, "weight": 400, "lineHeight": 1.55, "tracking": "0" },
+        "font-sec-xs":   { "size": 10, "weight": 400, "lineHeight": 1.50, "tracking": "0.04em" }
+      }
+    },
+    "button": {
+      "font-btn-primary":   { "face": "caption",   "weight": 500, "size": 14, "tracking": "0.084em", "case": "uppercase", "lineHeight": 1 },
+      "font-btn-secondary": { "face": "secondary", "weight": 500, "size": 14, "tracking": "0.02em",  "case": "sentence",  "lineHeight": 1 }
+    },
+    "form": {
+      "font-form-legend":      { "face": "secondary", "weight": 500, "size": 15, "lineHeight": 1.4 },
+      "font-form-label":       { "face": "secondary", "weight": 500, "size": 13, "lineHeight": 1.4, "tracking": "0.01em" },
+      "font-form-input":       { "face": "secondary", "weight": 400, "size": 15, "lineHeight": 1.4 },
+      "font-form-placeholder": { "face": "secondary", "weight": 400, "size": 15, "lineHeight": 1.4, "color": "neutral-60" },
+      "font-form-helper":      { "face": "secondary", "weight": 400, "size": 13, "lineHeight": 1.5, "color": "neutral-80" },
+      "font-form-error":       { "face": "secondary", "weight": 500, "size": 13, "lineHeight": 1.5, "color": "secondary-90" },
+      "font-form-optional":    { "face": "secondary", "weight": 400, "size": 10, "lineHeight": 1.4, "tracking": "0.08em", "case": "uppercase", "color": "neutral-60" }
+    }
+  },
+  "breakpoints": { "desktop": "1024px and up", "tablet": "768px to 1023px", "mobile": "below 768px" },
+  "color": {
+    "primary":   { "110": "#0B0D23", "100": "#141A44", "90": "#282F66", "80": "#424A88", "70": "#626BAA", "60": "#8991CC", "50": "#B6BDEE", "40": "#CBD0F7", "30": "#DEE2FF", "20": "#EBEEFF", "10": "#F9F9FF" },
+    "secondary": { "110": "#25090A", "100": "#451113", "90": "#672224", "80": "#89383B", "70": "#AB5356", "60": "#CD7477", "50": "#EF9A9D", "40": "#FBB6B8", "30": "#FFCDCE", "20": "#FFE1E2", "10": "#FFF6F6" },
+    "green":     { "110": "#0C2718", "100": "#16482C", "90": "#2A6A46", "80": "#448C63", "70": "#64AE84", "60": "#8BD0A9", "50": "#B8F2D1", "40": "#CDFBE1", "30": "#DDFFEC", "20": "#EBFFF4", "10": "#F9FFFB" },
+    "orange":    { "110": "#2D1606", "100": "#50270C", "90": "#643516", "80": "#864D28", "70": "#A8693E", "60": "#CA875A", "50": "#ECA87A", "40": "#FCC39E", "30": "#FFD6BB", "20": "#FFE7D7", "10": "#FFF7F2" },
+    "tan":       { "110": "#302B21", "100": "#473F31", "90": "#615644", "80": "#7A6E59", "70": "#93866E", "60": "#AD9E85", "50": "#C7B79D", "40": "#E0D0B5", "30": "#FAE9CF", "20": "#FDF4E6", "10": "#FEFBF6" },
+    "neutral":   { "110": "#2F2D27", "100": "#47433B", "90": "#5B574D", "80": "#706B61", "70": "#847F74", "60": "#989389", "50": "#ADA89E", "40": "#C1BDB4", "30": "#D6D2CA", "20": "#EAE7E1", "10": "#FEFCF9" },
+    "white": "#FFFFFF",
+    "brandStep": "100"
+  }
+}</code></pre>
+    </div>
+  </section>
+
+  <footer>
+    <p class="font-sec-sm">Signature Society · Brand guidelines v1.0 · Internal use only.</p>
+    <p class="font-sec-sm">Colour values sourced from the <em>Brand Color Scale</em> frame in the Signature Society Figma file.</p>
+    <p class="font-sec-sm">Kepler Std served from Adobe Fonts kit hqq5dii. Inter served from Google Fonts.</p>
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  var STEPS = [110, 100, 90, 80, 70, 60, 50, 40, 30, 20, 10];
+
+  // Build every colour ramp from the CSS custom properties, so the swatches
+  // can never drift from the tokens.
+  var root = getComputedStyle(document.documentElement);
+  document.querySelectorAll('.ramp').forEach(function (ramp) {
+    var family = ramp.dataset.family;
+    STEPS.forEach(function (step) {
+      var hex = root.getPropertyValue('--' + family + '-' + step).trim().toUpperCase();
+      var isBrand = step === 100;
+
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'swatch';
+      btn.setAttribute('aria-label',
+        family + '/' + step + ' ' + hex + (isBrand ? ', brand swatch' : '') + '. Click to copy hex.');
+
+      var chip = document.createElement('span');
+      chip.className = 'chip' + (isBrand ? ' brand' : '') + (step >= 70 ? ' dark-mark' : '');
+      chip.style.background = hex;
+
+      var meta = document.createElement('span');
+      meta.className = 'swatch-meta';
+      meta.innerHTML =
+        '<span class="step">' + step + (isBrand ? ' <span class="brand-dot">&bull;</span>' : '') + '</span>' +
+        '<span class="hex">' + hex + '</span>';
+
+      btn.appendChild(chip);
+      btn.appendChild(meta);
+
+      btn.addEventListener('click', function () {
+        copy(hex, function () {
+          btn.classList.add('copied');
+          setTimeout(function () { btn.classList.remove('copied'); }, 1200);
+        });
+      });
+
+      ramp.appendChild(btn);
+    });
+  });
+
+  // Token export tabs
+  var tabs = document.querySelectorAll('.tab');
+  tabs.forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      tabs.forEach(function (t) {
+        var on = t === tab;
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+        document.getElementById(t.dataset.panel).hidden = !on;
+      });
+    });
+  });
+
+  // Copy the visible code panel
+  var copyBtn = document.querySelector('.copy-code');
+  copyBtn.addEventListener('click', function () {
+    var open = document.querySelector('.code-wrap pre:not([hidden]) code');
+    copy(open.textContent, function () {
+      copyBtn.textContent = 'Copied';
+      setTimeout(function () { copyBtn.textContent = 'Copy'; }, 1400);
+    });
+  });
+
+  function copy(text, done) {
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).then(done, function () { fallback(text, done); });
+    } else {
+      fallback(text, done);
+    }
+  }
+
+  function fallback(text, done) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); done(); } catch (e) { /* no clipboard available */ }
+    document.body.removeChild(ta);
+  }
+})();
+</script>
+
+</body>
+</html>
