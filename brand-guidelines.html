@@ -353,13 +353,10 @@ section { padding: 88px 0; border-bottom: 1px solid var(--rule); }
 @media (max-width: 767px) { section { padding: 56px 0; } }
 
 .sec-head { display: flex; gap: 28px; align-items: baseline; margin-bottom: 48px; }
-.sec-num {
-  font-family: var(--face-display); font-size: 22px; line-height: 1;
-  color: var(--tan-60); flex: none; font-variant-numeric: lining-nums;
-}
 .sec-head h2 { margin: 0; }
-.sec-note { max-width: 68ch; color: var(--muted); margin: -24px 0 44px 50px; }
-@media (max-width: 767px) { .sec-note { margin-left: 0; } }
+/* Flush left with the heading. The old left indent cleared the section
+   numeral, which is no longer in the markup. */
+.sec-note { max-width: 68ch; color: var(--muted); margin: -24px 0 44px; }
 
 h3 {
   margin: 56px 0 20px;
@@ -408,7 +405,7 @@ h3:first-of-type { margin-top: 0; }
   font-size: 11px; line-height: 1.85; color: var(--muted);
   letter-spacing: 0.01em;
 }
-.spec-facts .k { color: var(--neutral-60); }
+.spec-facts .k { color: var(--neutral-60); font-size: 13px; }
 .sizes { display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
 .size-chip {
   font-family: var(--face-sec); font-weight: 500; font-size: 10px;
@@ -626,7 +623,6 @@ footer p { margin: 0 0 8px; }
   <!-- ==================== 01 TYPEFACES ==================== -->
   <section id="typefaces">
     <div class="sec-head">
-      <span class="sec-num">01</span>
       <h2 class="font-primary-3x">Typefaces</h2>
     </div>
     <p class="sec-note font-sec-base">
@@ -669,6 +665,9 @@ footer p { margin: 0 0 8px; }
       </div>
     </div>
 
+    <!-- HIDDEN FOR NOW. Both callouts below are intact and unedited.
+         Delete this comment wrapper to bring them back.
+
     <div class="callout">
       <div class="callout-title">Font loading · two stylesheets</div>
       <p>Kepler Std comes from the Adobe kit <code>hqq5dii</code>. Inter is loaded from Google Fonts
@@ -685,14 +684,17 @@ footer p { margin: 0 0 8px; }
          Until it is added in Adobe Fonts the browser will synthesise the weight, which is not the
          real Medium Caption drawing. Add it to the kit before launch.</p>
     </div>
+
+    -->
   </section>
 
   <!-- ==================== 02 PRIMARY SCALE ==================== -->
   <section id="primary-scale">
     <div class="sec-head">
-      <span class="sec-num">02</span>
       <h2 class="font-primary-3x">Primary type scale</h2>
     </div>
+    <!-- HIDDEN FOR NOW. Intact and unedited; delete this wrapper to restore.
+
     <p class="sec-note font-sec-base">
       Kepler Std. Base 18px, ratio 1.2, ten steps above the base and two below.
       Sizes are rounded to whole pixels. The base holds at 18px across every
@@ -701,6 +703,8 @@ footer p { margin: 0 0 8px; }
       step down on smaller screens. The highlighted chip is the value in force
       at your current window width.
     </p>
+
+    -->
 
     <div class="spec">
       <div class="spec-key">
@@ -965,7 +969,6 @@ footer p { margin: 0 0 8px; }
   <!-- ==================== 03 SECONDARY SCALE ==================== -->
   <section id="secondary-scale">
     <div class="sec-head">
-      <span class="sec-num">03</span>
       <h2 class="font-primary-3x">Secondary type scale</h2>
     </div>
     <p class="sec-note font-sec-base">
@@ -1038,7 +1041,6 @@ footer p { margin: 0 0 8px; }
   <!-- ==================== 04 BUTTONS ==================== -->
   <section id="buttons">
     <div class="sec-head">
-      <span class="sec-num">04</span>
       <h2 class="font-primary-3x">Button type</h2>
     </div>
     <p class="sec-note font-sec-base">
@@ -1105,7 +1107,6 @@ footer p { margin: 0 0 8px; }
   <!-- ==================== 05 FORMS ==================== -->
   <section id="forms">
     <div class="sec-head">
-      <span class="sec-num">05</span>
       <h2 class="font-primary-3x">Form typography</h2>
     </div>
     <p class="sec-note font-sec-base">
@@ -1194,7 +1195,6 @@ footer p { margin: 0 0 8px; }
   <!-- ==================== 06 COLOR ==================== -->
   <section id="color">
     <div class="sec-head">
-      <span class="sec-num">06</span>
       <h2 class="font-primary-3x">Colour system</h2>
     </div>
     <p class="sec-note font-sec-base">
@@ -1277,7 +1277,6 @@ footer p { margin: 0 0 8px; }
   <!-- ==================== 07 TOKENS ==================== -->
   <section id="tokens">
     <div class="sec-head">
-      <span class="sec-num">07</span>
       <h2 class="font-primary-3x">Token export</h2>
     </div>
     <p class="sec-note font-sec-base">
