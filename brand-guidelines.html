@@ -287,7 +287,7 @@
   font-family: var(--face-sec); font-weight: 500;
   font-size: var(--font-sec-sm); line-height: 1.5;
 }
-.font-form-optional {
+.font-form-tag {
   font-family: var(--face-sec); font-weight: 400;
   font-size: var(--font-sec-xs); line-height: 1.4;
   letter-spacing: 0.08em; text-transform: uppercase;
@@ -495,7 +495,10 @@ h3:first-of-type { margin-top: 0; }
 .field { margin-bottom: 26px; }
 .field-label-row { display: flex; align-items: baseline; gap: 10px; margin-bottom: 8px; }
 .field label { color: var(--primary-100); }
-.optional { color: var(--neutral-60); }
+/* Overrides the uppercase in .font-form-tag for this instance only.
+   Equal specificity, so source order decides and this rule must stay after
+   the text style classes. */
+.optional { color: var(--neutral-60); text-transform: none; }
 .field input, .field select, .field textarea {
   width: 100%; padding: 13px 15px;
   border: 1px solid var(--neutral-40); background: var(--white);
@@ -708,8 +711,9 @@ footer p { margin: 0 0 8px; }
 
     <div class="spec">
       <div class="spec-key">
-        <div class="token">font-primary-9x</div>
+        <div class="token">9x</div>
         <div class="spec-facts">
+          <span class="k">CSS</span> font-primary-9x<br>
           <span class="k">Face</span> Kepler Std Display<br>
           <span class="k">Case</span> Uppercase<br>
           <span class="k">Line height</span> 1.0<br>
@@ -726,8 +730,9 @@ footer p { margin: 0 0 8px; }
 
     <div class="spec">
       <div class="spec-key">
-        <div class="token">font-primary-8x</div>
+        <div class="token">8x</div>
         <div class="spec-facts">
+          <span class="k">CSS</span> font-primary-8x<br>
           <span class="k">Face</span> Kepler Std Display<br>
           <span class="k">Case</span> Uppercase<br>
           <span class="k">Line height</span> 1.02<br>
@@ -744,8 +749,9 @@ footer p { margin: 0 0 8px; }
 
     <div class="spec">
       <div class="spec-key">
-        <div class="token">font-primary-7x</div>
+        <div class="token">7x</div>
         <div class="spec-facts">
+          <span class="k">CSS</span> font-primary-7x<br>
           <span class="k">Face</span> Kepler Std Display<br>
           <span class="k">Case</span> Uppercase<br>
           <span class="k">Line height</span> 1.05<br>
@@ -762,8 +768,9 @@ footer p { margin: 0 0 8px; }
 
     <div class="spec">
       <div class="spec-key">
-        <div class="token">font-primary-6x</div>
+        <div class="token">6x</div>
         <div class="spec-facts">
+          <span class="k">CSS</span> font-primary-6x<br>
           <span class="k">Face</span> Kepler Std Display<br>
           <span class="k">Case</span> Uppercase<br>
           <span class="k">Line height</span> 1.06<br>
@@ -780,8 +787,9 @@ footer p { margin: 0 0 8px; }
 
     <div class="spec">
       <div class="spec-key">
-        <div class="token">font-primary-5x</div>
+        <div class="token">5x</div>
         <div class="spec-facts">
+          <span class="k">CSS</span> font-primary-5x<br>
           <span class="k">Face</span> Kepler Std Display<br>
           <span class="k">Case</span> Uppercase<br>
           <span class="k">Line height</span> 1.08<br>
@@ -798,8 +806,9 @@ footer p { margin: 0 0 8px; }
 
     <div class="spec">
       <div class="spec-key">
-        <div class="token">font-primary-4x</div>
+        <div class="token">4x</div>
         <div class="spec-facts">
+          <span class="k">CSS</span> font-primary-4x<br>
           <span class="k">Face</span> Kepler Std Display<br>
           <span class="k">Case</span> Uppercase<br>
           <span class="k">Line height</span> 1.10<br>
@@ -816,8 +825,9 @@ footer p { margin: 0 0 8px; }
 
     <div class="spec">
       <div class="spec-key">
-        <div class="token">font-primary-3x</div>
+        <div class="token">3x</div>
         <div class="spec-facts">
+          <span class="k">CSS</span> font-primary-3x<br>
           <span class="k">Face</span> Kepler Std Subhead<br>
           <span class="k">Case</span> Uppercase<br>
           <span class="k">Line height</span> 1.12<br>
@@ -834,8 +844,9 @@ footer p { margin: 0 0 8px; }
 
     <div class="spec">
       <div class="spec-key">
-        <div class="token">font-primary-2x</div>
+        <div class="token">2x</div>
         <div class="spec-facts">
+          <span class="k">CSS</span> font-primary-2x<br>
           <span class="k">Face</span> Kepler Std Subhead<br>
           <span class="k">Case</span> Uppercase<br>
           <span class="k">Line height</span> 1.18<br>
@@ -852,8 +863,9 @@ footer p { margin: 0 0 8px; }
 
     <div class="spec">
       <div class="spec-key">
-        <div class="token">font-primary-1x</div>
+        <div class="token">1x</div>
         <div class="spec-facts">
+          <span class="k">CSS</span> font-primary-1x<br>
           <span class="k">Face</span> Kepler Std Subhead<br>
           <span class="k">Case</span> Uppercase<br>
           <span class="k">Line height</span> 1.22<br>
@@ -870,8 +882,9 @@ footer p { margin: 0 0 8px; }
 
     <div class="spec">
       <div class="spec-key">
-        <div class="token">font-primary-lg</div>
+        <div class="token">lg</div>
         <div class="spec-facts">
+          <span class="k">CSS</span> font-primary-lg<br>
           <span class="k">Face</span> Kepler Std Subhead<br>
           <span class="k">Case</span> Uppercase<br>
           <span class="k">Line height</span> 1.30<br>
@@ -888,8 +901,9 @@ footer p { margin: 0 0 8px; }
 
     <div class="spec">
       <div class="spec-key">
-        <div class="token">font-primary-base</div>
+        <div class="token">base</div>
         <div class="spec-facts">
+          <span class="k">CSS</span> font-primary-base<br>
           <span class="k">Face</span> Kepler Std Regular<br>
           <span class="k">Case</span> Sentence<br>
           <span class="k">Line height</span> 1.60<br>
@@ -912,8 +926,9 @@ footer p { margin: 0 0 8px; }
 
     <div class="spec">
       <div class="spec-key">
-        <div class="token">font-primary-sm</div>
+        <div class="token">sm</div>
         <div class="spec-facts">
+          <span class="k">CSS</span> font-primary-sm<br>
           <span class="k">Face</span> Kepler Std Regular<br>
           <span class="k">Case</span> Sentence<br>
           <span class="k">Line height</span> 1.55<br>
@@ -936,8 +951,9 @@ footer p { margin: 0 0 8px; }
 
     <div class="spec">
       <div class="spec-key">
-        <div class="token">font-primary-xs</div>
+        <div class="token">xs</div>
         <div class="spec-facts">
+          <span class="k">CSS</span> font-primary-xs<br>
           <span class="k">Face</span> Kepler Std Caption<br>
           <span class="k">Case</span> Sentence<br>
           <span class="k">Line height</span> 1.50<br>
@@ -958,12 +974,16 @@ footer p { margin: 0 0 8px; }
       </div>
     </div>
 
+    <!-- HIDDEN FOR NOW. Intact and unedited; delete this wrapper to restore.
+
     <div class="callout note">
       <div class="callout-title">Where the optical size changes</div>
       <p>The 32px boundary falls cleanly between two steps. <code>font-primary-2x</code> at
          31px is the largest Subhead, and <code>font-primary-3x</code> at 37px is the smallest
          Display. No step straddles the boundary, so the rule never needs a judgement call.</p>
     </div>
+
+    -->
   </section>
 
   <!-- ==================== 03 SECONDARY SCALE ==================== -->
@@ -980,8 +1000,9 @@ footer p { margin: 0 0 8px; }
 
     <div class="spec">
       <div class="spec-key">
-        <div class="token">font-sec-base</div>
+        <div class="token">base</div>
         <div class="spec-facts">
+          <span class="k">CSS</span> font-sec-base<br>
           <span class="k">Face</span> Inter<br>
           <span class="k">Weight</span> 400<br>
           <span class="k">Line height</span> 1.60<br>
@@ -1000,8 +1021,9 @@ footer p { margin: 0 0 8px; }
 
     <div class="spec">
       <div class="spec-key">
-        <div class="token">font-sec-sm</div>
+        <div class="token">sm</div>
         <div class="spec-facts">
+          <span class="k">CSS</span> font-sec-sm<br>
           <span class="k">Face</span> Inter<br>
           <span class="k">Weight</span> 400<br>
           <span class="k">Line height</span> 1.55<br>
@@ -1019,8 +1041,9 @@ footer p { margin: 0 0 8px; }
 
     <div class="spec">
       <div class="spec-key">
-        <div class="token">font-sec-xs</div>
+        <div class="token">xs</div>
         <div class="spec-facts">
+          <span class="k">CSS</span> font-sec-xs<br>
           <span class="k">Face</span> Inter<br>
           <span class="k">Weight</span> 400<br>
           <span class="k">Line height</span> 1.50<br>
@@ -1096,12 +1119,16 @@ footer p { margin: 0 0 8px; }
       </div>
     </div>
 
+    <!-- HIDDEN FOR NOW. Intact and unedited; delete this wrapper to restore.
+
     <div class="callout note">
       <div class="callout-title">Proposed, not specified</div>
       <p>The 14px size, 0.02em tracking and sentence case on the secondary button were
          chosen to pair with the primary. The brief fixed only the face and weight,
          so these three are open to revision.</p>
     </div>
+
+    -->
   </section>
 
   <!-- ==================== 05 FORMS ==================== -->
@@ -1127,7 +1154,7 @@ footer p { margin: 0 0 8px; }
       <div class="field">
         <div class="field-label-row">
           <label class="font-form-label" for="demo-apt">Apartment or suite</label>
-          <span class="optional font-form-optional">Optional</span>
+          <span class="optional font-form-tag">Optional</span>
         </div>
         <input class="font-form-input" id="demo-apt" type="text" placeholder="Unit 4B">
       </div>
@@ -1184,9 +1211,9 @@ footer p { margin: 0 0 8px; }
       </div>
     </div>
     <div class="spec">
-      <div class="spec-key"><div class="token">font-form-optional</div></div>
+      <div class="spec-key"><div class="token">font-form-tag</div></div>
       <div class="spec-render">
-        <div class="font-form-optional" style="color:var(--neutral-60);">Optional</div>
+        <div class="font-form-tag" style="color:var(--neutral-60);">Optional</div>
         <p class="font-sec-sm" style="margin:8px 0 0; color:var(--muted);">Inter 400 · 10px · tracking 0.08em · uppercase. Mark optional fields, never required ones.</p>
       </div>
     </div>
@@ -1266,12 +1293,16 @@ footer p { margin: 0 0 8px; }
          them. Both need variables created before the scale is complete.</p>
     </div>
 
+    <!-- HIDDEN FOR NOW. Intact and unedited; delete this wrapper to restore.
+
     <div class="callout note">
       <div class="callout-title">One value outside the scale</div>
       <p>Pure white, <code>#FFFFFF</code>, exists as <code>color/white</code> in Figma and is kept as a token here.
          It is not part of any family ramp. Note that it is not the same as <code>Neutral/10</code> (<code>#FEFCF9</code>),
          which is the warm off-white used as the page ground.</p>
     </div>
+
+    -->
   </section>
 
   <!-- ==================== 07 TOKENS ==================== -->
@@ -1438,7 +1469,7 @@ footer p { margin: 0 0 8px; }
       "font-form-placeholder": { "face": "secondary", "weight": 400, "size": 15, "lineHeight": 1.4, "color": "neutral-60" },
       "font-form-helper":      { "face": "secondary", "weight": 400, "size": 13, "lineHeight": 1.5, "color": "neutral-80" },
       "font-form-error":       { "face": "secondary", "weight": 500, "size": 13, "lineHeight": 1.5, "color": "secondary-90" },
-      "font-form-optional":    { "face": "secondary", "weight": 400, "size": 10, "lineHeight": 1.4, "tracking": "0.08em", "case": "uppercase", "color": "neutral-60" }
+      "font-form-tag":         { "face": "secondary", "weight": 400, "size": 10, "lineHeight": 1.4, "tracking": "0.08em", "case": "uppercase", "color": "neutral-60" }
     }
   },
   "breakpoints": { "desktop": "1024px and up", "tablet": "768px to 1023px", "mobile": "below 768px" },
