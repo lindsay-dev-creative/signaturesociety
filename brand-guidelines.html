@@ -314,38 +314,10 @@ body::before {
 
 /* ---- Medium parts (Digital / Print) ----------------------
    The document is split by output medium. Everything from Typefaces
-   through Form typography specifies type for screen. A Print part will
-   sit alongside it later, which is why this is a reusable pattern and
-   not a one-off banner. Color sits outside both, since the ramps are
-   the same values whatever they are output on. */
-
-.medium-open {
-  background: var(--primary-900); color: var(--tan-200);
-  padding: 40px; margin: 88px 0 0;
-  display: flex; align-items: baseline; gap: 28px; flex-wrap: wrap;
-}
-@media (max-width: 767px) { .medium-open { padding: 28px 22px; margin-top: 56px; gap: 12px; } }
-.medium-open h2 {
-  margin: 0; color: var(--white);
-  font-family: var(--face-display); font-weight: 400;
-  font-size: var(--font-primary-4x); line-height: 1;
-  text-transform: uppercase; letter-spacing: var(--ls-display);
-}
-.medium-open p {
-  margin: 0; flex: 1 1 320px; max-width: 56ch;
-  font-family: var(--face-sec); font-weight: 400;
-  font-size: var(--font-sec-sm); line-height: 1.6; color: var(--primary-300);
-}
-.medium-open p b { color: var(--tan-200); font-weight: 400; }
-
-/* Repeated beside every section heading inside the part, so the medium
-   is legible no matter where the reader lands. */
-.medium-tag {
-  flex: none; align-self: center;
-  padding: 4px 9px; border: 1px solid var(--primary-300); background: var(--primary-100);
-  font-family: var(--face-sec); font-weight: 500; font-size: 10px;
-  letter-spacing: 0.09em; text-transform: uppercase; color: var(--primary-800);
-}
+   through Form typography specifies type for screen; Color sits outside,
+   since the ramps are the same values whatever they are output on. Only
+   the closing marker remains: the opening band and the per-section tags
+   were removed. */
 
 .medium-close {
   display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
@@ -357,10 +329,6 @@ body::before {
 /* The closing rule replaces the last section's hairline rather than
    stacking a 2px rule directly on top of a 1px one. */
 section:has(+ .medium-close) { border-bottom: none; }
-
-/* The part opens with its own band, so the section beneath it does not
-   also need its top gap. */
-.medium-open + section { padding-top: 64px; }
 
 /* ---- Sections ------------------------------------------- */
 
@@ -625,16 +593,6 @@ footer p { margin: 0 0 8px; }
 @media print {
   .bp-live, .copy-code, .tabs { display: none; }
   section { break-inside: avoid; }
-  /* The part bands must survive on paper: browsers drop backgrounds by
-     default, so the Digital band is redrawn as a ruled block. */
-  .medium-open {
-    background: none; color: var(--ink);
-    border-top: 3px solid var(--ink); border-bottom: 1px solid var(--ink);
-    padding: 20px 0; break-after: avoid;
-  }
-  .medium-open h2 { color: var(--ink); }
-  .medium-open p, .medium-open p b { color: var(--ink); }
-  .medium-tag { background: none; }
 }
 </style>
 </head>
@@ -667,20 +625,13 @@ footer p { margin: 0 0 8px; }
   </header>
 
   <!-- ============ PART: DIGITAL ============
-       Opens here and closes after Form typography. -->
-  <div class="medium-open" id="digital">
-    <h2>Digital</h2>
-    <p>Everything from <b>Typefaces</b> through <b>Form typography</b> specifies type for
-       screen: the responsive scale, the pixel sizes and the interface styles.
-       <b>Print</b> will follow as its own part. Where the two differ, the part a spec
-       sits in is what governs it.</p>
-  </div>
+       Runs from here to the closing marker after Form typography. The
+       part is carried by the tag beside each section heading. -->
 
   <!-- ==================== 01 TYPEFACES ==================== -->
   <section id="typefaces">
     <div class="sec-head">
       <h2 class="font-primary-3x">Typefaces</h2>
-      <span class="medium-tag">Digital</span>
     </div>
     <p class="sec-note font-sec-base">
       Kepler Std carries the brand voice and is used at four optical sizes. Choosing
@@ -749,7 +700,6 @@ footer p { margin: 0 0 8px; }
   <section id="primary-scale">
     <div class="sec-head">
       <h2 class="font-primary-3x">Primary type scale</h2>
-      <span class="medium-tag">Digital</span>
     </div>
     <!-- HIDDEN FOR NOW. Intact and unedited; delete this wrapper to restore.
 
@@ -1045,7 +995,6 @@ footer p { margin: 0 0 8px; }
   <section id="secondary-scale">
     <div class="sec-head">
       <h2 class="font-primary-3x">Secondary type scale</h2>
-      <span class="medium-tag">Digital</span>
     </div>
     <p class="sec-note font-sec-base">
       Inter at weight 400, base 15px. There are no steps above the base: anything
@@ -1121,7 +1070,6 @@ footer p { margin: 0 0 8px; }
   <section id="buttons">
     <div class="sec-head">
       <h2 class="font-primary-3x">Button type</h2>
-      <span class="medium-tag">Digital</span>
     </div>
     <p class="sec-note font-sec-base">
       Two button type styles. The primary carries Kepler Std, the secondary carries
@@ -1192,7 +1140,6 @@ footer p { margin: 0 0 8px; }
   <section id="forms">
     <div class="sec-head">
       <h2 class="font-primary-3x">Form typography</h2>
-      <span class="medium-tag">Digital</span>
     </div>
     <p class="sec-note font-sec-base">
       Forms are entirely Inter. Kepler Std is never used inside a form control:
