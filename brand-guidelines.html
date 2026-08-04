@@ -265,19 +265,23 @@
   letter-spacing: var(--ls-btn-secondary);
 }
 
-/* Form type · all Inter */
+/* Form type · all Inter.
+   Label and input are both 15px. Because they now match in size, the
+   legend is separated by case and tracking rather than by size, and the
+   label is separated from the input value by weight alone. */
 .font-form-legend {
   font-family: var(--face-sec); font-weight: 500;
   font-size: var(--font-sec-base); line-height: 1.4;
+  letter-spacing: 0.06em; text-transform: uppercase;
 }
 .font-form-label {
   font-family: var(--face-sec); font-weight: 500;
-  font-size: var(--font-sec-sm); line-height: 1.4; letter-spacing: 0.01em;
+  font-size: var(--font-sec-base); line-height: 1.45;
 }
 .font-form-input,
 .font-form-placeholder {
   font-family: var(--face-sec); font-weight: 400;
-  font-size: var(--font-sec-base); line-height: 1.4;
+  font-size: var(--font-sec-base); line-height: 1.5;
 }
 .font-form-helper {
   font-family: var(--face-sec); font-weight: 400;
@@ -436,7 +440,7 @@ h3:first-of-type { margin-top: 0; }
 /* ---- Typeface cards ------------------------------------- */
 
 /* Hairlines are drawn per card, not by gap bleed, so a short final row
-   leaves ground colour rather than a slab of rule colour. */
+   leaves ground color rather than a slab of rule color. */
 .faces {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(216px, 1fr));
   gap: 0; background: var(--ground);
@@ -491,26 +495,39 @@ h3:first-of-type { margin-top: 0; }
 
 /* ---- Form demo ------------------------------------------ */
 
-.form-demo { max-width: 460px; margin-top: 8px; }
+.form-demo { max-width: 460px; margin-top: 8px; border: 0; padding: 0; }
+.form-demo legend { padding: 0; margin-bottom: 22px; color: var(--primary-100); }
+
 .field { margin-bottom: 26px; }
-.field-label-row { display: flex; align-items: baseline; gap: 10px; margin-bottom: 8px; }
+.field-label-row { display: flex; align-items: baseline; gap: 10px; margin-bottom: 6px; }
 .field label { color: var(--primary-100); }
+
 /* Overrides the uppercase in .font-form-tag for this instance only.
    Equal specificity, so source order decides and this rule must stay after
    the text style classes. */
 .optional { color: var(--neutral-60); text-transform: none; }
+
+/* Hint sits between the label and the control, so it is read before the
+   field is filled in rather than after. */
+.helper { color: var(--neutral-80); margin-bottom: 8px; }
+
+/* Controls do not inherit font by default, so the family, size and weight
+   are all restated. min-height keeps the touch target at 44px. */
 .field input, .field select, .field textarea {
-  width: 100%; padding: 13px 15px;
+  width: 100%; padding: 12px 15px; min-height: 44px;
   border: 1px solid var(--neutral-40); background: var(--white);
   color: var(--primary-100); border-radius: 0;
-  font-family: var(--face-sec); font-weight: 400; font-size: var(--font-sec-base); line-height: 1.4;
+  font-family: var(--face-sec); font-weight: 400;
+  font-size: var(--font-sec-base); line-height: 1.5;
 }
-.field input:focus, .field select:focus, .field textarea:focus {
+.field input:focus-visible, .field select:focus-visible, .field textarea:focus-visible {
   outline: 2px solid var(--primary-70); outline-offset: 1px; border-color: var(--primary-100);
 }
 .field input::placeholder, .field textarea::placeholder { color: var(--neutral-60); }
-.helper { color: var(--neutral-80); margin-top: 7px; }
+
+/* Error is marked by weight, color and a glyph, never by color alone. */
 .error-msg { color: var(--secondary-90); margin-top: 7px; }
+.error-msg::before { content: "! "; font-weight: 500; }
 .field.is-error input { border-color: var(--secondary-80); }
 
 /* ---- Color ---------------------------------------------- */
@@ -534,11 +551,14 @@ h3:first-of-type { margin-top: 0; }
   display: flex; flex-direction: column; background: none; font: inherit;
 }
 .chip { height: 82px; width: 100%; position: relative; }
+/* The brand step carries an inset rule. Which step that is varies by
+   family, so the rule has to read on dark and light chips alike: .on-light
+   is set from the chip's own luminance when the ramp is built. */
 .chip.brand::after {
   content: ""; position: absolute; inset: 6px;
   border: 1px solid rgba(255,255,255,0.55);
 }
-.chip.dark-mark.brand::after { border-color: rgba(255,255,255,0.5); }
+.chip.brand.on-light::after { border-color: rgba(0,0,0,0.42); }
 .swatch-meta { display: block; padding: 9px 2px 0; }
 .step {
   display: block;
@@ -617,7 +637,7 @@ footer p { margin: 0 0 8px; }
     </div>
     <h1 class="font-primary-7x">Signature<br>Society</h1>
     <p class="lede font-primary-base">
-      Brand guidelines covering the typographic system and the colour system. Every
+      Brand guidelines covering the typographic system and the color system. Every
       specimen on this page is rendered in the live token it documents, so what you
       see is what ships. Resize the window to watch the responsive scale change.
     </p>
@@ -1142,79 +1162,194 @@ footer p { margin: 0 0 8px; }
       from the secondary scale and do not change across breakpoints.
     </p>
 
-    <form class="form-demo" onsubmit="return false;">
-      <div class="field">
-        <div class="field-label-row">
-          <label class="font-form-label" for="demo-email">Email address</label>
-        </div>
-        <input class="font-form-input" id="demo-email" type="email" placeholder="you@example.com">
-        <div class="helper font-form-helper">Order confirmations and shipping updates only.</div>
-      </div>
+    <form onsubmit="return false;">
+      <fieldset class="form-demo">
+        <legend class="font-form-legend">Shipping address</legend>
 
-      <div class="field">
-        <div class="field-label-row">
-          <label class="font-form-label" for="demo-apt">Apartment or suite</label>
-          <span class="optional font-form-tag">Optional</span>
+        <div class="field">
+          <div class="field-label-row">
+            <label class="font-form-label" for="demo-email">Email address</label>
+          </div>
+          <div class="helper font-form-helper" id="demo-email-hint">Order confirmations and shipping updates only.</div>
+          <input class="font-form-input" id="demo-email" name="email" type="email"
+                 autocomplete="email" aria-describedby="demo-email-hint" placeholder="you@example.com">
         </div>
-        <input class="font-form-input" id="demo-apt" type="text" placeholder="Unit 4B">
-      </div>
 
-      <div class="field is-error">
-        <div class="field-label-row">
-          <label class="font-form-label" for="demo-post">Postal code</label>
+        <div class="field">
+          <div class="field-label-row">
+            <label class="font-form-label" for="demo-apt">Apartment or suite</label>
+            <span class="optional font-form-tag">Optional</span>
+          </div>
+          <input class="font-form-input" id="demo-apt" name="address2" type="text"
+                 autocomplete="address-line2" placeholder="Unit 4B">
         </div>
-        <input class="font-form-input" id="demo-post" type="text" value="0000" aria-invalid="true" aria-describedby="demo-post-err">
-        <div class="error-msg font-form-error" id="demo-post-err">Enter a valid postal code.</div>
-      </div>
+
+        <div class="field is-error">
+          <div class="field-label-row">
+            <label class="font-form-label" for="demo-post">Postal code</label>
+          </div>
+          <input class="font-form-input" id="demo-post" name="postal-code" type="text"
+                 autocomplete="postal-code" inputmode="numeric" value="0000"
+                 aria-invalid="true" aria-describedby="demo-post-err">
+          <div class="error-msg font-form-error" id="demo-post-err">Enter a valid postal code.</div>
+        </div>
+      </fieldset>
     </form>
 
     <div class="spec" style="margin-top:44px;">
-      <div class="spec-key"><div class="token">font-form-legend</div></div>
+      <div class="spec-key">
+        <div class="token">legend</div>
+        <div class="spec-facts">
+          <span class="k">CSS</span> font-form-legend<br>
+          <span class="k">Face</span> Inter<br>
+          <span class="k">Weight</span> 500<br>
+          <span class="k">Size</span> 15px<br>
+          <span class="k">Line height</span> 1.4<br>
+          <span class="k">Tracking</span> 0.06em<br>
+          <span class="k">Case</span> Uppercase
+        </div>
+      </div>
       <div class="spec-render">
         <div class="font-form-legend" style="color:var(--primary-100);">Shipping address</div>
-        <p class="font-sec-sm" style="margin:8px 0 0; color:var(--muted);">Inter 500 · 15px · line height 1.4. Fieldset and step headings inside a form.</p>
+        <p class="font-sec-sm" style="margin:12px 0 0; color:var(--muted); max-width:62ch;">
+          Fieldset and step headings. It matches the label in size and weight, so case
+          and tracking are what separate them. Use a real <code>&lt;legend&gt;</code> inside a
+          <code>&lt;fieldset&gt;</code> so the grouping is announced, not just drawn.
+        </p>
       </div>
     </div>
+
     <div class="spec">
-      <div class="spec-key"><div class="token">font-form-label</div></div>
+      <div class="spec-key">
+        <div class="token">label</div>
+        <div class="spec-facts">
+          <span class="k">CSS</span> font-form-label<br>
+          <span class="k">Face</span> Inter<br>
+          <span class="k">Weight</span> 500<br>
+          <span class="k">Size</span> 15px<br>
+          <span class="k">Line height</span> 1.45<br>
+          <span class="k">Case</span> Sentence
+        </div>
+      </div>
       <div class="spec-render">
         <div class="font-form-label" style="color:var(--primary-100);">Email address</div>
-        <p class="font-sec-sm" style="margin:8px 0 0; color:var(--muted);">Inter 500 · 13px · tracking 0.01em. Always visible, never replaced by a placeholder.</p>
+        <p class="font-sec-sm" style="margin:12px 0 0; color:var(--muted); max-width:62ch;">
+          Always visible, above the control, never replaced by a placeholder and never
+          collapsed into one. Matches the input at 15px so the pair reads as one unit;
+          weight alone separates the question from the answer. Every label needs a
+          <code>for</code> pointing at the control&rsquo;s <code>id</code>.
+        </p>
       </div>
     </div>
+
     <div class="spec">
-      <div class="spec-key"><div class="token">font-form-input</div></div>
+      <div class="spec-key">
+        <div class="token">input</div>
+        <div class="spec-facts">
+          <span class="k">CSS</span> font-form-input<br>
+          <span class="k">Face</span> Inter<br>
+          <span class="k">Weight</span> 400<br>
+          <span class="k">Size</span> 15px<br>
+          <span class="k">Line height</span> 1.5<br>
+          <span class="k">Case</span> Sentence
+        </div>
+      </div>
       <div class="spec-render">
         <div class="font-form-input" style="color:var(--primary-100);">you@example.com</div>
-        <p class="font-sec-sm" style="margin:8px 0 0; color:var(--muted);">Inter 400 · 15px. Value text inside inputs, selects and textareas.</p>
+        <p class="font-sec-sm" style="margin:12px 0 0; color:var(--muted); max-width:62ch;">
+          Value text in inputs, selects and textareas. Controls do not inherit type from
+          the page, so the family, size and weight have to be restated on the element.
+          Pair with a minimum 44px control height for the touch target.
+        </p>
       </div>
     </div>
+
     <div class="spec">
-      <div class="spec-key"><div class="token">font-form-placeholder</div></div>
+      <div class="spec-key">
+        <div class="token">placeholder</div>
+        <div class="spec-facts">
+          <span class="k">CSS</span> font-form-placeholder<br>
+          <span class="k">Face</span> Inter<br>
+          <span class="k">Weight</span> 400<br>
+          <span class="k">Size</span> 15px<br>
+          <span class="k">Line height</span> 1.5<br>
+          <span class="k">Color</span> Neutral/60
+        </div>
+      </div>
       <div class="spec-render">
         <div class="font-form-placeholder" style="color:var(--neutral-60);">Unit 4B</div>
-        <p class="font-sec-sm" style="margin:8px 0 0; color:var(--muted);">Same size and weight as the input value, set in Neutral/60 so it is clearly not filled in.</p>
+        <p class="font-sec-sm" style="margin:12px 0 0; color:var(--muted); max-width:62ch;">
+          Same size and weight as the value, lightened to Neutral/60 so an empty field is
+          obviously empty. It is an example of the format, never the label and never the
+          hint, because it disappears the moment typing starts.
+        </p>
       </div>
     </div>
+
     <div class="spec">
-      <div class="spec-key"><div class="token">font-form-helper</div></div>
+      <div class="spec-key">
+        <div class="token">helper</div>
+        <div class="spec-facts">
+          <span class="k">CSS</span> font-form-helper<br>
+          <span class="k">Face</span> Inter<br>
+          <span class="k">Weight</span> 400<br>
+          <span class="k">Size</span> 13px<br>
+          <span class="k">Line height</span> 1.5<br>
+          <span class="k">Color</span> Neutral/80
+        </div>
+      </div>
       <div class="spec-render">
         <div class="font-form-helper" style="color:var(--neutral-80);">Order confirmations and shipping updates only.</div>
-        <p class="font-sec-sm" style="margin:8px 0 0; color:var(--muted);">Inter 400 · 13px · Neutral/80. Sits below the field, before any error.</p>
+        <p class="font-sec-sm" style="margin:12px 0 0; color:var(--muted); max-width:62ch;">
+          Sits between the label and the control, so it is read before the field is filled
+          in rather than after it is got wrong. Wire it up with <code>aria-describedby</code>.
+        </p>
       </div>
     </div>
+
     <div class="spec">
-      <div class="spec-key"><div class="token">font-form-error</div></div>
+      <div class="spec-key">
+        <div class="token">error</div>
+        <div class="spec-facts">
+          <span class="k">CSS</span> font-form-error<br>
+          <span class="k">Face</span> Inter<br>
+          <span class="k">Weight</span> 500<br>
+          <span class="k">Size</span> 13px<br>
+          <span class="k">Line height</span> 1.5<br>
+          <span class="k">Color</span> Secondary/90
+        </div>
+      </div>
       <div class="spec-render">
         <div class="font-form-error" style="color:var(--secondary-90);">Enter a valid postal code.</div>
-        <p class="font-sec-sm" style="margin:8px 0 0; color:var(--muted);">Inter 500 · 13px · Secondary/90. The added weight is what separates it from helper copy.</p>
+        <p class="font-sec-sm" style="margin:12px 0 0; color:var(--muted); max-width:62ch;">
+          Below the control. Weight, color and a leading glyph all carry the message, so it
+          survives for anyone who cannot separate Secondary/90 from Neutral/80. Say what to
+          do, not that something is invalid. Set <code>aria-invalid</code> and point
+          <code>aria-describedby</code> at it.
+        </p>
       </div>
     </div>
+
     <div class="spec">
-      <div class="spec-key"><div class="token">font-form-tag</div></div>
+      <div class="spec-key">
+        <div class="token">tag</div>
+        <div class="spec-facts">
+          <span class="k">CSS</span> font-form-tag<br>
+          <span class="k">Face</span> Inter<br>
+          <span class="k">Weight</span> 400<br>
+          <span class="k">Size</span> 10px<br>
+          <span class="k">Line height</span> 1.4<br>
+          <span class="k">Tracking</span> 0.08em<br>
+          <span class="k">Case</span> Uppercase
+        </div>
+      </div>
       <div class="spec-render">
         <div class="font-form-tag" style="color:var(--neutral-60);">Optional</div>
-        <p class="font-sec-sm" style="margin:8px 0 0; color:var(--muted);">Inter 400 · 10px · tracking 0.08em · uppercase. Mark optional fields, never required ones.</p>
+        <p class="font-sec-sm" style="margin:12px 0 0; color:var(--muted); max-width:62ch;">
+          Sits beside the label. Mark what is optional rather than starring what is
+          required: on most forms it is the shorter list and it reads as an invitation
+          rather than a demand.
+        </p>
       </div>
     </div>
   </section>
@@ -1222,12 +1357,14 @@ footer p { margin: 0 0 8px; }
   <!-- ==================== 06 COLOR ==================== -->
   <section id="color">
     <div class="sec-head">
-      <h2 class="font-primary-3x">Colour system</h2>
+      <h2 class="font-primary-3x">Color system</h2>
     </div>
     <p class="sec-note font-sec-base">
       Six families, eleven steps each, running 110 at the darkest to 10 at the
-      lightest. The brand swatch for every family is the 100 step, marked with an
-      inset rule and a bullet. Click any swatch to copy its hex.
+      lightest. The brand swatch is marked with an inset rule and a bullet, and it
+      is not the same step in every family: 100 for Primary, Secondary, Green and
+      Orange, 60 for Tan, 20 for Neutral. Each family heading names its own.
+      Click any swatch to copy its hex.
     </p>
 
     <div class="families">
@@ -1235,7 +1372,7 @@ footer p { margin: 0 0 8px; }
       <div class="family">
         <div class="family-name">
           <h3>Primary</h3>
-          <span class="family-tag">Brand · Primary/100 · #141A44</span>
+          <span class="family-tag"><span class="brand-ref" data-family="primary"></span></span>
         </div>
         <div class="ramp" data-family="primary"></div>
       </div>
@@ -1243,7 +1380,7 @@ footer p { margin: 0 0 8px; }
       <div class="family">
         <div class="family-name">
           <h3>Secondary</h3>
-          <span class="family-tag">Brand · Secondary/100 · #451113 · Figma variable group &ldquo;Red&rdquo;</span>
+          <span class="family-tag"><span class="brand-ref" data-family="secondary"></span> · Figma variable group &ldquo;Red&rdquo;</span>
         </div>
         <div class="ramp" data-family="secondary"></div>
       </div>
@@ -1251,7 +1388,7 @@ footer p { margin: 0 0 8px; }
       <div class="family">
         <div class="family-name">
           <h3>Green</h3>
-          <span class="family-tag">Brand · Green/100 · #16482C</span>
+          <span class="family-tag"><span class="brand-ref" data-family="green"></span></span>
         </div>
         <div class="ramp" data-family="green"></div>
       </div>
@@ -1259,7 +1396,7 @@ footer p { margin: 0 0 8px; }
       <div class="family">
         <div class="family-name">
           <h3>Orange</h3>
-          <span class="family-tag">Brand · Orange/100 · #50270C</span>
+          <span class="family-tag"><span class="brand-ref" data-family="orange"></span></span>
         </div>
         <div class="ramp" data-family="orange"></div>
       </div>
@@ -1267,7 +1404,7 @@ footer p { margin: 0 0 8px; }
       <div class="family">
         <div class="family-name">
           <h3>Tan</h3>
-          <span class="family-tag">Brand · Tan/100 · #473F31</span>
+          <span class="family-tag"><span class="brand-ref" data-family="tan"></span></span>
         </div>
         <div class="ramp" data-family="tan"></div>
       </div>
@@ -1275,7 +1412,7 @@ footer p { margin: 0 0 8px; }
       <div class="family">
         <div class="family-name">
           <h3>Neutral</h3>
-          <span class="family-tag">Brand · Neutral/100 · #47433B</span>
+          <span class="family-tag"><span class="brand-ref" data-family="neutral"></span></span>
         </div>
         <div class="ramp" data-family="neutral"></div>
       </div>
@@ -1306,7 +1443,11 @@ footer p { margin: 0 0 8px; }
   </section>
 
   <!-- ==================== 07 TOKENS ==================== -->
-  <section id="tokens">
+  <!-- HIDDEN FOR NOW. Remove the hidden attribute below to bring it back.
+       Deliberately not wrapped in a comment like the other hidden blocks:
+       the export is full of CSS custom properties, and a stray "--" inside
+       an HTML comment is invalid and can end the comment early. -->
+  <section id="tokens" hidden>
     <div class="sec-head">
       <h2 class="font-primary-3x">Token export</h2>
     </div>
@@ -1359,37 +1500,37 @@ footer p { margin: 0 0 8px; }
   --font-btn-primary:   14px;  --ls-btn-primary:   0.084em;
   --font-btn-secondary: 14px;  --ls-btn-secondary: 0.02em;
 
-  /* Colour: Primary */
+  /* Color: Primary */
   --primary-110: #0B0D23;  --primary-100: #141A44;  --primary-90: #282F66;
   --primary-80:  #424A88;  --primary-70:  #626BAA;  --primary-60: #8991CC;
   --primary-50:  #B6BDEE;  --primary-40:  #CBD0F7;  --primary-30: #DEE2FF;
   --primary-20:  #EBEEFF;  --primary-10:  #F9F9FF;
 
-  /* Colour: Secondary */
+  /* Color: Secondary */
   --secondary-110: #25090A;  --secondary-100: #451113;  --secondary-90: #672224;
   --secondary-80:  #89383B;  --secondary-70:  #AB5356;  --secondary-60: #CD7477;
   --secondary-50:  #EF9A9D;  --secondary-40:  #FBB6B8;  --secondary-30: #FFCDCE;
   --secondary-20:  #FFE1E2;  --secondary-10:  #FFF6F6;
 
-  /* Colour: Green */
+  /* Color: Green */
   --green-110: #0C2718;  --green-100: #16482C;  --green-90: #2A6A46;
   --green-80:  #448C63;  --green-70:  #64AE84;  --green-60: #8BD0A9;
   --green-50:  #B8F2D1;  --green-40:  #CDFBE1;  --green-30: #DDFFEC;
   --green-20:  #EBFFF4;  --green-10:  #F9FFFB;
 
-  /* Colour: Orange */
+  /* Color: Orange */
   --orange-110: #2D1606;  --orange-100: #50270C;  --orange-90: #643516;
   --orange-80:  #864D28;  --orange-70:  #A8693E;  --orange-60: #CA875A;
   --orange-50:  #ECA87A;  --orange-40:  #FCC39E;  --orange-30: #FFD6BB;
   --orange-20:  #FFE7D7;  --orange-10:  #FFF7F2;
 
-  /* Colour: Tan */
+  /* Color: Tan */
   --tan-110: #302B21;  --tan-100: #473F31;  --tan-90: #615644;
   --tan-80:  #7A6E59;  --tan-70:  #93866E;  --tan-60: #AD9E85;
   --tan-50:  #C7B79D;  --tan-40:  #E0D0B5;  --tan-30: #FAE9CF;
   --tan-20:  #FDF4E6;  --tan-10:  #FEFBF6;
 
-  /* Colour: Neutral */
+  /* Color: Neutral */
   --neutral-110: #2F2D27;  --neutral-100: #47433B;  --neutral-90: #5B574D;
   --neutral-80:  #706B61;  --neutral-70:  #847F74;  --neutral-60: #989389;
   --neutral-50:  #ADA89E;  --neutral-40:  #C1BDB4;  --neutral-30: #D6D2CA;
@@ -1463,10 +1604,10 @@ footer p { margin: 0 0 8px; }
       "font-btn-secondary": { "face": "secondary", "weight": 500, "size": 14, "tracking": "0.02em",  "case": "sentence",  "lineHeight": 1 }
     },
     "form": {
-      "font-form-legend":      { "face": "secondary", "weight": 500, "size": 15, "lineHeight": 1.4 },
-      "font-form-label":       { "face": "secondary", "weight": 500, "size": 13, "lineHeight": 1.4, "tracking": "0.01em" },
-      "font-form-input":       { "face": "secondary", "weight": 400, "size": 15, "lineHeight": 1.4 },
-      "font-form-placeholder": { "face": "secondary", "weight": 400, "size": 15, "lineHeight": 1.4, "color": "neutral-60" },
+      "font-form-legend":      { "face": "secondary", "weight": 500, "size": 15, "lineHeight": 1.4,  "tracking": "0.06em", "case": "uppercase" },
+      "font-form-label":       { "face": "secondary", "weight": 500, "size": 15, "lineHeight": 1.45, "case": "sentence" },
+      "font-form-input":       { "face": "secondary", "weight": 400, "size": 15, "lineHeight": 1.5 },
+      "font-form-placeholder": { "face": "secondary", "weight": 400, "size": 15, "lineHeight": 1.5, "color": "neutral-60" },
       "font-form-helper":      { "face": "secondary", "weight": 400, "size": 13, "lineHeight": 1.5, "color": "neutral-80" },
       "font-form-error":       { "face": "secondary", "weight": 500, "size": 13, "lineHeight": 1.5, "color": "secondary-90" },
       "font-form-tag":         { "face": "secondary", "weight": 400, "size": 10, "lineHeight": 1.4, "tracking": "0.08em", "case": "uppercase", "color": "neutral-60" }
@@ -1481,7 +1622,7 @@ footer p { margin: 0 0 8px; }
     "tan":       { "110": "#302B21", "100": "#473F31", "90": "#615644", "80": "#7A6E59", "70": "#93866E", "60": "#AD9E85", "50": "#C7B79D", "40": "#E0D0B5", "30": "#FAE9CF", "20": "#FDF4E6", "10": "#FEFBF6" },
     "neutral":   { "110": "#2F2D27", "100": "#47433B", "90": "#5B574D", "80": "#706B61", "70": "#847F74", "60": "#989389", "50": "#ADA89E", "40": "#C1BDB4", "30": "#D6D2CA", "20": "#EAE7E1", "10": "#FEFCF9" },
     "white": "#FFFFFF",
-    "brandStep": "100"
+    "brandStep": { "primary": 100, "secondary": 100, "green": 100, "orange": 100, "tan": 60, "neutral": 20 }
   }
 }</code></pre>
     </div>
@@ -1489,7 +1630,7 @@ footer p { margin: 0 0 8px; }
 
   <footer>
     <p class="font-sec-sm">Signature Society · Brand guidelines v1.0 · Internal use only.</p>
-    <p class="font-sec-sm">Colour values sourced from the <em>Brand Color Scale</em> frame in the Signature Society Figma file.</p>
+    <p class="font-sec-sm">Color values sourced from the <em>Brand Color Scale</em> frame in the Signature Society Figma file.</p>
     <p class="font-sec-sm">Kepler Std served from Adobe Fonts kit hqq5dii. Inter served from Google Fonts.</p>
   </footer>
 
@@ -1499,14 +1640,42 @@ footer p { margin: 0 0 8px; }
 (function () {
   var STEPS = [110, 100, 90, 80, 70, 60, 50, 40, 30, 20, 10];
 
-  // Build every colour ramp from the CSS custom properties, so the swatches
+  // The brand step is not the same in every family. This map is the single
+  // source of truth for it: the inset rule on the ramp, the bullet beside
+  // the number, and the reference line in each family heading all read it,
+  // so they cannot disagree.
+  var BRAND_STEP = {
+    primary:   100,
+    secondary: 100,
+    green:     100,
+    orange:    100,
+    tan:        60,
+    neutral:    20
+  };
+
+  // Perceived lightness, used only to decide whether the inset rule on the
+  // brand chip should be white or black.
+  function isLight(hex) {
+    var n = parseInt(hex.slice(1), 16);
+    var c = [(n >> 16) & 255, (n >> 8) & 255, n & 255].map(function (v) {
+      v /= 255;
+      return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+    });
+    return (0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]) > 0.36;
+  }
+
+  // Build every color ramp from the CSS custom properties, so the swatches
   // can never drift from the tokens.
   var root = getComputedStyle(document.documentElement);
+  function hexOf(family, step) {
+    return root.getPropertyValue('--' + family + '-' + step).trim().toUpperCase();
+  }
+
   document.querySelectorAll('.ramp').forEach(function (ramp) {
     var family = ramp.dataset.family;
     STEPS.forEach(function (step) {
-      var hex = root.getPropertyValue('--' + family + '-' + step).trim().toUpperCase();
-      var isBrand = step === 100;
+      var hex = hexOf(family, step);
+      var isBrand = step === BRAND_STEP[family];
 
       var btn = document.createElement('button');
       btn.type = 'button';
@@ -1515,7 +1684,7 @@ footer p { margin: 0 0 8px; }
         family + '/' + step + ' ' + hex + (isBrand ? ', brand swatch' : '') + '. Click to copy hex.');
 
       var chip = document.createElement('span');
-      chip.className = 'chip' + (isBrand ? ' brand' : '') + (step >= 70 ? ' dark-mark' : '');
+      chip.className = 'chip' + (isBrand ? ' brand' : '') + (isBrand && isLight(hex) ? ' on-light' : '');
       chip.style.background = hex;
 
       var meta = document.createElement('span');
@@ -1536,6 +1705,14 @@ footer p { margin: 0 0 8px; }
 
       ramp.appendChild(btn);
     });
+  });
+
+  // Fill the brand reference in each family heading from the same map.
+  document.querySelectorAll('.brand-ref').forEach(function (el) {
+    var family = el.dataset.family;
+    var step = BRAND_STEP[family];
+    el.textContent = 'Brand · ' + family.charAt(0).toUpperCase() + family.slice(1)
+      + '/' + step + ' · ' + hexOf(family, step);
   });
 
   // Token export tabs
