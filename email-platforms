@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Email Platform Comparison | Signature Society</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A0A0A;
+    --panel:#1A1A1A;
+    --panel-2:#262626;
+    --rule:#2E2E2E;
+    --rule-soft:#424242;
+    --head:#EDEDED;
+    --gold:#D4A85A;
+    --gold-deep:#B6862F;
+    --gold-light:#EACD94;
+    --body-light:#D2D2D2;
+    --body:#B8B8B8;
+    --body-2:#989898;
+    --muted:#797979;
+  }
+
+  *{box-sizing:border-box;}
+
+  html{-webkit-text-size-adjust:100%;}
+
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--body);
+    font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    font-size:15px;
+    font-weight:400;
+    line-height:1.6em;
+    letter-spacing:0;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .wrap{
+    max-width:1040px;
+    margin:0 auto;
+    padding:72px 32px 96px;
+  }
+
+  h1,h2,h3{
+    font-family:"PP Editorial New","Editorial New",Georgia,"Times New Roman",serif;
+    font-weight:400;
+    color:var(--head);
+    margin:0;
+    letter-spacing:-0.01em;
+  }
+
+  h1{font-size:44px;line-height:1.15em;}
+  h2{font-size:27px;line-height:1.25em;}
+  h3{font-size:19px;line-height:1.3em;}
+
+  .eyebrow{
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin:0 0 18px;
+  }
+
+  .lead{
+    font-size:17px;
+    line-height:1.525em;
+    color:var(--body-light);
+    max-width:70ch;
+    margin:20px 0 0;
+  }
+
+  p{max-width:70ch;}
+
+  header.masthead{
+    border-bottom:1px solid var(--rule);
+    padding-bottom:40px;
+  }
+
+  .meta{
+    margin-top:32px;
+    font-size:11px;
+    line-height:1.6em;
+    color:var(--muted);
+    letter-spacing:.06em;
+    text-transform:uppercase;
+  }
+
+  section{
+    margin-top:72px;
+  }
+
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    gap:16px;
+    border-bottom:1px solid var(--rule);
+    padding-bottom:14px;
+    margin-bottom:32px;
+  }
+
+  .section-head .rule-label{
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin-left:auto;
+    white-space:nowrap;
+  }
+
+  .intro{
+    color:var(--body-2);
+    margin:0 0 28px;
+  }
+
+  .table-scroll{
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+  }
+
+  table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:640px;
+  }
+
+  caption{
+    caption-side:bottom;
+    text-align:left;
+    font-size:11px;
+    line-height:1.6em;
+    color:var(--muted);
+    padding-top:16px;
+  }
+
+  th,td{
+    text-align:left;
+    padding:16px 20px;
+    border-bottom:1px solid var(--rule);
+    vertical-align:top;
+  }
+
+  thead th{
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    color:var(--body-2);
+    border-bottom:1px solid var(--rule-soft);
+    padding-bottom:12px;
+  }
+
+  thead th.brand-o{color:var(--gold);}
+  thead th.brand-k{color:var(--head);}
+
+  tbody th{
+    font-weight:500;
+    color:var(--body-light);
+    font-size:15px;
+    letter-spacing:0;
+    text-transform:none;
+    width:26%;
+  }
+
+  tbody tr:hover td,
+  tbody tr:hover th{background:var(--panel);}
+
+  .price{
+    font-family:"PP Editorial New","Editorial New",Georgia,serif;
+    font-size:21px;
+    color:var(--head);
+    line-height:1.2em;
+  }
+
+  .price.o{color:var(--gold);}
+
+  .price-note{
+    display:block;
+    font-family:"Inter",sans-serif;
+    font-size:11px;
+    color:var(--muted);
+    line-height:1.6em;
+    margin-top:4px;
+  }
+
+  .tier{
+    font-family:"PP Editorial New","Editorial New",Georgia,serif;
+    font-size:19px;
+    color:var(--body-light);
+  }
+
+  .delta{
+    font-size:13px;
+    color:var(--body-2);
+  }
+
+  .delta strong{
+    color:var(--gold-light);
+    font-weight:500;
+  }
+
+  .free-row td,.free-row th{background:var(--panel);}
+
+  .callout{
+    background:var(--panel);
+    border-left:2px solid var(--gold);
+    padding:28px 32px;
+    margin-top:36px;
+  }
+
+  .callout h3{margin-bottom:10px;}
+  .callout p{margin:0 0 14px;color:var(--body);}
+  .callout p:last-child{margin-bottom:0;}
+
+  .grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:24px;
+    margin-top:32px;
+  }
+
+  .card{
+    background:var(--panel);
+    border:1px solid var(--rule);
+    padding:32px;
+  }
+
+  .card .tag{
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    color:var(--gold);
+    display:block;
+    margin-bottom:14px;
+  }
+
+  .card h3{margin-bottom:14px;}
+
+  .card ul{
+    margin:0;
+    padding:0;
+    list-style:none;
+  }
+
+  .card li{
+    font-size:13px;
+    line-height:1.6em;
+    color:var(--body-2);
+    padding:10px 0 10px 18px;
+    border-bottom:1px solid var(--rule);
+    position:relative;
+  }
+
+  .card li:last-child{border-bottom:none;padding-bottom:0;}
+
+  .card li::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:18px;
+    width:6px;
+    height:1px;
+    background:var(--gold-deep);
+  }
+
+  .verdict{
+    border-top:1px solid var(--rule);
+    margin-top:72px;
+    padding-top:40px;
+  }
+
+  .verdict p{color:var(--body-light);}
+
+  footer{
+    margin-top:72px;
+    padding-top:28px;
+    border-top:1px solid var(--rule);
+    font-size:11px;
+    line-height:1.7em;
+    color:var(--muted);
+  }
+
+  footer strong{color:var(--body-2);font-weight:500;}
+
+  @media (max-width:720px){
+    .wrap{padding:48px 20px 72px;}
+    h1{font-size:32px;}
+    h2{font-size:23px;}
+    body{line-height:1.7em;}
+    .grid{grid-template-columns:1fr;}
+    .section-head{flex-wrap:wrap;gap:8px;}
+    .section-head .rule-label{margin-left:0;}
+    .callout{padding:24px;}
+    .card{padding:24px;}
+  }
+
+  @media print{
+    body{background:#fff;color:#333;}
+    .card,.callout,.free-row td,.free-row th{background:#f6f4f0;}
+    h1,h2,h3,.price{color:#1A1A1A;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <p class="eyebrow">Signature Society</p>
+    <h1>Email platform comparison</h1>
+    <p class="lead">Two platforms are worth considering for the Signature Society store: Omnisend and Klaviyo. Both connect natively to Shopify, both pull in order data, and both handle the flows we plan to build. The differences come down to cost as the list grows, how much of the platform you will realistically use, and how easy it is to manage day to day.</p>
+    <p class="meta">Prepared by Lindsay Dev Creative &nbsp;/&nbsp; August 2026</p>
+  </header>
+
+  <section>
+    <div class="section-head">
+      <h2>Monthly cost by list size</h2>
+      <span class="rule-label">Omnisend Standard vs Klaviyo Email</span>
+    </div>
+    <p class="intro">Both platforms price on how many contacts you store, not how many emails you send. A quiet month costs the same as a busy one, which is why list hygiene matters on either platform.</p>
+
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Contacts</th>
+            <th scope="col" class="brand-o">Omnisend</th>
+            <th scope="col" class="brand-k">Klaviyo</th>
+            <th scope="col">Difference</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="free-row">
+            <th scope="row"><span class="tier">250</span></th>
+            <td><span class="price o">Free</span><span class="price-note">500 emails per month</span></td>
+            <td><span class="price">Free</span><span class="price-note">500 emails per month</span></td>
+            <td class="delta">Even</td>
+          </tr>
+          <tr>
+            <th scope="row"><span class="tier">500</span></th>
+            <td><span class="price o">$16</span></td>
+            <td><span class="price">$20</span></td>
+            <td class="delta">Omnisend saves <strong>$4</strong></td>
+          </tr>
+          <tr>
+            <th scope="row"><span class="tier">1,000</span></th>
+            <td><span class="price o">$20 to $25</span></td>
+            <td><span class="price">$30</span></td>
+            <td class="delta">Omnisend saves <strong>$5 to $10</strong></td>
+          </tr>
+          <tr>
+            <th scope="row"><span class="tier">2,500</span></th>
+            <td><span class="price o">$45</span></td>
+            <td><span class="price">$60</span></td>
+            <td class="delta">Omnisend saves <strong>$15</strong></td>
+          </tr>
+          <tr>
+            <th scope="row"><span class="tier">5,000</span></th>
+            <td><span class="price o">$81</span></td>
+            <td><span class="price">$100</span></td>
+            <td class="delta">Omnisend saves <strong>$19</strong></td>
+          </tr>
+          <tr>
+            <th scope="row"><span class="tier">10,000</span></th>
+            <td><span class="price o">$132</span></td>
+            <td><span class="price">$150</span></td>
+            <td class="delta">Omnisend saves <strong>$18</strong></td>
+          </tr>
+          <tr>
+            <th scope="row"><span class="tier">25,000</span></th>
+            <td><span class="price o">$245</span></td>
+            <td><span class="price">$400</span></td>
+            <td class="delta">Omnisend saves <strong>$155</strong></td>
+          </tr>
+          <tr>
+            <th scope="row"><span class="tier">50,000</span></th>
+            <td><span class="price o">$490</span></td>
+            <td><span class="price">$720</span></td>
+            <td class="delta">Omnisend saves <strong>$230</strong></td>
+          </tr>
+        </tbody>
+        <caption>Figures are US list pricing as published in mid 2026 and are approximate at the bands between published tiers. Confirm exact numbers in each platform's own pricing calculator before committing.</caption>
+      </table>
+    </div>
+
+    <div class="callout">
+      <h3>The short version</h3>
+      <p>Omnisend costs less at every list size, and the gap widens as the list grows. Under 2,500 contacts the difference is roughly $15 a month, which is small enough that it should not decide this on its own. Past 25,000 contacts the difference becomes real money.</p>
+      <p>Neither platform offers an annual discount. Both bill monthly and both raise your price automatically when your contact count crosses into the next band.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Higher tiers</h2>
+      <span class="rule-label">If you outgrow the entry plan</span>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <span class="tag">Omnisend Pro</span>
+        <h3>From $59 per month</h3>
+        <ul>
+          <li>Requires a minimum of 2,500 contacts</li>
+          <li>Removes the monthly send cap entirely</li>
+          <li>Unlocks advanced reporting and priority support</li>
+          <li>Required if you ever want to send SMS</li>
+          <li>Not needed at launch</li>
+        </ul>
+      </div>
+      <div class="card">
+        <span class="tag">Klaviyo Email plus Mobile</span>
+        <h3>About $15 more per month</h3>
+        <ul>
+          <li>Adds SMS, MMS and WhatsApp at any contact tier</li>
+          <li>Same email features as the base plan</li>
+          <li>Message credits are bundled, then billed per use</li>
+          <li>Add-ons for reviews and advanced analytics are priced separately</li>
+          <li>Above 250,000 contacts, billing moves to a custom quote</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>Features side by side</h2>
+      <span class="rule-label">What you get on each</span>
+    </div>
+
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">&nbsp;</th>
+            <th scope="col" class="brand-o">Omnisend</th>
+            <th scope="col" class="brand-k">Klaviyo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Shopify connection</th>
+            <td>Native app, connects in one click</td>
+            <td>Native app, connects in one click</td>
+          </tr>
+          <tr>
+            <th scope="row">Free plan</th>
+            <td>250 contacts, 500 emails per month</td>
+            <td>250 contacts, 500 emails per month</td>
+          </tr>
+          <tr>
+            <th scope="row">Monthly send allowance</th>
+            <td>12 times your contact count, unlimited on Pro</td>
+            <td>Roughly 10 times your contact count</td>
+          </tr>
+          <tr>
+            <th scope="row">Features by price tier</th>
+            <td>A few gated behind Pro, mainly unlimited sends and advanced reporting</td>
+            <td>Identical at every tier, price moves only with list size</td>
+          </tr>
+          <tr>
+            <th scope="row">Automation templates</th>
+            <td>Pre-built abandoned cart, welcome and post-purchase flows ready to turn on</td>
+            <td>Highly customizable, more setup required to get running</td>
+          </tr>
+          <tr>
+            <th scope="row">Segmentation</th>
+            <td>Purchase history, spend, engagement and product-level filters</td>
+            <td>Same, plus predictive analytics such as lifetime value and churn risk</td>
+          </tr>
+          <tr>
+            <th scope="row">Reporting</th>
+            <td>Clear revenue and campaign reporting, lighter on deep analysis</td>
+            <td>Deeper analysis available, with cohort and RFM reporting as a paid add-on</td>
+          </tr>
+          <tr>
+            <th scope="row">SMS</th>
+            <td>Pro plan only for new accounts, priced from $0.007 per message</td>
+            <td>Available at any tier for about $15 more per month</td>
+          </tr>
+          <tr>
+            <th scope="row">Web push notifications</th>
+            <td>Included, unlimited</td>
+            <td>Available through the mobile add-on</td>
+          </tr>
+          <tr>
+            <th scope="row">Product reviews</th>
+            <td>Not included, requires a separate app</td>
+            <td>Available as a paid add-on inside the platform</td>
+          </tr>
+          <tr>
+            <th scope="row">Day to day management</th>
+            <td>One flat contact list with tags, simple drag and drop editor</td>
+            <td>More structure to learn across flows, campaigns and templates</td>
+          </tr>
+          <tr>
+            <th scope="row">How the bill can surprise you</th>
+            <td>Contact count climbs as signups come in</td>
+            <td>Auto-upgrades at each threshold, capped at a 25 percent jump at a time</td>
+          </tr>
+          <tr>
+            <th scope="row">Ceiling</th>
+            <td>Custom plan negotiated for high volume</td>
+            <td>Manual billing above 250,000 contacts</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="verdict">
+    <div class="section-head">
+      <h2>Recommendation</h2>
+      <span class="rule-label">For Signature Society</span>
+    </div>
+    <p>Start on <strong style="color:var(--gold);font-weight:500;">Omnisend Standard</strong>. At the list size we expect at launch, the cost difference is minor, so the decision comes down to what your team touches after the site goes live. Omnisend keeps contacts in one straightforward list, and the template editor is simple enough that swapping an image, updating copy and sending a campaign takes a few minutes without a marketing background.</p>
+    <p>Klaviyo is the stronger platform if email becomes a dedicated channel with someone managing it regularly. The predictive segmentation and deeper reporting are genuinely better. They are also features that go unused on most stores in their first year, and the platform asks more of whoever is running it.</p>
+    <p>Either way, the flows and templates we build carry over. Moving between platforms later means rebuilding the designs, so it is worth choosing based on the next twelve months rather than the next five years.</p>
+  </section>
+
+  <footer>
+    <p><strong>A note on these numbers.</strong> Both platforms adjust pricing regularly and published figures vary between sources at the larger list sizes. The tiers above reflect US pricing as of August 2026 and should be confirmed directly with each platform before you commit. Pricing is based on stored contacts on both platforms, including contacts who have unsubscribed, so keeping the list clean directly affects the monthly bill.</p>
+  </footer>
+
+</div>
+</body>
+</html>
