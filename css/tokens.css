@@ -1,0 +1,832 @@
+/* ============================================================
+   SIGNATURE SOCIETY · DESIGN TOKENS
+   Single source of truth for both documents in main.html.
+   Colour values are pulled from the Figma 'scales' frame:
+   figma.com/design/NfEENGImbc8voFOOFPCOPS  node 5951-2167
+   ============================================================ */
+
+/* ---- PP Playground ---------------------------------------
+   Only the Regular cut is shipped in assets/, so every weight
+   resolves to it. .hero, .hero-light and .hero-thin therefore
+   render identically; the weight range stops the browser from
+   synthesising a faux bold or light. */
+@font-face {
+  font-family: "PP Playground";
+  src: url("../assets/PPPlayground-Regular.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* ---- Typefaces ---------------------------------------- */
+  --face-display:  "kepler-std-display", Georgia, "Times New Roman", serif;
+  --face-subhead:  "kepler-std-subhead", Georgia, "Times New Roman", serif;
+  --face-regular:  "kepler-std", Georgia, "Times New Roman", serif;
+  --face-caption:  "kepler-std-caption", Georgia, "Times New Roman", serif;
+  --face-btn:      "kepler-std-medium-caption", Georgia, "Times New Roman", serif;
+  --face-sec:      "Inter", "inter-18pt", -apple-system, BlinkMacSystemFont, sans-serif;
+  --face-hero:     "PP Playground", "kepler-std-display", Georgia, serif;
+
+  /* ---- HEADING 1 SCALE DESKTOP ------------------------------
+     PP Playground. Six steps, base 31px, ratio 1.25. The base is an
+     anchor, not a shipped step: 1x is the first rung above it, and
+     31 x 1.25^6 = 118.24, which lands on the 118px ceiling drawn in
+     Figma. Three weights are available: Thin 100, Light 300,
+     Medium 500. */
+  --size-heading1-1x:   39px;
+  --size-heading1-2x:   48px;
+  --size-heading1-3x:   61px;
+  --size-heading1-4x:   76px;
+  --size-heading1-5x:   95px;
+  --size-heading1-6x:  118px;
+
+  /* ---- Heading 1 line heights DESKTOP ----
+     Tighter as the type grows: a 118px line needs far less leading
+     than a 39px one, and a script face set loose at display size
+     drifts apart. 0.02 per step, 1.18 down to 1.08. */
+  --lh-heading1-1x: 1.18;
+  --lh-heading1-2x: 1.16;
+  --lh-heading1-3x: 1.14;
+  --lh-heading1-4x: 1.12;
+  --lh-heading1-5x: 1.10;
+  --lh-heading1-6x: 1.08;
+
+  /* ---- Heading 1 tracking · ALL STEPS, ALL BREAKPOINTS ----
+     One token, not a ladder, and not repeated in the media queries.
+
+     PP Playground is a joining SCRIPT set in sentence case. Opening the
+     tracking breaks the join between characters and tightening it
+     collides the swashes, so there is no step and no width at which a
+     non-zero value is an improvement. The Kepler --ls-heading-* ladder
+     graduates because those headings are uppercase and need air between
+     letters at small sizes; none of that applies to a script.
+
+     Held as a named token rather than writing 0 into the classes so the
+     decision stays visible and reversible in one place. Same value and
+     same reason as --ls-hero, which is the 6x step under its old name. */
+  --ls-heading1: 0;
+
+  --ls-hero: 0;
+
+  /* ---- HEADING SERIF DESKTOP ----------
+     Base 18px, ratio 1.25. .heading is one step above base;
+     .heading-6x is seven steps up and is the ceiling.      */
+  --heading:    22px;
+  --heading-1x: 28px;
+  --heading-2x: 35px;
+  --heading-3x: 44px;
+  --heading-4x: 55px;
+  --heading-5x: 69px;
+  --heading-6x: 86px;
+
+  /* ---- Heading line heights ---- */
+  --lh-heading:    1.26;  --lh-heading-1x: 1.20;  --lh-heading-2x: 1.14;
+  --lh-heading-3x: 1.10;  --lh-heading-4x: 1.08;  --lh-heading-5x: 1.06;
+  --lh-heading-6x: 1.04;
+
+  /* ---- BODY PRIMARY 
+     Only the base is responsive. sm and xs are fixed at every
+     breakpoint, because the three ratios cross below the base
+     and would otherwise run larger on mobile than on desktop. */
+  --body-pri:    18px;
+  --body-pri-sm: 15px;
+  --body-pri-xs: 13px;
+
+  /* ---- Line Height ---- */
+  --lh-body-pri: 1.60;  --lh-body-pri-sm: 1.60;  --lh-body-pri-xs: 1.55;
+
+  /* ---- Tracking ---- */
+  --ls-heading-6x: 0;
+  --ls-heading-5x: 0.005em;
+  --ls-heading-4x: 0.01em;
+  --ls-heading-3x: 0.015em;
+  --ls-heading-2x: 0.02em;
+  --ls-heading-1x: 0.025em;
+  --ls-heading:    0.03em;
+
+  --ls-display: -0.01em;   /* specimen cards only           */
+  --ls-subhead:  0.01em;   /* specimen cards only           */
+  --ls-text:     0;        /* sentence case                 */
+  --ls-btn:      0.084em;
+  --ls-btn-sec:  0;
+  --ls-btn-sec-upper: .096em;
+  --ls-nav:      0.24em;
+
+  /* ---- Secondary scale (Inter) --------------------------
+     Base 15px. No steps above base, fixed at all breakpoints. */
+  --body-base-sec: 15px;  --lh-body-base-sec: 1.70;
+  --body-sm-sec:   13px;  --lh-body-sm-sec:   1.65;
+  --body-xs-sec:   11px;  --lh-body-xs-sec:   1.55;
+
+  /* ---- Interface sizes · fixed at all breakpoints -------
+     The placeholder matches the label deliberately: a hint that sits
+     inside the control has to read at the same size as the thing
+     naming it, or it starts to look like help text. */
+  --size-btn:                   14px;
+  --size-btn-sec:               14px;
+  --size-btn-base-sec-upper:    12px;
+  --size-btn-sm-sec-upper:      10px;
+  --size-nav:                   14px;
+  --size-form-btn:              14px;
+  --size-form-label:            15px;
+  --size-form-placeholder:      15px;
+
+  /* ---- Brand bases · the swatches in the 'brand colors' frame ----
+     The anchor step differs by family, because the six bases do not sit on
+     one shared lightness. Each ramp carries its own curve anchored exactly
+     on its base value. */
+  --color1:  var(--color1-800);
+  --color2:  var(--color2-800);
+  --color3:  var(--color3-800);
+  --color4:  var(--color4-800);
+  --color5:  var(--color5-400);
+  --neutral: var(--neutral-200);
+
+  /* ---- Color 1 · navy ---- */
+  --color1-900: #030811;  --color1-800: #08142B;  --color1-700: #192D54;
+  --color1-600: #334C7D;  --color1-500: #5671A5;  --color1-400: #829CCE;
+  --color1-300: #B8CDF7;  --color1-200: #D1E1FF;  --color1-100: #E5EEFF;
+  --color1-50:  #F8FAFF;
+
+  /* ---- Color 2 · burgundy ----
+     700 duplicates 800 in the Figma 'scales' frame. Carried as-is. */
+  --color2-900: #26070C;  --color2-800: #4D0F19;  --color2-700: #4D0F19;
+  --color2-600: #762330;  --color2-500: #9F3E4E;  --color2-400: #C76272;
+  --color2-300: #F08E9E;  --color2-200: #FFB6C2;  --color2-100: #FFD5DC;
+  --color2-50:  #FFF4F6;
+
+  /* ---- Color 3 · forest ---- */
+  --color3-900: #07220B;  --color3-800: #0C4015;  --color3-700: #1F692B;
+  --color3-600: #3A9249;  --color3-500: #5DBB6D;  --color3-400: #89E398;
+  --color3-300: #B4FFC1;  --color3-200: #CBFFD3;  --color3-100: #E1FFE6;
+  --color3-50:  #F7FFF9;
+
+  /* ---- Color 4 · tobacco ---- */
+  --color4-900: #221206;  --color4-800: #40220C;  --color4-700: #693D1F;
+  --color4-600: #925E3A;  --color4-500: #BB845D;  --color4-400: #E4AE89;
+  --color4-300: #FFD3B4;  --color4-200: #FFE0CA;  --color4-100: #FFEDE1;
+  --color4-50:  #FFFAF7;
+
+  /* ---- Color 5 · tan ----
+     The 900 and 800 layers are labelled the other way round in Figma.
+     Recorded here in lightness order to match every other family. */
+  --color5-900: #221D11;  --color5-800: #4E4329;  --color5-700: #6C5D3B;
+  --color5-600: #89774E;  --color5-500: #A69263;  --color5-400: #C3AD79;
+  --color5-300: #E0C891;  --color5-200: #FDE4AA;  --color5-100: #FFF1D0;
+  --color5-50:  #FFFCF6;
+
+  /* ---- Neutral · carries an extra 950 step below the 900 ---- */
+  --neutral-950: #32312A;  --neutral-900: #4D4B40;  --neutral-800: #625F53;
+  --neutral-700: #767366;  --neutral-600: #8A887A;  --neutral-500: #9F9C8F;
+  --neutral-400: #B3B1A4;  --neutral-300: #C8C5BA;  --neutral-200: #DCDAD0;
+  --neutral-100: #F0EFE7;  --neutral-50:  #FFFEF9;
+
+  --white: #FFFFFF;
+
+  /* ---- Document surface ---------------------------------
+     --ink points at the brand navy, which lives at color1-800.
+     color1-900 is a near-black #030811 and is not a text color.
+
+     --ground is the lightest Neutral, the 50.
+
+     --muted inherits the Neutral ramp's warmth. */
+  --ink:     var(--color1);
+  --ground:  var(--neutral-50);
+  --rule:    var(--color5-300);
+  --rule-faint: var(--color5-200);
+  --muted:   var(--neutral-700);
+}
+@media (max-width: 1023px) {
+  :root {
+    /* ---- HEADING 1 SCALE TABLET · base 31, ratio 1.2 ----
+       Same 31px anchor, shallower ratio, so the ladder climbs to 93
+       instead of 118 and the top steps still fit the measure. */
+    --size-heading1-1x: 37px;
+    --size-heading1-2x: 45px;
+    --size-heading1-3x: 54px;
+    --size-heading1-4x: 64px;
+    --size-heading1-5x: 77px;
+    --size-heading1-6x: 93px;
+
+    /* Every step renders smaller here than it does on desktop, so the
+       whole leading ladder shifts one notch looser (+0.02). Same 0.02
+       spacing between steps. */
+    --lh-heading1-1x: 1.20;
+    --lh-heading1-2x: 1.18;
+    --lh-heading1-3x: 1.16;
+    --lh-heading1-4x: 1.14;
+    --lh-heading1-5x: 1.12;
+    --lh-heading1-6x: 1.10;
+
+    /* No tracking entry. --ls-heading1 is 0 at every width — see the
+       note on it in :root. */
+
+    --hero:    73px;
+    --hero-1x: 88px;
+
+    --heading:    20px;
+    --heading-1x: 24px;
+    --heading-2x: 29px;
+    --heading-3x: 35px;
+    --heading-4x: 42px;
+    --heading-5x: 51px;
+    --heading-6x: 61px;
+
+    --body-pri: 17px;
+    }
+}
+@media (max-width: 767px) {
+  :root {
+    /* ---- HEADING 1 SCALE MOBILE · base 31, ratio 1.125 ----
+       The shallowest ratio of the three. At this width a 1.25 ladder
+       would put 3x alone on four lines, so the whole scale compresses
+       into a 35–63px band. */
+    --size-heading1-1x: 35px;
+    --size-heading1-2x: 39px;
+    --size-heading1-3x: 44px;
+    --size-heading1-4x: 50px;
+    --size-heading1-5x: 56px;
+    --size-heading1-6x: 63px;
+
+    /* Looser again (+0.02 on tablet). Nothing here is display size —
+       63px is the ceiling — so the tight end of the ladder is not
+       needed and would cause ascender/descender clash on a script. */
+    --lh-heading1-1x: 1.22;
+    --lh-heading1-2x: 1.20;
+    --lh-heading1-3x: 1.18;
+    --lh-heading1-4x: 1.16;
+    --lh-heading1-5x: 1.14;
+    --lh-heading1-6x: 1.12;
+
+    /* No tracking entry. --ls-heading1 is 0 at every width — see the
+       note on it in :root. */
+
+    --hero:    44px;
+    --hero-1x: 49px;
+
+    --heading:    19px;
+    --heading-1x: 22px;
+    --heading-2x: 24px;
+    --heading-3x: 27px;
+    --heading-4x: 31px;
+    --heading-5x: 34px;
+    --heading-6x: 39px;
+
+    --body-pri: 17px;
+    }
+}
+
+/* ============================================================
+   BODY TEXT CLASSES
+   One definition for both documents. Top level, NOT nested inside
+   :root — nested they compile to `:root .body-base-sec`, a descendant
+   selector at (0,2,0) instead of the (0,1,0) a class should carry.
+
+   .strong is a modifier on the SAME element, not a descendant:
+       <p class="body-sm-sec strong">            correct
+       <p class="body-sm-sec"><b class="strong">     not this
+
+   PRIMARY · Kepler. The xs step uses the Caption cut, made for 13px
+   and below. SECONDARY · Inter, fixed at every breakpoint.
+   ============================================================ */
+
+.body-pri,
+.body-pri-sm {
+  font-family: var(--face-regular);
+  font-weight: var(--weight-regular);
+  letter-spacing: var(--ls-text);
+  text-transform: var(--case-body-pri);
+}
+.body-pri-xs {
+  font-family: var(--face-caption);
+  font-weight: var(--weight-caption);
+  letter-spacing: var(--ls-text);
+  text-transform: var(--case-body-pri);
+}
+.body-pri    { font-size: var(--body-pri);    line-height: var(--lh-body-pri); }
+.body-pri-sm { font-size: var(--body-pri-sm); line-height: var(--lh-body-pri-sm); }
+.body-pri-xs { font-size: var(--body-pri-xs); line-height: var(--lh-body-pri-xs); }
+
+.body-base-sec,
+.body-sm-sec,
+.body-xs-sec {
+  font-family: var(--face-sec);
+  font-weight: var(--weight-body-sec-normal);
+  letter-spacing: var(--ls-text);
+  text-transform: var(--case-body-sec);
+}
+.body-base-sec { font-size: var(--body-base-sec); line-height: var(--lh-body-base-sec); }
+.body-sm-sec   { font-size: var(--body-sm-sec);   line-height: var(--lh-body-sm-sec); }
+.body-xs-sec   { font-size: var(--body-xs-sec);   line-height: var(--lh-body-xs-sec); }
+
+/* Emphasis. Inter carries a real 500. Kepler does NOT: the Typekit kit
+   publishes kepler-std at 300 and 400 only, so .body-pri.strong and
+   .body-pri-sm.strong would be a synthetic bold and are deliberately
+   absent. Only kepler-std-caption has a real Medium — that is
+   --weight-btn, the weight paired with --face-btn
+   (kepler-std-medium-caption). For emphasis in running Kepler copy use
+   the real 400 italic instead. */
+.body-pri-xs.strong { font-weight: var(--weight-btn); }
+
+.body-base-sec.strong,
+.body-sm-sec.strong,
+.body-xs-sec.strong { font-weight: var(--weight-body-sec-strong); }
+
+/* ============================================================
+   TIMELINE-LOCAL TOKENS
+   These have no equivalent in the brand system, so they are
+   defined here rather than left dangling as they were before.
+   ============================================================ */
+:root {
+  /* Gantt label gutter. */
+  --glabel: 420px;
+
+  /* The brand system is square throughout: the only border-radius
+     in styles.css is an explicit 0 on form controls. Both radius
+     tokens therefore resolve to 0 rather than inventing a curve. */
+  --radius:    0;
+  --radius-sm: 0;
+
+  /* Elevation for drawers, popovers and cards. Tinted with
+     color1-900 (#030811) so the shadow sits in the navy family
+     instead of neutral black. */
+  --shadow: 0 2px 8px rgba(3, 8, 17, 0.10), 0 8px 24px rgba(3, 8, 17, 0.08);
+
+  /* Phase markers · one brand family each, at its brand step. */
+  --phase-01: var(--color1-800);   /* navy      */
+  --phase-02: var(--color2-800);   /* burgundy  */
+  --phase-03: var(--color3-800);   /* forest    */
+  --phase-04: var(--color4-800);   /* tobacco   */
+  --phase-05: var(--color5-400);   /* tan       */
+  --phase-06: var(--neutral-600);  /* neutral   */
+}
+
+/* ============================================================
+   SEMANTIC ROLES
+   Merged in from the old styles.css. That file named these roles
+   throughout its component rules but never defined them, so every
+   .text-*, .surface-* and .rule-* utility resolved to nothing.
+   They are anchored on the ramps above rather than on raw hex.
+
+   Light ground is the default: the brand document sits on
+   --ground with --ink type. The dark remap is at the bottom.
+   ============================================================ */
+:root {
+  /* ---- Type roles ---------------------------------------- */
+  --text-heading:        var(--ink);
+  --text-heading-accent: var(--color5-700);
+  --text-body:           var(--ink);
+  --text-secondary:      var(--neutral-700);
+  --text-muted:          var(--neutral-600);
+  --text-accent:         var(--neutral-100);  /* 6.5:1 on --ground */
+  --text-light:          var(--neutral-50);
+
+  /* ---- Surfaces -----------------------------------------
+     Raised is pure white so a card lifts off the warm ground;
+     sunken drops one Neutral step instead of adding a shadow. */
+  --surface-page:   var(--ground);
+  --surface-raised: var(--white);
+  --surface-sunken: var(--neutral-100);
+
+  /* ---- Rules --------------------------------------------
+     --rule and --rule-faint are defined with the document
+     surface above. These are the two ends of the same ladder. */
+  --rule-strong: var(--color5-500);
+  --rule-subtle: var(--rule-faint);
+
+  /* The button colour tokens are NOT here. Their base lives in the
+     BUTTON TOKENS block at the top of buttons.css, which loads after
+     this file and would shadow any copy written here. The dark remap
+     below is the only button entry this file carries. */
+
+  /* ---- Measure ------------------------------------------
+     Line length caps for running copy. */
+  --measure:        70ch;
+  --measure-narrow: 56ch;
+
+  /* ---- Motion -------------------------------------------
+     One duration for every interface state change, so buttons,
+     links and controls all settle together. */
+  --ease-ui: 160ms ease;
+
+  /* ---- Weights ------------------------------------------
+     Kepler ships Light through Medium; Inter carries 400/500/600. */
+  --weight-display:         300;
+  --weight-subhead:         400;
+  --weight-regular:         400;
+  --weight-caption:         400;
+  --weight-btn:             500;
+  --weight-btn-sec:         500;
+  --weight-body-sec-normal: 400;
+  --weight-body-sec-strong: 500;
+  --weight-hero:            400;
+
+  /* ---- Casing -------------------------------------------
+     Held as tokens so a casing decision is changed in one place
+     rather than hunted through the component rules. */
+  --case-heading:  uppercase;
+  --case-body-pri: none;
+  --case-body-sec: none;
+  --case-btn:      uppercase;
+  --case-btn-sec:  none;
+  --case-btn-sec-upper:  uppercase;
+  --case-nav:      none;
+
+  /* ---- Size ladder -------------------------------------
+     One ladder for every button in the system. A size variant
+     sets these three and nothing else, so a control changes size
+     without restating its type, weight, tracking or casing.
+
+     A stray closing brace used to sit immediately above this comment.
+     It shut :root early, which left every declaration in this ladder
+     orphaned outside any rule and thrown away by the parser. .btn-md
+     then set --btn-size and --btn-pad-* to nothing, so .btn's padding
+     collapsed to 0 and .btn-sans' font-size fell back to the inherited
+     18px — every compact button in the project rendered as bare text
+     on a fill. --ls-btn-compact and --btn-touch went with it.
+
+     md is measured from the btn-sec-fill frame in Figma
+     (node 6028-2073): 18px vertical, 32px horizontal, which is the
+     spacing/32 variable. Held in px rather than em because that frame
+     states them as absolute values, not as a ratio of the label.
+     lg is the brand button; sm and md are the compact controls that
+     sit inside toolbars, table rows and drawers. */
+  --btn-size-sm:  var(--body-sm-sec);   /* 13px */
+  --btn-size-md:  var(--body-sm-sec);   /* 13px */
+  --btn-size-lg:  var(--body-base-sec); /* 15px */
+
+  --btn-pad-y-sm: 10px;  --btn-pad-x-sm: 16px;
+  --btn-pad-y-md: 14px;  --btn-pad-x-md: 24px;
+  --btn-pad-y-lg: 18px;  --btn-pad-x-lg: 32px;
+
+  /* Compact controls open their tracking further than the brand
+     button: at 13px the label needs the air, and the wider setting
+     is what separates a toolbar control from running copy. */
+  --ls-btn-compact: 0.12em;
+
+  /* Minimum touch target. Applied to compact controls at the
+     narrow breakpoints, where they are the primary hit areas. */
+  --btn-touch: 40px;
+}
+
+/* ============================================================
+   LINK TOKENS
+   ============================================================ */
+:root {
+  --link-text:        var(--text-body);
+  --link-text-hover:  var(--color2-800);
+  --link-text-active: var(--color2-900);
+
+  --link-underline:       var(--color5-500);  /* quiet by default */
+  --link-underline-hover: var(--color2-800);
+
+  --link-offset:    0.18em;
+  --link-thickness: 1px;
+}
+
+/* ============================================================
+   FORM TOKENS · light ground
+   Fields sit on --surface-raised, one step lighter than the page,
+   so they read as inset targets. Border steps are chosen against
+   the 3:1 floor for control boundaries, not for looks.
+   ============================================================ */
+:root {
+  /* ---- Field surface ---- */
+  --field-bg:          var(--neutral-50);
+  --field-bg-hover:    var(--neutral-50);
+  --field-bg-focus:    var(--neutral-50);
+  --field-bg-disabled: var(--neutral-500);
+  --field-bg-readonly: var(--neutral-100);
+
+  /* ---- Field border ----
+     neutral-600 is the lightest step that clears 3:1 on white. */
+  --field-border:          var(--neutral-200);  /* #8A887A  3.5:1 */
+  --field-border-hover:    var(--neutral-200);
+  --field-border-filled:   var(--neutral-50);
+  --field-border-focus:    var(--color1-300);
+  --field-border-disabled: var(--neutral-500);
+
+  /* ---- Field text ---- */
+  --field-text:          var(--neutral-950);  /* 12.9:1 */
+  --field-text-focus:    var(--neutral-950);
+  --field-placeholder:   var(--neutral-700);  /* 4.7:1  */
+  --field-text-readonly: var(--neutral-800);
+  --field-text-disabled: var(--neutral-600);
+
+  /* ---- Label and help ----
+     The LIGHT ground values, so they stay dark: this block is the brand
+     document, which sits on --ground.
+
+     All five had been left defined ONLY in the dark remap at the bottom
+     of the file. A var() with no definition is invalid at computed-value
+     time, and colour inherits, so every label, hint and required mark in
+     #tab-brand silently fell back to whatever its parent happened to be
+     rather than to a chosen value.
+
+     The timeline does not read these at all: its labels take
+     --color-form-label from the .form-field-* set above. */
+  --label-text:       var(--neutral-900);
+  --label-text-focus: var(--color1-700);
+  --label-disabled:   var(--neutral-600);
+  --help-text:        var(--neutral-800);
+  --required-mark:    var(--color2-600);
+
+  /* ---- Controls · checkbox, radio, switch ---- */
+  --control-bg:            var(--white);
+  --control-border:        var(--neutral-600);
+  --control-border-hover:  var(--neutral-800);
+  --control-checked-bg:    var(--color1-700);
+  --control-checked-hover: var(--color1-600);
+  --control-checked-mark:  var(--neutral-50);
+  --control-disabled-bg:   var(--neutral-300);
+
+  /* ---- Focus ring · shared by buttons, links and controls ---- */
+  --focus-ring:      var(--color1-600);
+  --focus-ring-soft: rgba(51, 76, 125, 0.22);
+
+  /* ---- Feedback ---- */
+  --field-error:      var(--color2-500);
+  --field-error-text: var(--color2-700);
+  --field-error-bg:   var(--color2-50);
+  --field-error-ring: rgba(159, 62, 78, 0.22);
+
+  --field-success:      var(--color3-600);
+  --field-success-text: var(--color3-700);
+  --field-success-bg:   var(--color3-50);
+
+  --field-warning:      var(--color4-600);
+  --field-warning-text: var(--color4-700);
+  --field-warning-bg:   var(--color4-50);
+
+  /* ---- Accent ---- */
+  --field-selection-bg:   var(--color5-200);
+  --field-selection-text: var(--neutral-950);
+  --field-caret:          var(--color1-700);
+
+  /* ---- Shape ---- */
+  --field-radius: var(--radius);
+  --field-pad-y:  0.85em;
+  --field-pad-x:  14px;
+  --field-ease:   var(--ease-ui);
+  --field-face:   var(--face-sec);
+
+  /* ---- Form field type · one style for label, placeholder and value --
+     Face, size, line height, tracking, case and the two weights, stated
+     in full so a form control is changed here rather than hunted through
+     forms.css and timeline.css.
+
+     Inter at 15px. --form-field-text-sm is the compact step for the
+     inline controls in the schedule table, where a 15px date selector
+     would not fit the row. The line height runs tighter than
+     --lh-body-base-sec (1.70) because a label is one line naming a
+     control, not running copy — 1.70 opened a gap between the label and
+     the field it belongs to and broke the pairing.
+
+     Legend is the same object at the group level, so it shares this
+     style and only adds its own inline padding.
+
+     The colours below are the timeline's, which is a dark document.
+     --color-form-input is the exception: it is the navy for the
+     white-filled row controls, and timeline.css remaps it to
+     --neutral-100 inside the drawer and the modals, where the field is
+     a 5% white wash over navy. */
+  --form-field-text-family: var(--face-sec);
+  --form-field-text-size: var(--body-base-sec);
+  --form-field-text-lh: 1.45;
+  --form-field-text-ls: 0;
+  --form-field-text-sm: var(--body-sm-sec);
+  --form-field-text-case: none;
+
+  --form-field-weight-normal: var(--weight-body-sec-normal);
+  --form-field-weight-strong: var(--weight-body-sec-strong);
+
+  --color-form-label: var(--neutral-50);
+  --color-form-label-disabled: var(--neutral-600);
+  --color-form-placeholder: var(--neutral-300);
+  --color-form-placeholder-focused: var(--color1-800);
+  --color-form-input: var(--color1-800);
+
+  /* Which palette the OS draws its own parts with — the date picker,
+     the select arrow, the scrollbar inside a multi-select. They follow
+     color-scheme, not the fill, so they have to be told separately. */
+  --form-field-scheme: light;
+
+  /* 16px is the floor that stops iOS Safari zooming the page when a
+     field takes focus. Only applied below the mobile breakpoint. */
+  --form-field-text-touch: 16px;
+
+  /* Box metrics for the controls. The checkbox is sized in em so it
+     tracks the label beside it at any step. */
+  --form-field-box: 1.15em;
+  --form-field-textarea-min: 7rem;
+  --form-field-multi-min: 9rem;
+}
+
+
+/* ============================================================
+   DARK GROUND
+   A pure token remap. No component is redefined here: every rule
+   in buttons.css, links.css and forms.css already reads a token,
+   so re-pointing the tokens re-themes the whole layer.
+
+   Scope it with either:
+     <body data-surface="dark">     whole page
+     <section class="on-dark">      one section
+
+   Fields sit on color1-800, one step UP from a color1-900 page.
+   On dark the border carries most of the definition, so it runs
+   brighter than its light counterpart.
+
+   #tab-timeline is listed here because it IS a dark document: it
+   sits on color1-900 with light type, as base.css sets up. Saying so
+   once means its controls read the dark tokens without every one of
+   them needing an .on-dark class in the markup.
+   ============================================================ */
+[data-surface="dark"],
+.on-dark,
+#tab-timeline {
+  /* ---- Type roles ---- */
+  --text-heading:        var(--neutral-50);
+  --text-heading-accent: var(--neutral-50);
+  --text-body:           var(--neutral-100);
+  --text-secondary:      var(--neutral-300);
+  --text-muted:          var(--neutral-500);
+  --text-accent:         var(--neutral-300);
+  --text-light:          var(--neutral-50);
+
+  /* ---- Surfaces ---- */
+  --surface-page:   var(--color1-900);
+  --surface-raised: var(--color1-800);
+  --surface-sunken: var(--color1-900);
+
+  /* ---- Rules ---- */
+  --rule:        var(--color5-700);
+  --rule-strong: var(--color5-500);
+  --rule-faint:  var(--color1-700);
+  --rule-subtle: var(--color1-700);
+
+  /* ---- Buttons ----
+     The fill is NOT remapped here. btn-sec-fill is one designed
+     object, so the dark ground inherits #3F1214 / #F6F5F4 from the
+     base rather than carrying a second copy that can drift from it.
+     The pair that used to sit here pointed at --color2-800 and
+     --color2-700, which hold the same hex in the Figma scales frame,
+     so hover was indistinguishable from rest.
+
+     Only the outline stroke is restated, because a stroke has to be
+     seen against the ground it is drawn on and the fill's near-black
+     burgundy disappears into navy. */
+  --btn-outline-stroke:        var(--color2-400);
+  --btn-outline-stroke-hover:  var(--color2-300);
+  --btn-outline-stroke-active: var(--color2-200);
+  --btn-outline-wash:          transparent;
+  --btn-outline-wash-hover:    rgba(195, 173, 121, 0.12);
+  --btn-outline-wash-active:   rgba(195, 173, 121, 0.20);
+
+  --btn-disabled-bg:     var(--neutral-700);
+  --btn-disabled-stroke: var(--neutral-700);
+  --btn-disabled-label:  var(--neutral-100);
+
+  /* Inline wash lifts off the dark ground instead of into it. */
+  --btn-inline-wash:        rgba(255, 255, 255, 0.04);
+  --btn-inline-wash-hover:  rgba(255, 255, 255, 0.10);
+  --btn-inline-wash-active: rgba(255, 255, 255, 0.16);
+
+  /* ---- Links ---- */
+  --link-text:            var(--neutral-200);  /* 14.3:1 */
+  --link-text-hover:      var(--color5-300);   /* 12.3:1 */
+  --link-text-active:     var(--color5-500);   /*  6.6:1 */
+  --link-underline:       var(--neutral-600);
+  --link-underline-hover: var(--color5-300);
+
+  /* ---- Field surface ---- */
+  --field-bg:          var(--color1-800);
+  --field-bg-hover:    var(--color1-700);
+  --field-bg-focus:    var(--color1-700);
+  --field-bg-disabled: var(--color1-900);
+  --field-bg-readonly: var(--color1-900);
+
+  /* ---- Field border ----
+     color1-600 only reaches 2.2:1 against the field and fails the
+     3:1 floor. 500 is the lowest step that passes. */
+  --field-border:          var(--color1-500);  /*  3.8:1 */
+  --field-border-hover:    var(--color1-400);  /*  6.7:1 */
+  --field-border-filled:   var(--color1-400);
+  --field-border-focus:    var(--color1-300);  /* 11.5:1 */
+  --field-border-disabled: var(--color1-700);
+
+  /* ---- Field text ---- */
+  --field-text:          var(--neutral-100);  /* 16:1  */
+  --field-text-focus:    var(--neutral-50);   /* 17:1  */
+  --field-placeholder:   var(--neutral-500);  /* 6.7:1 */
+  --field-text-readonly: var(--neutral-400);
+  --field-text-disabled: var(--neutral-700);
+
+  /* ---- Label and help ---- */
+  --label-text:       var(--neutral-300);
+  --label-text-focus: var(--color1-300);
+  --label-disabled:   var(--neutral-700);
+  --help-text:        var(--neutral-400);
+  --required-mark:    var(--color2-400);
+
+  /* ---- Controls ---- */
+  --control-bg:            var(--color1-800);
+  --control-border:        var(--color1-500);
+  --control-border-hover:  var(--color1-400);
+  --control-checked-bg:    var(--color1-300);
+  --control-checked-hover: var(--color1-200);
+  --control-checked-mark:  var(--color1-900);
+  --control-disabled-bg:   var(--color1-600);
+
+  /* ---- Focus ring ---- */
+  --focus-ring:      var(--color1-300);
+  --focus-ring-soft: rgba(184, 205, 247, 0.24);
+
+  /* ---- Feedback · tints come from the 900 steps, not the 50s ---- */
+  --field-error:      var(--color2-500);  /* 4.7:1 border */
+  --field-error-text: var(--color2-400);  /* 8.7:1 text   */
+  --field-error-bg:   var(--color2-900);
+  --field-error-ring: rgba(199, 98, 114, 0.26);
+
+  --field-success:      var(--color3-500);
+  --field-success-text: var(--color3-400);
+  --field-success-bg:   var(--color3-900);
+
+  --field-warning:      var(--color4-500);
+  --field-warning-text: var(--color4-400);
+  --field-warning-bg:   var(--color4-900);
+
+  /* ---- Accent ---- */
+  --field-selection-bg:   var(--color5-700);
+  --field-selection-text: var(--neutral-50);
+  --field-caret:          var(--color1-300);
+}
+
+/* ---- The form colours on a dark ground ------------------------
+   Deliberately NOT folded into the block above, whose selector list
+   includes #tab-timeline. The timeline holds two grounds at once: its
+   drawer and modals are navy, but the row controls in the schedule
+   table sit on a white fill where --color-form-input's navy is correct.
+   Remapping it for the whole panel would put near-white text on those
+   white controls. timeline.css scopes the swap to .drawer, .board-modal
+   and .preview-modal instead. */
+[data-surface="dark"],
+.on-dark {
+  --color-form-label:              var(--neutral-50);
+  --color-form-label-disabled:     var(--neutral-700);
+  --color-form-placeholder:        var(--neutral-500);
+  --color-form-placeholder-focused: var(--neutral-300);
+  --color-form-input:              var(--neutral-100);
+  --form-field-scheme:             dark;
+}
+
+/* Raises the field boundary to the brightest passing step when the
+   reader has asked the OS for more contrast. */
+@media (prefers-contrast: more) {
+  :root {
+    --field-border:      var(--neutral-900);
+    --field-placeholder: var(--neutral-900);
+  }
+  [data-surface="dark"],
+  .on-dark {
+    --field-border:      var(--color1-300);
+    --field-placeholder: var(--neutral-300);
+  }
+}
+
+/* ============================================================
+   LOGO TOKENS
+   Ratios come from each file's viewBox. The optical multipliers
+   correct for the three lockups reading at different visual
+   weights at the same box height: the logomark is the densest,
+   so it is set smallest.
+
+   Sources point at the copies in assets/, which is what main.html
+   already loads. The Shopify CDN mirrors are:
+     .../SIG_LOGO_LOGOTYPE_WHITE.svg?v=1785988734
+     .../SIG_LOGO_PRIMARY_WHITE.svg?v=1785988726
+     .../SIG_LOGO_LOGOMARK_WHITE.svg?v=1785988717
+   ============================================================ */
+:root {
+  --logo-logotype: url("../assets/SIG_LOGO_LOGOTYPE_WHITE.svg");
+  --logo-primary:  url("../assets/SIG_LOGO_PRIMARY_WHITE.svg");
+  --logo-logomark: url("../assets/SIG_LOGO_LOGOMARK_WHITE.svg");
+
+  --logo-logotype-ratio: 372.9 / 159.32;   /* 2.341, landscape   */
+  --logo-primary-ratio:  257.09 / 202.34;  /* 1.271, near square */
+  --logo-logomark-ratio: 106.74 / 162.05;  /* 0.659, portrait    */
+
+  --logo-logotype-optical: 1;
+  --logo-primary-optical:  1.15;
+  --logo-logomark-optical: 0.9;
+
+  --logo-h-header:  1.75rem;   /* nav bar                 */
+  --logo-h-footer:  2.25rem;
+  --logo-h-hero:    6rem;
+  --logo-h-favicon: 1.25rem;   /* logomark in tight spots */
+
+  --logo-ease: 200ms ease;
+}
+
+

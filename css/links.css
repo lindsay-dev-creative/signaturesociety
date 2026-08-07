@@ -1,0 +1,110 @@
+/* ============================================================
+   LINKS
+   Merged in from styles.css.
+
+   Three link roles, all sharing the same underline geometry:
+     .link        standalone, sets its own type
+     .link-body   inline in running Kepler copy, inherits type
+     .link-quiet  meta, footer, breadcrumbs
+
+   In the source file .link:focus-visible was left unclosed, so the
+   browser parsed everything down to the next closing brace as part
+   of that one rule. .link-body and its three states were swallowed
+   whole and never applied. The brace is closed here.
+   ============================================================ */
+
+/* ---- Shared underline ------------------------------------- */
+
+.link,
+.link-body,
+.link-quiet {
+  text-decoration: underline;
+  text-underline-offset: var(--link-offset);
+  text-decoration-thickness: var(--link-thickness);
+  text-decoration-skip-ink: auto;
+  transition:
+    color var(--ease-ui),
+    text-decoration-color var(--ease-ui);
+}
+
+
+/* ---- Standalone. Sets its own type ------------------------ */
+
+.link {
+  font-family: var(--face-sec);
+  font-size: var(--body-base-sec);
+  font-weight: var(--weight-body-sec-strong);
+  line-height: 1.3;
+  letter-spacing: var(--ls-text);
+  color: var(--link-text);
+  text-decoration-color: var(--link-underline);
+}
+
+.link:hover {
+  color: var(--link-text-hover);
+  text-decoration-color: var(--link-underline-hover);
+}
+
+.link:active {
+  color: var(--link-text-active);
+  text-decoration-color: var(--link-text-active);
+}
+
+
+/* ---- Inline inside running copy ---------------------------
+   Inherits face, size and colour from the paragraph so it never
+   breaks the line. The underline carries the affordance. */
+
+.link-body {
+  color: inherit;
+  text-decoration-color: var(--link-underline);
+}
+
+.link-body:hover {
+  color: var(--link-text-hover);
+  text-decoration-color: var(--link-underline-hover);
+}
+
+.link-body:active {
+  color: var(--link-text-active);
+  text-decoration-color: var(--link-text-active);
+}
+
+
+/* ---- Quiet. Meta, footer, breadcrumbs --------------------- */
+
+.link-quiet {
+  color: var(--text-secondary);
+  text-decoration-color: transparent;
+}
+
+.link-quiet:hover {
+  color: var(--text-heading);
+  text-decoration-color: var(--link-underline);
+}
+
+.link-quiet:active { color: var(--link-text-active); }
+
+
+/* ---- Focus ------------------------------------------------
+   The underline is kept on focus. It is the only non-colour signal
+   that this is a link, so removing it leaves colour doing the work
+   on its own. */
+
+.link:focus-visible,
+.link-body:focus-visible,
+.link-quiet:focus-visible {
+  color: var(--link-text-hover);
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+  border-radius: 1px;
+}
+
+
+/* ---- Current page ----------------------------------------- */
+
+.link[aria-current],
+.link-quiet[aria-current] {
+  color: var(--text-accent);
+  text-decoration-color: var(--text-accent);
+}

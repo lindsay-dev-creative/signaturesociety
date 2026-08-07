@@ -1,0 +1,363 @@
+/* ============================================================
+   SIGNATURE SOCIETY · DOCUMENT STYLES
+   ============================================================
+   The token, button, link, utility and form layers that used to
+   sit above this section have been merged into css/:
+
+     css/tokens.css     colour, type, logo, button, link and form
+                        tokens, plus the dark-ground remap
+     css/base.css       element reset and document chrome
+     css/buttons.css    .btn and its type and fill variants
+     css/links.css      .link, .link-body, .link-quiet
+     css/utilities.css  .text-*, .surface-*, .rule-*, a11y helpers
+     css/forms.css      the .form-* component layer
+
+   They were moved rather than copied. Keeping a second definition
+   of the ramps here is what let the two drift apart: this file and
+   css/tokens.css disagreed on the whole Color 2 ramp, on --ink, and
+   on which @font-face PP Playground loads from.
+
+   css/tokens.css is the source of truth. Do not redeclare a brand
+   token in this file.
+
+   What remains below is the guidelines document's own layout, which
+   no other document shares.
+   ============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+/* Long tokens, hex values and font URLs break rather than push the page
+   wider than the viewport. No overflow-x guard is used, because it would
+   turn the root into a scroll container and break the sticky headers. */
+.face-css, .family-tag, .spec-facts { overflow-wrap: anywhere; }
+
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--face-regular);
+  font-size: var(--body-pri);
+  line-height: var(--lh-body-pri);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Faint warm grain so the ground is not a flat fill */
+body::before {
+  content: "";
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  opacity: 0.5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+}
+
+.wrap { position: relative; z-index: 1; max-width: 1240px; margin: 0 auto; padding: 0 40px; }
+@media (max-width: 767px) { .wrap { padding: 0 20px; } }
+
+/* ---- Masthead ---- */
+
+.masthead { padding: 96px 0 64px; border-bottom: 1px solid var(--rule); }
+@media (max-width: 767px) { .masthead { padding: 56px 0 40px; } }
+
+.eyebrow-row {
+  display: flex; justify-content: space-between; align-items: baseline;
+  gap: 24px; flex-wrap: wrap; margin-bottom: 56px;
+}
+.internal-flag {
+  font-family: var(--face-caption); font-weight: 500;
+  font-size: 14px; letter-spacing: 0.084em; text-transform: uppercase;
+  color: var(--color2-800);
+}
+.doc-meta { color: var(--muted); }
+
+.masthead h1 { margin: 0; }
+.masthead .lede {
+  margin: 32px 0 0; max-width: 62ch; color: var(--neutral-900);
+}
+
+/* ---- Sections ------- */
+
+section { padding: 88px 0; border-bottom: 1px solid var(--rule); }
+@media (max-width: 767px) { section { padding: 56px 0; } }
+
+.sec-head { display: flex; gap: 28px; align-items: baseline; margin-bottom: 48px; }
+.sec-head h2 { margin: 0; }
+/* Flush left with the heading. The old left indent cleared the section
+   numeral, which is no longer in the markup. */
+.sec-note { max-width: 68ch; color: var(--muted); margin: -24px 0 44px; }
+
+h3 {
+  margin: 56px 0 20px;
+  font-family: var(--face-subhead); font-weight: 400;
+  font-size: var(--heading); line-height: var(--lh-heading);
+  letter-spacing: var(--ls-subhead); text-transform: uppercase;
+}
+h3:first-of-type { margin-top: 0; }
+
+/* ---- Breakpoint indicator ------------------------------- */
+
+.bp-live {
+  position: sticky; top: 0; z-index: 20;
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 16px; padding: 10px 40px;
+  background: var(--color1-900); color: var(--color1-200);
+  font-family: var(--face-sec); font-weight: 500;
+  font-size: 11px; letter-spacing: 0.09em; text-transform: uppercase;
+}
+@media (max-width: 767px) { .bp-live { padding: 10px 20px; } }
+.bp-live b { color: var(--color5-300); font-weight: 500; }
+.bp-d, .bp-t, .bp-m { display: none; }
+@media (min-width: 1024px) { .bp-d { display: inline; } }
+@media (min-width: 768px) and (max-width: 1023px) { .bp-t { display: inline; } }
+@media (max-width: 767px) { .bp-m { display: inline; } }
+
+/* ---- Specimen rows -------------------------------------- */
+
+.spec {
+  display: grid; grid-template-columns: 210px 1fr; gap: 32px;
+  padding: 34px 0; border-top: 1px solid var(--rule-faint);
+  align-items: start;
+}
+.spec:last-child { border-bottom: 1px solid var(--rule-faint); }
+@media (max-width: 767px) {
+  .spec { grid-template-columns: 1fr; gap: 14px; padding: 26px 0; }
+}
+
+.spec-key { position: sticky; top: 56px; }
+.token {
+  font-family: var(--face-sec); font-weight: 500; font-size: 13px;
+  color: var(--color1-800); word-break: break-all;
+}
+.spec-facts {
+  margin: 8px 0 0; font-family: var(--face-sec); font-weight: 400;
+  font-size: 13px; line-height: 1.7; color: var(--muted);
+  letter-spacing: 0.01em;
+}
+.spec-facts .k { color: var(--neutral-500); font-size: 13px; }
+/* The value a chip can swap out. */
+.spec-facts .v { color: var(--muted); }
+.sizes { display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
+.size-chip {
+  font-family: var(--face-sec); font-weight: 500; font-size: 10px;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 4px 7px; border: 1px solid var(--rule);
+  color: var(--neutral-700); white-space: nowrap;
+  background: none; cursor: pointer;
+}
+.size-chip.on { background: var(--color1-900); border-color: var(--color1-900); color: var(--color5-200); }
+.size-chip i { font-style: normal; color: var(--neutral-500); }
+.size-chip.on i { color: var(--color1-400); }
+
+/* A chip the reader has clicked. Overrides the automatic breakpoint
+   highlight, so the picked state always wins until it is cleared. */
+.size-chip.picked, .size-chip.picked.chip-t, .size-chip.picked.chip-m {
+  background: var(--color4-700); border-color: var(--color4-700); color: var(--white);
+}
+.size-chip.picked i { color: var(--color4-200); }
+
+/* Weight toggle. Its own class rather than .size-chip, because the size
+   chips carry a breakpoint highlight that would fight the active state. */
+.weights { display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
+.wt-chip {
+  font-family: var(--face-sec); font-weight: 500; font-size: 10px;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 4px 7px; border: 1px solid var(--rule);
+  color: var(--neutral-700); white-space: nowrap;
+  background: none; cursor: pointer;
+}
+.wt-chip.on { background: var(--color1-900); border-color: var(--color1-900); color: var(--color5-200); }
+
+.spec-render { min-width: 0; overflow-wrap: anywhere; }
+
+/* Highlight the live chip per breakpoint */
+@media (max-width: 1023px) {
+  .size-chip.on { background: transparent; border-color: var(--rule); color: var(--neutral-700); }
+  .size-chip.on i { color: var(--neutral-500); }
+  .size-chip.chip-t { background: var(--color1-900); border-color: var(--color1-900); color: var(--color5-200); }
+  .size-chip.chip-t i { color: var(--color1-400); }
+}
+@media (max-width: 767px) {
+  .size-chip.chip-t { background: transparent; border-color: var(--rule); color: var(--neutral-700); }
+  .size-chip.chip-t i { color: var(--neutral-500); }
+  .size-chip.chip-m { background: var(--color1-900); border-color: var(--color1-900); color: var(--color5-200); }
+  .size-chip.chip-m i { color: var(--color1-400); }
+}
+
+/* ---- Typeface cards ------------------------------------- */
+
+/* Hairlines are drawn per card, not by gap bleed, so a short final row
+   leaves ground color rather than a slab of rule color. */
+.faces {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(216px, 1fr));
+  gap: 0; background: var(--ground);
+  border-top: 1px solid var(--rule); border-left: 1px solid var(--rule);
+}
+.face-card {
+  padding: 30px 24px 26px;
+  border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+}
+.face-card .glyphs { font-size: 52px; line-height: 1.1; margin-bottom: 22px; color: var(--color1-900); }
+.face-name { font-family: var(--face-sec); font-weight: 500; font-size: 13px; letter-spacing: 0.02em; }
+.face-css { font-family: var(--face-sec); font-weight: 400; font-size: 11px; color: var(--muted); margin-top: 6px; line-height: 1.7; }
+.face-use { font-family: var(--face-sec); font-weight: 400; font-size: 12px; color: var(--neutral-800); margin-top: 14px; line-height: 1.6; }
+
+/* ---- Callout -------- */
+
+.callout {
+  border-left: 3px solid var(--color4-600);
+  background: var(--color4-100);
+  padding: 20px 24px; margin: 28px 0;
+}
+.callout-title {
+  font-family: var(--face-sec); font-weight: 500; font-size: 11px;
+  letter-spacing: 0.09em; text-transform: uppercase; color: var(--color4-800);
+  margin-bottom: 8px;
+}
+.callout p {
+  margin: 0; font-family: var(--face-sec); font-weight: 400; font-size: 14px;
+  line-height: 1.65; color: var(--neutral-900); overflow-wrap: anywhere;
+}
+.callout p + p { margin-top: 10px; }
+.callout code {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12.5px;
+  background: var(--color4-200); padding: 1px 5px; overflow-wrap: anywhere;
+}
+
+.callout.note { border-left-color: var(--color1-600); background: var(--color1-100); }
+.callout.note .callout-title { color: var(--color1-800); }
+.callout.note code { background: var(--color1-200); }
+
+/* ---- Buttons -------- */
+
+.btn-row { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; margin-bottom: 8px; }
+.btn {
+  border: 1px solid transparent; cursor: pointer;
+  padding: 17px 34px; transition: background .25s ease, color .25s ease, border-color .25s ease;
+}
+.btn-primary { background: var(--color2-900); color: var(--color5-100); }
+.btn-primary:hover { background: var(--color2-800); }
+.btn-primary:active, .btn-primary:focus-visible { background: var(--color2-900); }
+.btn-secondary { background: transparent; color: var(--color1-900); border-color: var(--color1-900); padding: 17px 30px; }
+.btn-secondary:hover { background: var(--color1-900); color: var(--color5-100); }
+
+/* ---- Form demo ------ */
+
+.form-demo { max-width: 460px; margin-top: 8px; border: 0; padding: 0; }
+.form-demo legend { padding: 0; margin-bottom: 22px; color: var(--color1-900); }
+
+.field { margin-bottom: 26px; }
+.field-label-row { display: flex; align-items: baseline; gap: 10px; margin-bottom: 6px; }
+.field label { color: var(--color1-900); }
+
+/* Overrides the uppercase in .tag-form for this instance only.
+   Equal specificity, so source order decides and this rule must stay after
+   the text style classes. */
+.optional { color: var(--neutral-500); text-transform: none; }
+
+/* Hint sits between the label and the control, so it is read before the
+   field is filled in rather than after. */
+.helper { color: var(--neutral-700); margin-bottom: 8px; }
+
+/* Controls do not inherit font by default, so the family, size and weight
+   are all restated. min-height keeps the touch target at 44px. */
+.field input, .field select, .field textarea {
+  width: 100%; padding: 12px 15px; min-height: 44px;
+  border: 1px solid var(--neutral-300); background: var(--white);
+  color: var(--color1-900); border-radius: 0;
+  font-family: var(--face-sec); font-weight: 400;
+  font-size: var(--size-form-label); line-height: 1.5;
+}
+.field input:focus-visible, .field select:focus-visible, .field textarea:focus-visible {
+  outline: 2px solid var(--color1-600); outline-offset: 1px; border-color: var(--color1-900);
+}
+.field input::placeholder, .field textarea::placeholder { color: var(--neutral-600); }
+
+/* Error is marked by weight, color and a glyph, never by color alone. */
+.error-msg { color: var(--color2-800); margin-top: 7px; }
+.error-msg::before { content: "! "; font-weight: 500; }
+.field.is-error input { border-color: var(--color2-700); }
+
+/* ---- Color ---------- */
+
+.families { display: flex; flex-direction: column; gap: 46px; }
+.family-name {
+  display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap;
+  margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--rule);
+}
+.family-name h3 { margin: 0; }
+.family-tag {
+  font-family: var(--face-sec); font-weight: 400; font-size: 11px;
+  letter-spacing: 0.05em; text-transform: uppercase; color: var(--neutral-600);
+}
+.ramp { display: grid; grid-template-columns: repeat(11, 1fr); gap: 1px; }
+/* Neutral is the only family with a 25 step, so its ramp runs one wider. */
+.ramp[data-family="neutral"] { grid-template-columns: repeat(12, 1fr); }
+@media (max-width: 1023px) { .ramp { grid-template-columns: repeat(6, 1fr); gap: 2px; } }
+@media (max-width: 560px)  { .ramp { grid-template-columns: repeat(3, 1fr); gap: 2px; } }
+
+.swatch {
+  border: none; padding: 0; cursor: pointer; text-align: left;
+  display: flex; flex-direction: column; background: none; font: inherit;
+}
+.chip { height: 82px; width: 100%; position: relative; }
+/* The brand step carries an inset rule. Which step that is varies by
+   family, so the rule has to read on dark and light chips alike: .on-light
+   is set from the chip's own luminance when the ramp is built. */
+.chip.brand::after {
+  content: ""; position: absolute; inset: 6px;
+  border: 1px solid rgba(255,255,255,0.55);
+}
+.chip.brand.on-light::after { border-color: rgba(0,0,0,0.42); }
+.swatch-meta { display: block; padding: 9px 2px 0; }
+.step {
+  display: block;
+  font-family: var(--face-sec); font-weight: 500; font-size: 11px;
+  letter-spacing: 0.04em; color: var(--color1-900);
+}
+.step .brand-dot { color: var(--color4-700); }
+.hex {
+  display: block;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 10.5px;
+  color: var(--neutral-600); margin-top: 3px; text-transform: uppercase;
+}
+.swatch:hover .hex { color: var(--color1-800); }
+.swatch.copied .hex { color: var(--color3-800); }
+.swatch.copied .hex::after { content: " copied"; }
+
+/* ---- Token export --------------------------------------- */
+
+.tabs { display: flex; gap: 0; border-bottom: 1px solid var(--rule); margin-bottom: 0; }
+.tab {
+  border: none; background: none; cursor: pointer; padding: 12px 22px;
+  font-family: var(--face-sec); font-weight: 500; font-size: 12px;
+  letter-spacing: 0.06em; text-transform: uppercase; color: var(--neutral-600);
+  border-bottom: 2px solid transparent; margin-bottom: -1px;
+}
+.tab[aria-selected="true"] { color: var(--color1-900); border-bottom-color: var(--color1-900); }
+
+.code-wrap { position: relative; background: var(--color1-900); }
+.code-wrap pre {
+  margin: 0; padding: 28px 26px; overflow-x: auto; max-height: 520px;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 12px; line-height: 1.75; color: var(--color5-300);
+  tab-size: 2;
+}
+.copy-code {
+  position: absolute; top: 14px; right: 14px;
+  border: 1px solid var(--color1-700); background: var(--color1-900); color: var(--color5-200);
+  cursor: pointer; padding: 7px 13px;
+  font-family: var(--face-sec); font-weight: 500; font-size: 10px;
+  letter-spacing: 0.08em; text-transform: uppercase;
+}
+.copy-code:hover { background: var(--color1-800); }
+[hidden] { display: none !important; }
+
+/* ---- Footer --------- */
+
+footer { padding: 56px 0 88px; color: var(--muted); }
+footer p { margin: 0 0 8px; }
+
+/* ---- Print ---------- */
+@media print {
+  .bp-live, .copy-code, .tabs, .sizes { display: none; }
+  section { break-inside: avoid; }
+}

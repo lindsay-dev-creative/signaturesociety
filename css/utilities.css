@@ -1,0 +1,90 @@
+/* ============================================================
+   UTILITIES
+   Merged in from styles.css. Every one of these pointed at a
+   --text-*, --surface-* or --rule-* role that the old file never
+   defined, so the whole block resolved to nothing. The roles now
+   live in tokens.css and these read them.
+   ============================================================ */
+
+/* ---- Text colour ------------------------------------------ */
+.text-heading   { color: var(--text-heading); }
+.text-body      { color: var(--text-body); }
+.text-secondary { color: var(--text-secondary); }
+.text-muted     { color: var(--text-muted); }
+.text-accent    { color: var(--text-accent); }
+
+/* ---- Surface ---------------------------------------------- */
+.surface-page   { background-color: var(--surface-page); }
+.surface-raised { background-color: var(--surface-raised); }
+.surface-sunken { background-color: var(--surface-sunken); }
+
+/* ---- Rules ------------------------------------------------ */
+.rule,
+.rule-strong,
+.rule-subtle {
+  border: 0;
+  border-top: 1px solid;
+  margin: 0;
+}
+.rule        { border-top-color: var(--rule); }
+.rule-strong { border-top-color: var(--rule-strong); }
+.rule-subtle { border-top-color: var(--rule-subtle); }
+
+/* ---- Measure ---------------------------------------------- */
+.measure        { max-width: var(--measure); }
+.measure-narrow { max-width: var(--measure-narrow); }
+.measure-full   { max-width: none; }
+
+/* ---- Figures ----------------------------------------------
+   Old-style in prose, lining and tabular in tables and prices so
+   the columns line up. */
+.nums-old     { font-variant-numeric: oldstyle-nums proportional-nums; }
+.nums-tabular { font-variant-numeric: lining-nums tabular-nums; }
+
+/* ---- Balance and wrap ------------------------------------- */
+.text-balance { text-wrap: balance; }
+.text-pretty  { text-wrap: pretty; }
+
+/* ---- Screen reader only -----------------------------------
+   The two share one geometry; the focusable variant simply stops
+   applying it once the element is focused, which is what makes a
+   skip link appear on tab. */
+.visually-hidden,
+.visually-hidden-focusable:not(:focus):not(:focus-within) {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link:focus {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 100;
+  padding: 0.9em 1.6em;
+  background-color: var(--color5-400);
+  color: var(--color1-900);
+  font-family: var(--face-sec);
+  font-size: var(--body-base-sec);
+  font-weight: var(--weight-body-sec-strong);
+  letter-spacing: var(--ls-nav);
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+/* ---- Reduced motion ---------------------------------------
+   Honours the OS setting across every animation and transition in
+   the system, including the ones the two documents declare. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

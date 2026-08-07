@@ -1,0 +1,467 @@
+/* ============================================================
+   FORM CONTROLS
+   The component layer for every form control in both documents.
+   Loaded last, so these rules win wherever they overlap a
+   per-document stylesheet.
+
+   ONE class per control type, applied in the markup:
+
+     .form-field-text          text · email · url · number
+     .form-field-textarea
+     .form-field-select        single
+     .form-field-select-multi  [multiple]
+     .form-field-checkbox
+     .form-field-file
+     .form-field-date
+
+   plus three text-only styles that carry no box:
+
+     .form-field-label   .form-field-placeholder   .form-field-input
+
+   NO TOKENS ARE DEFINED HERE. They live in tokens.css. A duplicate
+   :root block of all 65 field tokens used to sit in the middle of this
+   file — byte-identical to tokens.css, and because this file loads
+   last it beat the dark remap in tokens.css at equal specificity. That
+   silently disabled dark form theming for [data-surface="dark"] and
+   .on-dark. (#tab-timeline escaped it only because an id out-ranks
+   :root.) Removed; tokens.css is the single source.
+
+   NOT ONE LITERAL VALUE below — every size, colour, weight, radius,
+   padding and duration reads a token, so a control is retuned by
+   moving a token rather than by editing a rule.
+
+   BOTH GROUNDS FOR FREE. Nothing here is redefined for dark. The
+   colours resolve through --color-form-* and --field-*, which remap
+   under [data-surface="dark"] and .on-dark, so the same markup
+   themes itself.
+
+   ORDER MATTERS and is deliberate:
+     1 · text styles    2 · shared shell     3 · shared states
+     4 · per type       5 · mobile
+   The per-type block must follow the shell, because multi-select and
+   file override the shell's padding at equal specificity.
+   ============================================================ */
+
+
+/* ============================================================
+   1 · TEXT STYLES · no box, type only
+   ============================================================ */
+
+/* ---- The three form text styles, as classes ------------------
+   Top level, not nested inside :root. Nested, they compiled to
+   `:root .form-field-label` — a descendant selector at specificity
+   (0,2,0) rather than the (0,1,0) a class is expected to carry, which
+   put them above ordinary component rules and below anything id-scoped.
+   Declared here they behave like every other class in the system.
+
+   The timeline reads these tokens through its own id-scoped rules in
+   forms.css and timeline.css, because its drawer markup is regenerated
+   by script on every render and cannot carry a static class. */
+.form-field-label {
+  font-family: var(--form-field-text-family);
+  font-size: var(--form-field-text-size);
+  font-weight: var(--form-field-weight-strong);
+  line-height: var(--form-field-text-lh);
+  letter-spacing: var(--form-field-text-ls);
+  text-transform: var(--form-field-text-case);
+  color: var(--color-form-label);
+}
+.form-field-label:has(:disabled),
+.form-field-label[data-disabled] { color: var(--color-form-label-disabled); }
+
+.form-field-placeholder {
+  font-family: var(--form-field-text-family);
+  font-size: var(--form-field-text-size);
+  font-weight: var(--form-field-weight-normal);
+  line-height: var(--form-field-text-lh);
+  letter-spacing: var(--form-field-text-ls);
+  text-transform: var(--form-field-text-case);
+  color: var(--color-form-placeholder);
+}
+
+.form-field-input {
+  font-family: var(--form-field-text-family);
+  font-size: var(--form-field-text-size);
+  font-weight: var(--form-field-weight-normal);
+  line-height: var(--form-field-text-lh);
+  letter-spacing: var(--form-field-text-ls);
+  text-transform: var(--form-field-text-case);
+  color: var(--color-form-input);
+}
+.form-field-input:focus::placeholder { color: var(--color-form-placeholder-focused); }
+
+
+/* ============================================================
+   2 · THE SHELL · shared by the six box controls
+   ============================================================ */
+
+/* ---- Fields ---- */
+.form-field-text,
+.form-field-textarea,
+.form-field-select,
+.form-field-select-multi,
+.form-field-file,
+.form-field-date {
+  /* Type · the .form-field-input style */
+  font-family: var(--form-field-text-family);
+  font-size: var(--form-field-text-size);
+  font-weight: var(--form-field-weight-normal);
+  line-height: var(--form-field-text-lh);
+  letter-spacing: var(--form-field-text-ls);
+  text-transform: var(--form-field-text-case);
+  color: var(--color-form-input);
+
+  /* Box */
+  display: block;
+  width: 100%;
+  height: auto;
+  min-height: 34px;
+  margin: 0;
+  padding: var(--field-pad-y) var(--field-pad-x);
+  border: 1px solid var(--field-border);
+  border-radius: var(--field-radius);
+  background-color: var(--field-bg);
+  caret-color: var(--field-caret);
+  color-scheme: var(--form-field-scheme);
+  transition:
+    background-color var(--field-ease),
+    border-color var(--field-ease),
+    color var(--field-ease),
+    box-shadow var(--field-ease);
+}
+
+/* Text-entry controls only. A select draws its own arrow and a file
+   input its own button, so neither may have its appearance stripped. */
+.form-field-text,
+.form-field-textarea,
+.form-field-date {
+  -webkit-appearance: none;
+          appearance: none;
+}
+
+/* ---- Placeholder --------------------------------------------
+   Same face and size as the value, separated from it by weight and
+   colour. opacity:1 because Firefox dims placeholders by default,
+   which would drop this under the contrast floor on its own. */
+.form-field-text::placeholder,
+.form-field-textarea::placeholder,
+.form-field-date::placeholder {
+  font-family: var(--form-field-text-family);
+  font-weight: var(--form-field-weight-normal);
+  letter-spacing: var(--form-field-text-ls);
+  text-transform: var(--form-field-text-case);
+  color: var(--color-form-placeholder);
+  opacity: 1;
+}
+.form-field-text:focus::placeholder,
+.form-field-textarea:focus::placeholder,
+.form-field-date:focus::placeholder {
+  color: var(--color-form-placeholder-focused);
+}
+
+
+/* ============================================================
+   3 · SHARED STATES · selection, hover, focus, filled,
+       read-only, disabled, validation
+   ============================================================ */
+
+/* ---- Selected text inside a field --------------------------- */
+.form-field-text::selection,
+.form-field-textarea::selection,
+.form-field-date::selection {
+  background-color: var(--field-selection-bg);
+  color: var(--field-selection-text);
+}
+
+/* ---- Hover -------------------------------------------------- */
+.form-field-text:hover:not(:disabled):not(:read-only),
+.form-field-textarea:hover:not(:disabled):not(:read-only),
+.form-field-date:hover:not(:disabled):not(:read-only),
+.form-field-select:hover:not(:disabled),
+.form-field-select-multi:hover:not(:disabled),
+.form-field-file:hover:not(:disabled) {
+  background-color: var(--field-bg-hover);
+  border-color: var(--field-border-hover);
+}
+
+/* ---- Focus --------------------------------------------------
+   The soft ring on any focus, a hard ring added for keyboard focus, so
+   a pointer user is not shouted at and a keyboard user is never lost. */
+.form-field-text:focus,
+.form-field-textarea:focus,
+.form-field-select:focus,
+.form-field-select-multi:focus,
+.form-field-file:focus,
+.form-field-date:focus {
+  outline: none;
+  color: var(--field-text-focus);
+  background-color: var(--field-bg-focus);
+  border-color: var(--field-border-focus);
+  box-shadow: 0 0 0 3px var(--focus-ring-soft);
+}
+.form-field-text:focus-visible,
+.form-field-textarea:focus-visible,
+.form-field-select:focus-visible,
+.form-field-select-multi:focus-visible,
+.form-field-file:focus-visible,
+.form-field-date:focus-visible {
+  box-shadow: 0 0 0 1px var(--focus-ring), 0 0 0 4px var(--focus-ring-soft);
+}
+
+/* ---- Filled · a field holding a value carries a firmer edge ---
+   Gated on [placeholder]. :placeholder-shown only ever matches an
+   element that HAS a placeholder attribute, so the bare
+   :not(:placeholder-shown) reads as true for every field without one —
+   an empty textarea would come up styled as filled. */
+.form-field-text[placeholder]:not(:placeholder-shown):not(:focus),
+.form-field-textarea[placeholder]:not(:placeholder-shown):not(:focus) {
+  border-color: var(--field-border-filled);
+}
+
+/* ---- Read-only and disabled ---------------------------------- */
+.form-field-text:read-only,
+.form-field-textarea:read-only,
+.form-field-date:read-only {
+  background-color: var(--field-bg-readonly);
+  color: var(--field-text-readonly);
+  cursor: default;
+}
+.form-field-text:disabled,
+.form-field-textarea:disabled,
+.form-field-select:disabled,
+.form-field-select-multi:disabled,
+.form-field-file:disabled,
+.form-field-date:disabled {
+  background-color: var(--field-bg-disabled);
+  border-color: var(--field-border-disabled);
+  color: var(--field-text-disabled);
+  cursor: not-allowed;
+}
+.form-field-text:disabled::placeholder,
+.form-field-textarea:disabled::placeholder { color: var(--field-text-disabled); }
+
+/* ---- Validation ----------------------------------------------
+   Marked by border, tint AND the message beside it, never by colour
+   on its own. */
+.form-field-text[aria-invalid="true"],
+.form-field-textarea[aria-invalid="true"],
+.form-field-select[aria-invalid="true"],
+.form-field-select-multi[aria-invalid="true"],
+.form-field-file[aria-invalid="true"],
+.form-field-date[aria-invalid="true"] {
+  border-color: var(--field-error);
+  background-color: var(--field-error-bg);
+}
+.form-field-text[aria-invalid="true"]:focus,
+.form-field-textarea[aria-invalid="true"]:focus,
+.form-field-select[aria-invalid="true"]:focus,
+.form-field-select-multi[aria-invalid="true"]:focus,
+.form-field-file[aria-invalid="true"]:focus,
+.form-field-date[aria-invalid="true"]:focus {
+  border-color: var(--field-error);
+  box-shadow: 0 0 0 3px var(--field-error-ring);
+}
+.form-field-text[data-state="success"],
+.form-field-textarea[data-state="success"],
+.form-field-select[data-state="success"] {
+  border-color: var(--field-success);
+  background-color: var(--field-success-bg);
+}
+.form-field-text[data-state="warning"],
+.form-field-textarea[data-state="warning"],
+.form-field-select[data-state="warning"] {
+  border-color: var(--field-warning);
+  background-color: var(--field-warning-bg);
+}
+
+
+/* ============================================================
+   4 · PER CONTROL TYPE
+   ============================================================ */
+
+/* ============ 1 · TEXT ============ */
+/* Nothing beyond the shell. It is the base every other box is a
+   variation on, and stating it again would only invite drift. */
+
+/* ============ 2 · TEXTAREA ============ */
+.form-field-textarea {
+  min-height: var(--form-field-textarea-min);
+  resize: vertical;
+}
+
+/* ============ 3 · SINGLE-SELECT ============
+   The arrow is left to the platform. Drawing our own would mean an SVG
+   with a colour baked into it, and a baked colour cannot follow a token
+   across the light and dark grounds — which is the whole point of this
+   file. color-scheme on the shell is what keeps the native arrow in
+   step instead. */
+.form-field-select {
+  cursor: pointer;
+}
+.form-field-select option,
+.form-field-select-multi option {
+  font-family: var(--form-field-text-family);
+  font-size: var(--form-field-text-size);
+  font-weight: var(--form-field-weight-normal);
+  background-color: var(--field-bg);
+  color: var(--color-form-input);
+}
+
+/* ============ 4 · MULTI-SELECT ============
+   A list, not a line, so the padding moves off the box and onto the
+   options: inset padding on a scrolling list leaves a dead margin the
+   rows scroll under. */
+.form-field-select-multi {
+  padding-inline: 0;
+  padding-block: calc(var(--field-pad-y) / 2);
+  min-height: var(--form-field-multi-min);
+  cursor: pointer;
+}
+.form-field-select-multi option {
+  padding: calc(var(--field-pad-y) / 2) var(--field-pad-x);
+}
+.form-field-select-multi option:checked {
+  background-color: var(--control-checked-bg);
+  color: var(--control-checked-mark);
+  font-weight: var(--form-field-weight-strong);
+}
+
+/* ============ 5 · FILE UPLOAD ============
+   The native control is a button plus a filename. The button takes the
+   button tokens, the filename takes the field's own text colour. */
+.form-field-file {
+  cursor: pointer;
+  padding-block: calc(var(--field-pad-y) / 2);
+}
+.form-field-file::file-selector-button {
+  margin-right: var(--field-pad-x);
+  padding: var(--btn-pad-y-sm) var(--btn-pad-x-sm);
+  border: var(--btn-border-w) solid var(--btn-fill-bg);
+  border-radius: var(--btn-radius);
+  background-color: var(--btn-fill-bg);
+  color: var(--btn-fill-label);
+  font-family: var(--face-sec);
+  font-size: var(--btn-size-sm);
+  font-weight: var(--weight-btn-sec);
+  letter-spacing: var(--ls-btn-sec);
+  text-transform: var(--case-btn-sec);
+  cursor: pointer;
+  transition: background-color var(--field-ease), border-color var(--field-ease);
+}
+.form-field-file::file-selector-button:hover {
+  background-color: var(--btn-fill-bg-hover);
+  border-color: var(--btn-fill-bg-hover);
+}
+.form-field-file:disabled::file-selector-button {
+  background-color: var(--btn-disabled-bg);
+  border-color: var(--btn-disabled-stroke);
+  color: var(--btn-disabled-label);
+  cursor: not-allowed;
+}
+
+/* ============ 6 · CHECKBOX ============
+   Sized in em so it tracks the label sitting beside it at any step.
+   The tick is two borders on a rotated box rather than a glyph or an
+   image, so it inherits --control-checked-mark and needs no asset. */
+.form-field-checkbox {
+  -webkit-appearance: none;
+          appearance: none;
+  flex: none;
+  display: inline-grid;
+  place-content: center;
+  width: var(--form-field-box);
+  height: var(--form-field-box);
+  margin: 0;
+  border: 1px solid var(--control-border);
+  border-radius: var(--field-radius);
+  background-color: var(--control-bg);
+  color-scheme: var(--form-field-scheme);
+  cursor: pointer;
+  transition: background-color var(--field-ease), border-color var(--field-ease);
+}
+.form-field-checkbox::before {
+  content: "";
+  width: 0.3em;
+  height: 0.6em;
+  margin-top: -0.12em;
+  border-right: 2px solid var(--control-checked-mark);
+  border-bottom: 2px solid var(--control-checked-mark);
+  transform: rotate(45deg) scale(0);
+  transition: transform var(--field-ease);
+}
+.form-field-checkbox:hover:not(:disabled) { border-color: var(--control-border-hover); }
+.form-field-checkbox:checked {
+  background-color: var(--control-checked-bg);
+  border-color: var(--control-checked-bg);
+}
+.form-field-checkbox:checked::before { transform: rotate(45deg) scale(1); }
+.form-field-checkbox:checked:hover:not(:disabled) {
+  background-color: var(--control-checked-hover);
+  border-color: var(--control-checked-hover);
+}
+/* Indeterminate is a bar, not a tick: it means "some", not "none". */
+.form-field-checkbox:indeterminate {
+  background-color: var(--control-checked-bg);
+  border-color: var(--control-checked-bg);
+}
+.form-field-checkbox:indeterminate::before {
+  width: 0.55em;
+  height: 0;
+  margin-top: 0;
+  border-right: 0;
+  border-bottom: 2px solid var(--control-checked-mark);
+  transform: none;
+}
+.form-field-checkbox:focus-visible {
+  outline: none;
+  border-color: var(--field-border-focus);
+  box-shadow: 0 0 0 1px var(--focus-ring), 0 0 0 4px var(--focus-ring-soft);
+}
+.form-field-checkbox:disabled {
+  background-color: var(--control-disabled-bg);
+  border-color: var(--field-border-disabled);
+  cursor: not-allowed;
+}
+.form-field-checkbox[aria-invalid="true"] { border-color: var(--field-error); }
+
+/* ============ 7 · DATE ============
+   The picker, its calendar popup and the clear button are all drawn by
+   the OS and follow color-scheme, which the shell already sets from
+   --form-field-scheme. What is left is the indicator, which is a
+   platform image and so takes a filter rather than a colour: inverted
+   on the dark ground, left alone on the light one. */
+.form-field-date {
+  cursor: pointer;
+}
+.form-field-date::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity var(--field-ease);
+}
+.form-field-date:hover::-webkit-calendar-picker-indicator { opacity: 1; }
+
+
+/* ============================================================
+   5 · MOBILE
+   ============================================================ */
+
+/* ---- Mobile -------------------------------------------------
+   16px is the floor that stops iOS Safari zooming the page when a field
+   takes focus, and the controls give up their measure and grow to a
+   real touch target. */
+@media (max-width: 767px) {
+  .form-field-text,
+  .form-field-textarea,
+  .form-field-select,
+  .form-field-select-multi,
+  .form-field-file,
+  .form-field-date {
+    font-size: var(--form-field-text-touch);
+  }
+  .form-field-text,
+  .form-field-select,
+  .form-field-file,
+  .form-field-date {
+    min-height: var(--btn-touch);
+  }
+}

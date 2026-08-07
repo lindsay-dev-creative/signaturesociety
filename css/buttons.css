@@ -1,0 +1,288 @@
+/* ============================================================
+   BUTTONS
+   Merged in from styles.css. Every value reads a --btn-* token
+   from tokens.css, so the dark ground is handled by the remap
+   under [data-surface="dark"] / .on-dark and not repeated here.
+
+   Two axes, set independently:
+     type     .btn-serif  ·  .btn-sans
+     variant  .btn-pri-fill  ·  .btn-pri-outline
+
+     <button class="btn btn-serif btn-pri-fill">Enquire</button>
+
+   The old file pointed .btn-serif at --btn-serif / --lh-btn-serif /
+   --ls-btn-serif and .btn-sans at the matching --btn-sans trio.
+   None of those six tokens existed, so both type classes shipped
+   with no size, line height or tracking at all. They now read the
+   interface sizes the rest of the system uses.
+   ============================================================ */
+
+/* ============================================================
+   BUTTON TOKENS
+   Burgundy is the action family. Hover steps to color2-600, not
+   color2-700: 700 and 800 hold the same hex in the Figma 'scales'
+   frame, so a 700 hover would not read as a state change at all.
+   (Same correction already applied to .form-btn in forms.css.)
+   ============================================================ */
+:root {
+  /* ---- Fill ----
+     Measured from the btn-sec-fill frame in Figma, node 6028-2073.
+     Its #3F1214 is an unbound raw hex in the design — get_variable_defs
+     returns no colour variable for it — and it sits between
+     --color2-900 (#26070C) and --color2-800 (#4D0F19), so there is no
+     ramp step it is meant to be. Recorded as the button's own value
+     rather than snapped to the nearest step, which read visibly lighter
+     against the frame side by side. The label is the frame's #F6F5F4
+     for the same reason.
+
+     Hover and active still come off the ramp, one step either side, so
+     the states read as a change. */
+  --btn-fill-bg:           #3F1214;
+  --btn-fill-bg-hover:     var(--color2-600);
+  --btn-fill-bg-active:    var(--color2-900);
+  --btn-fill-label:        #F6F5F4;
+  --btn-fill-label-active: #F6F5F4;
+
+  /* ---- Outline ----
+     The wash tints from the light end of the burgundy ramp. The old
+     file reached for color2-900 here, a near-black behind near-black
+     text, which left the hover state unreadable. */
+  --btn-outline-stroke:        var(--color2-800);
+  --btn-outline-stroke-hover:  var(--color2-600);
+  --btn-outline-stroke-active: var(--color2-900);
+  --btn-outline-wash:          transparent;
+  --btn-outline-wash-hover:    var(--color2-50);
+  --btn-outline-wash-active:   var(--color2-100);
+
+  /* ---- Disabled ---- */
+  --btn-disabled-bg:     var(--neutral-400);
+  --btn-disabled-stroke: var(--neutral-400);
+  --btn-disabled-label:  var(--neutral-50);
+
+  /* ---- Inline wash ----
+     A tint of the ink, not a grey, so the quiet control sits in the
+     same family as the surface it is drawn on. */
+  --btn-inline-wash:        rgba(15, 19, 64, 0.05);
+  --btn-inline-wash-hover:  rgba(15, 19, 64, 0.11);
+  --btn-inline-wash-active: rgba(15, 19, 64, 0.16);
+
+  /* ---- Shape · square, like the rest of the system ---- */
+  --btn-pad-y:    var(--btn-pad-y-lg);
+  --btn-pad-x:    var(--btn-pad-x-lg);
+  --btn-size:     var(--btn-size-lg);
+  --btn-radius:   var(--radius);
+  --btn-border-w: 1px;
+}
+
+/* ---- Box -------------------------------------------------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  padding: var(--btn-pad-y) var(--btn-pad-x);
+  border: var(--btn-border-w) solid transparent;
+  border-radius: var(--btn-radius);
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-appearance: none;
+          appearance: none;
+  transition:
+    background-color var(--ease-ui),
+    border-color var(--ease-ui),
+    color var(--ease-ui);
+}
+
+/* Icons scale with the label rather than carrying a fixed px size,
+   so a button set at any step keeps the same icon-to-text ratio. */
+.btn > svg {
+  width: 1em;
+  height: 1em;
+  fill: currentColor;
+  flex: none;
+}
+
+
+/* ---- Type ------------------------------------------------- */
+
+.btn-serif {
+  font-family: var(--face-btn);
+  font-size: var(--btn-size);
+  font-weight: var(--weight-btn);
+  line-height: 1;
+  letter-spacing: var(--ls-btn);
+  text-transform: var(--case-btn);
+}
+
+.btn-sans-base-upper {
+  font-family: var(--face-sec);
+  font-size: var(--size-btn-base-sec-upper);
+  font-weight: var(--weight-btn-sec);
+  line-height: 1;
+  letter-spacing: var(--ls-btn-sec-upper);
+  text-transform: var(--case-btn-sec-upper);
+}
+
+.btn-sans-sm-upper {
+  font-family: var(--face-sec);
+  font-size: var(--size-btn-sm-sec-upper);
+  font-weight: var(--weight-btn-sec);
+  line-height: 1;
+  letter-spacing: var(--ls-btn-sec-upper);
+  text-transform: var(--case-btn-sec-upper);
+}
+
+.btn-sans {
+  font-family: var(--face-sec);
+  font-size: var(--size-btn-sec);
+  font-weight: var(--weight-btn-sec);
+  line-height: 1;
+  letter-spacing: var(--ls-btn-sec);
+  text-transform: var(--case-btn-sec);
+}
+
+
+/* ---- Size -------------------------------------------------
+   A size variant sets three tokens and nothing else, so it can be
+   combined with any type or fill variant without restating them.
+   .btn-lg is the default and only needs stating to override an
+   inherited size. */
+
+.btn-sm {
+  --btn-pad-y: var(--btn-pad-y-sm);
+  --btn-pad-x: var(--btn-pad-x-sm);
+  --btn-size:  var(--btn-size-sm);
+}
+
+.btn-md {
+  --btn-pad-y: var(--btn-pad-y-md);
+  --btn-pad-x: var(--btn-pad-x-md);
+  --btn-size:  var(--btn-size-md);
+}
+
+.btn-lg {
+  --btn-pad-y: var(--btn-pad-y-lg);
+  --btn-pad-x: var(--btn-pad-x-lg);
+  --btn-size:  var(--btn-size-lg);
+}
+
+
+/* ---- Inline ------------------------------------------------
+   The quiet variant: a control that sits inside a toolbar, table
+   row or drawer rather than terminating a section. It carries no
+   border and only a wash for a fill, so a row of them reads as one
+   group instead of competing with the page's real actions.
+
+   Was a timeline-local class with its own font-size, weight,
+   tracking and padding. Those are now the size variants above and
+   the tokens; what stays here is only what makes it inline. */
+
+.btn-inline {
+  letter-spacing: var(--ls-btn-sec);
+  border-color: transparent;
+  background-color: var(--btn-inline-wash, rgba(255, 255, 255, 0.04));
+  color: var(--text-accent);
+  gap: 0.4em;
+}
+
+@media (hover: hover) {
+  .btn-inline:hover {
+    background-color: var(--btn-inline-wash-hover, rgba(255, 255, 255, 0.10));
+    color: var(--text-heading);
+  }
+}
+
+.btn-inline:active {
+  background-color: var(--btn-inline-wash-active, rgba(255, 255, 255, 0.16));
+  transform: translateY(1px);
+}
+
+/* Selected, not pressed. Carries a real fill so the current choice
+   is readable without relying on the wash alone. */
+.btn-inline.active {
+  background-color: var(--btn-fill-bg);
+  color: var(--btn-fill-label);
+}
+
+
+/* ---- Primary fill ----------------------------------------- */
+
+.btn-pri-fill {
+  background-color: var(--btn-fill-bg);
+  border-color: var(--btn-fill-bg);
+  color: var(--btn-fill-label);
+}
+
+.btn-pri-fill:active {
+  background-color: var(--btn-fill-bg-active);
+  border-color: var(--btn-fill-bg-active);
+  color: var(--btn-fill-label-active);
+}
+
+
+/* ---- Primary outline --------------------------------------
+   The wash deepens as the stroke brightens, so the press reads
+   without the button ever becoming a copy of the fill variant
+   sitting next to it. */
+
+.btn-pri-outline {
+  background-color: var(--btn-outline-wash);
+  border-color: var(--btn-outline-stroke);
+  color: var(--btn-outline-stroke);
+}
+
+.btn-pri-outline:active {
+  background-color: var(--btn-outline-wash-active);
+  border-color: var(--btn-outline-stroke-active);
+  color: var(--btn-outline-stroke-active);
+}
+
+
+/* ---- Hover ------------------------------------------------
+   Behind a hover query, so a touch device never latches a hover
+   state on tap. The old file wrote the hover rules unconditionally
+   and then tried to unwind them in a max-width block, which left
+   the two fighting on any small window with a mouse attached. */
+
+@media (hover: hover) {
+  .btn-pri-fill:hover {
+    background-color: var(--btn-fill-bg-hover);
+    border-color: var(--btn-fill-bg-hover);
+    color: var(--btn-fill-label);
+  }
+  .btn-pri-outline:hover {
+    background-color: var(--btn-outline-wash-hover);
+    border-color: var(--btn-outline-stroke-hover);
+    color: var(--btn-outline-stroke-hover);
+  }
+}
+
+
+/* ---- Focus ------------------------------------------------
+   Offset so the ring clears the outline variant's own border. */
+
+.btn:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+
+/* ---- Disabled --------------------------------------------- */
+
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  background-color: var(--btn-disabled-bg);
+  border-color: var(--btn-disabled-stroke);
+  color: var(--btn-disabled-label);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+
+/* ---- Mobile ----------------------------------------------- */
+
+@media (max-width: 767px) {
+  :root { --btn-pad-x: 1.8em; }
+}

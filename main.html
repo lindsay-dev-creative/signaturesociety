@@ -1,0 +1,3322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Signature Society</title>
+
+<link rel="preconnect" href="https://use.typekit.net" crossorigin>
+<link rel="stylesheet" href="https://use.typekit.net/hqq5dii.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
+
+<!-- System layer. Tokens first, then the components that read them.
+     Kept above the two document stylesheets so that where a generic
+     rule and a scoped one carry equal weight, the document wins. -->
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/buttons.css">
+<link rel="stylesheet" href="css/links.css">
+<link rel="stylesheet" href="css/utilities.css">
+
+<!-- Document layer, one stylesheet per panel. -->
+<link rel="stylesheet" href="css/timeline.css">
+<link rel="stylesheet" href="css/guidelines.css">
+
+<!-- Form components load last so they win wherever they overlap. -->
+<link rel="stylesheet" href="css/forms.css">
+</head>
+<body>
+
+<nav class="doc-tabs" role="tablist" aria-label="Documents">
+  <img class="doc-tabs-mark" src="assets/SIG_LOGO_LOGOMARK_WHITE.svg" alt="Signature Society">
+  <button class="doc-tab" type="button" role="tab" id="doctab-timeline"
+          aria-controls="tab-timeline" aria-selected="true">Project timeline</button>
+  <button class="doc-tab" type="button" role="tab" id="doctab-brand"
+          aria-controls="tab-brand" aria-selected="false">Brand guidelines</button>
+</nav>
+
+<section id="tab-timeline" role="tabpanel" aria-labelledby="doctab-timeline">
+<div class="wrap">
+  <nav class="masthead-actions" aria-label="Team spaces">
+    <button type="button" class="nav-link" id="boardOpenBtn">Message Board</button>
+    <button type="button" class="nav-link" id="notesOpenBtn">Meeting Notes</button>
+    <button type="button" class="nav-link" id="suggestOpenBtn">Suggestions</button>
+  </nav>
+  <header class="masthead">
+    <div class="masthead-brand">
+    <img class="brand-logo" src="data:image/png;base64,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" alt="Signature Society">
+    <div class="brand-text">
+      <h6 class="heading-1x" style="color:var(--neutral-100)">Shopify Website Development</h6>
+      <span class="text-base-italic" style="color:var(--neutral-100)">Project Timeline</span>
+    </div>
+    </div>
+    <div class="masthead-copy">
+      <!-- The burgundy slab is gone. It was the loudest object on the
+           page, it collided with the burgundy of the real action
+           buttons, and it packed two unrelated facts into one box with
+           nothing between them. This is the same content as a quiet
+           editorial panel: hairline, label, date, hairline, links —
+           the date carries its weight through type and the tan accent
+           rather than through a colour block.
+           All type comes from the existing classes; only layout is
+           inline, so no new CSS. -->
+      <div class="header-card">
+        <!-- Only this first .inner carries the rule; the Resources block
+             below deliberately has none. border-bottom-width takes a
+             single length, so "1px var(--color5-600)" was invalid and
+             dropped whole — the shorthand is what draws it. align-self
+             stretches it to the card's full width, because the parent is
+             a column flex with align-items:flex-start and the row would
+             otherwise shrink to the width of its text. -->
+        <div class="header-card inner" style="border-bottom:1px solid var(--color5-600);align-self:stretch;padding-bottom:16px;">
+          <span class="body-pri-sm" style="color:var(--neutral-100);margin-bottom:4px;">Launch date</span>
+          <!-- font-weight inline overrides the 300 that .header-card .date
+               takes from --weight-display: this date is the Display roman,
+               not the Light. 400 is a real published cut of
+               kepler-std-display, so nothing is synthesised. -->
+          <div class="header-card date" style="padding:0px;margin:0;font-weight:400;">NOV 4, 2026</div>
+        </div>
+        <div class="header-card inner">
+          <span class="body-pri-sm" style="color:var(--neutral-100)">Resources & Links</span>
+          <ul>
+            <li><a href="https://docs.google.com/spreadsheets/d/19bja2JXHV_TU48Ek6kvphBd2c8Aisc2bk62aUVEsGjM/edit?gid=0#gid=0" target="_blank" rel="noopener">Product Details Sheet</a></li>
+            <li><a href="https://drive.google.com/drive/folders/11f89GE-GjzKeZGo02tCF0q421uJmzuyP" target="_blank" rel="noopener">Main Google Drive</a></li>
+            <li><a href="https://docs.google.com/document/d/1SX32Tb6AYjSx0Tu6NqIQoRL638Psf1Bx2KzSPGmHw-8/edit?usp=drive_link" target="_blank" rel="noopener">Website Copy</a></li>
+            <li><a href="https://docs.google.com/document/d/1SX32Tb6AYjSx0Tu6NqIQoRL638Psf1Bx2KzSPGmHw-8/edit?tab=t.mmg4pega1kzp" target="_blank" rel="noopener">Policies copy</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  
+
+  <div class="viewbar">
+    <div class="segmented" id="segmented">
+      <button data-view="month" class="btn btn-sans btn-md btn-inline active">Month</button>
+      <button data-view="week" class="btn btn-sans btn-md btn-inline">Week</button>
+      <button data-view="timeline" class="btn btn-sans btn-md btn-inline" style="color:var(neutral-100);">Gantt</button>
+    </div>
+    <div class="navgroup">
+      <button class="btn btn-sans btn-sm btn-inline" id="prevBtn" aria-label="Previous">&#8249;</button>
+      <span class="period-title" id="periodTitle">--</span>
+      <button class="btn btn-sans btn-sm btn-inline" id="nextBtn" aria-label="Next">&#8250;</button>
+    </div>
+    <button class="btn btn-sans btn-sm btn-inline" id="todayBtn">Today</button>
+    <div class="spacer"></div>
+  </div>
+
+  <div id="calArea"></div>
+
+  <section class="listview" id="listview">
+    <div class="listview-head">
+      <h3 class="heading-3x" style="color:var(--neutral-50);">Full schedule</h3>
+      <button type="button" class="btn btn-sans-sm-upper btn-sm btn-pri-fill" id="newTaskBtn" style="margin-left:auto;flex:none">+ New Task/Phase</button>
+    </div>
+    <div class="list-body" id="listBody"></div>
+  </section>
+
+</div>
+
+<!-- EDIT DRAWER -->
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-hidden="true">
+  <div class="drawer-head">
+    <div>
+      <h4 id="dTitle" style="margin-top:4px;display:none">Edit phase</h4>
+    </div>
+    <!-- Meeting notes sits in the head, hard right, 24px clear of the
+         close button. margin-left:auto pushes the pair away from the
+         title. The margin is 12px, not 24: .drawer-head is a flex row
+         with gap:12px, and the two add up to the 24px asked for. -->
+    <button type="button" class="btn btn-sans btn-sm btn-pri-fill" id="noteFromPhaseBtn"
+            style="margin-left:auto;margin-right:12px;flex:none;align-self:center">Meeting notes</button>
+    <button class="drawer-close" id="drawerClose" aria-label="Close">&times;</button>
+  </div>
+  <div class="drawer-body" id="drawerBody"></div>
+  <div class="drawer-foot" id="drawerFoot"></div>
+</aside>
+
+<!-- FILE PREVIEW -->
+<div class="scrim" id="previewScrim"></div>
+<div class="preview-modal" id="previewModal" role="dialog" aria-modal="true" aria-labelledby="previewName" aria-hidden="true">
+  <div class="preview-head">
+    <span class="pv-name" id="previewName"></span>
+    <a class="btn btn-sans btn-md btn-inline" id="previewDownload" download>Download</a>
+    <button class="drawer-close" id="previewClose" aria-label="Close preview">&times;</button>
+  </div>
+  <div class="preview-body" id="previewBody"></div>
+</div>
+
+<!-- MESSAGE BOARD / SUGGESTIONS (same modal, two boards) -->
+<div class="scrim" id="boardScrim"></div>
+<div class="board-modal" id="boardModal" role="dialog" aria-modal="true" aria-labelledby="boardTitle" aria-hidden="true">
+  <div class="board-head">
+    <h4 id="boardTitle">Message Board</h4>
+    <button class="drawer-close" id="boardClose" aria-label="Close">&times;</button>
+  </div>
+  <div class="board-list" id="boardList"></div>
+  <div class="board-foot">
+    <div class="ca-row" id="boardAuthorRow"></div>
+    <textarea class="form-field-textarea" id="bText" placeholder="Write a message for the team..."></textarea>
+  </div>
+</div>
+
+<!-- MEETING NOTES -->
+<div class="scrim" id="notesScrim"></div>
+<div class="board-modal" id="notesModal" role="dialog" aria-modal="true" aria-labelledby="notesTitle" aria-hidden="true">
+  <div class="board-head">
+    <h4 id="notesTitle">Meeting Notes</h4>
+    <button class="drawer-close" id="notesClose" aria-label="Close meeting notes">&times;</button>
+  </div>
+  <div class="board-list" id="notesList"></div>
+  <div class="board-foot">
+    <button type="button" class="btn btn-sans btn-md btn-inline" id="noteNewBtn">New meeting note</button>
+  </div>
+</div>
+
+<!-- SINGLE MEETING NOTE -->
+<div class="scrim" id="noteScrim"></div>
+<div class="board-modal note-modal" id="noteModal" role="dialog" aria-modal="true" aria-labelledby="noteTitle" aria-hidden="true">
+  <div class="board-head">
+    <h4 id="noteTitle">Meeting note</h4>
+    <span class="note-date" id="noteDate"></span>
+    <!-- The phase the note was uploaded from. Hidden when there isn't
+         one, so a standalone note shows no empty slot. -->
+    <span class="note-src" id="noteSrc" style="display:none"></span>
+    <button class="drawer-close" id="noteClose" aria-label="Close note">&times;</button>
+  </div>
+  <div class="note-body">
+    <textarea class="form-field-textarea" id="noteText" placeholder="Paste or type the meeting notes here..."></textarea>
+  </div>
+  <div class="board-foot note-foot">
+    <button class="btn btn-sans btn-lg btn-primary" id="noteSaveBtn">Save note</button>
+    <button class="btn btn-sans btn-md btn-inline" id="noteCancelBtn">Cancel</button>
+    <button class="btn btn-sans btn-md btn-inline note-del" id="noteDeleteBtn">Delete</button>
+  </div>
+</div>
+</section>
+
+<section id="tab-brand" role="tabpanel" aria-labelledby="doctab-brand" hidden>
+<div class="bp-live">
+  <span>Signature Society · Type + Color</span>
+  <span>
+    Active scale:
+    <b class="bp-d">Desktop · 1024px and up</b>
+    <b class="bp-t">Tablet · 768&ndash;1023px</b>
+    <b class="bp-m">Mobile · below 768px</b>
+  </span>
+</div>
+
+<div class="wrap">
+
+  <!-- ==================== MASTHEAD ==================== -->
+  <header class="masthead">
+    <div class="eyebrow-row">
+      <span class="internal-flag">Internal use only</span>
+      <span class="doc-meta body-sm-sec">Version 1.0 · August 2026</span>
+    </div>
+    <h1 class="heading-6x">Signature<br>Society</h1>
+    <p class="lede body-pri">
+      Brand guidelines covering the typographic system and the color system. Every
+      specimen on this page is rendered in the live token it documents, so what you
+      see is what ships. Resize the window to watch the responsive scale change.
+    </p>
+  </header>
+
+  <!-- ==================== 01 TYPEFACES ==================== -->
+  <section id="typefaces">
+    <div class="sec-head">
+      <h2 class="heading-3x">Typefaces</h2>
+    </div>
+    <p class="sec-note body-base-sec">
+      Kepler Std carries the brand voice and is used at four optical sizes. Choosing
+      the optical size by point size is not optional: it is what keeps the letterforms
+      correct at scale. PP Playground sits above all of it as the hero face. Inter is
+      the secondary face, used for interface copy, forms and the form button.
+    </p>
+
+    <div class="faces">
+      <div class="face-card">
+        <div class="glyphs" style="font-family:var(--face-hero); font-weight:500;">Aa</div>
+        <div class="face-name">PP Playground Medium</div>
+        <div class="face-css">font-family: "PP Playground"<br>weight 100, 300 and 500 · self-hosted woff2</div>
+        <div class="face-use">Hero moments only, above 86px. Never uppercase.</div>
+      </div>
+      <div class="face-card">
+        <div class="glyphs" style="font-family:var(--face-display); text-transform:uppercase; letter-spacing:-0.01em;">Aa</div>
+        <div class="face-name">Kepler Std Display</div>
+        <div class="face-css">font-family: "kepler-std-display"<br>weight 300 and 400 · italic at 400</div>
+        <div class="face-use">Headings 32px and above. Always uppercase.</div>
+      </div>
+      <div class="face-card">
+        <div class="glyphs" style="font-family:var(--face-subhead); text-transform:uppercase; letter-spacing:0.01em;">Aa</div>
+        <div class="face-name">Kepler Std Subhead</div>
+        <div class="face-css">font-family: "kepler-std-subhead"<br>weight 400 · roman and italic</div>
+        <div class="face-use">Headings 18px to 32px. Always uppercase.</div>
+      </div>
+      <div class="face-card">
+        <div class="glyphs" style="font-family:var(--face-regular);">Aa</div>
+        <div class="face-name">Kepler Std Regular</div>
+        <div class="face-css">font-family: "kepler-std"<br>weight 300 and 400 · roman and italic</div>
+        <div class="face-use">Primary body copy at 14px to 18px, plus the primary button and nav at weight 500.</div>
+      </div>
+      <div class="face-card">
+        <div class="glyphs" style="font-family:var(--face-caption);">Aa</div>
+        <div class="face-name">Kepler Std Caption</div>
+        <div class="face-css">font-family: "kepler-std-caption"<br>weight 400</div>
+        <div class="face-use">13px and below.</div>
+      </div>
+      <div class="face-card">
+        <div class="glyphs" style="font-family:var(--face-sec); font-weight:400;">Aa</div>
+        <div class="face-name">Inter</div>
+        <div class="face-css">font-family: "Inter"<br>weight 400, 500 and 600</div>
+        <div class="face-use">Secondary body, forms, form button.</div>
+      </div>
+    </div>
+
+    <!-- HIDDEN FOR NOW. Both callouts below are intact and unedited.
+         Delete this comment wrapper to bring them back.
+
+    <div class="callout">
+      <div class="callout-title">Font loading · two stylesheets</div>
+      <p>Kepler Std comes from the Adobe kit <code>hqq5dii</code>. Inter is loaded from Google Fonts
+         because the Adobe kit publishes <code>inter-18pt</code> at weight 400 only, and the system
+         needs a real weight 500 for the secondary button and form labels.</p>
+      <p><code>&lt;link rel="stylesheet" href="https://use.typekit.net/hqq5dii.css"&gt;</code><br>
+         <code>&lt;link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&amp;display=swap"&gt;</code></p>
+    </div>
+
+    <div class="callout">
+      <div class="callout-title">Action required · Kepler Std Medium Caption</div>
+      <p>The primary button is specified as <code>kepler-std-caption</code> at weight 500. That face is
+         not yet published in kit <code>hqq5dii</code>, which currently carries Caption at weight 400 only.
+         Until it is added in Adobe Fonts the browser will synthesise the weight, which is not the
+         real Medium Caption drawing. Add it to the kit before launch.</p>
+    </div>
+
+    -->
+  </section>
+
+  <!-- ==================== 02 HEADING + BODY SCALE ==================== -->
+  <section id="primary-scale">
+    <div class="sec-head">
+      <h2 class="heading-3x">Primary type scale</h2>
+    </div>
+    <p class="sec-note body-base-sec">
+      Kepler Std across seven heading steps and three body steps, with PP Playground
+      above it for hero moments. Three ratios rather than one: desktop is 18px base at
+      1.25, tablet 17px at 1.2, mobile 17px at 1.125. Only the headings, the hero steps
+      and the body base move; sm and xs are fixed everywhere. The highlighted chip is
+      the value in force at your current window width. Click any chip to preview that
+      breakpoint without resizing.
+    </p>
+
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">hero-1x</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> <span class="v v-face">PP Playground Medium</span><br>
+          <span class="k">Weight</span> <span class="v v-wt">500</span><br>
+          <span class="k">Case</span> Sentence<br>
+          <span class="k">Line height</span> 1.08<br>
+          <span class="k">Tracking</span> 0
+        </div>
+        <div class="weights">
+          <button type="button" class="wt-chip on" data-cls="hero-1x" data-face="PP Playground Medium" data-wt="500">Medium 500</button>
+          <button type="button" class="wt-chip" data-cls="hero-1x-light" data-face="PP Playground Light" data-wt="300">Light 300</button>
+          <button type="button" class="wt-chip" data-cls="hero-1x-thin" data-face="PP Playground Thin" data-wt="100">Thin 100</button>
+        </div>
+        <div class="sizes">
+          <button type="button" class="size-chip on" data-px="134"><i>D</i> 134</button>
+          <button type="button" class="size-chip chip-t" data-px="88"><i>T</i> 88</button>
+          <button type="button" class="size-chip chip-m" data-px="49"><i>M</i> 49</button>
+        </div>
+      </div>
+      <div class="spec-render"><div class="hero-1x">The quiet luxury</div></div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">hero</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> <span class="v v-face">PP Playground Medium</span><br>
+          <span class="k">Weight</span> <span class="v v-wt">500</span><br>
+          <span class="k">Case</span> Sentence<br>
+          <span class="k">Line height</span> 1.10<br>
+          <span class="k">Tracking</span> 0
+        </div>
+        <div class="weights">
+          <button type="button" class="wt-chip on" data-cls="hero" data-face="PP Playground Medium" data-wt="500">Medium 500</button>
+          <button type="button" class="wt-chip" data-cls="hero-light" data-face="PP Playground Light" data-wt="300">Light 300</button>
+          <button type="button" class="wt-chip" data-cls="hero-thin" data-face="PP Playground Thin" data-wt="100">Thin 100</button>
+        </div>
+        <div class="sizes">
+          <button type="button" class="size-chip on" data-px="118"><i>D</i> 118</button>
+          <button type="button" class="size-chip chip-t" data-px="73"><i>T</i> 73</button>
+          <button type="button" class="size-chip chip-m" data-px="44"><i>M</i> 44</button>
+        </div>
+      </div>
+      <div class="spec-render"><div class="hero">Considered by hand</div></div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">heading-6x-light</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> <span class="v v-face">Kepler Std Light Display</span><br>
+          <span class="k">Weight</span> <span class="v v-wt">300</span><br>
+          <span class="k">Case</span> Uppercase<br>
+          <span class="k">Line height</span> 1.04<br>
+          <span class="k">Tracking</span> <span class="v v-ls">0</span>
+        </div>
+        <div class="weights">
+          <button type="button" class="wt-chip" data-cls="heading-6x" data-face="Kepler Std Display" data-wt="400">Regular 400</button>
+          <button type="button" class="wt-chip on" data-cls="heading-6x-light" data-face="Kepler Std Light Display" data-wt="300">Light 300</button>
+        </div>
+        <div class="sizes">
+          <button type="button" class="size-chip on" data-px="86"><i>D</i> 86</button>
+          <button type="button" class="size-chip chip-t" data-px="61"><i>T</i> 61</button>
+          <button type="button" class="size-chip chip-m" data-px="39"><i>M</i> 39</button>
+        </div>
+      </div>
+      <div class="spec-render"><div class="heading-6x-light">The quiet luxury</div></div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">heading-5x-light</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> <span class="v v-face">Kepler Std Light Display</span><br>
+          <span class="k">Weight</span> <span class="v v-wt">300</span><br>
+          <span class="k">Case</span> Uppercase<br>
+          <span class="k">Line height</span> 1.06<br>
+          <span class="k">Tracking</span> <span class="v v-ls">0.005em</span>
+        </div>
+        <div class="weights">
+          <button type="button" class="wt-chip" data-cls="heading-5x" data-face="Kepler Std Display" data-wt="400">Regular 400</button>
+          <button type="button" class="wt-chip on" data-cls="heading-5x-light" data-face="Kepler Std Light Display" data-wt="300">Light 300</button>
+        </div>
+        <div class="sizes">
+          <button type="button" class="size-chip on" data-px="69"><i>D</i> 69</button>
+          <button type="button" class="size-chip chip-t" data-px="51"><i>T</i> 51</button>
+          <button type="button" class="size-chip chip-m" data-px="34"><i>M</i> 34</button>
+        </div>
+      </div>
+      <div class="spec-render"><div class="heading-5x-light">Considered by hand</div></div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">heading-4x-light</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> <span class="v v-face">Kepler Std Light Display</span><br>
+          <span class="k">Weight</span> <span class="v v-wt">300</span><br>
+          <span class="k">Case</span> Uppercase<br>
+          <span class="k">Line height</span> 1.08<br>
+          <span class="k">Tracking</span> <span class="v v-ls">0.01em</span>
+        </div>
+        <div class="weights">
+          <button type="button" class="wt-chip" data-cls="heading-4x" data-face="Kepler Std Display" data-wt="400">Regular 400</button>
+          <button type="button" class="wt-chip on" data-cls="heading-4x-light" data-face="Kepler Std Light Display" data-wt="300">Light 300</button>
+        </div>
+        <div class="sizes">
+          <button type="button" class="size-chip on" data-px="55"><i>D</i> 55</button>
+          <button type="button" class="size-chip chip-t" data-px="42"><i>T</i> 42</button>
+          <button type="button" class="size-chip chip-m" data-px="31"><i>M</i> 31</button>
+        </div>
+      </div>
+      <div class="spec-render"><div class="heading-4x-light">A signature is earned</div></div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">heading-3x-light</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> <span class="v v-face">Kepler Std Light Display</span><br>
+          <span class="k">Weight</span> <span class="v v-wt">300</span><br>
+          <span class="k">Case</span> Uppercase<br>
+          <span class="k">Line height</span> 1.10<br>
+          <span class="k">Tracking</span> <span class="v v-ls">0.015em</span>
+        </div>
+        <div class="weights">
+          <button type="button" class="wt-chip" data-cls="heading-3x" data-face="Kepler Std Display" data-wt="400">Regular 400</button>
+          <button type="button" class="wt-chip on" data-cls="heading-3x-light" data-face="Kepler Std Light Display" data-wt="300">Light 300</button>
+        </div>
+        <div class="sizes">
+          <button type="button" class="size-chip on" data-px="44"><i>D</i> 44</button>
+          <button type="button" class="size-chip chip-t" data-px="35"><i>T</i> 35</button>
+          <button type="button" class="size-chip chip-m" data-px="27"><i>M</i> 27</button>
+        </div>
+      </div>
+      <div class="spec-render"><div class="heading-3x-light">Formulated in small batches</div></div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">heading-2x</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> <span class="v v-face">Kepler Std Display</span><br>
+          <span class="k">Weight</span> <span class="v v-wt">400</span><br>
+          <span class="k">Case</span> Uppercase<br>
+          <span class="k">Line height</span> 1.14<br>
+          <span class="k">Tracking</span> <span class="v v-ls">0.02em</span>
+        </div>
+        <div class="weights">
+          <button type="button" class="wt-chip on" data-cls="heading-2x" data-face="Kepler Std Display" data-wt="400">Regular 400</button>
+          <button type="button" class="wt-chip" data-cls="heading-2x-light" data-face="Kepler Std Light Display" data-wt="300">Light 300</button>
+        </div>
+        <div class="sizes">
+          <button type="button" class="size-chip on" data-px="35"><i>D</i> 35</button>
+          <button type="button" class="size-chip chip-t" data-px="29"><i>T</i> 29</button>
+          <button type="button" class="size-chip chip-m" data-px="24"><i>M</i> 24</button>
+        </div>
+      </div>
+      <div class="spec-render"><div class="heading-2x">The step that crosses the optical boundary</div></div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">heading-1x</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> <span class="v v-face">Kepler Std Subhead</span><br>
+          <span class="k">Case</span> Uppercase<br>
+          <span class="k">Line height</span> 1.20<br>
+          <span class="k">Tracking</span> <span class="v v-ls">0.025em</span>
+        </div>
+        <div class="sizes">
+          <button type="button" class="size-chip on" data-px="28"><i>D</i> 28</button>
+          <button type="button" class="size-chip chip-t" data-px="24"><i>T</i> 24</button>
+          <button type="button" class="size-chip chip-m" data-px="22"><i>M</i> 22</button>
+        </div>
+      </div>
+      <div class="spec-render"><div class="heading-1x">Section headings and category titles</div></div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">heading</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> <span class="v v-face">Kepler Std Subhead</span><br>
+          <span class="k">Case</span> Uppercase<br>
+          <span class="k">Line height</span> 1.26<br>
+          <span class="k">Tracking</span> <span class="v v-ls">0.03em</span>
+        </div>
+        <div class="sizes">
+          <button type="button" class="size-chip on" data-px="22"><i>D</i> 22</button>
+          <button type="button" class="size-chip chip-t" data-px="20"><i>T</i> 20</button>
+          <button type="button" class="size-chip chip-m" data-px="19"><i>M</i> 19</button>
+        </div>
+      </div>
+      <div class="spec-render"><div class="heading">The smallest heading step, one above the base</div></div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">body-pri</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> <span class="v v-face">Kepler Std Regular</span><br>
+          <span class="k">Case</span> Sentence<br>
+          <span class="k">Line height</span> 1.60<br>
+          <span class="k">Tracking</span> <span class="v v-ls">0</span>
+        </div>
+        <div class="sizes">
+          <button type="button" class="size-chip on" data-px="18"><i>D</i> 18</button>
+          <button type="button" class="size-chip chip-t" data-px="17"><i>T</i> 17</button>
+          <button type="button" class="size-chip chip-m" data-px="17"><i>M</i> 17</button>
+        </div>
+      </div>
+      <div class="spec-render">
+        <p class="body-pri" style="margin:0; max-width:60ch;">
+          The primary body style. Every long-form passage on the site is set here:
+          product stories, ingredient notes, the journal. Eighteen pixels of Kepler
+          Std Regular reads warm and unhurried, which is the point.
+        </p>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">body-pri-sm</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> <span class="v v-face">Kepler Std Regular</span><br>
+          <span class="k">Case</span> Sentence<br>
+          <span class="k">Line height</span> 1.60<br>
+          <span class="k">Tracking</span> <span class="v v-ls">0</span>
+        </div>
+        <div class="sizes"><span class="size-chip on"><i>All</i> 15</span></div>
+      </div>
+      <div class="spec-render">
+        <p class="body-pri-sm" style="margin:0; max-width:64ch;">
+          One step below the base, for supporting copy and secondary detail. Fixed at
+          15px on every breakpoint, so it never runs larger on mobile than on desktop.
+        </p>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">body-pri-xs</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> <span class="v v-face">Kepler Std Caption</span><br>
+          <span class="k">Case</span> Sentence<br>
+          <span class="k">Line height</span> 1.55<br>
+          <span class="k">Tracking</span> <span class="v v-ls">0</span>
+        </div>
+        <div class="sizes"><span class="size-chip on"><i>All</i> 13</span></div>
+      </div>
+      <div class="spec-render">
+        <p class="body-pri-xs" style="margin:0; max-width:70ch;">
+          Two steps below the base and fixed at 13px. Thirteen pixels sits in the Caption
+          optical size, drawn with the open counters and sturdier strokes that hold up
+          small. Captions, footnotes, ingredient lists.
+        </p>
+      </div>
+    </div>
+
+    <div class="callout note">
+      <div class="callout-title">Where the optical size changes</div>
+      <p>The 32px boundary does not sit between two fixed steps, because all three ratios
+         differ. <code>heading-2x</code> is 35px on desktop and 24px on mobile, so it starts in
+         Display and ends in Subhead. <code>heading-3x</code> and <code>heading-4x</code> cross the same line
+         at mobile only. The CSS handles this with family overrides in the breakpoints,
+         so the class name stays the same and the correct cut is chosen for you.</p>
+    </div>
+  </section>
+
+  <!-- ==================== 03 SECONDARY SCALE ==================== -->
+  <section id="secondary-scale">
+    <div class="sec-head">
+      <h2 class="heading-3x">Secondary type scale</h2>
+    </div>
+    <p class="sec-note body-base-sec">
+      Inter at weight 400, base 15px. There are no steps above the base: anything
+      larger belongs to Kepler Std. This scale does not change across breakpoints.
+      Use it for interface copy that should recede, and anywhere Kepler would feel
+      too editorial.
+    </p>
+
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">body-base-sec</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> Inter<br>
+          <span class="k">Weight</span> 400<br>
+          <span class="k">Line height</span> 1.70<br>
+          <span class="k">Tracking</span> 0
+        </div>
+        <div class="sizes"><span class="size-chip on"><i>All</i> 15</span></div>
+      </div>
+      <div class="spec-render">
+        <p class="body-base-sec" style="margin:0; max-width:62ch;">
+          The secondary body style. Interface copy, navigation, order summaries,
+          shipping detail and anything else that should stay quiet and legible
+          without carrying the brand voice.
+        </p>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">body-sm-sec</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> Inter<br>
+          <span class="k">Weight</span> 400<br>
+          <span class="k">Line height</span> 1.65<br>
+          <span class="k">Tracking</span> 0
+        </div>
+        <div class="sizes"><span class="size-chip on"><i>All</i> 13</span></div>
+      </div>
+      <div class="spec-render">
+        <p class="body-sm-sec" style="margin:0; max-width:68ch;">
+          Supporting interface text. Helper copy under a field, table cells, metadata,
+          timestamps and inline notes.
+        </p>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">body-xs-sec</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> Inter<br>
+          <span class="k">Weight</span> 400<br>
+          <span class="k">Line height</span> 1.55<br>
+          <span class="k">Tracking</span> 0
+        </div>
+        <div class="sizes"><span class="size-chip on"><i>All</i> 11</span></div>
+      </div>
+      <div class="spec-render">
+        <p class="body-xs-sec" style="margin:0; max-width:80ch;">
+          The floor of the system. Legal lines, disclaimers, optional-field markers
+          and badge text. Never set a full sentence of reading copy at this size.
+        </p>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">italic-sec</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> Inter<br>
+          <span class="k">Weight</span> 400 italic<br>
+          <span class="k">Size</span> 15px, 13px or 11px<br>
+          <span class="k">Note</span> Modifier, composes with any secondary step
+        </div>
+      </div>
+      <div class="spec-render">
+        <p class="body-base-sec italic-sec" style="margin:0; max-width:62ch;">
+          Italic is a modifier rather than a step. Add it to any secondary size.
+        </p>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">text-upper-sec</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> Inter<br>
+          <span class="k">Weight</span> 500<br>
+          <span class="k">Size</span> 15px, 13px or 11px<br>
+          <span class="k">Case</span> Uppercase
+        </div>
+      </div>
+      <div class="spec-render">
+        <div class="body-sm-sec text-upper-sec">Free shipping over one hundred</div>
+        <p class="body-sm-sec" style="margin:12px 0 0; color:var(--muted); max-width:62ch;">
+          All uppercase Inter takes weight 500, at whatever size it is composed with.
+          The form button is the one exception and stays sentence case at weight 500.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 04 INTERFACE ==================== -->
+  <section id="buttons">
+    <div class="sec-head">
+      <h2 class="heading-3x">Interface type</h2>
+    </div>
+    <p class="sec-note body-base-sec">
+      Buttons and navigation. The primary button and the nav carry Kepler Std at
+      weight 500; the form button carries Inter. All three sit at 14px and none of
+      them changes across breakpoints, except the nav, which becomes a Subhead
+      heading at mobile size.
+    </p>
+
+    <div class="btn-row">
+      <button type="button" class="btn btn-primary btn-pri">Add to ritual</button>
+      <button type="button" class="btn btn-secondary btn-form">View details</button>
+    </div>
+
+    <div class="spec" style="margin-top:36px;">
+      <div class="spec-key">
+        <div class="token">btn-pri</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> Kepler Std Medium<br>
+          <span class="k">Weight</span> 500<br>
+          <span class="k">Size</span> 14px<br>
+          <span class="k">Tracking</span> 0.084em<br>
+          <span class="k">Case</span> Uppercase<br>
+          <span class="k">Line height</span> 1
+        </div>
+      </div>
+      <div class="spec-render">
+        <div class="btn-pri" style="color:var(--color1-900);">Add to ritual · Checkout · Subscribe</div>
+        <p class="body-sm-sec" style="margin:16px 0 0; color:var(--muted); max-width:62ch;">
+          The single most branded piece of interface type. The wide 0.084em tracking is
+          what makes it read as considered rather than generic, so it must not be reduced.
+          Rest is <code>color2/800</code>, hover <code>color2/700</code>, pressed <code>color2/900</code>.
+        </p>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">btn-form</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> Inter<br>
+          <span class="k">Weight</span> 500<br>
+          <span class="k">Size</span> 14px<br>
+          <span class="k">Tracking</span> 0<br>
+          <span class="k">Case</span> Sentence<br>
+          <span class="k">Line height</span> 1
+        </div>
+      </div>
+      <div class="spec-render">
+        <div class="btn-form" style="color:var(--color1-900);">Continue · Save address · Cancel</div>
+        <p class="body-sm-sec" style="margin:16px 0 0; color:var(--muted); max-width:62ch;">
+          Deliberately plainer than the primary. Sentence case and Inter keep it
+          subordinate, so the primary action never has to compete. This is the one
+          uppercase-exempt Inter style in the system.
+        </p>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">text-nav-1</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> Kepler Std Medium, Subhead on mobile<br>
+          <span class="k">Weight</span> 500, 400 on mobile<br>
+          <span class="k">Size</span> 14px, 24px on mobile<br>
+          <span class="k">Tracking</span> 0.24em, 0 on mobile<br>
+          <span class="k">Case</span> Uppercase, sentence on mobile
+        </div>
+        <div class="sizes">
+          <span class="size-chip on"><i>D</i> 14</span>
+          <span class="size-chip chip-t"><i>T</i> 14</span>
+          <span class="size-chip chip-m"><i>M</i> 24</span>
+        </div>
+      </div>
+      <div class="spec-render">
+        <div class="text-nav-1" style="color:var(--color1-900);">Shop &nbsp; Journal &nbsp; About</div>
+        <p class="body-sm-sec" style="margin:16px 0 0; color:var(--muted); max-width:62ch;">
+          The only style in the system that changes character rather than just size.
+          On desktop it is a tracked-out uppercase rule across the top of the page.
+          On mobile it becomes a stacked drawer, so it drops the tracking, the case
+          and the Medium weight and reads as a list of headings instead.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 05 FORMS ==================== -->
+  <section id="forms">
+    <div class="sec-head">
+      <h2 class="heading-3x">Form typography</h2>
+    </div>
+    <p class="sec-note body-base-sec">
+      Forms are entirely Inter. Kepler Std is never used inside a form control:
+      checkout is a task, not a place for the brand voice. The form styles are built
+      from the secondary scale and do not change across breakpoints.
+    </p>
+
+    <form onsubmit="return false;">
+      <fieldset class="form-demo">
+        <legend class="legend-form">Shipping address</legend>
+
+        <div class="field">
+          <div class="field-label-row">
+            <label class="label-form" for="demo-email">Email address</label>
+          </div>
+          <div class="helper helper-form" id="demo-email-hint">Order confirmations and shipping updates only.</div>
+          <input class="input-form form-field-text" id="demo-email" name="email" type="email"
+                 autocomplete="email" aria-describedby="demo-email-hint" placeholder="you@example.com">
+        </div>
+
+        <div class="field">
+          <div class="field-label-row">
+            <label class="label-form" for="demo-apt">Apartment or suite</label>
+            <span class="optional tag-form">Optional</span>
+          </div>
+          <input class="input-form form-field-text" id="demo-apt" name="address2" type="text"
+                 autocomplete="address-line2" placeholder="Unit 4B">
+        </div>
+
+        <div class="field is-error">
+          <div class="field-label-row">
+            <label class="label-form" for="demo-post">Postal code</label>
+          </div>
+          <input class="input-form form-field-text" id="demo-post" name="postal-code" type="text"
+                 autocomplete="postal-code" inputmode="numeric" value="0000"
+                 aria-invalid="true" aria-describedby="demo-post-err">
+          <div class="error-msg error-form" id="demo-post-err">Enter a valid postal code.</div>
+        </div>
+      </fieldset>
+    </form>
+
+    <div class="spec" style="margin-top:44px;">
+      <div class="spec-key">
+        <div class="token">legend-form</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> Inter<br>
+          <span class="k">Weight</span> 500<br>
+          <span class="k">Size</span> 15px<br>
+          <span class="k">Line height</span> 1.4<br>
+          <span class="k">Tracking</span> 0.06em<br>
+          <span class="k">Case</span> Uppercase
+        </div>
+      </div>
+      <div class="spec-render">
+        <div class="legend-form" style="color:var(--color1-900);">Shipping address</div>
+        <p class="body-sm-sec" style="margin:12px 0 0; color:var(--muted); max-width:62ch;">
+          Fieldset and step headings. It matches the label in size and weight, so case
+          and tracking are what separate them. Use a real <code>&lt;legend&gt;</code> inside a
+          <code>&lt;fieldset&gt;</code> so the grouping is announced, not just drawn.
+        </p>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">label-form</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> Inter<br>
+          <span class="k">Weight</span> 500<br>
+          <span class="k">Size</span> 15px<br>
+          <span class="k">Line height</span> 1.45<br>
+          <span class="k">Case</span> Sentence
+        </div>
+      </div>
+      <div class="spec-render">
+        <div class="label-form" style="color:var(--color1-900);">Email address</div>
+        <p class="body-sm-sec" style="margin:12px 0 0; color:var(--muted); max-width:62ch;">
+          Always visible, above the control, never replaced by a placeholder and never
+          collapsed into one. Matches the input at 15px so the pair reads as one unit;
+          weight alone separates the question from the answer. Every label needs a
+          <code>for</code> pointing at the control&rsquo;s <code>id</code>.
+        </p>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">input-form</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> Inter<br>
+          <span class="k">Weight</span> 400<br>
+          <span class="k">Size</span> 15px<br>
+          <span class="k">Line height</span> 1.5<br>
+          <span class="k">Case</span> Sentence
+        </div>
+      </div>
+      <div class="spec-render">
+        <div class="input-form" style="color:var(--color1-900);">you@example.com</div>
+        <p class="body-sm-sec" style="margin:12px 0 0; color:var(--muted); max-width:62ch;">
+          Value text in inputs, selects and textareas. Controls do not inherit type from
+          the page, so the family, size and weight have to be restated on the element.
+          Pair with a minimum 44px control height for the touch target.
+        </p>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">placeholder-form</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> Inter<br>
+          <span class="k">Weight</span> 400<br>
+          <span class="k">Size</span> 15px<br>
+          <span class="k">Line height</span> 1.5<br>
+          <span class="k">Color</span> neutral-600
+        </div>
+      </div>
+      <div class="spec-render">
+        <div class="placeholder-form" style="color:var(--neutral-600);">Unit 4B</div>
+        <p class="body-sm-sec" style="margin:12px 0 0; color:var(--muted); max-width:62ch;">
+          Same size and weight as the value, lightened to neutral-600 so an empty field is
+          obviously empty. It is an example of the format, never the label and never the
+          hint, because it disappears the moment typing starts.
+        </p>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">helper-form</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> Inter<br>
+          <span class="k">Weight</span> 400<br>
+          <span class="k">Size</span> 13px<br>
+          <span class="k">Line height</span> 1.5<br>
+          <span class="k">Color</span> Neutral/80
+        </div>
+      </div>
+      <div class="spec-render">
+        <div class="helper-form" style="color:var(--neutral-700);">Order confirmations and shipping updates only.</div>
+        <p class="body-sm-sec" style="margin:12px 0 0; color:var(--muted); max-width:62ch;">
+          Sits between the label and the control, so it is read before the field is filled
+          in rather than after it is got wrong. Wire it up with <code>aria-describedby</code>.
+        </p>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">error-form</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> Inter<br>
+          <span class="k">Weight</span> 500<br>
+          <span class="k">Size</span> 13px<br>
+          <span class="k">Line height</span> 1.5<br>
+          <span class="k">Color</span> Secondary/90
+        </div>
+      </div>
+      <div class="spec-render">
+        <div class="error-form" style="color:var(--color2-800);">Enter a valid postal code.</div>
+        <p class="body-sm-sec" style="margin:12px 0 0; color:var(--muted); max-width:62ch;">
+          Below the control. Weight, color and a leading glyph all carry the message, so it
+          survives for anyone who cannot separate Secondary/90 from Neutral/80. Say what to
+          do, not that something is invalid. Set <code>aria-invalid</code> and point
+          <code>aria-describedby</code> at it.
+        </p>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">tag-form</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> Inter<br>
+          <span class="k">Weight</span> 500<br>
+          <span class="k">Size</span> 11px<br>
+          <span class="k">Line height</span> 1.4<br>
+          <span class="k">Tracking</span> 0.08em<br>
+          <span class="k">Case</span> Uppercase
+        </div>
+      </div>
+      <div class="spec-render">
+        <div class="tag-form" style="color:var(--neutral-500);">Optional</div>
+        <p class="body-sm-sec" style="margin:12px 0 0; color:var(--muted); max-width:62ch;">
+          Sits beside the label. Mark what is optional rather than starring what is
+          required: on most forms it is the shorter list and it reads as an invitation
+          rather than a demand.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 06 COLOR ====================
+       Print will need CMYK and spot equivalents adding. -->
+  <section id="color">
+    <div class="sec-head">
+      <h2 class="heading-3x">Color system</h2>
+    </div>
+    <p class="sec-note body-base-sec">
+      Six families running 900 at the darkest to 50 at the lightest. Five carry
+      ten steps; Neutral carries eleven, with an extra 950 below the 900. The
+      brand swatch is marked with an inset rule and a bullet, and it is not the
+      same step in every family: 800 for Colors 1, 2, 3 and 4, 400 for Color 5,
+      200 for Neutral. Each family heading names its own. Click any swatch to
+      copy its hex.
+    </p>
+
+    <div class="families">
+
+      <div class="family">
+        <div class="family-name">
+          <h3>Color 1</h3>
+          <span class="family-tag"><span class="brand-ref" data-family="color1"></span> · navy</span>
+        </div>
+        <div class="ramp" data-family="color1"></div>
+      </div>
+
+      <div class="family">
+        <div class="family-name">
+          <h3>Color 2</h3>
+          <span class="family-tag"><span class="brand-ref" data-family="color2"></span> · burgundy</span>
+        </div>
+        <div class="ramp" data-family="color2"></div>
+      </div>
+
+      <div class="family">
+        <div class="family-name">
+          <h3>Color 3</h3>
+          <span class="family-tag"><span class="brand-ref" data-family="color3"></span> · forest</span>
+        </div>
+        <div class="ramp" data-family="color3"></div>
+      </div>
+
+      <div class="family">
+        <div class="family-name">
+          <h3>Color 4</h3>
+          <span class="family-tag"><span class="brand-ref" data-family="color4"></span> · tobacco</span>
+        </div>
+        <div class="ramp" data-family="color4"></div>
+      </div>
+
+      <div class="family">
+        <div class="family-name">
+          <h3>Color 5</h3>
+          <span class="family-tag"><span class="brand-ref" data-family="color5"></span> · tan</span>
+        </div>
+        <div class="ramp" data-family="color5"></div>
+      </div>
+
+      <div class="family">
+        <div class="family-name">
+          <h3>Neutral</h3>
+          <span class="family-tag"><span class="brand-ref" data-family="neutral"></span></span>
+        </div>
+        <div class="ramp" data-family="neutral"></div>
+      </div>
+
+    </div>
+
+    <div class="callout">
+      <div class="callout-title">Action required · confirm Pantone separation</div>
+      <p>All four dark families sit low in lightness at their brand step. Before anything goes to
+         a printer, run the six brand values through Illustrator with the Solid Coated library
+         loaded and confirm all six come back distinct. Below roughly 12 percent lightness the
+         library collapses most dark colors onto <code>Black 6 C</code> regardless of hue, and
+         Color 1 at <code>#08142B</code> is the one most exposed to that.</p>
+      <p>The ramps are low chroma throughout. <code>color1/500</code> is <code>#5671A5</code>, a
+         muted slate blue that still reads as the brand, so the earlier warning to avoid the 400
+         to 600 band on links and focus states no longer applies.</p>
+      <p>Color 2 fills the secondary role in the brand. The families are named
+         <code>color1</code> through <code>color5</code> in Figma and are called the same here, and
+         the step numbers now match the Figma <code>scales</code> frame one for one, so the
+         document and the design file cannot drift apart.</p>
+      <p>Two things to fix in the Figma file, carried here as they stand rather than corrected
+         silently. <code>color2/700</code> holds <code>#4D0F19</code>, identical to
+         <code>color2/800</code>, so the burgundy ramp has no distinct 700 and a hover state built
+         on it will not read as a change. Separately, the <code>color5</code> 900 and 800 layers
+         are labelled the other way round from every other family; they are recorded here in
+         lightness order, with 900 as the darker of the two.</p>
+    </div>
+  </section>
+
+  <!-- ==================== 07 TOKENS ====================
+       Hidden for now. Remove the hidden attribute below to bring it back. -->
+  <section id="tokens" hidden>
+    <div class="sec-head">
+      <h2 class="heading-3x">Token export</h2>
+    </div>
+    <p class="sec-note body-base-sec">
+      The full system, ready to paste. The CSS block mirrors css/tokens.css,
+      media queries included.
+    </p>
+
+    <div class="tabs" role="tablist">
+      <button class="tab" role="tab" aria-selected="true" data-panel="panel-css">CSS custom properties</button>
+      <button class="tab" role="tab" aria-selected="false" data-panel="panel-json">JSON</button>
+    </div>
+
+    <div class="code-wrap">
+      <button class="copy-code" type="button">Copy</button>
+      <pre id="panel-css" role="tabpanel"><code>:root {
+  /* Typefaces */
+  --face-display: "kepler-std-display", Georgia, serif;
+  --face-subhead: "kepler-std-subhead", Georgia, serif;
+  --face-regular: "kepler-std", Georgia, serif;
+  --face-caption: "kepler-std-caption", Georgia, serif;
+  --face-sec:     "Inter", "inter-18pt", sans-serif;   /* weights 400, 500, 600 */
+  --face-hero:    "PP Playground", "kepler-std-display", Georgia, serif;
+
+  /* Hero scale: desktop. PP Playground Medium, above the Kepler ceiling. */
+  --hero:    118px;  --lh-hero:    1.10;
+  --hero-1x: 134px;  --lh-hero-1x: 1.08;
+  --ls-hero: 0;
+  /* Weights: .hero-thin 100, .hero-light 300, .hero 500. Same for 1x. */
+
+  /* Heading scale: desktop, 1024px and up */
+  --heading:    22px;  --lh-heading:    1.26;
+  --heading-1x: 28px;  --lh-heading-1x: 1.20;
+  --heading-2x: 35px;  --lh-heading-2x: 1.14;
+  --heading-3x: 44px;  --lh-heading-3x: 1.10;
+  --heading-4x: 55px;  --lh-heading-4x: 1.08;
+  --heading-5x: 69px;  --lh-heading-5x: 1.06;
+  --heading-6x: 86px;  --lh-heading-6x: 1.04;
+  /* .heading-2x-light through .heading-6x-light share these values;
+     weight 300 instead of 400. Subhead has no 300, so 2x falls back to
+     400 below 1024px, and 3x and 4x on mobile. */
+
+  /* Primary body scale. Only the base is responsive. */
+  --body-pri:    18px;  --lh-body-pri:    1.60;
+  --body-pri-sm: 15px;  --lh-body-pri-sm: 1.60;
+  --body-pri-xs: 13px;  --lh-body-pri-xs: 1.55;
+
+  /* Tracking. Headings run a graduated ladder anchored on 4x at 0.01em,
+     stepping 0.005em per position. Tracking belongs to the step, not the
+     optical cut, so it does not change at a breakpoint. Only the face
+     does. The hero steps are excluded and stay at 0. */
+  --ls-heading-6x: 0;
+  --ls-heading-5x: 0.005em;
+  --ls-heading-4x: 0.01em;
+  --ls-heading-3x: 0.015em;
+  --ls-heading-2x: 0.02em;
+  --ls-heading-1x: 0.025em;
+  --ls-heading:    0.03em;
+  --ls-text:     0;        /* sentence case */
+  --ls-btn:      0.084em;
+  --ls-btn-sec:  0.02em;
+  --ls-nav:      0.24em;
+
+  /* Secondary scale: all breakpoints */
+  --body-base-sec: 15px;  --lh-body-base-sec: 1.70;
+  --body-sm-sec:   13px;  --lh-body-sm-sec:   1.65;
+  --body-xs-sec:   11px;  --lh-body-xs-sec:   1.55;
+
+  /* Interface sizes: all breakpoints */
+  --size-btn: 14px;  --size-btn-sec: 14px;  --size-nav: 14px;
+  --size-form-btn: 14px;  --size-form-label: 15px;
+
+  /* Brand bases. The anchor step differs by family. */
+  --color1:  var(--color1-800);
+  --color2:  var(--color2-800);
+  --color3:  var(--color3-800);
+  --color4:  var(--color4-800);
+  --color5:  var(--color5-400);
+  --neutral: var(--neutral-200);
+
+  /* Color 1 · navy */
+  --color1-900: #030811;  --color1-800: #08142B;  --color1-700: #192D54;
+  --color1-600: #334C7D;  --color1-500: #5671A5;  --color1-400: #829CCE;
+  --color1-300: #B8CDF7;  --color1-200: #D1E1FF;  --color1-100: #E5EEFF;
+  --color1-50:  #F8FAFF;
+
+  /* Color 2 · burgundy */
+  --color2-900: #26070C;  --color2-800: #4D0F19;  --color2-700: #4D0F19;
+  --color2-600: #762330;  --color2-500: #9F3E4E;  --color2-400: #C76272;
+  --color2-300: #F08E9E;  --color2-200: #FFB6C2;  --color2-100: #FFD5DC;
+  --color2-50:  #FFF4F6;
+
+  /* Color 3 · forest */
+  --color3-900: #07220B;  --color3-800: #0C4015;  --color3-700: #1F692B;
+  --color3-600: #3A9249;  --color3-500: #5DBB6D;  --color3-400: #89E398;
+  --color3-300: #B4FFC1;  --color3-200: #CBFFD3;  --color3-100: #E1FFE6;
+  --color3-50:  #F7FFF9;
+
+  /* Color 4 · tobacco */
+  --color4-900: #221206;  --color4-800: #40220C;  --color4-700: #693D1F;
+  --color4-600: #925E3A;  --color4-500: #BB845D;  --color4-400: #E4AE89;
+  --color4-300: #FFD3B4;  --color4-200: #FFE0CA;  --color4-100: #FFEDE1;
+  --color4-50:  #FFFAF7;
+
+  /* Color 5 · tan */
+  --color5-900: #221D11;  --color5-800: #4E4329;  --color5-700: #6C5D3B;
+  --color5-600: #89774E;  --color5-500: #A69263;  --color5-400: #C3AD79;
+  --color5-300: #E0C891;  --color5-200: #FDE4AA;  --color5-100: #FFF1D0;
+  --color5-50:  #FFFCF6;
+
+  /* Neutral, plus an extra 950 step below the 900 */
+  --neutral-950: #32312A;  --neutral-900: #4D4B40;  --neutral-800: #625F53;
+  --neutral-700: #767366;  --neutral-600: #8A887A;  --neutral-500: #9F9C8F;
+  --neutral-400: #B3B1A4;  --neutral-300: #C8C5BA;  --neutral-200: #DCDAD0;
+  --neutral-100: #F0EFE7;  --neutral-50:  #FFFEF9;
+  --white: #FFFFFF;
+
+  /* Document surface */
+  --ink:    var(--color1);      --ground:     var(--neutral-50);
+  --rule:   var(--color5-300);  --rule-faint: var(--color5-200);
+  --muted:  var(--neutral-700);
+}
+
+/* SEMANTIC ROLES. Components name a role, never a ramp step, so a
+   surface can be re-themed by re-pointing these alone. */
+:root {
+  --text-heading:   var(--ink);          --text-heading-accent: var(--color5-700);
+  --text-body:      var(--ink);          --text-secondary:      var(--neutral-700);
+  --text-muted:     var(--neutral-600);  --text-accent:         var(--color5-700);
+  --text-light:     var(--neutral-50);
+
+  --surface-page:   var(--ground);  --surface-raised: var(--white);
+  --surface-sunken: var(--neutral-100);
+
+  --rule-strong: var(--color5-500);  --rule-subtle: var(--rule-faint);
+
+  --measure: 70ch;  --measure-narrow: 56ch;
+  --ease-ui: 160ms ease;
+  --radius:  0;     --radius-sm: 0;     /* the system is square throughout */
+
+  /* Weights */
+  --weight-display: 300;  --weight-subhead: 400;  --weight-regular: 400;
+  --weight-caption: 400;  --weight-btn:     500;  --weight-btn-sec: 500;
+  --weight-body-sec-normal: 400;  --weight-body-sec-strong: 500;
+  --weight-hero: 400;
+
+  /* Casing */
+  --case-heading: uppercase;  --case-btn:     uppercase;
+  --case-body-pri: none;      --case-body-sec: none;
+  --case-btn-sec:  none;      --case-nav:      none;
+}
+
+/* BUTTONS. Burgundy is the action family. Hover steps to color2-600,
+   not 700: 700 and 800 hold the same hex in the Figma 'scales' frame,
+   so a 700 hover would not read as a state change at all. */
+:root {
+  --btn-fill-bg:       var(--color2-800);  --btn-fill-bg-hover:  var(--color2-600);
+  --btn-fill-bg-active: var(--color2-900); --btn-fill-label:     var(--neutral-50);
+  --btn-fill-label-active: var(--neutral-50);
+
+  --btn-outline-stroke:        var(--color2-800);
+  --btn-outline-stroke-hover:  var(--color2-600);
+  --btn-outline-stroke-active: var(--color2-900);
+  --btn-outline-wash:          transparent;
+  --btn-outline-wash-hover:    var(--color2-50);
+  --btn-outline-wash-active:   var(--color2-100);
+
+  --btn-disabled-bg:     var(--neutral-400);
+  --btn-disabled-stroke: var(--neutral-400);
+  --btn-disabled-label:  var(--neutral-50);
+
+  --btn-pad-y: 1.15em;  --btn-pad-x: 2.2em;
+  --btn-radius: var(--radius);  --btn-border-w: 1px;
+}
+
+/* LINKS */
+:root {
+  --link-text:        var(--text-body);
+  --link-text-hover:  var(--color2-800);
+  --link-text-active: var(--color2-900);
+  --link-underline:       var(--color5-500);
+  --link-underline-hover: var(--color2-800);
+  --link-offset: 0.18em;  --link-thickness: 1px;
+}
+
+/* FORMS, light ground. Border steps are chosen against the 3:1 floor
+   for control boundaries, not for looks. */
+:root {
+  --field-bg:       var(--white);      --field-bg-hover:    var(--white);
+  --field-bg-focus: var(--white);      --field-bg-disabled: var(--neutral-100);
+  --field-bg-readonly: var(--neutral-100);
+
+  --field-border:       var(--neutral-600);  /* 3.5:1 on white */
+  --field-border-hover: var(--neutral-800);  --field-border-filled: var(--neutral-700);
+  --field-border-focus: var(--color1-600);   --field-border-disabled: var(--neutral-400);
+
+  --field-text:          var(--neutral-950);  --field-text-focus:    var(--neutral-950);
+  --field-placeholder:   var(--neutral-700);  --field-text-readonly: var(--neutral-800);
+  --field-text-disabled: var(--neutral-600);
+
+  --label-text:     var(--neutral-900);  --label-text-focus: var(--color1-700);
+  --label-disabled: var(--neutral-600);  --help-text:        var(--neutral-800);
+  --required-mark:  var(--color2-600);
+
+  --control-bg:           var(--white);       --control-border:        var(--neutral-600);
+  --control-border-hover: var(--neutral-800); --control-checked-bg:    var(--color1-700);
+  --control-checked-hover: var(--color1-600); --control-checked-mark:  var(--neutral-50);
+  --control-disabled-bg:  var(--neutral-300);
+
+  --focus-ring: var(--color1-600);  --focus-ring-soft: rgba(51, 76, 125, 0.22);
+
+  --field-error:   var(--color2-600);  --field-error-text: var(--color2-700);
+  --field-error-bg: var(--color2-50);  --field-error-ring: rgba(159, 62, 78, 0.22);
+  --field-success: var(--color3-600);  --field-success-text: var(--color3-700);
+  --field-success-bg: var(--color3-50);
+  --field-warning: var(--color4-600);  --field-warning-text: var(--color4-700);
+  --field-warning-bg: var(--color4-50);
+
+  --field-selection-bg: var(--color5-200);  --field-selection-text: var(--neutral-950);
+  --field-caret: var(--color1-700);
+
+  --field-radius: var(--radius);  --field-pad-y: 0.85em;  --field-pad-x: 1em;
+  --field-ease: var(--ease-ui);   --field-face: var(--face-sec);
+}
+
+/* DARK GROUND. A pure remap: no component is redefined, the tokens
+   change and the whole layer follows. Scope with
+   &lt;body data-surface="dark"&gt; or &lt;section class="on-dark"&gt;. */
+[data-surface="dark"], .on-dark {
+  --text-heading: var(--neutral-50);   --text-body:      var(--neutral-200);
+  --text-secondary: var(--neutral-400); --text-muted:    var(--neutral-500);
+  --text-accent:  var(--color5-300);   --text-heading-accent: var(--color5-300);
+
+  --surface-page: var(--color1-900);   --surface-raised: var(--color1-800);
+
+  --btn-fill-bg:  var(--color5-400);   --btn-fill-label: var(--color1-900);
+  --link-text:    var(--neutral-200);  --link-text-hover: var(--color5-300);
+
+  --field-bg:     var(--color1-800);   --field-border:   var(--color1-500);
+  --field-text:   var(--neutral-100);  --field-placeholder: var(--neutral-500);
+  --focus-ring:   var(--color1-300);   --focus-ring-soft: rgba(184, 205, 247, 0.24);
+  /* full set in css/tokens.css */
+}
+
+/* LOGOS. Ratios come from each file's viewBox. The optical
+   multipliers correct for the three lockups reading at different
+   visual weights at the same box height. */
+:root {
+  --logo-logotype: url("assets/SIG_LOGO_LOGOTYPE_WHITE.svg");
+  --logo-primary:  url("assets/SIG_LOGO_PRIMARY_WHITE.svg");
+  --logo-logomark: url("assets/SIG_LOGO_LOGOMARK_WHITE.svg");
+
+  --logo-logotype-ratio: 372.9 / 159.32;   --logo-logotype-optical: 1;
+  --logo-primary-ratio:  257.09 / 202.34;  --logo-primary-optical:  1.15;
+  --logo-logomark-ratio: 106.74 / 162.05;  --logo-logomark-optical: 1;
+
+  --logo-h-header: 1.75rem;  --logo-h-footer:  2.25rem;
+  --logo-h-hero:   6rem;     --logo-h-favicon: 1.25rem;
+  --logo-ease: 200ms ease;
+}
+
+/* TABLET: 768px to 1023px. Base 17, ratio 1.2. */
+@media (max-width: 1023px) {
+  :root {
+    --hero: 73px; --hero-1x: 88px;
+    --heading: 20px;    --heading-1x: 24px; --heading-2x: 29px;
+    --heading-3x: 35px; --heading-4x: 42px; --heading-5x: 51px;
+    --heading-6x: 61px; --body-pri: 17px;
+  }
+}
+
+/* MOBILE: below 768px. Base 17, ratio 1.125. */
+@media (max-width: 767px) {
+  :root {
+    --hero: 44px; --hero-1x: 49px;
+    --heading: 19px;    --heading-1x: 22px; --heading-2x: 24px;
+    --heading-3x: 27px; --heading-4x: 31px; --heading-5x: 34px;
+    --heading-6x: 39px; --body-pri: 17px;
+  }
+}</code></pre>
+
+      <pre id="panel-json" role="tabpanel" hidden><code>{
+  "typeface": {
+    "hero": "PP Playground",
+    "display": "kepler-std-display",
+    "subhead": "kepler-std-subhead",
+    "regular": "kepler-std",
+    "caption": "kepler-std-caption",
+    "secondary": "Inter"
+  },
+  "typography": {
+    "primary": {
+      "base": 18,
+      "ratio": { "desktop": 1.25, "tablet": 1.2, "mobile": 1.125 },
+      "steps": {
+        "hero-1x":     { "desktop": 134, "tablet":  88, "mobile": 49, "lineHeight": 1.08, "face": "hero", "weight": 500, "weights": [100, 300, 500], "case": "sentence", "tracking": "0" },
+        "hero":        { "desktop": 118, "tablet":  73, "mobile": 44, "lineHeight": 1.10, "face": "hero", "weight": 500, "weights": [100, 300, 500], "case": "sentence", "tracking": "0" },
+        "heading-6x":  { "desktop":  86, "tablet": 61, "mobile": 39, "lineHeight": 1.04, "face": "display", "weight": 400, "case": "uppercase", "tracking": "0" },
+        "heading-6x-light": { "desktop": 86, "tablet": 61, "mobile": 39, "lineHeight": 1.04, "face": "display", "weight": 300, "case": "uppercase", "tracking": "0" },
+        "heading-5x":  { "desktop":  69, "tablet": 51, "mobile": 34, "lineHeight": 1.06, "face": "display", "weight": 400, "case": "uppercase", "tracking": "0.005em" },
+        "heading-5x-light": { "desktop": 69, "tablet": 51, "mobile": 34, "lineHeight": 1.06, "face": "display", "weight": 300, "case": "uppercase", "tracking": "0.005em" },
+        "heading-4x":  { "desktop":  55, "tablet": 42, "mobile": 31, "lineHeight": 1.08, "face": "display, subhead on mobile", "weight": 400, "case": "uppercase", "tracking": "0.01em" },
+        "heading-4x-light": { "desktop": 55, "tablet": 42, "mobile": 31, "lineHeight": 1.08, "face": "display, subhead on mobile", "weight": 300, "weightOnMobile": 400, "case": "uppercase", "tracking": "0.01em" },
+        "heading-3x":  { "desktop":  44, "tablet": 35, "mobile": 27, "lineHeight": 1.10, "face": "display, subhead on mobile", "weight": 400, "case": "uppercase", "tracking": "0.015em" },
+        "heading-3x-light": { "desktop": 44, "tablet": 35, "mobile": 27, "lineHeight": 1.10, "face": "display, subhead on mobile", "weight": 300, "weightOnMobile": 400, "case": "uppercase", "tracking": "0.015em" },
+        "heading-2x":  { "desktop":  35, "tablet": 29, "mobile": 24, "lineHeight": 1.14, "face": "display, subhead below 1024px", "weight": 400, "case": "uppercase", "tracking": "0.02em" },
+        "heading-2x-light": { "desktop": 35, "tablet": 29, "mobile": 24, "lineHeight": 1.14, "face": "display, subhead below 1024px", "weight": 300, "weightBelow1024": 400, "case": "uppercase", "tracking": "0.02em" },
+        "heading-1x":  { "desktop":  28, "tablet": 24, "mobile": 22, "lineHeight": 1.20, "face": "subhead", "weight": 400, "case": "uppercase", "tracking": "0.025em" },
+        "heading":     { "desktop":  22, "tablet": 20, "mobile": 19, "lineHeight": 1.26, "face": "subhead", "weight": 400, "case": "uppercase", "tracking": "0.03em" },
+        "body-pri":    { "desktop":  18, "tablet": 17, "mobile": 17, "lineHeight": 1.60, "face": "regular", "case": "sentence", "tracking": "0" },
+        "body-pri-sm": { "desktop":  15, "tablet": 15, "mobile": 15, "lineHeight": 1.60, "face": "regular", "case": "sentence", "tracking": "0" },
+        "body-pri-xs": { "desktop":  13, "tablet": 13, "mobile": 13, "lineHeight": 1.55, "face": "caption", "case": "sentence", "tracking": "0" }
+      }
+    },
+    "secondary": {
+      "base": 15,
+      "steps": {
+        "body-base-sec": { "size": 15, "weight": 400, "lineHeight": 1.70, "tracking": "0" },
+        "body-sm-sec":   { "size": 13, "weight": 400, "lineHeight": 1.65, "tracking": "0" },
+        "body-xs-sec":   { "size": 11, "weight": 400, "lineHeight": 1.55, "tracking": "0" },
+        "italic-sec":    { "weight": 400, "style": "italic", "note": "modifier, composes with any secondary step" },
+        "text-upper-sec":{ "weight": 500, "case": "uppercase", "note": "all uppercase Inter except btn-form" }
+      }
+    },
+    "interface": {
+      "btn-pri":    { "face": "regular",   "weight": 500, "size": 14, "tracking": "0.084em", "case": "uppercase", "lineHeight": 1, "bg": "color2-800", "bgHover": "color2-700", "bgPressed": "color2-900" },
+      "btn-form":   { "face": "secondary", "weight": 500, "size": 14, "tracking": "0", "case": "sentence", "lineHeight": 1 },
+      "text-nav-1": { "face": "regular",   "weight": 500, "size": 14, "tracking": "0.24em", "case": "uppercase", "lineHeight": 1.2, "mobile": { "face": "subhead", "weight": 400, "size": 24, "tracking": "0", "case": "sentence", "lineHeight": 1.3 } }
+    },
+    "form": {
+      "legend-form":      { "face": "secondary", "weight": 500, "size": 15, "lineHeight": 1.4,  "tracking": "0.06em", "case": "uppercase" },
+      "label-form":       { "face": "secondary", "weight": 500, "size": 15, "lineHeight": 1.45, "case": "sentence" },
+      "input-form":       { "face": "secondary", "weight": 400, "size": 15, "lineHeight": 1.5 },
+      "placeholder-form": { "face": "secondary", "weight": 400, "size": 15, "lineHeight": 1.5, "color": "neutral-600" },
+      "helper-form":      { "face": "secondary", "weight": 400, "size": 13, "lineHeight": 1.5, "color": "neutral-700" },
+      "error-form":       { "face": "secondary", "weight": 500, "size": 13, "lineHeight": 1.5, "color": "color2-800" },
+      "tag-form":         { "face": "secondary", "weight": 500, "size": 11, "lineHeight": 1.4, "tracking": "0.08em", "case": "uppercase", "color": "neutral-500" }
+    }
+  },
+  "breakpoints": { "desktop": "1024px and up", "tablet": "768px to 1023px", "mobile": "below 768px" },
+  "color": {
+    "color1":    { "900": "#030811", "800": "#08142B", "700": "#192D54", "600": "#334C7D", "500": "#5671A5", "400": "#829CCE", "300": "#B8CDF7", "200": "#D1E1FF", "100": "#E5EEFF", "50": "#F8FAFF" },
+    "color2":    { "900": "#26070C", "800": "#4D0F19", "700": "#4D0F19", "600": "#762330", "500": "#9F3E4E", "400": "#C76272", "300": "#F08E9E", "200": "#FFB6C2", "100": "#FFD5DC", "50": "#FFF4F6" },
+    "color3":    { "900": "#07220B", "800": "#0C4015", "700": "#1F692B", "600": "#3A9249", "500": "#5DBB6D", "400": "#89E398", "300": "#B4FFC1", "200": "#CBFFD3", "100": "#E1FFE6", "50": "#F7FFF9" },
+    "color4":    { "900": "#221206", "800": "#40220C", "700": "#693D1F", "600": "#925E3A", "500": "#BB845D", "400": "#E4AE89", "300": "#FFD3B4", "200": "#FFE0CA", "100": "#FFEDE1", "50": "#FFFAF7" },
+    "color5":    { "900": "#221D11", "800": "#4E4329", "700": "#6C5D3B", "600": "#89774E", "500": "#A69263", "400": "#C3AD79", "300": "#E0C891", "200": "#FDE4AA", "100": "#FFF1D0", "50": "#FFFCF6" },
+    "neutral":   { "950": "#32312A", "900": "#4D4B40", "800": "#625F53", "700": "#767366", "600": "#8A887A", "500": "#9F9C8F", "400": "#B3B1A4", "300": "#C8C5BA", "200": "#DCDAD0", "100": "#F0EFE7", "50": "#FFFEF9" },
+    "white": "#FFFFFF",
+    "brandStep": { "color1": 800, "color2": 800, "color3": 800, "color4": 800, "color5": 400, "neutral": 200 }
+  }
+}</code></pre>
+    </div>
+  </section>
+
+  <footer>
+    <p class="body-sm-sec">Signature Society · Brand guidelines v1.0 · Internal use only.</p>
+    <p class="body-sm-sec">Color values sourced from the <em>brand colors</em> frame in the Signature Society Figma file.</p>
+    <p class="body-sm-sec">Kepler Std served from Adobe Fonts kit hqq5dii. Inter served from Google Fonts. PP Playground self-hosted from the brand font folder.</p>
+  </footer>
+
+</div>
+</section>
+
+<script>
+/* Document tabs. Both panels stay in the DOM so each document's
+   own script can bind to its markup on load regardless of which
+   tab is showing. */
+(function () {
+  var KEY  = "sig-wbd-active-tab";
+  var tabs = Array.prototype.slice.call(document.querySelectorAll(".doc-tab"));
+
+  function show(id) {
+    tabs.forEach(function (t) {
+      var on = t.getAttribute("aria-controls") === id;
+      t.setAttribute("aria-selected", on ? "true" : "false");
+      document.getElementById(t.getAttribute("aria-controls")).hidden = !on;
+    });
+    try { localStorage.setItem(KEY, id); } catch (e) {}
+  }
+
+  tabs.forEach(function (t) {
+    t.addEventListener("click", function () {
+      show(t.getAttribute("aria-controls"));
+      window.scrollTo(0, 0);
+    });
+  });
+
+  /* #timeline and #brand deep-link to a tab, so a link can point at one
+     document directly. An explicit hash beats the remembered tab. */
+  function fromHash() {
+    var h = (location.hash || "").replace(/^#/, "");
+    return h && document.getElementById("tab-" + h) ? "tab-" + h : null;
+  }
+  window.addEventListener("hashchange", function () {
+    var id = fromHash();
+    if (id) show(id);
+  });
+
+  var saved;
+  try { saved = localStorage.getItem(KEY); } catch (e) {}
+  var start = fromHash() || (saved && document.getElementById(saved) ? saved : null);
+  if (start) show(start);
+})();
+</script>
+
+<script>
+/* ============ PROJECT DATA ============
+   Phases, start/end dates, and assignees mirror the Notion "Signature Society Project
+   Timeline" database. Each task's `days` is the inclusive business-day span between its
+   Notion start and end date; milestones (single Notion date) use fixedDate. */
+var ORIGINAL_START = "2026-07-20";
+var ORIGINAL_DATA = [
+  {id:"ph1",phase:1,name:"Color Palette Refinement",description:"",assignee:"Lindsay",days:5,after:[],startOverride:"2026-07-20",type:"task"},
+  {id:"ph2",phase:1,name:"Launch Party RSVP Landing Page",description:"",assignee:"Lindsay",days:75,after:[],startOverride:"2026-07-20",type:"task"},
+  {id:"ph24",phase:1,name:"Copywriter Confirmed",description:"",assignee:"All",days:1,after:[],fixedDate:"2026-07-23",type:"milestone",milestone:true},
+  {id:"ph3",phase:1,name:"Brand Guidelines Update",description:"",assignee:"Lindsay / Morgan",days:5,after:[],startOverride:"2026-07-27",type:"task"},
+  {id:"ph4",phase:1,name:"Policies, Shipping, & Returns: Copywriting",description:"",assignee:"Matt",days:25,after:[],startOverride:"2026-07-27",type:"task"},
+  {id:"ph5",phase:1,name:"Basic Products & Collection Setup",description:"",assignee:"All",days:10,after:[],startOverride:"2026-08-03",type:"task"},
+  {id:"ph6",phase:1,name:"Homepage: High-Fidelity",description:"",assignee:"Lindsay",days:10,after:[],startOverride:"2026-08-03",type:"task"},
+  {id:"ph7",phase:1,name:"Email Platform Integration",description:"",assignee:"Morgan / Angel",days:15,after:[],startOverride:"2026-08-03",type:"task"},
+  {id:"ph8",phase:1,name:"Global Components, 404, & Homepage: Development",description:"",assignee:"Lindsay",days:15,after:[],startOverride:"2026-08-17",type:"task"},
+  {id:"ph27",phase:1,name:"Product Details: Copywriting",description:"",assignee:"Matt",days:22,after:[],startOverride:"2026-08-28",type:"task"},
+  {id:"ph9",phase:1,name:"Cart & Checkout: Copywriting",description:"",assignee:"Matt",days:10,after:[],startOverride:"2026-08-31",type:"task"},
+  {id:"ph10",phase:1,name:"Transactional Email Template",description:"",assignee:"Lindsay",days:5,after:[],startOverride:"2026-09-07",type:"task"},
+  {id:"ph11",phase:1,name:"Contact Page: Development",description:"",assignee:"Lindsay",days:5,after:[],startOverride:"2026-09-07",type:"task"},
+  {id:"ph12",phase:1,name:"Policies, Shipping, & Returns: Development",description:"",assignee:"Lindsay",days:5,after:[],startOverride:"2026-09-14",type:"task"},
+  {id:"ph26",phase:1,name:"Raw Video Footage Uploaded to Drive",description:"",assignee:"Morgan / Angel",days:1,after:[],fixedDate:"2026-09-18",type:"milestone",milestone:true},
+  {id:"ph13",phase:1,name:"Cart & Checkout: Wireframe & High-Fidelity",description:"",assignee:"Lindsay",days:10,after:[],startOverride:"2026-09-21",type:"task"},
+  {id:"ph14",phase:1,name:"Video Editing & Finalizing",description:"",assignee:"Lindsay",days:20,after:[],startOverride:"2026-09-21",type:"task"},
+  {id:"ph15",phase:1,name:"The Collection, Product Details, Cart, & Checkout: Development",description:"",assignee:"Lindsay",days:15,after:[],startOverride:"2026-09-28",type:"task"},
+  {id:"ph16",phase:1,name:"Live Test Order Placed & Refunded",description:"",assignee:"All",days:13,after:[],startOverride:"2026-10-19",type:"task"},
+  {id:"launch-party",phase:1,name:"Launch Party",description:"",assignee:"",days:1,after:[],fixedDate:"2026-11-07",type:"milestone",milestone:true}
+];
+
+var PHASE_NAMES = {1:"",2:"",3:"Key Deadlines",5:"Post-Launch"};
+
+/* ============ STATE ============ */
+var STORE_KEY = "ss_shopify_timeline_v12";
+var state = load();
+function freshState(){
+  return {start: ORIGINAL_START, tasks: JSON.parse(JSON.stringify(ORIGINAL_DATA))};
+}
+function load(){
+  try{
+    var raw = localStorage.getItem(STORE_KEY);
+    if(!raw) return freshState();
+    var s = JSON.parse(raw);
+    if(!s.tasks || !s.start) return freshState();
+    return s;
+  }catch(e){return freshState();}
+}
+/* Everything typed or uploaded here (comments, review files, links, edits) is written to
+   localStorage immediately, so it survives closing the tab. A failed write is never silent:
+   the caller rolls the change back and the person is told, rather than losing it on reload. */
+var saveWarned=false;
+function save(){
+  try{
+    localStorage.setItem(STORE_KEY, JSON.stringify(state));
+    saveWarned=false;
+    return true;
+  }catch(e){
+    if(!saveWarned){
+      saveWarned=true;
+      alert("This browser's storage is full, so that change could not be saved and would be lost when you close the page.\n\nUploaded files take the most room — remove one from \"For review\" and try again.");
+    }
+    return false;
+  }
+}
+/* Assignee picks live in their own stable key so they persist across data changes / STORE_KEY bumps / file reverts. */
+var SAVED_ASSIGNEES = (function(){
+  try{ var raw=localStorage.getItem("ss_assignees_v2"); if(raw){ var o=JSON.parse(raw); if(o&&typeof o==="object") return o; } }catch(e){}
+  return {};
+})();
+function saveAssigneeMap(){ try{ localStorage.setItem("ss_assignees_v2", JSON.stringify(SAVED_ASSIGNEES)); }catch(e){} }
+function setAssignee(t, value){ t.assignee=value; SAVED_ASSIGNEES[t.id]=value; saveAssigneeMap(); save(); }
+function applySavedAssignees(){ state.tasks.forEach(function(t){ if(Object.prototype.hasOwnProperty.call(SAVED_ASSIGNEES,t.id)) t.assignee=SAVED_ASSIGNEES[t.id]; }); }
+
+/* Status lives in its own stable key too, for the same reason as the assignee map above. */
+var STATUS_OPTIONS = ["Not started","To do","In progress","Needs review","On hold","Done","Cancelled"];
+var DEFAULT_STATUS = "Not started";
+var SAVED_STATUS = (function(){
+  try{ var raw=localStorage.getItem("ss_status_v1"); if(raw){ var o=JSON.parse(raw); if(o&&typeof o==="object") return o; } }catch(e){}
+  return {};
+})();
+function saveStatusMap(){ try{ localStorage.setItem("ss_status_v1", JSON.stringify(SAVED_STATUS)); }catch(e){} }
+function taskStatus(t){ return STATUS_OPTIONS.indexOf(t.status)>-1 ? t.status : DEFAULT_STATUS; }
+function setStatus(t, value){ t.status=value; SAVED_STATUS[t.id]=value; saveStatusMap(); save(); }
+function applySavedStatus(){ state.tasks.forEach(function(t){ if(Object.prototype.hasOwnProperty.call(SAVED_STATUS,t.id)) t.status=SAVED_STATUS[t.id]; }); }
+
+/* Dates live in their own stable key too, for the same reason as the two
+   maps above. Every date is set by hand now, one row at a time, in the
+   Start and Due selectors of the full schedule — there is no project-wide
+   start or end feeding a chain any more.
+
+   A task still stores a start plus a LENGTH in business days, because
+   anything chained after it derives from that length. Setting Due converts
+   back to a length on the spot; a fixed-date item has no span, so both
+   selectors write the one date. */
+var SAVED_DATES = (function(){
+  try{ var raw=localStorage.getItem("ss_dates_v1"); if(raw){ var o=JSON.parse(raw); if(o&&typeof o==="object") return o; } }catch(e){}
+  return {};
+})();
+function saveDateMap(){ try{ localStorage.setItem("ss_dates_v1", JSON.stringify(SAVED_DATES)); }catch(e){} }
+function rememberDates(t){
+  SAVED_DATES[t.id] = t.fixedDate
+    ? {fixedDate:t.fixedDate}
+    : {startOverride:t.startOverride, days:t.days};
+  saveDateMap();
+}
+function applySavedDates(){
+  state.tasks.forEach(function(t){
+    var d=SAVED_DATES[t.id]; if(!d) return;
+    if(d.fixedDate){ t.fixedDate=d.fixedDate; return; }
+    if(d.startOverride) t.startOverride=d.startOverride;
+    if(d.days) t.days=d.days;
+  });
+}
+function setTaskStart(t, iso){
+  if(!iso) return;
+  if(t.fixedDate) t.fixedDate = iso;
+  else t.startOverride = iso;
+  rememberDates(t); clearMemo(); save(); rerender();
+}
+function setTaskDue(t, iso){
+  if(!iso) return;
+  if(t.fixedDate) t.fixedDate = iso;
+  else {
+    clearMemo();
+    t.days = bizDaysBetween(taskStart(t), parseISO(iso));
+  }
+  rememberDates(t); clearMemo(); save(); rerender();
+}
+
+/* ============ DATE ENGINE ============ */
+function parseISO(s){var p=s.split("-");return new Date(+p[0],+p[1]-1,+p[2]);}
+function toISO(d){var m=d.getMonth()+1,day=d.getDate();return d.getFullYear()+"-"+(m<10?"0":"")+m+"-"+(day<10?"0":"")+day;}
+function addBusinessDays(date,n){
+  var d=new Date(date.getFullYear(),date.getMonth(),date.getDate());
+  var step=n>=0?1:-1, rem=Math.abs(n);
+  while(rem>0){d.setDate(d.getDate()+step);var g=d.getDay();if(g!==0&&g!==6)rem--;}
+  return d;
+}
+var byId={}, memoStart={}, memoEnd={};
+function reindex(){byId={};state.tasks.forEach(function(t){byId[t.id]=t;});clearMemo();}
+function clearMemo(){memoStart={};memoEnd={};}
+function chainStart(t){
+  if(!t.after || t.after.length===0){ return parseISO(state.start); }
+  var mx=null;
+  t.after.forEach(function(id){var p=byId[id];if(!p)return;var e=taskEnd(p);if(!mx||e>mx)mx=e;});
+  return mx ? addBusinessDays(mx,1) : parseISO(state.start);
+}
+function taskStart(t){
+  if(memoStart[t.id]) return memoStart[t.id];
+  var r;
+  if(t.fixedDate) r=parseISO(t.fixedDate);
+  else if(t.startOverride) r=parseISO(t.startOverride);
+  else r=chainStart(t);
+  return memoStart[t.id]=r;
+}
+function taskEnd(t){
+  if(memoEnd[t.id]) return memoEnd[t.id];
+  if(t.fixedDate) return memoEnd[t.id]=parseISO(t.fixedDate);
+  return memoEnd[t.id]=addBusinessDays(taskStart(t),t.days-1);
+}
+
+/* ============ CHECK-INS (fixed Thursdays, nothing depends on them) ============ */
+/* The standing biweekly check-in: every other Thursday, starting on the
+   Aug 6 2026 kickoff and running through launch week.
+
+   Generated from the two constants rather than written out as a list, so
+   the series cannot drift out of step with itself and extending it is a
+   one-date edit. Both bounds are inclusive; CHECKIN_THROUGH is the Nov 4
+   launch, so the last check-in is the Thursday before it (Oct 29). Push
+   that date out and the ladder re-derives on load.
+
+   The 14-day step is taken on the date parts, not by adding milliseconds,
+   so the series stays on Thursday across the November DST change. */
+var CHECKIN_FROM    = "2026-08-06";  /* Thursday · project kickoff */
+var CHECKIN_THROUGH = "2026-11-04";  /* launch date               */
+var CHECKIN_DATA = (function(){
+  var out=[], d=parseISO(CHECKIN_FROM), end=parseISO(CHECKIN_THROUGH);
+  while(d<=end){
+    out.push({n:"Biweekly Checkin", d:toISO(d)});
+    d=new Date(d.getFullYear(), d.getMonth(), d.getDate()+14);
+  }
+  return out;
+})();
+function buildCheckins(){
+  return CHECKIN_DATA.map(function(c,i){
+    return {id:"checkin-"+i,checkin:true,type:"checkin",name:c.n,description:"Standing project check-in at 11am, every other Thursday.",assignee:"Full team",fixedDate:c.d,phase:0};
+  });
+}
+var CHECKINS = buildCheckins();
+
+/* map a task to its bar-color class (drives all views) */
+function typeClass(t){
+  if(t.milestone) return "milestone";
+  /* Two classes, not one: the check-in marker is a MODIFIER on the
+     milestone, so it has to carry both for .bar.milestone.checkin to
+     match. Anything testing for a check-in reads t.type, never this
+     string — see the note in allItems(). */
+  if(t.type==="checkin") return "milestone checkin";
+  if(t.type==="hard-date") return "harddate";
+  if(t.type==="client-task") return "clienttask";
+  return "buildtask";
+}
+/* assignee -> color. Bars (buildtask) and the row assignee input tint to the assignee's color. */
+var ASSIGNEE_COLORS = { "Matt":"var(--color4-100)", "Angel":"var(--color1-100)", "Lindsay":"var(--neutral-100)", "Morgan":"var(--color3-100)" }; 
+var DEFAULT_BAR_COLOR = "var(--neutral-100)";
+function assigneeColor(assignee, dflt){
+  var names=(assignee||"").split("/").map(function(x){ return x.trim(); }).filter(Boolean);
+  if(names.length>1) return "var(--color5-100)";
+  for(var i=0;i<names.length;i++){ if(ASSIGNEE_COLORS[names[i]]) return ASSIGNEE_COLORS[names[i]]; }
+  return dflt || DEFAULT_BAR_COLOR;
+}
+function barBg(kind, assignee){ return kind==="buildtask" ? ";background:"+assigneeColor(assignee) : ""; }
+/* The colour key in the viewbar. Built from the live name list rather
+   than from ASSIGNEE_COLORS, so a name added through "+ Add name"
+   appears here too — it just carries the default swatch until it is
+   given a colour. "Shared" is only listed when a task actually has
+   more than one assignee, because that is the only time the
+   --color5-100 tint appears on a bar. */
+/* Type comes from existing classes only — .tag-form is the system's
+   small tracked uppercase label, .body-xs-sec its 11px running mate.
+   Everything else (the flex row, the gap, the swatch box) is inline,
+   so this needs no rule in timeline.css at all. */
+function renderAssigneeKey(){
+  var wrap=document.getElementById("assigneeKey"); if(!wrap) return;
+  var ITEM = 'display:inline-flex;align-items:center;gap:6px;white-space:nowrap;color:var(--text-body)';
+  var DOT  = 'flex:none;width:12px;height:12px;border:1px solid rgba(255,255,255,.22);background:';
+  var shared = state.tasks.some(function(t){
+    return (t.assignee||"").split("/").map(function(x){ return x.trim(); }).filter(Boolean).length>1;
+  });
+  var items = AUTHOR_OPTIONS.map(function(n){
+    return '<span class="body-xs-sec" role="listitem" style="'+ITEM+'">'+
+             '<span aria-hidden="true" style="'+DOT+assigneeColor(n)+'"></span>'+esc(n)+
+           '</span>';
+  });
+  if(shared) items.push('<span class="body-xs-sec" role="listitem" style="'+ITEM+'">'+
+    '<span aria-hidden="true" style="'+DOT+'var(--color5-100)"></span>Shared</span>');
+  wrap.innerHTML = '<span class="tag-form" style="color:var(--text-muted)">Assignees</span>'+items.join("");
+}
+/* all renderable items = tasks + checkins, each with start/end date objects */
+function allItems(){
+  var items = state.tasks.map(function(t){
+    return {t:t, start:taskStart(t), end:taskEnd(t), kind: typeClass(t)};
+  });
+  /* kind is a CLASS LIST, not an identifier — check-ins carry
+     "milestone checkin". Never compare it with ===; test t.type. */
+  CHECKINS.forEach(function(c){
+    items.push({t:c, start:parseISO(c.fixedDate), end:parseISO(c.fixedDate), kind:"milestone checkin"});
+  });
+  return items;
+}
+
+/* ============ FORMATTING ============ */
+var MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+var MONFULL=["January","February","March","April","May","June","July","August","September","October","November","December"];
+var DOW=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+var WEEKDAYS=["Mon","Tue","Wed","Thu","Fri"];
+function fmtNice(d){return DOW[d.getDay()]+", "+MON[d.getMonth()]+" "+d.getDate()+", "+d.getFullYear();}
+function fmtShort(d){return MON[d.getMonth()]+" "+d.getDate();}
+function sameDay(a,b){return a.getFullYear()===b.getFullYear()&&a.getMonth()===b.getMonth()&&a.getDate()===b.getDate();}
+function dayDiff(a,b){return Math.round((b-a)/86400000);}
+
+/* Which runs collapse to a continuation ribbon after their first week.
+   Keyed on id, not name, so renaming a phase cannot silently change how
+   it draws. Add an id here to give another long run the same treatment. */
+var RIBBON_RUNS = { ph2: true };   // Launch Party RSVP Landing Page (ongoing) · Lindsay
+
+/* ============ VIEW STATE ============ */
+/* The month the calendar opens on, every refresh. It used to follow
+   state.start, so the page always landed on July — the month the project
+   begins — however far past it the work had moved. It is stated here on
+   its own so moving the landing month is a one-line change, and it is
+   deliberately not "the current month": the Today button is what jumps
+   to now. Any day in the month will do; the cursor snaps to the 1st. */
+var LANDING_MONTH = "2026-08-01";
+var view="month";
+var cursor;
+function landingCursor(){ var s=parseISO(LANDING_MONTH); return new Date(s.getFullYear(),s.getMonth(),1); }
+cursor = landingCursor();
+var isMobile = window.matchMedia("(max-width:700px)");
+var collapsedPhases={};
+var commentAuthor=(function(){try{return localStorage.getItem("ss_comment_author")||"";}catch(e){return "";}})();
+
+/* ============ RENDER: TOP / LAUNCH ============ */
+function fmtLaunch(d){return (MON[d.getMonth()]+" "+d.getDate()+", "+d.getFullYear()).toUpperCase();}
+function renderLaunch(){
+  /* Launch date is set manually in the markup (#launchSite); nothing to compute. */
+}
+
+/* ============ RENDER: MONTH ============ */
+function buildMonthWeeks(year,month){
+  // weeks of five weekdays (Mon-Fri) covering the month; weekends excluded
+  var start=new Date(year,month,1);
+  var dow=start.getDay();               // 0 Sun .. 6 Sat
+  var offsetToMon=(dow===0)?-6:(1-dow); // step back to the Monday on/before the 1st
+  start.setDate(start.getDate()+offsetToMon);
+  var lastOfMonth=new Date(year,month+1,0);
+  var weeks=[], cur=new Date(start);
+  while(cur<=lastOfMonth){
+    var week=[];
+    for(var i=0;i<5;i++){week.push(new Date(cur));cur.setDate(cur.getDate()+1);}
+    cur.setDate(cur.getDate()+2); // skip Sat + Sun to the next Monday
+    weeks.push(week);
+  }
+  return weeks;
+}
+function assignLanes(items){
+  // items:{colStart,colEnd,...}; greedy lanes
+  var lanes=[];
+  items.sort(function(a,b){return a.colStart-b.colStart || a.colEnd-b.colEnd;});
+  items.forEach(function(it){
+    var placed=false;
+    for(var L=0;L<lanes.length;L++){
+      var ok=true;
+      for(var j=0;j<lanes[L].length;j++){
+        var o=lanes[L][j];
+        if(!(it.colStart>o.colEnd || it.colEnd<o.colStart)){ok=false;break;}
+      }
+      if(ok){lanes[L].push(it);it.lane=L;placed=true;break;}
+    }
+    if(!placed){it.lane=lanes.length;lanes.push([it]);}
+  });
+  return lanes.length;
+}
+function renderMonth(){
+  var year=cursor.getFullYear(), month=cursor.getMonth();
+  document.getElementById("periodTitle").textContent = MONFULL[month]+" "+year;
+  var items=allItems();
+  var today=new Date();
+
+  if(isMobile.matches){ renderAgenda(year,month,items); return; }
+
+  var weeks=buildMonthWeeks(year,month);
+  var html='<div class="calendar desktop-cal"><div class="dow">';
+  WEEKDAYS.forEach(function(d){html+="<div>"+d+"</div>";});
+  html+='</div><div class="month-grid">';
+
+  weeks.forEach(function(week){
+    var wStart=week[0], wEnd=week[4];
+    // bars for items overlapping this week
+    var wItems=[];
+    items.forEach(function(it){
+      if(it.end<wStart || it.start>wEnd) return;
+      var cs=Math.max(0, dayDiff(wStart, it.start));
+      var ce=Math.min(4, dayDiff(wStart, it.end));
+      if(cs<0)cs=0; if(ce>4)ce=4;
+      wItems.push({it:it,colStart:cs,colEnd:ce,
+        continL: it.start<wStart, continR: it.end>wEnd});
+    });
+    if(wItems.length===0) return; // skip weeks that have no items (e.g. the empty lead-in weeks of July)
+    // dates row
+    html+='<div class="week-row"><div class="week-dates">';
+    week.forEach(function(d){
+      var cls="daycell";
+      if(d.getMonth()!==month) cls+=" other";
+      if(sameDay(d,today)) cls+=" today";
+      html+='<div class="'+cls+'"><span class="dnum">'+d.getDate()+'</span></div>';
+    });
+    html+='</div>';
+    var laneCount=assignLanes(wItems);
+    html+='<div class="week-bars" style="grid-template-rows:repeat('+Math.max(1,laneCount)+',auto)">';
+    wItems.forEach(function(w){
+      var it=w.it, t=it.t;
+      var cls="bar "+it.kind;
+      /* The continuation ribbon — the slim, unlabelled strip a run gets in
+         every week after its first — is now reserved for the genuinely
+         long-running items in RIBBON_RUNS. Everything else draws a full,
+         labelled bar in each week it touches: a phase spanning two or
+         three weeks reads better named than as an anonymous strip. The
+         right edge still squares off wherever a run carries on. */
+      if(w.continL && RIBBON_RUNS[t.id]) cls+=" contin-l";
+      if(w.continR) cls+=" contin-r";
+      /* Reads t.type, not it.kind — kind is now the class list
+         "milestone checkin" and would never equal "checkin". */
+      var label = t.type==="checkin" ? "Biweekly Checkin" : t.name;
+      html+='<div class="'+cls+'" style="grid-column:'+(w.colStart+1)+'/'+(w.colEnd+2)+';grid-row:'+(w.lane+1)+barBg(it.kind,t.assignee)+'" '+
+            'data-id="'+t.id+'" title="'+esc(t.name)+' · '+esc(t.assignee)+'">'+esc(label)+'</div>';
+    });
+    html+='</div></div>';
+  });
+  html+='</div></div>';
+  document.getElementById("calArea").innerHTML=html;
+  bindBars();
+}
+function renderAgenda(year,month,items){
+  var mStart=new Date(year,month,1), mEnd=new Date(year,month+1,0);
+  var today=new Date();
+  // collect active days
+  var map={};
+  items.forEach(function(it){
+    var s=it.start<mStart?mStart:it.start;
+    var e=it.end>mEnd?mEnd:it.end;
+    if(it.start>mEnd||it.end<mStart) return;
+    // only mark the start day for multi-day, but list each day it is active? Use start day marker + span note
+    var key=toISO(it.start<mStart?mStart:it.start);
+    (map[key]=map[key]||[]).push(it);
+  });
+  var keys=Object.keys(map).sort();
+  var html='<div class="calendar"><div class="agenda">';
+  if(keys.length===0){ html+='<p style="padding:14px;color:var(--neutral-600)">Nothing scheduled to begin this month.</p>'; }
+  keys.forEach(function(k){
+    var d=parseISO(k);
+    html+='<div class="agenda-day"><div class="agenda-date"><span class="ad-day">'+d.getDate()+'</span>'+DOW[d.getDay()]+'</div><div class="agenda-items">';
+    map[k].forEach(function(it){
+      var t=it.t, cls="bar "+it.kind;
+      var label=t.name;
+      var span = (it.kind==="buildtask"||it.kind==="clienttask") ? ' <span style="opacity:.7">('+fmtShort(it.start)+' – '+fmtShort(it.end)+')</span>' : '';
+      html+='<div class="'+cls+'" style="height:auto;line-height:1.4;padding:5px 9px;white-space:normal'+barBg(it.kind,t.assignee)+'" data-id="'+t.id+'">'+esc(label)+span+'</div>';
+    });
+    html+='</div></div>';
+  });
+  html+='</div></div>';
+  document.getElementById("calArea").innerHTML=html;
+  bindBars();
+}
+
+/* ============ RENDER: WEEK ============ */
+function renderWeek(){
+  var wStart=new Date(cursor);
+  var dw=wStart.getDay();                 // 0 Sun .. 6 Sat
+  var off=(dw===0)?-6:(1-dw);             // step back to Monday
+  wStart.setDate(wStart.getDate()+off);
+  var days=[];for(var i=0;i<5;i++){var d=new Date(wStart);d.setDate(d.getDate()+i);days.push(d);}
+  var wEnd=days[4];
+  document.getElementById("periodTitle").textContent = fmtShort(days[0])+" – "+fmtShort(wEnd)+", "+wEnd.getFullYear();
+  var items=allItems();
+  var today=new Date();
+  var html='<div class="calendar"><div class="week-view">';
+  days.forEach(function(d){
+    var isWk=(d.getDay()===0||d.getDay()===6);
+    html+='<div class="wv-col'+(isWk?' weekend':'')+'">';
+    html+='<div class="wv-head'+(sameDay(d,today)?' today':'')+'"><div class="d1">'+DOW[d.getDay()]+'</div><div class="d2">'+d.getDate()+'</div></div>';
+    html+='<div class="wv-body">';
+    var dayItems=items.filter(function(it){return it.start<=d && it.end>=d;});
+    dayItems.forEach(function(it){
+      var t=it.t, cls="wv-item "+it.kind;
+      var desc = (t.type==="checkin"||!t.description) ? "" : '<div class="wi-desc">'+esc(snippet(t.description))+'</div>';
+      var meta = '<div class="wi-meta">'+esc(t.assignee)+'</div>';
+      html+='<div class="'+cls+'"'+(it.kind==="buildtask"?' style="background:'+assigneeColor(t.assignee)+'"':'')+' data-id="'+t.id+'"><div class="wi-name">'+esc(t.name)+'</div>'+meta+desc+'</div>';
+    });
+    if(dayItems.length===0) html+='<div style="font-size:11px;color:var(--neutral-400);padding:4px 2px">&nbsp;</div>';
+    html+='</div></div>';
+  });
+  html+='</div></div>';
+  document.getElementById("calArea").innerHTML=html;
+  bindBars();
+}
+function snippet(s){s=s||"";return s.length>90? s.slice(0,88)+"…" : s;}
+
+/* ============ RENDER: OVERVIEW (Jul–Nov Gantt) ============ */
+var OVERVIEW_MONTHS = 5; // project-start month + 4 -> Jul..Nov for a July start
+function renderOverview(){
+  var s0=parseISO(state.start);
+  var y=s0.getFullYear(), m0=s0.getMonth();
+  var rangeStart=new Date(y,m0,1);
+  var rangeEnd=new Date(y,m0+OVERVIEW_MONTHS,0); // last day of the final month
+  var totalDays=dayDiff(rangeStart,rangeEnd)+1;
+  var y0=rangeStart.getFullYear(), y1=rangeEnd.getFullYear();
+  document.getElementById("periodTitle").textContent =
+    MON[rangeStart.getMonth()]+(y0!==y1?" "+y0:"")+" – "+MON[rangeEnd.getMonth()]+" "+y1;
+
+  function factor(d){var f=dayDiff(rangeStart,d)/totalDays; return f<0?0:(f>1?1:f);}
+  function offsetCalc(f){return "calc(var(--glabel) + (100% - var(--glabel)) * "+f.toFixed(5)+")";}
+
+  var today=new Date();
+
+  // month header cells
+  var monthsHTML="";
+  for(var i=0;i<OVERVIEW_MONTHS;i++){
+    var dim=new Date(y,m0+i+1,0).getDate();
+    monthsHTML+='<div class="gmonth" style="width:'+(dim/totalDays*100).toFixed(4)+'%">'+MON[(m0+i)%12]+(((m0+i)>=12)?" "+(y+1):"")+'</div>';
+  }
+
+  var rowsHTML="";
+  for(var ph=1;ph<=5;ph++){
+    var tasks=state.tasks.filter(function(t){
+      if(t.phase!==ph) return false;
+      var st=taskStart(t), en=taskEnd(t);
+      return en>=rangeStart && st<=rangeEnd;
+    });
+    if(!tasks.length) continue;
+    if(PHASE_NAMES[ph]) rowsHTML+='<div class="gantt-phase"><div class="gantt-label-col">'+esc(PHASE_NAMES[ph])+'</div><div class="gantt-track"></div></div>';
+    tasks.forEach(function(t){
+      var st=taskStart(t), en=taskEnd(t);
+      var lf=factor(st), rf=factor(addBusinessDays(en,1)); // include the end day
+      if(rf<=lf) rf=factor(en)+ (1/totalDays); // guard for same-day
+      var leftPct=(lf*100).toFixed(4), widthPct=Math.max(0,(rf-lf)*100).toFixed(4);
+      var cls="gbar "+typeClass(t);
+      var title=esc(t.name)+" · "+esc(t.assignee)+" ("+fmtShort(st)+(t.days>1||t.fixedDate?" – "+fmtShort(en):"")+")";
+      rowsHTML+='<div class="gantt-row">'+
+        '<div class="gantt-label-col" data-id="'+t.id+'">'+esc(t.name)+'</div>'+
+        '<div class="gantt-track"><div class="'+cls+'" style="left:'+leftPct+'%;width:'+widthPct+'%'+barBg(typeClass(t),t.assignee)+'" data-id="'+t.id+'" title="'+title+'"></div></div>'+
+        '</div>';
+    });
+  }
+  if(!rowsHTML) rowsHTML='<div class="gantt-empty">Nothing scheduled in this window.</div>';
+
+  // overlays: month gridlines + today
+  var overlays="";
+  for(var g=1;g<OVERVIEW_MONTHS;g++){
+    var bf=dayDiff(rangeStart,new Date(y,m0+g,1))/totalDays;
+    overlays+='<div class="gantt-overlay" style="left:'+offsetCalc(bf)+'"></div>';
+  }
+  if(today>=rangeStart && today<=rangeEnd){
+    overlays+='<div class="gantt-today" style="left:'+offsetCalc(factor(today))+'"></div>';
+  }
+
+  var hint = isMobile.matches ? '<div class="gantt-hint">Swipe sideways for later months</div>' : '';
+  var html='<div class="calendar gantt">'+hint+'<div class="gantt-scroll"><div class="gantt-inner">'+
+    '<div class="gantt-head"><div class="gantt-label-col">Track / Task</div><div class="gantt-track gantt-months">'+monthsHTML+'</div></div>'+
+    rowsHTML+overlays+
+    '</div></div></div>';
+  document.getElementById("calArea").innerHTML=html;
+  bindBars();
+}
+
+/* ============ RENDER: LIST ============ */
+function commentIconSVG(){
+  return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>';
+}
+function trashIconSVG(){
+  return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>';
+}
+function renderList(){
+  var tasks = state.tasks.slice().sort(function(a,b){
+    return a.phase - b.phase || (taskStart(a)-taskStart(b));
+  });
+  /* Midnight today, so the comparison is day-to-day rather than
+     hour-to-hour: a phase due later today is not "after" today. */
+  var todayStart = new Date(); todayStart.setHours(0,0,0,0);
+  var html='<table class="tbl"><thead><tr>'+
+    '<th style="width:230px">Phase</th>'+
+    '<th class="c-detail">Detail</th>'+
+    '<th class="c-meta">Attached</th>'+
+    '<th class="hide-sm" style="width:120px">Assignee</th>'+
+    '<th class="hide-sm" style="width:136px">Start</th>'+
+    '<th style="width:136px">Due</th>'+
+    '<th style="width:130px">Status</th>'+
+    '<th class="c-comment" style="width:80px;text-align:center">Comment</th>'+
+    '<th class="c-complete" style="width:86px;text-align:center">Complete</th>'+
+    '<th class="c-delete" style="width:74px;text-align:center">Delete</th>'+
+    '</tr></thead><tbody>';
+  tasks.forEach(function(t){
+    var s=taskStart(t), e=taskEnd(t);
+    var tag = t.milestone ? '' : (t.fixedDate ? '<span class="tag-fixed">Fixed date</span>' : '');
+    var count = (t.comments && t.comments.length) ? t.comments.length : 0;
+    var badge = count ? '<span class="cc">'+count+'</span>' : '';
+    /* Due today or already past: the selector itself takes the
+       --color2-100 wash, so the work that has come round — or run
+       over — reads down the column. todayStart is midnight, so a
+       phase due today counts as reached rather than still ahead. */
+    var dueReached = e <= todayStart;
+    /* data-row-status drives the strike-through on the phase name when
+       the status is Done. Kept on the row, not the cell, so the rule
+       can reach across to .c-phase. */
+    html+='<tr data-id="'+t.id+'" data-row-status="'+escAttr(taskStatus(t))+'"'+(t.complete?' class="completed"':'')+'>'+
+      '<td class="c-phase">'+esc(t.name)+tag+'</td>'+
+      '<td class="c-meta">'+attachSummary(t)+'</td>'+
+      '<td class="c-detail"><div class="d-desc">'+esc(t.description)+'</div></td>'+
+      '<td class="c-assignee hide-sm">'+rowAssigneeHTML(t)+'</td>'+
+      '<td class="c-date hide-sm">'+rowDateHTML(t,"start",s)+'</td>'+
+      '<td class="c-date">'+rowDateHTML(t,"due",e,dueReached)+'</td>'+
+      '<td class="c-status">'+rowStatusHTML(t)+'</td>'+
+      '<td class="c-comment"><button type="button" class="comment-btn" data-comment="'+t.id+'" title="Comments" aria-label="Comments">'+commentIconSVG()+badge+'</button></td>'+
+      '<td class="c-complete"><input type="checkbox" class="form-field-checkbox row-complete" data-complete="'+t.id+'"'+(t.complete?' checked':'')+' aria-label="Mark complete"></td>'+
+      '<td class="c-delete"><button type="button" class="delete-btn" data-delete="'+t.id+'" title="Delete phase" aria-label="Delete phase">'+trashIconSVG()+'</button></td>'+
+      '</tr>';
+  });
+  html+='</tbody></table>';
+  document.getElementById("listBody").innerHTML=html;
+  bindRows();
+  bindCompleteBoxes();
+  bindCommentBtns();
+  bindDeleteBtns();
+  bindRowAssignees();
+  bindRowStatuses();
+  bindRowDates();
+}
+/* Start and Due are date selectors, not printed strings: this table is
+   where the schedule is adjusted, so the cell holds the control. */
+function rowDateHTML(t, edge, d, reached){
+  return '<input type="date" class="form-field-date row-date'+(reached?" is-due-reached":"")+'" data-date="'+escAttr(t.id)+'" data-edge="'+edge+'"'+
+    ' value="'+escAttr(toISO(d))+'"'+
+    ' aria-label="'+(edge==="start"?"Start date":"Due date")+' for '+escAttr(t.name)+'">';
+}
+function bindRowDates(){
+  Array.prototype.forEach.call(document.querySelectorAll(".row-date"),function(inp){
+    var t=byId[inp.getAttribute("data-date")]; if(!t) return;
+    inp.onclick=function(e){ e.stopPropagation(); };
+    inp.onchange=function(e){
+      e.stopPropagation();
+      if(inp.getAttribute("data-edge")==="start") setTaskStart(t, inp.value);
+      else setTaskDue(t, inp.value);
+    };
+  });
+}
+function rowStatusHTML(t){
+  var cur=taskStatus(t);
+  return '<select class="form-field-select row-status" data-status="'+escAttr(t.id)+'" data-value="'+escAttr(cur)+'" aria-label="Status">'+
+    STATUS_OPTIONS.map(function(s){
+      return '<option value="'+escAttr(s)+'"'+(s===cur?' selected':'')+'>'+esc(s)+'</option>';
+    }).join("")+
+    '</select>';
+}
+function bindRowStatuses(){
+  Array.prototype.forEach.call(document.querySelectorAll(".row-status"),function(sel){
+    var t=byId[sel.getAttribute("data-status")]; if(!t) return;
+    sel.onclick=function(e){ e.stopPropagation(); };
+    sel.onchange=function(e){
+      e.stopPropagation();
+      setStatus(t, sel.value);
+      sel.setAttribute("data-value", sel.value);
+      // Fill and strike-through are CSS on these two attributes, so the
+      // row updates on the spot rather than waiting for a re-render.
+      var tr = sel.closest("tr");
+      if(tr) tr.setAttribute("data-row-status", sel.value);
+    };
+  });
+}
+/* Mobile cards hide the comment / file columns, so summarise what is attached instead. */
+function attachSummary(t){
+  var parts=[];
+  var c=(t.comments||[]).length;
+  var f=(t.reviewFiles||[]).length;
+  var l=(t.reviewLinks||[]).length;
+  (t.reviewFiles||[]).forEach(function(x){ c += (x.comments||[]).length; });
+  if(f) parts.push(f+(f===1?" file":" files"));
+  if(l) parts.push(l+(l===1?" link":" links"));
+  if(c) parts.push(c+(c===1?" comment":" comments"));
+  return parts.length ? '<span class="cm-pill">'+esc(parts.join(" · "))+'</span>' : '';
+}
+function rowAssigneeHTML(t){
+  var sel=(t.assignee||"").split("/").map(function(x){ return x.trim(); }).filter(Boolean);
+  var opts=AUTHOR_OPTIONS.slice();
+  sel.forEach(function(n){ if(opts.indexOf(n)===-1) opts.unshift(n); });
+  var label = sel.length ? esc(sel.join(", ")) : "Select Assignee(s)";
+  var boxes = opts.map(function(n){ return '<label class="ra-opt"><input type="checkbox" class="form-field-checkbox" value="'+escAttr(n)+'"'+(sel.indexOf(n)>-1?' checked':'')+'> '+esc(n)+'</label>'; }).join("");
+  return '<details class="row-assignee" data-asg="'+escAttr(t.id)+'" style="background:'+assigneeColor(t.assignee,"#FEFCF9")+'">'+
+    '<summary class="ra-summary'+(sel.length?'':' ra-placeholder')+'">'+label+'</summary>'+
+    '<div class="ra-panel">'+boxes+'<button type="button" class="ra-add">+ Add name</button></div>'+
+    '</details>';
+}
+function checkedNames(dd){ return Array.prototype.slice.call(dd.querySelectorAll('input[type="checkbox"]')).filter(function(c){return c.checked;}).map(function(c){return c.value;}); }
+function recolorPhaseBars(t){
+  var c=assigneeColor(t.assignee);
+  Array.prototype.forEach.call(document.querySelectorAll('.buildtask[data-id="'+t.id+'"]'),function(el){ el.style.background=c; });
+}
+function updateRowAssignee(dd,t){
+  var sel=(t.assignee||"").split("/").map(function(x){ return x.trim(); }).filter(Boolean);
+  var summ=dd.querySelector(".ra-summary");
+  if(summ){ summ.textContent = sel.length ? sel.join(", ") : "Select Assignee(s)"; summ.classList.toggle("ra-placeholder", sel.length===0); }
+  dd.style.background=assigneeColor(t.assignee,"#FEFCF9");
+  recolorPhaseBars(t);
+}
+function bindRowAssignees(){
+  Array.prototype.forEach.call(document.querySelectorAll(".row-assignee"),function(dd){
+    var t=byId[dd.getAttribute("data-asg")]; if(!t) return;
+    dd.onclick=function(e){ e.stopPropagation(); };
+    dd.addEventListener("change", function(e){
+      if(!e.target || e.target.type!=="checkbox") return;
+      setAssignee(t, checkedNames(dd).join(" / ")); updateRowAssignee(dd,t);
+    });
+    var addBtn=dd.querySelector(".ra-add");
+    if(addBtn) addBtn.onclick=function(e){
+      e.preventDefault(); e.stopPropagation();
+      var name=window.prompt("Add a name to the list:"); name=name?name.trim():"";
+      if(!name) return;
+      addNameOption(name);
+      var names=checkedNames(dd); if(names.indexOf(name)===-1) names.push(name);
+      setAssignee(t, names.join(" / ")); renderList(); recolorPhaseBars(t);
+    };
+  });
+}
+function snippet2(s){s=s||"";return s.length>120? s.slice(0,118)+"…" : s;}
+
+/* ============ EDIT DRAWER ============ */
+var editingId=null;
+function openEditor(id, focusComments){
+  var t=byId[id]; if(!t){ // maybe checkin
+    var c=CHECKINS.filter(function(x){return x.id===id;})[0];
+    if(c){ openCheckin(c); } return;
+  }
+  editingId=id;
+  if(!t.comments) t.comments=[];
+  var dPhaseEl=document.getElementById("dPhase"); if(dPhaseEl) dPhaseEl.textContent = PHASE_NAMES[t.phase];
+  document.getElementById("dTitle").textContent = t.milestone?"Milestone":(t.type==="hard-date"?"Fixed deadline":"Edit phase");
+  var body=document.getElementById("drawerBody");
+  body.innerHTML =
+    '<div class="field"><label for="fName">Name</label><input type="text" class="form-field-text" id="fName" value="'+escAttr(t.name)+'"></div>'+
+    '<div class="field"><label for="fAssignee">Assignee</label>'+nameSelectHTML("fAssignee", t.assignee)+'</div>'+
+    '<div class="field review-wrap"><label>For review</label>'+
+      '<div class="review-list" id="reviewList"></div>'+
+      '<div class="review-add">'+
+        '<input type="file" id="rFile" class="review-file-input" multiple>'+
+        '<input type="file" id="rReplace" class="review-file-input">'+
+        '<label for="rFile" class="btn btn-sans btn-md btn-inline review-upload-btn">Upload files</label>'+
+      '</div>'+
+      '<div class="review-url">'+
+        '<label for="rUrl">URL</label>'+
+        '<div class="ru-row">'+
+          '<input type="url" class="form-field-text" id="rUrl" placeholder="Paste link">'+
+          '<button type="button" class="btn btn-sans btn-md btn-inline" id="rUrlBtn">submit</button>'+
+        '</div>'+
+        '<div class="review-links" id="reviewLinks"></div>'+
+      '</div></div>'+
+    '<div class="field comments-wrap"><label>Comments</label>'+
+      '<div class="comments-list" id="commentsList"></div>'+
+      '<div class="comment-add">'+
+        '<div class="ca-row">'+authorSelectHTML()+'<button type="button" class="btn btn-sans btn-md btn-inline" id="cAddBtn">Add comment</button></div>'+
+        '<textarea class="form-field-textarea" id="cAdd" placeholder="Leave a comment..."></textarea>'+
+      '</div></div>';
+  renderReviewFiles(t);
+  renderReviewLinks(t);
+  renderComments(t);
+  bindNameSelects();
+  document.getElementById("rFile").onchange=function(){ addReviewFile(t, this); };
+  document.getElementById("rReplace").onchange=function(){ replaceReviewFile(t, this); };
+  document.getElementById("rUrlBtn").onclick=function(){ addReviewLink(t); };
+  document.getElementById("rUrl").onkeydown=function(e){ if(e.key==="Enter"){ e.preventDefault(); addReviewLink(t); } };
+  document.getElementById("cAddBtn").onclick=function(){ addComment(t); };
+  /* Delete sits last and hard right, away from Save, so the
+     destructive action is never the one reached for by muscle memory.
+     It carries the .btn-danger fill and a trash glyph, because a
+     destructive control should not look like its neighbours. */
+  document.getElementById("drawerFoot").innerHTML =
+    '<button class="btn btn-sans btn-md btn-pri-fill" id="saveBtn">Save changes</button>'+
+    '<button class="btn btn-sans btn-md btn-inline" id="cancelBtn">Cancel</button>'+
+    '<button type="button" class="btn btn-sans btn-md btn-danger" id="deletePhaseBtn">'+trashIconSVG()+'Delete phase</button>';
+  document.getElementById("saveBtn").onclick=saveEdit;
+  document.getElementById("cancelBtn").onclick=closeEditor;
+  /* confirmDelete() puts up the confirmation and only then calls
+     deleteTask(), which closes this drawer on its way out. */
+  document.getElementById("deletePhaseBtn").onclick=function(){ confirmDelete(t.id); };
+  showDrawer();
+  if(focusComments){
+    var cl=document.getElementById("commentsList"); if(cl) cl.scrollIntoView({block:"nearest"});
+    var ca=document.getElementById("cAdd"); if(ca) ca.focus();
+  }
+}
+function renderComments(t){
+  var wrap=document.getElementById("commentsList"); if(!wrap) return;
+  var cs=t.comments||[];
+  if(!cs.length){ wrap.innerHTML='<div class="comments-empty">No comments yet.</div>'; return; }
+  wrap.innerHTML = cs.map(function(c){
+    return '<div class="comment-item"><div class="cm-head"><span class="cm-author">'+esc(c.author||"Anonymous")+'</span><span>'+esc(c.when||"")+'</span></div><div class="cm-text">'+esc(c.text)+'</div></div>';
+  }).join("");
+}
+function commentStamp(){
+  var d=new Date();
+  var h=d.getHours(), mi=d.getMinutes();
+  return MON[d.getMonth()]+" "+d.getDate()+", "+d.getFullYear()+" "+((h%12)||12)+":"+(mi<10?"0":"")+mi+(h<12?"am":"pm");
+}
+/* ---- For review: file upload / view (stored per phase in localStorage) ---- */
+function fmtBytes(n){ if(n<1024) return n+" B"; if(n<1048576) return (n/1024).toFixed(0)+" KB"; return (n/1048576).toFixed(1)+" MB"; }
+var openReviewIdx=-1;   // which file's comment thread is expanded
+function renderReviewFiles(t){
+  var wrap=document.getElementById("reviewList"); if(!wrap) return;
+  var fs=t.reviewFiles||[];
+  if(!fs.length){ wrap.innerHTML='<div class="review-empty">No files yet.</div>'; openReviewIdx=-1; return; }
+  if(openReviewIdx>=fs.length) openReviewIdx=-1;
+  wrap.innerHTML = fs.map(function(f,i){
+    var cs=f.comments||[], open=(i===openReviewIdx);
+    var thread='';
+    if(open){
+      thread='<div class="review-comments">'+
+        (cs.length
+          ? cs.map(function(c){
+              return '<div class="comment-item"><div class="cm-head"><span class="cm-author">'+esc(c.author||"")+'</span><span>'+esc(c.when||"")+'</span></div>'+
+                     '<div class="cm-text">'+esc(c.text)+'</div></div>';
+            }).join("")
+          : '<div class="comments-empty">No comments on this file yet.</div>')+
+        '<div class="comment-add">'+
+          '<div class="ca-row">'+nameSelectHTML("rcAuthor"+i, commentAuthor, "Select your name")+
+            '<button type="button" class="btn btn-sans btn-md btn-inline" data-add="'+i+'">Add comment</button></div>'+
+          '<textarea class="form-field-textarea" id="rcText'+i+'" placeholder="Comment on '+escAttr(f.name)+'..."></textarea>'+
+        '</div></div>';
+    }
+    return '<div class="review-file'+(open?' open':'')+'">'+
+      '<div class="review-item">'+
+        '<a href="'+f.data+'" download="'+escAttr(f.name)+'" class="review-name" data-prev="'+i+'" title="Preview">'+esc(f.name)+'</a>'+
+        '<span class="review-meta">'+esc(fmtBytes(f.size||0))+' · '+esc(f.when||'')+'</span>'+
+        '<button type="button" class="review-rep" data-r="'+i+'" title="Upload a new version of this file">Replace</button>'+
+        '<button type="button" class="review-cmt'+(open?' on':'')+'" data-c="'+i+'" aria-expanded="'+(open?'true':'false')+'" '+
+          'title="'+(open?'Hide comments':'Comments on this file')+'" aria-label="'+(open?'Hide comments':'Comments on this file')+'">'+
+          (open ? '<span class="rc-close">&times;</span>'
+                : commentIconSVG()+(cs.length?'<span class="rc-count">'+cs.length+'</span>':''))+'</button>'+
+        '<button type="button" class="review-del" data-i="'+i+'" aria-label="Remove file">&times;</button>'+
+      '</div>'+thread+
+    '</div>';
+  }).join("");
+  Array.prototype.forEach.call(wrap.querySelectorAll('.review-name[data-prev]'),function(a){
+    a.onclick=function(e){ e.preventDefault(); openPreview((t.reviewFiles||[])[parseInt(a.getAttribute('data-prev'),10)]); };
+  });
+  Array.prototype.forEach.call(wrap.querySelectorAll('.review-rep'),function(b){
+    b.onclick=function(){
+      var input=document.getElementById("rReplace"); if(!input) return;
+      replaceIdx=parseInt(b.getAttribute('data-r'),10);
+      input.value="";
+      input.click();
+    };
+  });
+  Array.prototype.forEach.call(wrap.querySelectorAll('.review-del'),function(b){
+    b.onclick=function(){ removeReviewFile(t, parseInt(b.getAttribute('data-i'),10)); };
+  });
+  Array.prototype.forEach.call(wrap.querySelectorAll('.review-cmt'),function(b){
+    b.onclick=function(){
+      var i=parseInt(b.getAttribute('data-c'),10);
+      openReviewIdx = (openReviewIdx===i) ? -1 : i;
+      renderReviewFiles(t);
+    };
+  });
+  Array.prototype.forEach.call(wrap.querySelectorAll('[data-add]'),function(b){
+    b.onclick=function(){ addFileComment(t, parseInt(b.getAttribute('data-add'),10)); };
+  });
+  bindNameSelects();
+}
+function addFileComment(t, i){
+  var f=(t.reviewFiles||[])[i]; if(!f) return;
+  var au=document.getElementById("rcAuthor"+i), ta=document.getElementById("rcText"+i);
+  var author=(au && au.value && au.value!=="__add__") ? au.value.trim() : "";
+  if(!author){ alert("Please select your name before adding a comment."); if(au) au.focus(); return; }
+  var text=(ta && ta.value || "").trim();
+  if(!text){ alert("Please write a comment first."); if(ta) ta.focus(); return; }
+  commentAuthor=author; try{localStorage.setItem("ss_comment_author",author);}catch(e){}
+  if(!f.comments) f.comments=[];
+  f.comments.push({author:author, text:text, when:commentStamp()});
+  if(!save()){ f.comments.pop(); return; }
+  if(ta) ta.value="";
+  renderReviewFiles(t);
+}
+function addReviewFile(t, input){
+  var files=input.files ? Array.prototype.slice.call(input.files) : [];
+  if(!files.length) return;
+  var skipped=[], added=0;
+  function finish(){
+    input.value='';
+    renderReviewFiles(t);
+    renderList();
+    if(skipped.length) alert('Not added:\n\n'+skipped.join('\n'));
+  }
+  // read one at a time so a failure part-way through leaves the rest intact
+  (function next(i){
+    if(i>=files.length){ finish(); return; }
+    var file=files[i];
+    if(file.size > 4*1048576){
+      skipped.push(file.name+' — '+fmtBytes(file.size)+' (keep review files under 4 MB; they are saved in the browser)');
+      next(i+1); return;
+    }
+    var reader=new FileReader();
+    reader.onload=function(){
+      if(!t.reviewFiles) t.reviewFiles=[];
+      t.reviewFiles.push({name:file.name, size:file.size, type:file.type, data:reader.result, when:commentStamp()});
+      if(!save()){
+        t.reviewFiles.pop();
+        skipped.push(file.name+' — not saved, this browser\'s storage is full');
+        finish(); return;   // stop: everything after this would fail too
+      }
+      added++;
+      next(i+1);
+    };
+    reader.onerror=function(){ skipped.push(file.name+' — could not be read'); next(i+1); };
+    reader.readAsDataURL(file);
+  })(0);
+}
+/* ---- For review: in-page preview of an uploaded file ---- */
+var previewURL=null;
+function dataURLToBlob(d){
+  var head=d.slice(0,d.indexOf(",")), body=d.slice(d.indexOf(",")+1);
+  var mime=(/data:([^;,]*)/.exec(head)||[])[1]||"application/octet-stream";
+  if(head.indexOf(";base64")>-1){
+    var bin=atob(body), arr=new Uint8Array(bin.length);
+    for(var i=0;i<bin.length;i++) arr[i]=bin.charCodeAt(i);
+    return new Blob([arr],{type:mime});
+  }
+  return new Blob([decodeURIComponent(body)],{type:mime});
+}
+function openPreview(f){
+  if(!f || !f.data) return;
+  var body=document.getElementById("previewBody");
+  var type=f.type||"";
+  if(!type){   // older uploads may not have stored a type; fall back to the extension
+    var ext=(f.name||"").split(".").pop().toLowerCase();
+    if(["png","jpg","jpeg","gif","webp","svg","avif"].indexOf(ext)>-1) type="image/"+(ext==="jpg"?"jpeg":ext);
+    else if(ext==="pdf") type="application/pdf";
+  }
+  /* blob: URLs render inline; a data: URL in an iframe is blocked by the browser */
+  if(previewURL){ URL.revokeObjectURL(previewURL); previewURL=null; }
+  try{ previewURL=URL.createObjectURL(dataURLToBlob(f.data)); }catch(e){ previewURL=null; }
+  document.getElementById("previewName").textContent=f.name||"File";
+  var dl=document.getElementById("previewDownload");
+  dl.href=f.data; dl.setAttribute("download", f.name||"file");
+  if(previewURL && type.indexOf("image/")===0){
+    body.innerHTML='<img src="'+previewURL+'" alt="'+escAttr(f.name||"")+'">';
+  }else if(previewURL && (type==="application/pdf" || type.indexOf("text/")===0)){
+    body.innerHTML='<iframe src="'+previewURL+'" title="'+escAttr(f.name||"")+'"></iframe>';
+  }else{
+    body.innerHTML='<div class="pv-fallback"><span class="pv-kind">'+esc(type||"Unknown type")+'</span>'+
+      'This kind of file cannot be shown in the browser.<br>Use Download to open it on your computer.</div>';
+  }
+  document.getElementById("previewScrim").classList.add("open");
+  var mo=document.getElementById("previewModal");
+  mo.classList.add("open"); mo.setAttribute("aria-hidden","false");
+}
+function closePreview(){
+  var mo=document.getElementById("previewModal");
+  mo.classList.remove("open"); mo.setAttribute("aria-hidden","true");
+  document.getElementById("previewScrim").classList.remove("open");
+  document.getElementById("previewBody").innerHTML="";
+  if(previewURL){ URL.revokeObjectURL(previewURL); previewURL=null; }
+}
+
+/* ---- For review: links (clickable, open in a new tab) ---- */
+function linkLabel(u){
+  var s=u.replace(/^https?:\/\//i,"").replace(/\/$/,"");
+  return s.length>52 ? s.slice(0,50)+"…" : s;
+}
+function renderReviewLinks(t){
+  var wrap=document.getElementById("reviewLinks"); if(!wrap) return;
+  var ls=t.reviewLinks||[];
+  if(!ls.length){ wrap.innerHTML=""; return; }
+  wrap.innerHTML = ls.map(function(l,i){
+    return '<div class="review-item">'+
+      '<a href="'+escAttr(l.url)+'" target="_blank" rel="noopener noreferrer" class="review-name" title="'+escAttr(l.url)+'">'+esc(linkLabel(l.url))+'</a>'+
+      '<span class="review-meta">'+esc(l.when||"")+'</span>'+
+      '<button type="button" class="review-del" data-l="'+i+'" aria-label="Remove link">&times;</button>'+
+    '</div>';
+  }).join("");
+  Array.prototype.forEach.call(wrap.querySelectorAll('.review-del'),function(b){
+    b.onclick=function(){ removeReviewLink(t, parseInt(b.getAttribute('data-l'),10)); };
+  });
+}
+function addReviewLink(t){
+  var input=document.getElementById("rUrl"); if(!input) return;
+  var url=(input.value||"").trim();
+  if(!url){ input.focus(); return; }
+  if(!/^https?:\/\//i.test(url)){
+    if(/^[a-z][a-z0-9+.-]*:/i.test(url)){ alert("Please paste a web address starting with http:// or https://"); return; }
+    url="https://"+url;   // bare domain pasted
+  }
+  if(!t.reviewLinks) t.reviewLinks=[];
+  if(t.reviewLinks.some(function(l){return l.url===url;})){ alert("That link is already here."); input.value=""; return; }
+  t.reviewLinks.push({url:url, when:commentStamp()});
+  if(!save()){ t.reviewLinks.pop(); return; }
+  input.value="";
+  renderReviewLinks(t);
+  renderList();
+}
+function removeReviewLink(t, i){
+  if(!t.reviewLinks || i<0 || i>=t.reviewLinks.length) return;
+  if(!confirm('Remove "'+t.reviewLinks[i].url+'"?')) return;
+  t.reviewLinks.splice(i,1);
+  save();
+  renderReviewLinks(t);
+  renderList();
+}
+var replaceIdx=-1;
+function replaceReviewFile(t, input){
+  var i=replaceIdx, f=(t.reviewFiles||[])[i];
+  var file=input.files && input.files[0];
+  input.value=""; replaceIdx=-1;
+  if(!f || !file) return;
+  if(file.size > 4*1048576){ alert('That file is '+fmtBytes(file.size)+'. Please keep review files under 4 MB (they are saved in the browser).'); return; }
+  var reader=new FileReader();
+  reader.onload=function(){
+    var prev={name:f.name,size:f.size,type:f.type,data:f.data,when:f.when};
+    f.name=file.name; f.size=file.size; f.type=file.type; f.data=reader.result; f.when=commentStamp();
+    if(!save()){ f.name=prev.name; f.size=prev.size; f.type=prev.type; f.data=prev.data; f.when=prev.when; return; }
+    renderReviewFiles(t);   // comments on this file are kept
+    renderList();
+  };
+  reader.onerror=function(){ alert('Could not read that file.'); };
+  reader.readAsDataURL(file);
+}
+function removeReviewFile(t, i){
+  if(!t.reviewFiles || i<0 || i>=t.reviewFiles.length) return;
+  if(!confirm('Remove "'+t.reviewFiles[i].name+'"?')) return;
+  t.reviewFiles.splice(i,1);
+  save();
+  renderReviewFiles(t);
+  renderList();
+}
+function addComment(t){
+  var ta=document.getElementById("cAdd"), au=document.getElementById("cAuthor");
+  if(!ta) return;
+  var text=(ta.value||"").trim(); if(!text) return;
+  var author=(au&&au.value&&au.value!=="__add__"?au.value:"").trim()||"Anonymous";
+  commentAuthor=author; try{localStorage.setItem("ss_comment_author",author);}catch(e){}
+  if(!t.comments) t.comments=[];
+  t.comments.push({author:author, text:text, when:commentStamp()});
+  if(!save()){ t.comments.pop(); return; }
+  ta.value="";
+  renderComments(t);
+  renderList();
+}
+function openCheckin(c){
+  editingId=null;
+  var dPhaseC=document.getElementById("dPhase"); if(dPhaseC) dPhaseC.textContent="Standing meeting";
+  document.getElementById("dTitle").textContent="Check-In";
+  document.getElementById("drawerBody").innerHTML=
+    '<div class="drawer-meta"><b>'+esc(c.name)+'</b><br>'+fmtNice(parseISO(c.fixedDate))+'<br><br>'+esc(c.description)+'</div>';
+  document.getElementById("drawerFoot").innerHTML='<button class="btn btn-sans btn-md btn-inline" id="cancelBtn">Close</button>';
+  document.getElementById("cancelBtn").onclick=closeEditor;
+  showDrawer();
+}
+var AUTHOR_OPTIONS = (function(){
+  try{ var raw=localStorage.getItem("ss_name_options"); if(raw){ var a=JSON.parse(raw); if(Array.isArray(a)&&a.length) return a; } }catch(e){}
+  return ["Lindsay","Morgan","Angel","Matt"];
+})();
+function saveNameOptions(){ try{ localStorage.setItem("ss_name_options", JSON.stringify(AUTHOR_OPTIONS)); }catch(e){} }
+function addNameOption(n){ n=(n||"").trim(); if(n && AUTHOR_OPTIONS.indexOf(n)===-1){ AUTHOR_OPTIONS.push(n); saveNameOptions(); } return n; }
+function phForSelect(id){ return (id==="cAuthor" || id==="bAuthor" || id.indexOf("rcAuthor")===0) ? "Select your name" : "Select assignee"; }
+function nameOptionsHTML(selected, placeholder){
+  placeholder = placeholder || "Select assignee";
+  var opts = AUTHOR_OPTIONS.slice();
+  if(selected && opts.indexOf(selected)===-1) opts.unshift(selected); // keep an existing value as an option
+  return '<option value=""'+(selected?'':' selected')+'>'+esc(placeholder)+'</option>'+
+    opts.map(function(n){ return '<option value="'+escAttr(n)+'"'+(n===selected?' selected':'')+'>'+esc(n)+'</option>'; }).join("")+
+    '<option value="__add__">+ Add name</option>';
+}
+function nameSelectHTML(id, selected, placeholder){
+  return '<select id="'+id+'" class="form-field-select ca-author name-select">'+nameOptionsHTML((selected||"").trim(), placeholder)+'</select>';
+}
+function authorSelectHTML(){ return nameSelectHTML("cAuthor", commentAuthor, "Select your name"); }
+function bindNameSelects(){
+  Array.prototype.forEach.call(document.querySelectorAll(".name-select"), function(sel){
+    if(sel._nameBound) return; sel._nameBound=true;
+    sel.addEventListener("mousedown", function(){ sel._prev = sel.value; });
+    sel.addEventListener("change", function(){
+      if(sel.value!=="__add__") return;
+      var name = window.prompt("Add a name to the list:");
+      name = name ? name.trim() : "";
+      if(!name){ sel.value = sel._prev || ""; return; }
+      addNameOption(name);
+      Array.prototype.forEach.call(document.querySelectorAll(".name-select"), function(s){
+        var cur = (s===sel) ? name : (s.value==="__add__" ? (s._prev||"") : s.value);
+        s.innerHTML = nameOptionsHTML(cur, phForSelect(s.id));
+      });
+    });
+  });
+}
+function businessDaysInclusive(a,b){
+  if(b<a) return 1;
+  var d=new Date(a.getFullYear(),a.getMonth(),a.getDate()), end=new Date(b.getFullYear(),b.getMonth(),b.getDate()), n=0;
+  while(d<=end){ var g=d.getDay(); if(g!==0&&g!==6) n++; d.setDate(d.getDate()+1); }
+  return Math.max(1,n);
+}
+/* ---- Dates ----------------------------------------------------
+   A task stores a start and a LENGTH in business days, not an end
+   date, because everything chained after it is derived from that
+   length. The drawer shows start and due, which is what a person
+   thinks in, and converts back to days on save. */
+function bizDaysBetween(a, b){
+  if(b < a) return 1;
+  var n = 1, d = new Date(a.getFullYear(), a.getMonth(), a.getDate());
+  while(d < b){ d.setDate(d.getDate()+1); var g=d.getDay(); if(g!==0&&g!==6) n++; }
+  return n;
+}
+/* The drawer no longer carries a start and a due field. Dates are set
+   in the schedule table, in the Start and Due selectors on each row,
+   so the editor is left to name, phase, assignee, description and the
+   review thread. setTaskStart / setTaskDue are the only writers. */
+
+/* ---- New task / phase -----------------------------------------
+   Opens the same drawer with an unsaved draft. The task is only
+   pushed onto state.tasks once Save is pressed, so cancelling
+   leaves nothing behind. */
+var draftTask = null;
+function newTaskId(){
+  var n = 1; while(byId["new"+n]) n++;
+  return "new"+n;
+}
+function openNewTask(){
+  editingId = null;
+  var today = new Date();
+  draftTask = {
+    id: newTaskId(), phase: 1, name: "", description: "", assignee: "",
+    days: 5, after: [], startOverride: toISO(today), type: "task",
+    comments: [], reviewFiles: [], reviewLinks: []
+  };
+  var t = draftTask;
+  var dPhaseEl=document.getElementById("dPhase"); if(dPhaseEl) dPhaseEl.textContent = "New";
+  document.getElementById("dTitle").textContent = "New task / phase";
+  document.getElementById("dTitle").style.display = "";
+
+  var phaseOpts = Object.keys(PHASE_NAMES).map(function(k){
+    var label = PHASE_NAMES[k] ? (k+" \u00b7 "+PHASE_NAMES[k]) : ("Phase "+k);
+    return '<option value="'+k+'">'+esc(label)+'</option>';
+  }).join("");
+
+  document.getElementById("drawerBody").innerHTML =
+    '<div class="field"><label for="fName">Name</label>'+
+      '<input type="text" class="form-field-text" id="fName" value="" placeholder="Task or phase name"></div>'+
+    '<div class="field"><label for="fPhase">Phase</label>'+
+      '<select id="fPhase" class="form-field-select">'+phaseOpts+'</select></div>'+
+    '<div class="field"><label for="fAssignee">Assignee</label>'+nameSelectHTML("fAssignee", "")+'</div>'+
+    '<div class="field"><label for="fDesc">Description</label>'+
+      '<textarea class="form-field-textarea" id="fDesc" placeholder="Optional"></textarea></div>';
+  bindNameSelects();
+
+  document.getElementById("drawerFoot").innerHTML =
+    '<button class="btn btn-sans btn-lg btn-primary" id="createBtn">Create</button>'+
+    '<button class="btn btn-sans btn-md btn-inline" id="cancelBtn">Cancel</button>';
+  document.getElementById("createBtn").onclick = createTask;
+  document.getElementById("cancelBtn").onclick = closeEditor;
+  showDrawer();
+  var nameEl=document.getElementById("fName"); if(nameEl) nameEl.focus();
+}
+function createTask(){
+  var t = draftTask; if(!t) return;
+  var name = document.getElementById("fName").value.trim();
+  if(!name){ document.getElementById("fName").focus(); return; }
+  t.name = name;
+  var ph = document.getElementById("fPhase");
+  if(ph) t.phase = parseInt(ph.value, 10) || 1;
+  var av = document.getElementById("fAssignee");
+  if(av && av.value && av.value!=="__add__") t.assignee = av.value.trim();
+  var de = document.getElementById("fDesc"); if(de) t.description = de.value;
+  state.tasks.push(t);
+  rememberDates(t);
+  draftTask = null;
+  reindex(); save(); rerender(); closeEditor();
+}
+function saveEdit(){
+  var t=byId[editingId]; if(!t) return;
+  t.name=document.getElementById("fName").value.trim()||t.name;
+  var fd=document.getElementById("fDesc"); if(fd) t.description=fd.value;
+  var avSel=document.getElementById("fAssignee");
+  if(avSel && avSel.value!=="__add__") setAssignee(t, avSel.value.trim());
+  clearMemo(); save(); rerender(); closeEditor();
+}
+function showDrawer(){
+  document.getElementById("drawer").classList.add("open");
+  document.getElementById("drawer").setAttribute("aria-hidden","false");
+  document.getElementById("scrim").classList.add("open");
+}
+function closeEditor(){
+  document.getElementById("drawer").classList.remove("open");
+  document.getElementById("drawer").setAttribute("aria-hidden","true");
+  document.getElementById("scrim").classList.remove("open");
+  editingId=null; draftTask=null;
+}
+
+/* ============ BINDINGS ============ */
+function bindBars(){
+  // Single delegated listener on the persistent #calArea container. Survives re-renders and
+  // reliably catches clicks on any bar (label, glyph, or a segment that spans week boundaries).
+  var area=document.getElementById("calArea");
+  if(!area || area._barDelegated) return;
+  area._barDelegated=true;
+  area.addEventListener("click",function(e){
+    var el=e.target.closest("[data-id]");
+    if(el && area.contains(el) && el.getAttribute("data-id")) openEditor(el.getAttribute("data-id"));
+  });
+}
+function bindRows(){
+  Array.prototype.forEach.call(document.querySelectorAll(".tbl tr[data-id]"),function(tr){
+    tr.onclick=function(e){
+      if(e.target.closest(".row-complete")||e.target.closest(".comment-btn")||e.target.closest(".delete-btn")||e.target.closest(".row-assignee")||e.target.closest(".row-status")||e.target.closest(".row-date")) return;
+      openEditor(tr.getAttribute("data-id"));
+    };
+  });
+}
+function bindCompleteBoxes(){
+  Array.prototype.forEach.call(document.querySelectorAll(".row-complete"),function(cb){
+    cb.onclick=function(e){ e.stopPropagation(); };
+    cb.onchange=function(){
+      var t=byId[cb.getAttribute("data-complete")]; if(!t) return;
+      t.complete=cb.checked; save();
+      var tr=cb.closest("tr"); if(tr) tr.classList.toggle("completed", cb.checked);
+    };
+  });
+}
+function bindCommentBtns(){
+  Array.prototype.forEach.call(document.querySelectorAll(".comment-btn"),function(b){
+    b.onclick=function(e){ e.stopPropagation(); openEditor(b.getAttribute("data-comment"), true); };
+  });
+}
+function bindDeleteBtns(){
+  Array.prototype.forEach.call(document.querySelectorAll(".delete-btn"),function(b){
+    b.onclick=function(e){ e.stopPropagation(); confirmDelete(b.getAttribute("data-delete")); };
+  });
+}
+function confirmDelete(id){
+  var t=byId[id]; if(!t) return;
+  /* Names the phase and spells out what goes with it, so the choice is
+     made on what is actually being lost rather than on "are you sure". */
+  var extras=[];
+  if(t.comments && t.comments.length) extras.push(t.comments.length+(t.comments.length===1?" comment":" comments"));
+  if(t.reviewFiles && t.reviewFiles.length) extras.push(t.reviewFiles.length+(t.reviewFiles.length===1?" file":" files"));
+  if(t.reviewLinks && t.reviewLinks.length) extras.push(t.reviewLinks.length+(t.reviewLinks.length===1?" link":" links"));
+  var msg = 'Delete "'+t.name+'"?';
+  if(extras.length) msg += "\n\nThis also removes "+extras.join(", ")+" attached to it.";
+  msg += "\n\nThis cannot be undone.";
+  if(!confirm(msg)) return;
+  deleteTask(id);
+}
+function deleteTask(id){
+  if(!state.removed) state.removed=[];
+  if(state.removed.indexOf(id)===-1) state.removed.push(id);   // so mergeNewTasks() doesn't bring it back
+  state.tasks = state.tasks.filter(function(t){return t.id!==id;});
+  // drop the deleted id from any remaining dependency chains
+  state.tasks.forEach(function(t){ if(t.after && t.after.length) t.after = t.after.filter(function(a){return a!==id;}); });
+  if(editingId===id) closeEditor();
+  clearMemo(); reindexIfNeeded(); save(); rerender();
+}
+
+/* ============ RERENDER ============ */
+function rerender(){
+  reindexIfNeeded();
+  renderLaunch();
+  renderAssigneeKey();
+  var timeline = (view==="timeline");
+  // prev/next/today only make sense for the paged month & week views
+  ["prevBtn","nextBtn","todayBtn"].forEach(function(id){
+    var el=document.getElementById(id); if(el) el.style.display = timeline ? "none" : "";
+  });
+  if(view==="month") renderMonth();
+  else if(view==="week") renderWeek();
+  else renderOverview();
+  renderList();
+}
+function reindexIfNeeded(){ byId={}; state.tasks.forEach(function(t){byId[t.id]=t;}); }
+
+/* ============ UTIL ============ */
+function esc(s){s=(s==null?"":""+s);return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function escAttr(s){return esc(s).replace(/"/g,"&quot;");}
+
+/* ============ EVENTS ============ */
+document.getElementById("segmented").addEventListener("click",function(e){
+  var b=e.target.closest("button"); if(!b)return;
+  view=b.getAttribute("data-view");
+  if(view==="week"){ cursor=new Date(); }   // always open on the current week
+  Array.prototype.forEach.call(this.children,function(c){c.classList.toggle("active",c===b);});
+  rerender();
+});
+document.getElementById("prevBtn").onclick=function(){step(-1);};
+document.getElementById("nextBtn").onclick=function(){step(1);};
+function step(dir){
+  if(view==="month"){ cursor=new Date(cursor.getFullYear(),cursor.getMonth()+dir,1); }
+  else{ cursor=new Date(cursor.getFullYear(),cursor.getMonth(),cursor.getDate()+7*dir); }
+  rerender();
+}
+document.getElementById("todayBtn").onclick=function(){
+  var t=new Date();
+  cursor = view==="month" ? new Date(t.getFullYear(),t.getMonth(),1) : t;
+  rerender();
+};
+var resetBtn=document.getElementById("resetBtn");
+if(resetBtn) resetBtn.onclick=function(){
+  if(!confirm("Reset the schedule back to the original dates?\n\nThis also clears every comment, uploaded file, and link on every phase. Message board posts are kept. This cannot be undone.")) return;
+  try{localStorage.removeItem(STORE_KEY);}catch(e){}
+  state=freshState();
+  reindexIfNeeded(); clearMemo();
+  cursor=landingCursor();
+  rerender();
+};
+document.getElementById("drawerClose").onclick=closeEditor;
+/* Meeting notes lives in the static drawer head, so it is bound once
+   here rather than on every openEditor(). */
+/* Uploading notes from inside a phase. editingId is read HERE, while the
+   drawer is still the thing in front of the user, and carried into
+   saveNote. The note then appears on the Meeting Notes page by itself —
+   saveNote re-renders that list on every save, open or not. */
+document.getElementById("noteFromPhaseBtn").onclick=function(){
+  noteFromPhase = editingId || null;
+  openNote(null);
+};
+document.getElementById("scrim").onclick=closeEditor;
+document.getElementById("newTaskBtn").onclick=openNewTask;
+document.addEventListener("keydown",function(e){
+  if(e.key!=="Escape") return;
+  if(document.getElementById("previewModal").classList.contains("open")) closePreview();
+  else if(document.getElementById("noteModal").classList.contains("open")) closeNote();
+  else if(document.getElementById("notesModal").classList.contains("open")) closeNotes();
+  else if(document.getElementById("boardModal").classList.contains("open")) closeBoard();
+  else closeEditor();
+});
+document.getElementById("previewClose").onclick=closePreview;
+document.getElementById("previewScrim").onclick=closePreview;
+
+/* ============ POST BOARDS (Message Board + Website Suggestions) ============ */
+/* Each board lives in its own localStorage key so it survives a schedule reset
+   or a STORE_KEY bump, and the two share one modal. */
+function readStore(key){
+  try{ var raw=localStorage.getItem(key); if(raw){ var a=JSON.parse(raw); if(a instanceof Array) return a; } }catch(e){}
+  return [];
+}
+function writeStore(key, val){
+  try{ localStorage.setItem(key, JSON.stringify(val)); return true; }
+  catch(e){ alert("This browser's storage is full, so that could not be saved and would be lost when you close the page."); return false; }
+}
+var POST_BOARDS={
+  messages:{title:"Message Board", key:"ss_message_board_v1",
+            empty:"No messages yet. Post the first one below.",
+            placeholder:"Write a message for the team...", cta:"Post message"},
+  suggestions:{title:"Project Website Suggestions", key:"ss_suggestions_v1",
+            empty:"No suggestions yet. Add the first one below.",
+            placeholder:"Share a suggestion for the website...", cta:"Add suggestion"}
+};
+var activeBoard=null;      // one of POST_BOARDS
+var BOARD=[];              // the active board's items
+var editingMsgId=null;
+function saveBoard(){ return activeBoard ? writeStore(activeBoard.key, BOARD) : false; }
+function boardAuthor(){
+  var s=document.getElementById("bAuthor");
+  var v=s && s.value && s.value!=="__add__" ? s.value.trim() : "";
+  return v || commentAuthor || "";
+}
+function renderBoard(){
+  var list=document.getElementById("boardList"); if(!list || !activeBoard) return;
+  var me=boardAuthor();
+  if(!BOARD.length){
+    list.innerHTML='<div class="board-empty">'+esc(activeBoard.empty)+'</div>';
+  }else{
+    list.innerHTML = BOARD.map(function(m){
+      if(m.id===editingMsgId){
+        return '<div class="board-msg"><div class="bm-head"><span class="bm-author">'+esc(m.author)+'</span><span class="bm-when">'+esc(m.when||"")+'</span></div>'+
+          '<div class="bm-edit"><textarea class="form-field-textarea" id="bEditText">'+esc(m.text)+'</textarea>'+
+            '<div class="bm-actions"><button type="button" class="btn btn-sans btn-md btn-inline" data-savemsg="'+escAttr(m.id)+'">Save</button>'+
+              '<button type="button" class="btn btn-sans btn-md btn-inline" data-cancelmsg="1">Cancel</button></div>'+
+          '</div></div>';
+      }
+      var mine = me && m.author===me;
+      return '<div class="board-msg">'+
+        '<div class="bm-head"><span class="bm-author">'+esc(m.author)+'</span>'+
+          '<span class="bm-when">'+esc(m.when||"")+(m.edited?'<span class="bm-edited">edited '+esc(m.edited)+'</span>':'')+'</span></div>'+
+        '<div class="bm-text">'+esc(m.text)+'</div>'+
+        (mine?'<div class="bm-actions"><button type="button" class="bm-act" data-editmsg="'+escAttr(m.id)+'">EDIT</button>'+
+              '<button type="button" class="bm-act del" data-delmsg="'+escAttr(m.id)+'">DELETE</button></div>':'')+
+      '</div>';
+    }).join("");
+  }
+  Array.prototype.forEach.call(list.querySelectorAll("[data-editmsg]"),function(b){
+    b.onclick=function(){ editingMsgId=b.getAttribute("data-editmsg"); renderBoard(); var ta=document.getElementById("bEditText"); if(ta){ ta.focus(); ta.setSelectionRange(ta.value.length,ta.value.length); } };
+  });
+  Array.prototype.forEach.call(list.querySelectorAll("[data-delmsg]"),function(b){
+    b.onclick=function(){ deleteMessage(b.getAttribute("data-delmsg")); };
+  });
+  Array.prototype.forEach.call(list.querySelectorAll("[data-savemsg]"),function(b){
+    b.onclick=function(){ saveMessageEdit(b.getAttribute("data-savemsg")); };
+  });
+  Array.prototype.forEach.call(list.querySelectorAll("[data-cancelmsg]"),function(b){
+    b.onclick=function(){ editingMsgId=null; renderBoard(); };
+  });
+}
+function postMessage(){
+  var ta=document.getElementById("bText");
+  var author=boardAuthor();
+  if(!author){ alert("Please select your name before posting."); var s=document.getElementById("bAuthor"); if(s) s.focus(); return; }
+  var text=(ta && ta.value || "").trim();
+  if(!text){ alert("Please write something first."); if(ta) ta.focus(); return; }
+  commentAuthor=author; try{localStorage.setItem("ss_comment_author",author);}catch(e){}
+  BOARD.push({id:"m"+Date.now()+"-"+Math.round(Math.random()*1e6), author:author, text:text, when:commentStamp()});
+  if(!saveBoard()){ BOARD.pop(); return; }
+  ta.value="";
+  editingMsgId=null;
+  renderBoard();
+  var list=document.getElementById("boardList"); if(list) list.scrollTop=list.scrollHeight;
+}
+function saveMessageEdit(id){
+  var m=BOARD.filter(function(x){return x.id===id;})[0]; if(!m) return;
+  if(m.author!==boardAuthor()){ alert("You can only edit your own posts."); return; }
+  var ta=document.getElementById("bEditText");
+  var text=(ta && ta.value || "").trim();
+  if(!text){ alert("This cannot be empty. Delete it instead."); if(ta) ta.focus(); return; }
+  var prev=m.text, prevEdited=m.edited;
+  m.text=text; m.edited=commentStamp();
+  if(!saveBoard()){ m.text=prev; m.edited=prevEdited; return; }
+  editingMsgId=null;
+  renderBoard();
+}
+function deleteMessage(id){
+  var i=-1;
+  for(var k=0;k<BOARD.length;k++){ if(BOARD[k].id===id){ i=k; break; } }
+  if(i<0) return;
+  if(BOARD[i].author!==boardAuthor()){ alert("You can only delete your own posts."); return; }
+  if(!confirm("Delete this post?")) return;
+  var gone=BOARD.splice(i,1)[0];
+  if(!saveBoard()){ BOARD.splice(i,0,gone); return; }
+  if(editingMsgId===id) editingMsgId=null;
+  renderBoard();
+}
+function openBoard(kind){
+  activeBoard=POST_BOARDS[kind]||POST_BOARDS.messages;
+  BOARD=readStore(activeBoard.key);
+  document.getElementById("boardTitle").textContent=activeBoard.title;
+  var ta=document.getElementById("bText");
+  ta.value=""; ta.setAttribute("placeholder", activeBoard.placeholder);
+  var row=document.getElementById("boardAuthorRow");
+  row.innerHTML = nameSelectHTML("bAuthor", commentAuthor, "Select your name")+
+    '<button type="button" class="btn btn-sans btn-md btn-inline" id="bPostBtn">'+esc(activeBoard.cta)+'</button>';
+  bindNameSelects();
+  document.getElementById("bPostBtn").onclick=postMessage;
+  // switching names re-evaluates which posts you can edit or delete
+  document.getElementById("bAuthor").addEventListener("change",function(){ editingMsgId=null; renderBoard(); });
+  editingMsgId=null;
+  renderBoard();
+  document.getElementById("boardScrim").classList.add("open");
+  var mo=document.getElementById("boardModal");
+  mo.classList.add("open"); mo.setAttribute("aria-hidden","false");
+  var list=document.getElementById("boardList"); if(list) list.scrollTop=list.scrollHeight;
+}
+function closeBoard(){
+  var mo=document.getElementById("boardModal");
+  mo.classList.remove("open"); mo.setAttribute("aria-hidden","true");
+  document.getElementById("boardScrim").classList.remove("open");
+  editingMsgId=null;
+}
+document.getElementById("boardOpenBtn").onclick=function(){ openBoard("messages"); };
+document.getElementById("suggestOpenBtn").onclick=function(){ openBoard("suggestions"); };
+document.getElementById("boardClose").onclick=closeBoard;
+document.getElementById("boardScrim").onclick=closeBoard;
+
+/* ============ MEETING-NOTE UPLOAD NOTIFICATION ============
+   Emails the project team when a new meeting note is saved. The sending
+   itself happens in notify-meeting-notes.gs, a Google Apps Script web
+   app — see that file for the deploy steps.
+
+   PASTE THE /exec URL BELOW. While it is empty this whole feature is a
+   no-op: notes still save normally, nothing is sent, and no error is
+   raised. That is the intended state until the script is deployed.
+
+   Note what is NOT here: no addresses, no subject, no message body. All
+   of that is fixed inside the Apps Script. This URL is readable by
+   anyone with the page, so if the request could name its own recipients
+   the endpoint would be an open mail relay. It cannot — the POST says
+   only "a note was uploaded".
+
+   Two deliberate choices in the fetch:
+     mode:"no-cors"  — Apps Script does not answer a CORS preflight, so
+       the response is unreadable by design. This is fire-and-forget; we
+       cannot and do not check whether the mail actually went out.
+     Content-Type: text/plain — keeps it a "simple request" so no
+       preflight is attempted in the first place. Sending JSON here
+       would trip an OPTIONS call that Apps Script fails.
+
+   Nothing is awaited and every failure is swallowed: an offline laptop
+   or a bad URL must never stop a note from being saved. */
+var NOTIFY_URL = "";   /* e.g. "https://script.google.com/macros/s/AKfy.../exec" */
+function notifyNotesUploaded(){
+  if(!NOTIFY_URL) return;
+  try{
+    fetch(NOTIFY_URL, {
+      method:"POST",
+      mode:"no-cors",
+      headers:{"Content-Type":"text/plain;charset=utf-8"},
+      body:JSON.stringify({event:"note-uploaded"})
+    })["catch"](function(){});
+  }catch(err){}
+}
+
+/* ============ MEETING NOTES ============ */
+var NOTES_KEY="ss_meeting_notes_v1";
+var NOTES=readStore(NOTES_KEY);
+var editingNoteId=null;      // null while the note modal is closed, "" for a brand new note
+/* The phase a NEW note is being uploaded from, captured at the moment the
+   drawer's "Meeting notes" button is pressed. Held separately from
+   editingId because the note modal outlives the click and editingId is
+   free to change underneath it. Null for a note started from the Meeting
+   Notes page itself, and null for a check-in — openCheckin clears
+   editingId, so a check-in note is simply filed without a source. */
+var noteFromPhase=null;
+function saveNotes(){ return writeStore(NOTES_KEY, NOTES); }
+function noteDateStamp(){
+  var d=new Date();
+  return MON[d.getMonth()]+" "+d.getDate()+", "+d.getFullYear();
+}
+function notePreview(s){ s=(s||"").replace(/\s+/g," ").trim(); return s.length>120 ? s.slice(0,118)+"..." : s; }
+/* When the note was uploaded, to the minute. This is the `added` stamp
+   the note has always carried — it was written on save and then never
+   shown anywhere. Notes predating the Uploaded column fall back to the
+   meeting date so an old row never renders blank, and `edited` is
+   deliberately NOT consulted: this column answers "when did this arrive",
+   which a later edit does not change. */
+function noteUploaded(n){ return n.added || n.date || ""; }
+function renderNotes(){
+  var wrap=document.getElementById("notesList"); if(!wrap) return;
+  if(!NOTES.length){
+    wrap.innerHTML='<div class="board-empty">No meeting notes yet. Use "New meeting note" below.</div>';
+    return;
+  }
+  var rows=NOTES.map(function(n){
+    /* Notes uploaded from a phase drawer name that phase under the
+       preview rather than in a column of their own — a fifth column
+       would not survive the narrow breakpoint. */
+    var src = n.phase ? '<div class="nt-src">'+esc(n.phase)+'</div>' : '';
+    return '<tr data-note="'+escAttr(n.id)+'">'+
+      '<td class="nt-date">'+esc(n.date||"")+'</td>'+
+      '<td class="nt-text">'+esc(notePreview(n.text))+src+'</td>'+
+      '<td class="nt-up">'+esc(noteUploaded(n))+'</td>'+
+      '<td class="nt-open"><span class="nt-chev">&rsaquo;</span></td>'+
+    '</tr>';
+  }).join("");
+  wrap.innerHTML='<table class="notes-tbl"><thead><tr>'+
+      '<th style="width:150px">Meeting Date</th><th>Notes</th>'+
+      '<th style="width:170px">Uploaded</th><th style="width:40px"></th>'+
+    '</tr></thead><tbody>'+rows+'</tbody></table>';
+  Array.prototype.forEach.call(wrap.querySelectorAll("tr[data-note]"),function(tr){
+    tr.onclick=function(){ openNote(tr.getAttribute("data-note")); };
+  });
+}
+function openNotes(){
+  NOTES=readStore(NOTES_KEY);
+  renderNotes();
+  document.getElementById("notesScrim").classList.add("open");
+  var mo=document.getElementById("notesModal");
+  mo.classList.add("open"); mo.setAttribute("aria-hidden","false");
+}
+function closeNotes(){
+  var mo=document.getElementById("notesModal");
+  mo.classList.remove("open"); mo.setAttribute("aria-hidden","true");
+  document.getElementById("notesScrim").classList.remove("open");
+}
+function openNote(id){
+  var n = id ? NOTES.filter(function(x){return x.id===id;})[0] : null;
+  editingNoteId = n ? n.id : "";
+  document.getElementById("noteTitle").textContent = n ? "Meeting note" : "New meeting note";
+  document.getElementById("noteDate").textContent = n ? n.date : noteDateStamp();
+  /* Source phase: stored on an existing note, live from the drawer on a
+     new one. Blank hides the slot rather than leaving a stray label. */
+  var srcEl=document.getElementById("noteSrc");
+  if(srcEl){
+    var srcName = n ? (n.phase||"")
+                    : (noteFromPhase && byId[noteFromPhase] ? byId[noteFromPhase].name : "");
+    srcEl.textContent = srcName ? "From: "+srcName : "";
+    srcEl.style.display = srcName ? "" : "none";
+  }
+  document.getElementById("noteText").value = n ? n.text : "";
+  document.getElementById("noteDeleteBtn").style.display = n ? "" : "none";
+  document.getElementById("noteScrim").classList.add("open");
+  var mo=document.getElementById("noteModal");
+  mo.classList.add("open"); mo.setAttribute("aria-hidden","false");
+  var ta=document.getElementById("noteText"); if(ta) ta.focus();
+}
+function closeNote(){
+  var mo=document.getElementById("noteModal");
+  mo.classList.remove("open"); mo.setAttribute("aria-hidden","true");
+  document.getElementById("noteScrim").classList.remove("open");
+  editingNoteId=null;
+}
+function saveNote(){
+  var ta=document.getElementById("noteText");
+  var text=(ta && ta.value || "").trim();
+  if(!text){ alert("Please paste or type the notes first."); if(ta) ta.focus(); return; }
+  if(editingNoteId){
+    var n=NOTES.filter(function(x){return x.id===editingNoteId;})[0]; if(!n) return;
+    var prev=n.text; n.text=text; n.edited=commentStamp();
+    if(!saveNotes()){ n.text=prev; return; }
+  }else{
+    // Meeting Date is set automatically from the day the note is added;
+    // `added` is the upload stamp the Uploaded column reads.
+    var item={id:"n"+Date.now()+"-"+Math.round(Math.random()*1e6), date:noteDateStamp(), added:commentStamp(), text:text};
+    /* Uploaded from a phase drawer: file it against that phase. The name
+       is snapshotted alongside the id so the note still reads correctly
+       if the phase is later renamed or deleted. */
+    if(noteFromPhase){
+      var p=byId[noteFromPhase];
+      item.phaseId=noteFromPhase;
+      item.phase=p ? p.name : "";
+    }
+    NOTES.unshift(item);
+    if(!saveNotes()){ NOTES.shift(); return; }
+    /* Only after the note is safely stored, and only on the NEW-note
+       branch — editing an existing note is not an upload and must not
+       re-notify the team. */
+    notifyNotesUploaded();
+  }
+  closeNote();
+  renderNotes();
+}
+function deleteNote(){
+  if(!editingNoteId) return;
+  var i=-1;
+  for(var k=0;k<NOTES.length;k++){ if(NOTES[k].id===editingNoteId){ i=k; break; } }
+  if(i<0) return;
+  if(!confirm("Delete this meeting note?")) return;
+  var gone=NOTES.splice(i,1)[0];
+  if(!saveNotes()){ NOTES.splice(i,0,gone); return; }
+  closeNote();
+  renderNotes();
+}
+document.getElementById("notesOpenBtn").onclick=openNotes;
+document.getElementById("notesClose").onclick=closeNotes;
+document.getElementById("notesScrim").onclick=closeNotes;
+/* Started from the Meeting Notes page, so there is no source phase.
+   Cleared explicitly rather than relied on: the previous note may have
+   come from a drawer and left the flag set. */
+document.getElementById("noteNewBtn").onclick=function(){ noteFromPhase=null; openNote(null); };
+document.getElementById("noteClose").onclick=closeNote;
+document.getElementById("noteScrim").onclick=closeNote;
+document.getElementById("noteCancelBtn").onclick=closeNote;
+document.getElementById("noteSaveBtn").onclick=saveNote;
+document.getElementById("noteDeleteBtn").onclick=deleteNote;
+/* full-schedule collapse removed; each phase now has its own toggle */
+isMobile.addEventListener?isMobile.addEventListener("change",rerender):isMobile.addListener(rerender);
+var rt;window.addEventListener("resize",function(){clearTimeout(rt);rt=setTimeout(rerender,150);});
+
+/* ============ INIT ============ */
+/* Phases added to ORIGINAL_DATA after someone already has saved state get folded in here,
+   in their scheduled position, without touching that person's edits, comments, or files. */
+function mergeNewTasks(){
+  var have={}; state.tasks.forEach(function(t){ have[t.id]=true; });
+  var removed=state.removed||[], added=0, at=0;
+  ORIGINAL_DATA.forEach(function(o){
+    if(have[o.id]){
+      for(var i=0;i<state.tasks.length;i++){ if(state.tasks[i].id===o.id){ at=i+1; break; } }
+      return;
+    }
+    if(removed.indexOf(o.id)!==-1) return;   // deliberately deleted, leave it out
+    state.tasks.splice(at,0,JSON.parse(JSON.stringify(o)));
+    at++; added++;
+  });
+  if(added) save();
+}
+mergeNewTasks();
+reindexIfNeeded();
+applySavedAssignees();
+applySavedStatus();
+applySavedDates();
+clearMemo();
+rerender();
+</script>
+<script>
+(function () {
+  // ---- Breakpoint preview on the specimen rows ----
+  // Clicking a size chip re-renders that specimen at the chosen
+  // breakpoint's size, and updates the Face and Weight facts with it.
+  // Optical size follows rendered px, so the 32px rule is applied here
+  // exactly as the stylesheet applies it at real breakpoints.
+  var FACE_DISPLAY = 'Kepler Std Display';
+  var FACE_SUBHEAD = 'Kepler Std Subhead';
+
+  document.querySelectorAll('.spec').forEach(function (spec) {
+    var chips  = spec.querySelectorAll('.size-chip[data-px]');
+    var wtChips = spec.querySelectorAll('.wt-chip[data-cls]');
+    var render = spec.querySelector('.spec-render');
+    var target = render && render.firstElementChild;
+    if (!target || (!chips.length && !wtChips.length)) return;
+
+    var tokenEl = spec.querySelector('.token');
+    var vFace = spec.querySelector('.v-face');
+    var vLs   = spec.querySelector('.v-ls');
+    var vWt   = spec.querySelector('.v-wt');
+
+    // Read live rather than caching: the weight toggle rewrites className.
+    function isHeading()  { return /(^|\s)heading(-\dx)?(-light)?(\s|$)/.test(target.className); }
+    function isLight()    { return /-light(\s|$)/.test(target.className); }
+
+    // Remembered so a second click on the same chip restores the default.
+    var baseFace = vFace ? vFace.textContent : null;
+    var baseLs   = vLs   ? vLs.textContent   : null;
+    var baseWt   = vWt   ? vWt.textContent   : null;
+
+    function clear() {
+      target.style.fontSize = '';
+      target.style.fontFamily = '';
+      target.style.letterSpacing = '';
+      target.style.fontWeight = '';
+      if (vFace && baseFace !== null) vFace.textContent = baseFace;
+      if (vLs   && baseLs   !== null) vLs.textContent = baseLs;
+      if (vWt   && baseWt   !== null) vWt.textContent = baseWt;
+      chips.forEach(function (c) { c.classList.remove('picked'); });
+    }
+
+    wtChips.forEach(function (wt) {
+      wt.addEventListener('click', function () {
+        clear();
+        wtChips.forEach(function (w) { w.classList.toggle('on', w === wt); });
+
+        target.className = wt.dataset.cls;
+        if (tokenEl) tokenEl.textContent = wt.dataset.cls;
+
+        // The chip declares its own face and weight rather than the JS
+        // inferring them, so hero and heading rows use the same handler.
+        if (wt.dataset.face) {
+          baseFace = wt.dataset.face;
+          if (vFace) vFace.textContent = baseFace;
+        }
+        if (wt.dataset.wt) {
+          baseWt = wt.dataset.wt;
+          if (vWt) vWt.textContent = baseWt;
+        }
+      });
+    });
+
+    chips.forEach(function (chip) {
+      chip.addEventListener('click', function () {
+        if (chip.classList.contains('picked')) { clear(); return; }
+        clear();
+        chip.classList.add('picked');
+
+        var px = parseInt(chip.dataset.px, 10);
+        target.style.fontSize = px + 'px';
+
+        if (!isHeading()) return;
+
+        var light = isLight();
+        var display = px >= 32;
+
+        // Only the face and weight move with the breakpoint. Tracking
+        // belongs to the step, so it is left alone.
+        target.style.fontFamily = 'var(' + (display ? '--face-display' : '--face-subhead') + ')';
+        if (light) target.style.fontWeight = display ? '300' : '400';
+
+        if (vFace) {
+          vFace.textContent = display
+            ? (light ? 'Kepler Std Light Display' : FACE_DISPLAY)
+            : FACE_SUBHEAD;
+        }
+        if (vWt) vWt.textContent = (light && display) ? '300' : '400';
+      });
+    });
+  });
+})();
+</script>
+<script>
+(function () {
+  // Darkest to lightest. Neutral carries an extra 950 step below the 900 that
+  // no other family has, so the step list is resolved per family rather than
+  // shared. The extras sit at the dark end, so they prefix the shared list.
+  var STEPS = [900, 800, 700, 600, 500, 400, 300, 200, 100, 50];
+  var DARK_STEPS = { neutral: [950] };
+  function stepsFor(family) {
+    return (DARK_STEPS[family] || []).concat(STEPS);
+  }
+
+  // The brand step is not the same in every family. This map is the single
+  // source of truth for it: the inset rule on the ramp, the bullet beside
+  // the number, and the reference line in each family heading all read it,
+  // so they cannot disagree.
+  var BRAND_STEP = {
+    color1:  800,
+    color2:  800,
+    color3:  800,
+    color4:  800,
+    color5:  400,
+    neutral: 200
+  };
+
+  // Perceived lightness, used only to decide whether the inset rule on the
+  // brand chip should be white or black.
+  function isLight(hex) {
+    var n = parseInt(hex.slice(1), 16);
+    var c = [(n >> 16) & 255, (n >> 8) & 255, n & 255].map(function (v) {
+      v /= 255;
+      return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+    });
+    return (0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]) > 0.36;
+  }
+
+  // Build every color ramp from the CSS custom properties, so the swatches
+  // can never drift from the tokens.
+  var root = getComputedStyle(document.documentElement);
+  function hexOf(family, step) {
+    return root.getPropertyValue('--' + family + '-' + step).trim().toUpperCase();
+  }
+
+  document.querySelectorAll('.ramp').forEach(function (ramp) {
+    var family = ramp.dataset.family;
+    stepsFor(family).forEach(function (step) {
+      var hex = hexOf(family, step);
+      var isBrand = step === BRAND_STEP[family];
+
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'swatch';
+      btn.setAttribute('aria-label',
+        family + '/' + step + ' ' + hex + (isBrand ? ', brand swatch' : '') + '. Click to copy hex.');
+
+      var chip = document.createElement('span');
+      chip.className = 'chip' + (isBrand ? ' brand' : '') + (isBrand && isLight(hex) ? ' on-light' : '');
+      chip.style.background = hex;
+
+      var meta = document.createElement('span');
+      meta.className = 'swatch-meta';
+      meta.innerHTML =
+        '<span class="step">' + step + (isBrand ? ' <span class="brand-dot">&bull;</span>' : '') + '</span>' +
+        '<span class="hex">' + hex + '</span>';
+
+      btn.appendChild(chip);
+      btn.appendChild(meta);
+
+      btn.addEventListener('click', function () {
+        copy(hex, function () {
+          btn.classList.add('copied');
+          setTimeout(function () { btn.classList.remove('copied'); }, 1200);
+        });
+      });
+
+      ramp.appendChild(btn);
+    });
+  });
+
+  // Fill the brand reference in each family heading from the same map.
+  document.querySelectorAll('.brand-ref').forEach(function (el) {
+    var family = el.dataset.family;
+    var step = BRAND_STEP[family];
+    el.textContent = 'Brand · ' + family.charAt(0).toUpperCase() + family.slice(1)
+      + '/' + step + ' · ' + hexOf(family, step);
+  });
+
+  // Token export tabs
+  var tabs = document.querySelectorAll('.tab');
+  tabs.forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      tabs.forEach(function (t) {
+        var on = t === tab;
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+        document.getElementById(t.dataset.panel).hidden = !on;
+      });
+    });
+  });
+
+  // Copy the visible code panel
+  var copyBtn = document.querySelector('.copy-code');
+  if (copyBtn) copyBtn.addEventListener('click', function () {
+    var open = document.querySelector('.code-wrap pre:not([hidden]) code');
+    copy(open.textContent, function () {
+      copyBtn.textContent = 'Copied';
+      setTimeout(function () { copyBtn.textContent = 'Copy'; }, 1400);
+    });
+  });
+
+  function copy(text, done) {
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).then(done, function () { fallback(text, done); });
+    } else {
+      fallback(text, done);
+    }
+  }
+
+  function fallback(text, done) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); done(); } catch (e) { /* no clipboard available */ }
+    document.body.removeChild(ta);
+  }
+})();
+</script>
+
+</body>
+</html>

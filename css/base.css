@@ -1,0 +1,98 @@
+/* ============================================================
+   DOCUMENT BASE + TAB CHROME
+   The body rules from the two source documents, merged.
+   ============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+/* Drops the user-agent margins on the block elements the documents
+   set type on. Both documents position these with the flex and grid
+   gaps around them, so the inherited UA margin was only ever fighting
+   that: an <h6> carries 2.33em top AND bottom in Chrome, and inside a
+   flex column — where margins do not collapse — the two stack in full.
+   This reset lived in styles.css, which no document ever loaded. */
+h1, h2, h3, h4, h5, h6,
+p, figure, blockquote, dl, dd {
+  margin: 0;
+}
+
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--face-regular);
+  font-size: var(--body-pri);
+  line-height: var(--lh-body-pri);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;            /* carried over from the timeline */
+}
+
+/* Guarantees the inactive panel stays down even where a scoped
+   rule sets display on the same element. */
+[hidden] { display: none !important; }
+
+/* ---- Document tabs ---------------------------------------
+   Named .doc-tab, not .tab: the guidelines document already
+   runs its own .tab handler for the token-export panels. */
+.doc-tabs {
+  position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: stretch; gap: 0;
+  background: var(--color1-800);
+  border-bottom: 1px solid var(--color1-900);
+}
+.doc-tabs-mark {
+  height: 32px; width: auto; align-self: center;
+  margin: 8px 26px 8px 22px; flex: none;
+}
+.doc-tab {
+  appearance: none; border: 0; background: transparent; cursor: pointer;
+  padding: 17px 26px; margin: 0;
+  font-family: var(--face-sec); font-weight: 500;
+  font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--color1-300);
+  border-bottom: 2px solid transparent;
+  transition: color .15s, border-color .15s, background .15s;
+}
+.doc-tab:hover { color: var(--color5-200); background: rgba(255,255,255,.05); }
+.doc-tab[aria-selected="true"] {
+  color: var(--white);
+  border-bottom-color: var(--color5-400);
+}
+.doc-tab:focus-visible { outline: 2px solid var(--color5-400); outline-offset: -4px; }
+
+/* ---- Panels ----------------------------------------------
+   The timeline carried its page padding on <body>; scoped to
+   its own panel it no longer leaks onto the guidelines.
+
+   The timeline is a dark document: it carries 49 light-on-dark
+   text colours and a set of .on-light override variants, so dark
+   is its default. Its page ground was only ever referenced through
+   --primary-950, which was never defined, so the ground never
+   rendered. color1-900 restores it, and the default text colour
+   has to come with it — otherwise anything the timeline does not
+   colour explicitly would inherit navy --ink and vanish. */
+#tab-timeline {
+  background: var(--color1-900);
+  color: var(--neutral-100);
+  min-height: 100vh;
+  line-height: 1.7;
+  /* Top padding is 0 so the masthead sits flush under the doc tabs.
+     The sides and bottom are unchanged; the 40px inline gutter comes
+     from #tab-timeline .wrap, and this 16px is the floor beneath it. */
+  padding: 0 16px 16px;
+}
+
+/* The guidelines' paper texture was a body::before. Anchored to
+   its own panel it disappears with the tab. */
+#tab-brand::before {
+  content: "";
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  opacity: 0.5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+}
+
+@media (max-width: 767px) {
+  .doc-tab { padding: 15px 16px; font-size: 12px; letter-spacing: 0.06em; }
+  .doc-tabs-mark { margin: 0 14px; height: 17px; }
+}

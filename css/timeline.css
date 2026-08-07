@@ -1,0 +1,1146 @@
+/* ============================================================
+   PROJECT TIMELINE
+   Every selector is scoped to #tab-timeline so the two documents in
+   main.html cannot reach into each other. Tokens live in tokens.css.
+
+   TYPE RULE FOR THIS FILE
+   Not one font-size, line-height or letter-spacing is written as a
+   literal. Every one of them reads a token from tokens.css, and a
+   size token is always paired with the line height and tracking from
+   its own family:
+
+       --heading-*      with --lh-heading-*     and --ls-heading-*
+       --body-pri*      with --lh-body-pri*     and --ls-text
+       --body-*-sec     with --lh-body-*-sec    and --ls-text
+       --size-nav       with --ls-nav
+       --size-btn*      with --ls-btn / --ls-btn-sec / --ls-btn-compact
+
+   Where the old file centred a label with line-height (a 16px line
+   box inside a 16px bar) the box now centres it with flex instead,
+   because a magic line height is a layout value wearing a type
+   value's clothes and there is no token for it.
+
+   Interface controls carry no line-height at all: the box centres
+   its own label, so the property was only ever fighting the padding.
+
+   DATES
+   The project-wide start / end range that used to sit in a .topbar
+   above the calendar is gone. Dates are set per row now, in the Start
+   and Due cells of the full schedule, so the chrome that file needs
+   is .row-date next to .row-status and .row-assignee.
+   ============================================================ */
+
+/* ============ FONTS ============
+   kepler-std-display is served by the Typekit stylesheet linked in <head>
+   (https://use.typekit.net/hqq5dii.css). No @font-face rule is needed here. */
+
+/* ============================================================
+   TEXT STYLE CLASSES · the shipping API
+   The same ladder guidelines.css publishes under #tab-brand, scoped
+   to this panel so a class means one thing in both documents.
+   ============================================================ */
+
+/* Hero · PP Playground. Sits above the Kepler ceiling and is the only
+   primary style that is never uppercase: the face is a script, and its
+   capitals lose the swashes and joins that make it worth using.
+   Three weights, self-hosted: Thin 100, Light 300, Medium 500. */
+#tab-timeline .hero, #tab-timeline .hero-light, #tab-timeline .hero-thin, #tab-timeline .hero-1x, #tab-timeline .hero-1x-light, #tab-timeline .hero-1x-thin {
+  font-family: var(--face-hero);
+  text-transform: none;
+  letter-spacing: var(--ls-hero);
+}
+#tab-timeline .hero, #tab-timeline .hero-1x { font-weight: var(--weight-hero); }
+#tab-timeline .hero-light, #tab-timeline .hero-1x-light { font-weight: 300; }
+#tab-timeline .hero-thin, #tab-timeline .hero-1x-thin { font-weight: 100; }
+#tab-timeline .hero, #tab-timeline .hero-light, #tab-timeline .hero-thin {
+  font-size: var(--hero); line-height: var(--lh-hero);
+}
+#tab-timeline .hero-1x, #tab-timeline .hero-1x-light, #tab-timeline .hero-1x-thin {
+  font-size: var(--hero-1x); line-height: var(--lh-hero-1x);
+}
+
+/* Headings · all uppercase.
+   Optical size follows rendered px, not step name. The Display cut
+   starts at 32px, so the boundary moves as the scale compresses:
+   2x on desktop, 3x on tablet, 5x on mobile. Tracking is per step and
+   does not move with it. */
+#tab-timeline .heading, #tab-timeline .heading-1x, #tab-timeline .heading-2x, #tab-timeline .heading-3x, #tab-timeline .heading-4x, #tab-timeline .heading-5x, #tab-timeline .heading-6x {
+  font-weight: var(--weight-subhead);
+  text-transform: var(--case-heading);
+}
+/* Display cut · 32px and up */
+#tab-timeline .heading-2x, #tab-timeline .heading-3x, #tab-timeline .heading-4x, #tab-timeline .heading-5x, #tab-timeline .heading-6x {
+  font-family: var(--face-display);
+}
+/* Subhead cut · 19px to 32px */
+#tab-timeline .heading, #tab-timeline .heading-1x {
+  font-family: var(--face-subhead);
+}
+#tab-timeline .heading    { font-size: var(--heading);    line-height: var(--lh-heading);    letter-spacing: var(--ls-heading); }
+#tab-timeline .heading-1x { font-size: var(--heading-1x); line-height: var(--lh-heading-1x); letter-spacing: var(--ls-heading-1x); }
+#tab-timeline .heading-2x { font-size: var(--heading-2x); line-height: var(--lh-heading-2x); letter-spacing: var(--ls-heading-2x); }
+#tab-timeline .heading-3x { font-size: var(--heading-3x); line-height: var(--lh-heading-3x); letter-spacing: var(--ls-heading-3x); }
+#tab-timeline .heading-4x { font-size: var(--heading-4x); line-height: var(--lh-heading-4x); letter-spacing: var(--ls-heading-4x); }
+#tab-timeline .heading-5x { font-size: var(--heading-5x); line-height: var(--lh-heading-5x); letter-spacing: var(--ls-heading-5x); }
+#tab-timeline .heading-6x { font-size: var(--heading-6x); line-height: var(--lh-heading-6x); letter-spacing: var(--ls-heading-6x); }
+
+/* Light Display · weight 300 of kepler-std-display, published in kit
+   hqq5dii as fvd=n3. Each is identical to its base step apart from weight.
+   kepler-std-subhead has no weight 300, so wherever a step drops below
+   32px and moves to Subhead, the light variant renders at 400. */
+#tab-timeline .heading-6x-light, #tab-timeline .heading-5x-light, #tab-timeline .heading-4x-light, #tab-timeline .heading-3x-light, #tab-timeline .heading-2x-light {
+  font-family: var(--face-display); font-weight: var(--weight-display);
+  text-transform: var(--case-heading);
+}
+#tab-timeline .heading-6x-light { font-size: var(--heading-6x); line-height: var(--lh-heading-6x); letter-spacing: var(--ls-heading-6x); }
+#tab-timeline .heading-5x-light { font-size: var(--heading-5x); line-height: var(--lh-heading-5x); letter-spacing: var(--ls-heading-5x); }
+#tab-timeline .heading-4x-light { font-size: var(--heading-4x); line-height: var(--lh-heading-4x); letter-spacing: var(--ls-heading-4x); }
+#tab-timeline .heading-3x-light { font-size: var(--heading-3x); line-height: var(--lh-heading-3x); letter-spacing: var(--ls-heading-3x); }
+#tab-timeline .heading-2x-light { font-size: var(--heading-2x); line-height: var(--lh-heading-2x); letter-spacing: var(--ls-heading-2x); }
+
+/* Face swaps at the optical boundary. 2x crosses at tablet; 3x and 4x at
+   mobile. The light variants restate weight 400 there, because Subhead has
+   no 300 and the browser would otherwise report a face it cannot draw. */
+@media (max-width: 1023px) {
+  #tab-timeline .heading-2x { font-family: var(--face-subhead); }
+  #tab-timeline .heading-2x-light { font-family: var(--face-subhead); font-weight: var(--weight-subhead); }
+}
+@media (max-width: 767px) {
+  #tab-timeline .heading-2x, #tab-timeline .heading-3x, #tab-timeline .heading-4x { font-family: var(--face-subhead); }
+  #tab-timeline .heading-4x-light, #tab-timeline .heading-3x-light { font-family: var(--face-subhead); font-weight: var(--weight-subhead); }
+}
+
+/* Primary and secondary body classes are defined once, unscoped, in
+   the BODY TEXT CLASSES block of tokens.css. */
+
+/* The masthead strapline. It carried no type at all before — only a
+   display:block and a mobile size — so it fell back to the panel's
+   inherited setting and was italic by accident of the markup. */
+#tab-timeline .text-base-italic {
+  font-family: var(--face-regular); font-weight: var(--weight-regular);
+  font-size: var(--body-pri); line-height: var(--lh-body-pri);
+  font-style: italic; letter-spacing: var(--ls-text);
+}
+
+#tab-timeline .italic-sec { font-style: italic; font-weight: var(--weight-body-sec-normal); }
+
+/* Any uppercase Inter takes weight 500. The form button is the
+   stated exception and stays sentence case. */
+#tab-timeline .text-upper-sec {
+  font-family: var(--face-sec); font-weight: var(--weight-body-sec-strong);
+  text-transform: uppercase;
+}
+
+/* Interface · the label only. The box, and with it the vertical
+   centring, belongs to .btn in buttons.css. */
+#tab-timeline .btn-pri {
+  font-family: var(--face-regular); font-weight: var(--weight-btn);
+  font-size: var(--size-btn);
+  text-transform: var(--case-btn); letter-spacing: var(--ls-btn);
+}
+#tab-timeline .btn-sec {
+  font-family: var(--face-sec); font-weight: var(--weight-btn-sec);
+  font-size: var(--size-btn-sec);
+  text-transform: var(--case-btn-sec); letter-spacing: var(--ls-btn-sec);
+}
+#tab-timeline .text-nav-1 {
+  font-family: var(--face-regular); font-weight: var(--weight-body-sec-strong);
+  font-size: var(--size-nav); line-height: var(--lh-heading-1x);
+  text-transform: uppercase; letter-spacing: var(--ls-nav);
+}
+/* On mobile the nav stops being a tracked-out rule across the top and
+   becomes a stacked drawer, so it reads as a list of headings. */
+@media (max-width: 767px) {
+  #tab-timeline .text-nav-1 {
+    font-family: var(--face-subhead); font-weight: var(--weight-subhead);
+    font-size: var(--heading-1x); line-height: var(--lh-heading-1x);
+    text-transform: none; letter-spacing: var(--ls-heading-1x);
+  }
+}
+
+/* Forms · all Inter. Label and input are both 15px, so the legend is
+   separated by case and tracking, and the label from the value by
+   weight alone. forms.css owns the live controls; these are the
+   specimen classes, kept in step with it. */
+#tab-timeline .legend-form {
+  font-family: var(--face-sec); font-weight: var(--weight-body-sec-strong);
+  font-size: var(--size-form-label); line-height: var(--lh-body-base-sec);
+  letter-spacing: var(--ls-btn); text-transform: uppercase;
+}
+#tab-timeline .label-form {
+  font-family: var(--face-sec); font-weight: var(--weight-body-sec-strong);
+  font-size: var(--size-form-label); line-height: var(--lh-body-base-sec);
+  letter-spacing: var(--ls-text); text-transform: none;
+}
+#tab-timeline .input-form, #tab-timeline .placeholder-form {
+  font-family: var(--face-sec); font-weight: var(--weight-body-sec-normal);
+  font-size: var(--size-form-label); line-height: var(--lh-body-base-sec);
+  letter-spacing: var(--ls-text);
+}
+#tab-timeline .btn-form {
+  font-family: var(--face-sec); font-weight: var(--weight-btn-sec);
+  font-size: var(--size-form-btn);
+  text-transform: var(--case-btn-sec); letter-spacing: var(--ls-text);
+}
+#tab-timeline .helper-form {
+  font-family: var(--face-sec); font-weight: var(--weight-body-sec-normal);
+  font-size: var(--body-sm-sec); line-height: var(--lh-body-sm-sec);
+}
+#tab-timeline .error-form {
+  font-family: var(--face-sec); font-weight: var(--weight-body-sec-strong);
+  font-size: var(--body-sm-sec); line-height: var(--lh-body-sm-sec);
+}
+#tab-timeline .tag-form {
+  font-family: var(--face-sec); font-weight: var(--weight-body-sec-strong);
+  font-size: var(--body-xs-sec); line-height: var(--lh-body-xs-sec);
+  letter-spacing: var(--ls-btn); text-transform: uppercase;
+}
+
+/* ============================================================
+   BUTTONS
+   The component lives in css/buttons.css. Everything below is either
+   a fill the timeline owns or a hook its script toggles. Box, type,
+   size, padding and tracking are gone from here: the markup carries
+   .btn .btn-sans plus a size variant, and those read the tokens.
+
+   The bare-button reset must not catch .btn. An id-scoped element
+   selector out-specifies the whole component, so without :not(.btn)
+   it would strip the border and background straight back off.
+   ============================================================ */
+#tab-timeline button:not(.btn) {font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+
+/* Primary · tobacco, the timeline's own action colour */
+#tab-timeline .btn-primary {background:var(--color4-600);border-color:var(--color4-600);color:var(--white)}
+#tab-timeline .btn-primary:hover {color:var(--color2-800)}
+#tab-timeline .btn-primary:active {background:var(--color2-900);border-color:var(--color2-900);transform:translateY(1px)}
+#tab-timeline .btn-primary.on-light {background:var(--color1-800);border-color:var(--color1-800);color:var(--white)}
+#tab-timeline .btn-primary.on-light:hover {background:var(--color1-900);border-color:var(--color1-900)}
+#tab-timeline .btn-primary.on-light:active {background:var(--color1-700);border-color:var(--color1-700)}
+
+/* Secondary · outline */
+#tab-timeline .btn-secondary {background:transparent;color:var(--text-body);border-color:var(--neutral-600)}
+#tab-timeline .btn-secondary:hover {background:rgba(255,255,255,.05);border-color:var(--neutral-200);color:var(--color5-100)}
+#tab-timeline .btn-secondary:active {background:rgba(255,255,255,.09);transform:translateY(1px)}
+#tab-timeline .btn-secondary.on-light {color:var(--color1-700);border-color:var(--neutral-200)}
+#tab-timeline .btn-secondary.on-light:hover {background:var(--color5-100);border-color:var(--color1-600)}
+#tab-timeline .btn-secondary.on-light:active {background:var(--color5-200)}
+
+/* Interactive label. Same ladder as the compact buttons, for the
+   places that need the type without the box. */
+#tab-timeline .button-text {
+  font-family:var(--face-sec);
+  font-size:var(--btn-size-md);
+  font-weight:var(--weight-btn-sec);
+  letter-spacing:var(--ls-btn-compact);
+  text-transform:var(--case-btn);
+  color:var(--text-heading);
+}
+#tab-timeline .button-text.dark {color:var(--color1-900)}
+
+/* Calendar views: MONTH WEEK TIMELINE.
+   The buttons are .btn .btn-sans .btn-md .btn-inline in the markup,
+   so the segment only owns the track it sits in. .active is the
+   selected fill, which .btn-inline.active already draws. */
+#tab-timeline .segmented {display:inline-flex;background:var(--btn-inline-wash);border-radius:var(--radius);padding:3px;gap:3px}
+#tab-timeline .segmented button[data-view="week"] {display:none}
+
+/* ============ LAYOUT ============ */
+#tab-timeline .wrap {max-width:1440px;margin:0 auto;padding-left:40px;padding-right:40px}
+#tab-timeline .brand-logo {height:clamp(64px,7vw,112px);width:auto;max-width:100%;display:block;padding-right:24px;border-right:1px solid var(--neutral-900)}
+#tab-timeline header.masthead {text-align:left;margin:0 0 26px;border-bottom:1px solid var(--color1-800);padding-bottom:40px;
+  display:flex;align-items:flex-start;justify-content:space-between;gap:24px;flex-wrap:nowrap}
+#tab-timeline .masthead-brand {display:flex;flex-direction:row;align-items:center}
+#tab-timeline .brand-text {display:flex;flex-direction:column;gap:2px;padding-left:24px}
+#tab-timeline .brand-text .text-base-italic {display:block}
+#tab-timeline .masthead-copy {display:flex;flex-direction:column;align-items:flex-end;gap:16px;margin-left:auto}
+#tab-timeline .subtitle {color:var(--neutral-400);margin-top:4px}
+
+/* Top navigation: links into the shared team spaces */
+#tab-timeline .masthead-actions {display:flex;flex-wrap:wrap;justify-content:right;align-items:center;gap:8px 24px;
+  padding:14px 0 16px;margin-bottom:18px;border-bottom:1px solid var(--color1-800)}
+/* Navigation label, not a button: no box, and the rule under it is
+   the affordance. Type follows the interface scale. */
+#tab-timeline .masthead-actions .nav-link {position:relative;background:none;border:none;padding:6px 2px;
+  font-family:var(--face-regular);font-size:var(--size-nav);font-weight:var(--weight-btn-sec);
+  letter-spacing:var(--ls-btn-sec);text-transform:var(--case-nav);
+  color:var(--text-body);transition:color var(--ease-ui)}
+#tab-timeline .masthead-actions .nav-link::after {content:"";position:absolute;left:0;right:0;bottom:0;height:1px;
+  background:var(--color4-600);transform:scaleX(0);transform-origin:center;transition:transform .18s}
+#tab-timeline .masthead-actions .nav-link:hover {color:var(--white)}
+#tab-timeline .masthead-actions .nav-link:hover::after {transform:scaleX(1)}
+#tab-timeline .masthead-actions .nav-link:active {color:var(--color4-400)}
+
+/* Launch card */
+#tab-timeline .header-card {margin-left:0;text-align:left;background:transparent;padding:16px 22px;border-radius:var(--radius);box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:flex-start;min-width:320px}
+#tab-timeline .header-card .inner {display:flex;flex-direction:column;gap:4px}
+#tab-timeline .header-card .date {font-family: var(--face-display);font-weight:var(--weight-display);font-size:var(--heading-3x);letter-spacing:var(--ls-heading-3x);line-height:var(--lh-heading-3x);color:var(--color5-300);}
+#tab-timeline .header-card ul {list-style:none;display:flex;flex-direction:column;padding-inline-start:0;margin-block:0;}
+#tab-timeline .header-card li a {display:inline-flex;align-items:center;gap:8px;color:var(--color2-50);text-decoration:none;
+  font-family:var(--face-sec);font-size:var(--body-sm-sec);line-height:1;}
+#tab-timeline .header-card li a:hover {color:var(--color2-300);text-decoration:underline}
+#tab-timeline .header-card li a::before {content:"\2197";color:var(--color2-100)}
+
+/* View controls row */
+#tab-timeline .viewbar {display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin:8px 0 16px}
+#tab-timeline .navgroup {display:inline-flex;gap:8px;align-items:center}
+#tab-timeline .period-title {font-family:var(--face-display);font-weight:var(--weight-subhead);
+  font-size:var(--heading);line-height:var(--lh-heading);letter-spacing:var(--ls-heading);
+  color:var(--neutral-50);min-width:180px;text-align:center}
+#tab-timeline .spacer {flex:1}
+
+/* ============ CALENDAR (light surface) ============ */
+#tab-timeline .calendar {background:var(--white);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow);color:var(--color1-700);overflow:hidden}
+#tab-timeline .dow {display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:8px}
+#tab-timeline .dow div {font-family:var(--face-sec);font-size:var(--body-xs-sec);line-height:var(--lh-body-xs-sec);
+  letter-spacing:var(--ls-btn-compact);text-transform:uppercase;color:var(--neutral-600);font-weight:var(--weight-body-sec-strong);text-align:center;padding:4px 0}
+#tab-timeline .month-grid {display:flex;flex-direction:column;gap:6px}
+#tab-timeline .week-row {overflow:hidden;background:var(--neutral-50)}
+#tab-timeline .week-dates {display:grid;grid-template-columns:repeat(5,1fr)}
+#tab-timeline .week-dates .daycell {padding:5px 7px;font-size:var(--body-xs-sec);line-height:var(--lh-body-xs-sec);min-height:26px;color:var(--neutral-600)}
+#tab-timeline .week-dates .daycell:last-child {border-right:none}
+#tab-timeline .week-dates .daycell.other {color:var(--neutral-200);background:var(--color5-50)}
+#tab-timeline .week-dates .daycell.weekend {background:var(--color5-50)}
+#tab-timeline .week-dates .daycell.today {color:var(--color4-700)}
+#tab-timeline .week-dates .daycell.today .dnum {background:var(--color4-600);color:var(--white);border-radius:var(--radius);padding:4px}
+#tab-timeline .week-bars {display:grid;grid-template-columns:repeat(5,1fr);gap:3px 0;padding:4px 4px 8px}
+
+/* The bar centres its label with flex, not with a line height matched
+   to its own height. The old file set both and they disagreed. */
+#tab-timeline .bar {grid-row:auto;margin:1px 2px;height:22px;border-radius:4px;
+  display:flex;align-items:center;
+  font-size:var(--body-sm-sec);color:var(--white);
+  padding:0 8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;font-weight:var(--weight-body-sec-normal);
+  transition:filter .12s,transform .05s;position:relative}
+#tab-timeline .bar:hover {filter:brightness(1.12);transform:translateY(-1px)}
+
+#tab-timeline .bar.p1 {background:var(--phase-01)}
+#tab-timeline .bar.p2 {background:var(--phase-02)}
+#tab-timeline .bar.p3 {background:var(--phase-03)}
+#tab-timeline .bar.p4 {background:var(--phase-04)}
+#tab-timeline .bar.p5 {background:var(--phase-05)}
+#tab-timeline .bar.p6 {background:var(--phase-06)}
+
+/* milestone marker */
+#tab-timeline .bar.milestone {background:var(--color4-600);color:var(--white);font-weight:var(--weight-body-sec-strong);box-shadow:0 0 0 2px var(--white),0 0 0 3px var(--color4-600)}
+#tab-timeline .bar.milestone::before {content:"\2666";margin-right:5px}
+/* check-in pill (outlined) */
+#tab-timeline .bar.checkin {background:transparent;color:var(--color4-700);font-size:var(--body-xs-sec);font-weight:var(--weight-body-sec-strong)}
+#tab-timeline .bar.checkin::before {content:"\25CB";margin-right:4px}
+/* task-type colors (shared across month bars, week items, and gantt bars) */
+#tab-timeline .bar.buildtask, #tab-timeline .wv-item.buildtask, #tab-timeline .gbar.buildtask {background:var(--neutral-100)}
+#tab-timeline .bar.buildtask {font-family:var(--face-sec);font-size:var(--body-xs-sec);font-weight:var(--weight-body-sec-normal);padding:8px;color:var(--color5-400)}
+/* auto-fit heights inside the calendar area so padded bars aren't clipped; keep gantt bars fixed */
+#tab-timeline #calArea, #tab-timeline #calArea div {height:auto}
+#tab-timeline #calArea .gbar {height:16px}
+#tab-timeline #calArea {background:var(--neutral-50)}
+#tab-timeline .bar.clienttask, #tab-timeline .wv-item.clienttask, #tab-timeline .gbar.clienttask {background:var(--color1-800)}
+/* hard-date deadline marker (gold accent, flag glyph) */
+#tab-timeline .bar.harddate, #tab-timeline .wv-item.harddate, #tab-timeline .gbar.harddate {background:var(--color4-700)}
+#tab-timeline .bar.harddate, #tab-timeline .wv-item.harddate {color:var(--white);font-weight:var(--weight-body-sec-strong)}
+#tab-timeline .bar.harddate::before {content:"\2691";margin-right:5px}
+
+/* ---- Runs that cross a week boundary --------------------------
+   The renderer tags every segment of a multi-week run with
+   contin-l / contin-r. The cut edges go square, so a run reads as one
+   continuous bar rather than a column of separate pills, and every
+   segment after the first collapses to a slim ribbon: contin-l means
+   "continued from the previous week", which is exactly the set that
+   does not need to say the name again.
+
+   The repeated label is pushed out of the box with text-indent and
+   clipped, rather than shrunk with font-size:0. Same result, and it
+   keeps the type properties in this file on the token system. The
+   ::before caret is out of flow, so the indent does not touch it.
+
+   The label survives on the title attribute, the segment keeps its
+   fill so the run stays traceable across weeks, and the whole bar is
+   still the same click target it was. */
+#tab-timeline .bar.contin-l {border-top-left-radius:0;border-bottom-left-radius:0;margin-left:0}
+#tab-timeline .bar.contin-r {border-top-right-radius:0;border-bottom-right-radius:0;margin-right:0}
+#tab-timeline .bar.contin-l {
+  height:10px;
+  padding:0;
+  text-indent:-9999px;
+  overflow:hidden;
+  align-self:center;
+}
+/* Kept opaque: at .85 the alternating day-cell tints banded through
+   the ribbon and it read as several bars rather than one. */
+#tab-timeline .bar.contin-l:hover {transform:none;filter:brightness(1.06)}
+/* A caret at the left edge marks the ribbon as a continuation rather
+   than a new, very short task. */
+#tab-timeline .bar.contin-l::before {
+  content:"";
+  position:absolute;
+  left:4px; top:50%;
+  width:4px; height:4px;
+  margin-top:-2px;
+  text-indent:0;
+  border-right:1px solid currentColor;
+  border-bottom:1px solid currentColor;
+  transform:rotate(-45deg);
+  opacity:.7;
+}
+
+/* ============ WEEK VIEW ============ */
+#tab-timeline .week-view {display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+#tab-timeline .wv-col {background:var(--neutral-50);border:1px solid var(--color5-200);border-radius:var(--radius-sm);min-height:200px;display:flex;flex-direction:column}
+#tab-timeline .wv-col.weekend {background:var(--color5-100)}
+#tab-timeline .wv-head {padding:8px;border-bottom:1px solid var(--color5-200);text-align:center}
+#tab-timeline .wv-head .d1 {font-family:var(--face-sec);font-size:var(--body-xs-sec);line-height:var(--lh-body-xs-sec);
+  letter-spacing:var(--ls-btn-sec);text-transform:uppercase;color:var(--neutral-600)}
+#tab-timeline .wv-head .d2 {font-family:var(--face-display);
+  font-size:var(--heading);line-height:var(--lh-heading);letter-spacing:var(--ls-heading);color:var(--color1-700)}
+#tab-timeline .wv-head.today .d2 {color:var(--color4-700)}
+#tab-timeline .wv-body {padding:6px;display:flex;flex-direction:column;gap:6px}
+#tab-timeline .wv-item {border-radius:var(--radius-sm);padding:7px 9px;color:var(--white);cursor:pointer;transition:filter .12s}
+#tab-timeline .wv-item:hover {filter:brightness(1.1)}
+#tab-timeline .wv-item.p1 {background:var(--phase-01)}
+#tab-timeline .wv-item.p2 {background:var(--phase-02)}
+#tab-timeline .wv-item.p3 {background:var(--phase-03)}
+#tab-timeline .wv-item.p4 {background:var(--phase-04)}
+#tab-timeline .wv-item.p5 {background:var(--phase-05)}
+#tab-timeline .wv-item.p6 {background:var(--phase-06)}
+#tab-timeline .wv-item .wi-name {font-weight:var(--weight-body-sec-normal);font-size:var(--body-sm-sec);line-height:var(--lh-body-sm-sec)}
+#tab-timeline .wv-item .wi-meta {font-size:var(--body-xs-sec);line-height:var(--lh-body-xs-sec);opacity:.85;margin-top:3px}
+#tab-timeline .wv-item .wi-desc {font-size:var(--body-xs-sec);line-height:var(--lh-body-xs-sec);opacity:.8;margin-top:4px;display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+#tab-timeline .wv-item.milestone {background:var(--color4-600)}
+#tab-timeline .wv-item.milestone .wi-name::before {content:"\2666  "}
+#tab-timeline .wv-item.checkin {background:transparent;border:1.5px solid var(--color4-600);color:var(--color4-800)}
+#tab-timeline .wv-item.checkin .wi-name::before {content:"\25CB  "}
+#tab-timeline .wv-item.harddate .wi-name::before {content:"\2691  "}
+/* uniform week bars: light fill + subtle stroke (overrides type colors) */
+#tab-timeline .week-bars .bar, #tab-timeline .week-view .wv-item {background:var(--neutral-50);border:1px solid var(--neutral-300);color:var(--color1-900);box-shadow:none}
+#tab-timeline .week-bars .bar.buildtask, #tab-timeline .week-view .wv-item.buildtask {background:var(--neutral-100);border:none}
+
+/* ---- Meeting check-in marker ------------------------------
+   The milestone's box — the tobacco fill and the white keyline ring
+   that lifts it off the day cells — without the diamond, because a
+   check-in is a standing appointment rather than a delivery. It reads
+   as running copy instead of as a chip: --body-pri-sm in Kepler, set
+   in the brand navy.
+
+   Stated after the uniform week-bar rule so the marker keeps its own
+   fill in the month grid rather than flattening to neutral-50 with
+   everything else.
+
+   Height goes to auto: a 15px line at --lh-body-pri-sm is taller than
+   the 22px .bar box and would otherwise be clipped. */
+#tab-timeline .bar.meeting-checkin,
+#tab-timeline .week-bars .bar.meeting-checkin {
+  background:var(--color4-600);
+  border:none;
+  box-shadow:0 0 0 2px var(--white),0 0 0 3px var(--color4-600);
+  height:auto;min-height:22px;padding:2px 8px;
+  font-family:var(--face-regular);font-weight:var(--weight-regular);
+  font-size:var(--body-pri-sm);line-height:var(--lh-body-pri-sm);letter-spacing:var(--ls-text);
+  text-transform:var(--case-body-pri);
+  color:var(--color1-800);
+}
+/* No glyph. The milestone diamond is suppressed in case the marker is
+   written as .bar.milestone.meeting-checkin rather than on its own. */
+#tab-timeline .bar.meeting-checkin::before {content:none}
+
+/* ---- Biweekly check-in · .bar.milestone.checkin ------------
+   A modifier ON .bar.milestone, from the 'bar milestone checkin'
+   frame in Figma (node 6037:194). The design is a quiet outlined
+   chip, not a filled one: paper ground, one hairline in the darkest
+   Neutral, and the label in that same Neutral.
+
+   The two colours resolve to tokens already in the file — #FFFEF9 is
+   --neutral-50 and #4D4B40 is --neutral-900, exactly.
+
+   TYPE SIZE IS A DELIBERATE DEPARTURE FROM THE FRAME. Figma draws the
+   label at 11px; it is set here at --body-pri-sm (15px), which is the
+   size the sibling .bar.meeting-checkin marker already uses. The face
+   is Kepler either way, so 15px takes its proper mate --lh-body-pri-sm
+   rather than the tight ratio an 11px line needed.
+
+   Specificity is the whole point of the selector. .bar.milestone and
+   .bar.checkin both already exist at (1,2,0) and both set a
+   background, a colour and a ::before glyph; .checkin is written
+   later so it currently wins. Naming all three classes lands this at
+   (1,3,0) so it beats both regardless of order, and the ::before
+   below clears the diamond and the ring glyph together.
+
+   Height goes to auto because a 15px line at --lh-body-pri-sm plus 8px
+   of padding is well past the 22px .bar box and would clip. */
+#tab-timeline .bar.milestone.checkin,
+#tab-timeline .week-bars .bar.milestone.checkin {
+  background:var(--neutral-50);
+  border:1px solid var(--neutral-900);
+  box-shadow:none;
+  border-radius:2px;
+  justify-content:center;
+  height:auto;min-height:22px;padding:8px 16px;
+  font-family:var(--face-regular);font-weight:var(--weight-regular);
+  font-size:var(--body-pri-sm);line-height:var(--lh-body-pri-sm);letter-spacing:var(--ls-text);
+  text-transform:var(--case-body-pri);
+  color:var(--neutral-900);
+}
+/* Clears both inherited glyphs: the milestone diamond and the
+   check-in ring. The Figma frame carries neither. */
+#tab-timeline .bar.milestone.checkin::before {content:none}
+
+/* The same marker in the week view, so the two views agree. Without
+   this it would take .wv-item.checkin's tobacco outline. */
+#tab-timeline .wv-item.milestone.checkin {
+  background:var(--neutral-50);
+  border:1px solid var(--neutral-900);
+  color:var(--neutral-900);
+  font-family:var(--face-regular);font-weight:var(--weight-regular);
+}
+#tab-timeline .wv-item.milestone.checkin .wi-name::before {content:none}
+
+/* ============ AGENDA (mobile month) ============ */
+#tab-timeline .agenda {display:flex;flex-direction:column;gap:2px}
+#tab-timeline .agenda-day {display:grid;grid-template-columns:64px 1fr;gap:10px;padding:8px 4px;border-bottom:1px solid var(--color5-200)}
+#tab-timeline .agenda-date {font-size:var(--body-sm-sec);line-height:var(--lh-body-sm-sec);color:var(--neutral-600);padding-top:3px}
+#tab-timeline .agenda-date .ad-day {font-family:var(--face-display);font-weight:var(--weight-subhead);
+  font-size:var(--heading);line-height:var(--lh-heading);letter-spacing:var(--ls-heading);color:var(--color1-700);display:block}
+#tab-timeline .agenda-items {display:flex;flex-direction:column;gap:5px}
+
+/* ============ GANTT / OVERVIEW ============ */
+#tab-timeline .gantt {--glabel:420px;padding:0}
+#tab-timeline .gantt-scroll {overflow-x:auto}
+#tab-timeline .gantt-inner {min-width:960px;position:relative}
+#tab-timeline .gantt-head {display:flex;align-items:stretch;border-bottom:1px solid var(--color5-200);position:sticky;top:0;background:var(--white);z-index:3}
+#tab-timeline .gantt-label-col {flex:0 0 var(--glabel);width:var(--glabel);padding:9px 14px;
+  font-size:var(--body-xs-sec);line-height:var(--lh-body-xs-sec);color:var(--neutral-600);
+  border-right:1px solid var(--color5-200);box-sizing:border-box}
+#tab-timeline .gantt-track {position:relative;flex:1 1 auto;min-height:26px;align-items:center;display:flex}
+#tab-timeline .gantt-months {display:flex}
+#tab-timeline .gantt-months .gmonth {border-right:1px solid var(--color5-200);
+  font-family:var(--face-sec);font-size:var(--body-xs-sec);line-height:var(--lh-body-xs-sec);
+  letter-spacing:var(--ls-btn-sec);text-transform:uppercase;color:var(--neutral-600);font-weight:var(--weight-body-sec-normal);
+  padding:9px 8px;box-sizing:border-box;overflow:hidden}
+#tab-timeline .gantt-months .gmonth:last-child {border-right:none}
+#tab-timeline .gantt-phase {display:flex;background:var(--color5-100);border-bottom:1px solid var(--color5-200)}
+#tab-timeline .gantt-phase .gantt-label-col {font-family:var(--face-display);
+  font-size:var(--body-sm-sec);line-height:var(--lh-body-sm-sec);color:var(--color1-700);font-weight:var(--weight-subhead);padding-top:7px;padding-bottom:7px}
+#tab-timeline .gantt-row {display:flex;align-items:stretch;border-bottom:1px solid var(--color5-100)}
+#tab-timeline .gantt-row:hover {background:var(--neutral-50)}
+#tab-timeline .gantt-row .gantt-label-col {font-size:var(--body-sm-sec);line-height:var(--lh-body-sm-sec);color:var(--color1-700);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-top:7px;padding-bottom:7px;cursor:pointer}
+#tab-timeline .gantt-row .gantt-track {padding:5px 0}
+/* Same story as .bar: the 16px label box is the flex centring now,
+   not a line height that happened to equal the bar height. */
+#tab-timeline .gbar {position:absolute;top:5px;height:16px;border-radius:3px;
+  display:flex;align-items:center;
+  color:var(--white);font-size:var(--body-xs-sec);
+  padding:0 6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;box-shadow:0 1px 2px rgba(3,8,17,.15);box-sizing:border-box}
+#tab-timeline .gbar.buildtask {box-shadow:none}
+#tab-timeline .gbar:hover {filter:brightness(1.1)}
+#tab-timeline .gbar.p1 {background:var(--phase-01)}
+#tab-timeline .gbar.p2 {background:var(--phase-02)}
+#tab-timeline .gbar.p3 {background:var(--phase-03)}
+#tab-timeline .gbar.p4 {background:var(--phase-04)}
+#tab-timeline .gbar.p5 {background:var(--phase-05)}
+#tab-timeline .gbar.p6 {background:var(--phase-06)}
+#tab-timeline .gbar.milestone {background:var(--color4-600);min-width:16px}
+#tab-timeline .gbar.harddate {min-width:16px}
+#tab-timeline .gantt-overlay {position:absolute;top:0;bottom:0;width:1px;background:var(--color5-200);pointer-events:none;z-index:1}
+#tab-timeline .gantt-today {position:absolute;top:0;bottom:0;width:2px;background:var(--color4-600);opacity:.75;pointer-events:none;z-index:2}
+#tab-timeline .gantt-today::before {content:"Today";position:absolute;top:3px;left:4px;
+  font-family:var(--face-sec);font-size:var(--body-xs-sec);line-height:var(--lh-body-xs-sec);
+  letter-spacing:var(--ls-btn-sec);text-transform:uppercase;color:var(--color4-700);white-space:nowrap}
+#tab-timeline .gantt-empty {padding:16px;color:var(--neutral-600);font-size:var(--body-sm-sec);line-height:var(--lh-body-sm-sec)}
+
+/* ============ LIST VIEW ============ */
+#tab-timeline .listview {margin-top:30px}
+#tab-timeline .listview-head {display:flex;align-items:center;gap:12px;user-select:none;padding:10px 0;border-bottom:1px solid var(--color1-800)}
+#tab-timeline .listview-head h3 {color:var(--color5-100)}
+/* Sits hard right of the heading, whatever the heading's width. */
+#tab-timeline .listview-head .lv-new {margin-left:auto;flex:none}
+#tab-timeline .list-body {margin-top:16px}
+
+/* ---- The schedule table ---------------------------------- */
+#tab-timeline .tbl {width:100%;border-collapse:collapse;font-size:var(--body-sm-sec);line-height:var(--lh-body-sm-sec);table-layout:fixed}
+/* The column head takes the primary body small step. --face-pri and
+   --weight-body-pri are not token names in this system — the primary
+   body face is --face-regular and its weight is --weight-regular — and
+   the tracking was reading --lh-body-pri-sm, a line height, which is a
+   bare number and so invalid as a letter-spacing and dropped. */
+#tab-timeline .tbl th {text-align:left;font-family:var(--face-regular);font-weight:var(--weight-regular);
+  font-size:var(--body-pri-sm);line-height:var(--lh-heading-1x);letter-spacing:var(--ls-text);text-transform:none;
+  color:var(--neutral-400);padding:6px 20px;border-bottom:1px solid var(--color1-800)}
+#tab-timeline .tbl td {padding:9px 20px;border-bottom:1px solid var(--color1-800);vertical-align:center;color:var(--neutral-100);word-wrap:break-word;overflow-wrap:break-word}
+#tab-timeline .tbl tr {cursor:pointer;transition:background .12s}
+#tab-timeline .tbl tr:hover td {background:rgba(255,255,255,.03)}
+#tab-timeline .tbl .c-phase {color:var(--neutral-50);white-space:normal;font-size:var(--body-base-sec);line-height:var(--lh-body-base-sec)}
+#tab-timeline .tbl .c-detail .d-desc {color:var(--neutral-400);font-size:var(--body-base-sec);line-height:var(--lh-body-base-sec);margin-top:2px}
+/* Hidden columns: Detail, Comment, Complete, Delete */
+#tab-timeline .tbl .c-detail, #tab-timeline .tbl .c-comment, #tab-timeline .tbl .c-complete, #tab-timeline .tbl .c-delete, #tab-timeline .tbl .c-meta {display:none}
+#tab-timeline .cm-pill {display:inline-block;font-family:var(--face-sec);
+  font-size:var(--body-xs-sec);line-height:var(--lh-body-xs-sec);letter-spacing:var(--ls-btn-compact);text-transform:uppercase;
+  color:var(--color4-400);border:1px solid var(--color4-700);border-radius:999px;padding:3px 10px}
+#tab-timeline .tbl .c-comment, #tab-timeline .tbl .c-complete {text-align:center;white-space:nowrap}
+/* completed row -> strike through all text */
+#tab-timeline .tbl tr.completed td {text-decoration:line-through;color:var(--neutral-400)}
+#tab-timeline .tbl tr.completed .d-desc {color:var(--neutral-600)}
+#tab-timeline .tbl tr.completed .comment-btn, #tab-timeline .tbl tr.completed .row-complete {text-decoration:none}
+
+/* ============ THE SCHEDULE TABLE IS A LIGHT FIELD SURFACE ============
+   The three row controls — assignee, Start/Due and Status — are the
+   .form-field-* components from tokens.css, applied by class in the
+   markup. Nothing about their type, box, fill, border, focus ring,
+   hover or disabled state is restated here. What this block does is
+   remap the tokens those components read, which is the only thing
+   that genuinely differs about them:
+
+   GROUND. #tab-timeline is a dark document, so --field-bg resolves to
+   navy and --color-form-input to navy with it — navy on navy. These
+   controls are the one light surface inside the panel: a white fill in
+   a table row. Pointing the field tokens at their light values is all
+   that was actually needed.
+
+   SIZE. --form-field-text-sm is the compact step the ladder already
+   carries for exactly this: a 15px field does not fit a table row.
+
+   ACCENT. Focus and hover move to tobacco, because the ring has to be
+   seen against a white control sitting on a navy page. */
+#tab-timeline .tbl {
+  --form-field-text-size: var(--form-field-text-sm);   /* 13px */
+  --form-field-scheme:    light;
+  --color-form-input:     var(--color1-800);
+  /* neutral-300 is the dark-ground placeholder and reaches only 1.9:1
+     on a white control. neutral-700 is the lightest step clearing 4.5:1. */
+  --color-form-placeholder: var(--neutral-700);
+
+  --field-bg:            var(--white);
+  --field-bg-hover:      var(--white);
+  --field-bg-focus:      var(--white);
+  --field-bg-disabled:   var(--neutral-100);
+  --field-border:        var(--neutral-200);
+  --field-border-hover:  var(--color4-600);
+  --field-border-focus:  var(--color4-600);
+  --field-border-filled: var(--neutral-200);
+  --field-text-focus:    var(--color1-800);
+  --field-text-disabled: var(--neutral-600);
+  --focus-ring:          var(--color4-600);
+  --focus-ring-soft:     rgba(146, 94, 58, .22);
+
+  --field-pad-y: 5px;
+  --field-pad-x: 8px;
+}
+
+/* Start and Due · one date selector per cell. Dates are set here, by
+   hand, row by row, so the cell holds the control rather than a
+   formatted string. */
+#tab-timeline .tbl .c-date {white-space:nowrap;color:var(--neutral-200)}
+#tab-timeline .tbl tr.completed .row-date,
+#tab-timeline .tbl tr.completed .row-status {text-decoration:none}
+
+/* complete checkbox */
+#tab-timeline .row-complete {width:18px;height:18px;cursor:pointer;accent-color:var(--color4-600);margin:0;vertical-align:middle}
+/* comment icon button */
+#tab-timeline .comment-btn {display:inline-flex;align-items:center;justify-content:center;gap:4px;background:rgba(255,255,255,.05);border:1px solid var(--color1-700);color:var(--neutral-100);padding:4px 7px;cursor:pointer;text-transform:none;font-size:var(--body-sm-sec)}
+#tab-timeline .comment-btn:hover {background:rgba(255,255,255,.12);color:var(--white)}
+#tab-timeline .comment-btn svg {width:14px;height:14px;display:block}
+/* delete (trash) button */
+#tab-timeline .tbl .c-delete {text-align:center;white-space:nowrap}
+#tab-timeline .delete-btn {display:inline-flex;align-items:center;justify-content:center;background:transparent;border:none;color:var(--color2-400);padding:4px 7px;cursor:pointer;text-transform:none}
+#tab-timeline .delete-btn:hover {background:transparent;border:none;color:var(--neutral-50)}
+#tab-timeline .delete-btn svg {width:14px;height:14px;display:block}
+#tab-timeline .tbl tr.completed .delete-btn {text-decoration:none}
+
+/* Danger is a fill variant only. Box, size and type come from
+   .btn .btn-sans .btn-md on the element. */
+#tab-timeline .btn-danger {background:transparent;color:var(--field-error-text);border-color:var(--field-error);letter-spacing:var(--ls-btn-compact);text-transform:var(--case-btn);gap:.5em}
+#tab-timeline .btn-danger:hover {background:var(--color2-700);color:var(--white)}
+#tab-timeline .btn-danger svg {width:15px;height:15px}
+/* Pushed to the far end of the drawer footer, so the destructive
+   action is never adjacent to Save. */
+#tab-timeline .drawer-foot .btn-danger {margin-left:auto}
+
+#tab-timeline .tag-ms, #tab-timeline .tag-fixed {display:inline-block;font-family:var(--face-sec);
+  font-size:var(--body-xs-sec);line-height:var(--lh-body-xs-sec);letter-spacing:var(--ls-btn-compact);text-transform:uppercase;
+  font-weight:var(--weight-body-sec-strong);border-radius:20px;padding:1px 7px;margin-left:6px;vertical-align:middle}
+#tab-timeline .tag-ms {color:var(--color4-400);border:1px solid var(--color4-600)}
+#tab-timeline .tag-fixed {color:var(--neutral-400);border:1px solid var(--neutral-600)}
+
+/* ---- Assignee ------------------------------------------------
+   A <details>, not a form control, so there is no .form-field-* class
+   for it — but it has to read as one of the three. Its shell and its
+   summary are built from the same field tokens the other two resolve
+   through, remapped by the .tbl block above, so it tracks them instead
+   of carrying its own copy of the values. */
+#tab-timeline .tbl .row-assignee {width:100%;max-width:100%;box-sizing:border-box;
+  border:1px solid var(--field-border);border-radius:var(--field-radius);background:var(--field-bg)}
+#tab-timeline .tbl .row-assignee:hover {border-color:var(--field-border-hover)}
+#tab-timeline .tbl .row-assignee>summary {list-style:none;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  padding:var(--field-pad-y) var(--field-pad-x);
+  font-family:var(--form-field-text-family);font-size:var(--form-field-text-size);
+  line-height:var(--form-field-text-lh);letter-spacing:var(--form-field-text-ls);
+  text-transform:var(--form-field-text-case);font-weight:var(--form-field-weight-normal);
+  color:var(--color-form-input)}
+#tab-timeline .tbl .row-assignee>summary:focus-visible {outline:none;
+  box-shadow:0 0 0 1px var(--focus-ring),0 0 0 4px var(--focus-ring-soft)}
+#tab-timeline .tbl .row-assignee>summary::-webkit-details-marker {display:none}
+#tab-timeline .tbl .row-assignee .ra-placeholder {color:var(--color-form-placeholder)}
+#tab-timeline .tbl .row-assignee .ra-panel {padding:6px;border-top:1px solid var(--field-border);display:flex;flex-direction:column;gap:5px;background:var(--field-bg)}
+#tab-timeline .tbl .row-assignee .ra-opt {display:flex;align-items:center;gap:6px;cursor:pointer;
+  font-family:var(--form-field-text-family);font-size:var(--form-field-text-size);
+  line-height:var(--form-field-text-lh);letter-spacing:var(--form-field-text-ls);
+  text-transform:var(--form-field-text-case);color:var(--color-form-input)}
+#tab-timeline .tbl .row-assignee .ra-opt input {accent-color:var(--control-checked-bg);margin:0;width:15px;height:15px}
+#tab-timeline .tbl .row-assignee .ra-add {align-self:flex-start;margin-top:2px;background:var(--btn-inline-wash);color:var(--color-form-input);border:none;padding:4px 8px;
+  font-family:var(--form-field-text-family);font-size:var(--body-xs-sec);line-height:var(--lh-body-xs-sec);
+  text-transform:var(--form-field-text-case);letter-spacing:var(--form-field-text-ls);cursor:pointer;border-radius:var(--field-radius)}
+#tab-timeline .name-select option, #tab-timeline .ca-author option {font-size:var(--body-base-sec)}
+
+/* Status: single-select per row, sits to the right of Due. Box and
+   type come from .form-field-select in tokens.css. */
+#tab-timeline .tbl .c-status {white-space:nowrap}
+
+/* ---- Status fills -------------------------------------------
+   Each state carries its own fill, so the column reads as a picture of
+   where the project is rather than as seven lines of similar text.
+   Keyed on the data-value attribute the script already keeps in step
+   with the selection, so the fill changes the moment the value does.
+
+   'Not started' and 'Needs review' are absent: the first is the
+   default, and no fill has been chosen for the second yet.
+
+   The label flips to --neutral-50 on the two dark fills. Measured
+   against the 4.5:1 floor — navy on --color1-500 reaches only 3.8:1
+   and on --color2-500 only 2.9:1, while neutral-50 clears at 4.8 and
+   6.4. The four light fills keep the navy. */
+#tab-timeline .tbl .row-status[data-value="To do"]       {background:var(--color5-200)}
+#tab-timeline .tbl .row-status[data-value="In progress"] {background:var(--color1-500);color:var(--neutral-50)}
+#tab-timeline .tbl .row-status[data-value="On hold"]     {background:var(--neutral-200)}
+#tab-timeline .tbl .row-status[data-value="Done"]        {background:var(--color3-500)}
+#tab-timeline .tbl .row-status[data-value="Cancelled"]   {background:var(--color2-500);color:var(--neutral-50)}
+
+/* The dropdown is drawn by the OS on its own surface, so the options
+   stay on the field pair rather than inheriting a fill that only makes
+   sense on the closed control. */
+#tab-timeline .tbl .row-status option {background:var(--field-bg);color:var(--color-form-input)}
+
+/* Done strikes the phase name. The row-level 'completed' class already
+   strikes every cell — that is the separate Complete checkbox. This is
+   the status saying the work is finished, so it marks the name only. */
+#tab-timeline .tbl tr[data-row-status="Done"] .c-phase {text-decoration:line-through;color:var(--neutral-400)}
+
+/* ---- --color-form-input on the timeline's dark surfaces ----------
+   The timeline holds two grounds at once. The row controls in the full
+   schedule sit on a white fill, where the token's navy --color1-800 is
+   exactly right. The drawer and the modals are navy documents whose
+   fields are a 5% white wash over --color1-800, and navy on navy lands
+   at about 1.2:1 — invisible.
+
+   Remapped rather than overridden, so every rule that reads
+   --color-form-input still reads one declaration and the .form-field-*
+   set stays the single source of truth. */
+#tab-timeline .drawer,
+#tab-timeline .board-modal,
+#tab-timeline .preview-modal {
+  --color-form-input: var(--neutral-100);
+}
+
+/* ============ EDIT DRAWER ============ */
+#tab-timeline .scrim {position:fixed;inset:0;background:rgba(4,5,16,.55);opacity:0;pointer-events:none;transition:opacity .2s;z-index:40}
+#tab-timeline .scrim.open {opacity:1;pointer-events:auto}
+/* Centred modal, on the axis the reader is already looking down, and
+   the same element serves both editing a phase and creating one.
+   Height is capped so a long body scrolls inside the panel instead of
+   growing past the viewport. */
+#tab-timeline .drawer {position:fixed;top:50%;left:50%;width:min(560px,92vw);max-height:min(86vh,860px);
+  background:var(--color1-800);border:1px solid var(--color1-700);box-shadow:var(--shadow);
+  display:flex;flex-direction:column;z-index:50;
+  transform:translate(-50%,-46%) scale(.98);opacity:0;pointer-events:none;
+  transition:opacity .18s ease,transform .18s ease}
+#tab-timeline .drawer.open {transform:translate(-50%,-50%) scale(1);opacity:1;pointer-events:auto}
+#tab-timeline .drawer-head {padding:8px 24px;border-bottom:1px solid var(--color1-800);display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+#tab-timeline .drawer-head .dh-phase {font-family:var(--face-sec);
+  font-size:var(--body-xs-sec);line-height:var(--lh-body-xs-sec);letter-spacing:var(--ls-btn-compact);text-transform:uppercase;
+  color:var(--color4-400);font-weight:var(--weight-body-sec-strong)}
+#tab-timeline .drawer-close {display:inline-flex;align-items:center;justify-content:center;
+  font-size:var(--heading);color:var(--neutral-200);padding:4px 8px;border-radius:var(--radius)}
+#tab-timeline .drawer-close:hover {background:rgba(255,255,255,.08);color:var(--neutral-50)}
+#tab-timeline .drawer-body {padding:20px 22px;overflow-y:auto;flex:1;display:flex;flex-direction:column;gap:16px}
+#tab-timeline .drawer-body .field {display:flex;flex-direction:column;gap:7px}
+#tab-timeline .drawer-body textarea {min-height:110px;resize:vertical;line-height:var(--lh-body-base-sec)}
+/* The Meeting notes button is the only direct .btn child of the body —
+   everything else is wrapped in a .field. The body is a flex column, so
+   without this it would stretch full width and read as a bar. */
+#tab-timeline .drawer-body > .btn {align-self:flex-start}
+#tab-timeline .drawer-meta {font-size:var(--body-sm-sec);line-height:var(--lh-body-sm-sec);color:var(--neutral-400);background:rgba(255,255,255,.03);border-radius:var(--radius-sm);padding:12px 14px}
+#tab-timeline .drawer-meta b {color:var(--color5-200);font-weight:var(--weight-body-sec-normal)}
+#tab-timeline .drawer-foot {padding:16px 22px;border-top:1px solid var(--color1-800);display:flex;gap:10px}
+#tab-timeline .readonly-note {font-size:var(--body-sm-sec);line-height:var(--lh-body-sm-sec);color:var(--neutral-400);font-style:italic}
+
+/* comments in drawer */
+#tab-timeline .comments-wrap {display:flex;flex-direction:column;gap:10px}
+#tab-timeline .comments-list {display:flex;flex-direction:column;gap:8px;max-height:240px;overflow-y:auto}
+#tab-timeline .comment-item {background:rgba(255,255,255,.03);border-left:2px solid var(--color4-600);padding:8px 10px}
+#tab-timeline .comment-item .cm-head {display:flex;justify-content:space-between;gap:8px;font-size:var(--body-sm-sec);line-height:var(--lh-body-sm-sec);color:var(--neutral-400);margin-bottom:3px}
+#tab-timeline .comment-item .cm-author {color:var(--color4-400);font-weight:var(--weight-body-sec-normal)}
+#tab-timeline .comment-item .cm-text {font-size:var(--body-sm-sec);line-height:var(--lh-body-sm-sec);color:var(--color5-200);white-space:pre-wrap;word-wrap:break-word}
+#tab-timeline .comments-empty {font-size:var(--body-sm-sec);line-height:var(--lh-body-sm-sec);color:var(--neutral-600);font-style:italic}
+#tab-timeline .comment-add textarea {min-height:64px;width:100%}
+#tab-timeline .comment-add .ca-row {display:flex;gap:8px;margin-bottom:8px;align-items:stretch}
+#tab-timeline .comment-add .ca-row input, #tab-timeline .comment-add .ca-row select {flex:1 1 42%;min-width:0}
+#tab-timeline .comment-add .ca-row button {white-space:nowrap}
+/* ---- .form-field-input, applied to the timeline's own controls ----
+   forms.css only reaches inside .drawer-body, so the board and meeting
+   note modals carry their own copy of the same token set. */
+#tab-timeline .ca-author,
+#tab-timeline .board-foot textarea,
+#tab-timeline .board-msg .bm-edit textarea,
+#tab-timeline .note-body textarea {
+  font-family:var(--form-field-text-family);
+  font-size:var(--form-field-text-size);
+  font-weight:var(--form-field-weight-normal);
+  line-height:var(--form-field-text-lh);
+  letter-spacing:var(--form-field-text-ls);
+  text-transform:var(--form-field-text-case);
+  color:var(--color-form-input);
+  background:rgba(255,255,255,.05);border:1px solid rgba(195,173,121,.4);border-radius:var(--radius);padding:.55em .7em;
+}
+/* Option lists are drawn by the OS on a native popup surface, so they
+   need their own pair rather than inheriting the wash above. */
+#tab-timeline .ca-author {color-scheme:dark}
+#tab-timeline .ca-author option {background:var(--color1-800);color:var(--neutral-100);
+  font-family:var(--form-field-text-family);font-size:var(--form-field-text-size)}
+#tab-timeline .name-select {cursor:pointer}
+#tab-timeline .board-foot textarea::placeholder,
+#tab-timeline .note-body textarea::placeholder {
+  font-family:var(--form-field-text-family);
+  font-size:var(--form-field-text-size);
+  font-weight:var(--form-field-weight-strong);
+  letter-spacing:var(--form-field-text-ls);
+  text-transform:var(--form-field-text-case);
+  color:var(--color-form-placeholder);opacity:1;
+}
+
+/* ---- For review · files and links ---- */
+#tab-timeline .review-wrap {display:flex;flex-direction:column;gap:10px}
+#tab-timeline .review-list {display:flex;flex-direction:column;gap:8px;max-height:440px;overflow-y:auto}
+#tab-timeline .review-item {display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.03);border-left:2px solid var(--color4-600);padding:8px 10px}
+#tab-timeline .review-item .review-name {flex:1 1 auto;min-width:0;color:var(--color4-400);text-decoration:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  font-size:var(--body-sm-sec);line-height:var(--lh-body-sm-sec)}
+#tab-timeline .review-item .review-name:hover {text-decoration:underline}
+#tab-timeline .review-item .review-meta {flex:0 0 auto;font-size:var(--body-xs-sec);line-height:var(--lh-body-xs-sec);color:var(--neutral-600);white-space:nowrap}
+#tab-timeline .review-item .review-del {flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;
+  background:transparent;border:none;color:var(--neutral-400);font-size:var(--body-pri);padding:0 2px;cursor:pointer}
+#tab-timeline .review-item .review-del:hover {color:var(--color2-400)}
+#tab-timeline .review-empty {font-size:var(--body-sm-sec);line-height:var(--lh-body-sm-sec);color:var(--neutral-600);font-style:italic}
+/* per-file comment thread */
+#tab-timeline .review-file {display:flex;flex-direction:column}
+#tab-timeline .review-file.open .review-item {border-left-color:var(--color4-400)}
+#tab-timeline .review-file.open .review-item .review-del {display:none}
+#tab-timeline .review-item .review-cmt {flex:0 0 auto;display:inline-flex;align-items:center;gap:4px;background:transparent;border:none;color:var(--neutral-400);padding:2px 4px;cursor:pointer;text-transform:none}
+#tab-timeline .review-item .review-cmt:hover, #tab-timeline .review-item .review-cmt.on {color:var(--color4-400)}
+#tab-timeline .review-item .review-cmt svg {width:14px;height:14px;display:block}
+#tab-timeline .review-item .rc-count {font-size:var(--body-xs-sec);letter-spacing:var(--ls-btn-sec);color:inherit}
+#tab-timeline .review-item .review-rep {flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;
+  background:transparent;border:1px solid var(--color1-700);color:var(--neutral-400);
+  font-size:var(--body-xs-sec);letter-spacing:var(--ls-btn-compact);padding:3px 8px;cursor:pointer}
+#tab-timeline .review-item .review-rep:hover {border-color:var(--color4-600);color:var(--color4-400)}
+#tab-timeline .review-item .rc-close {display:inline-flex;align-items:center;justify-content:center;font-size:var(--body-pri);padding:0 1px}
+#tab-timeline .review-comments {display:flex;flex-direction:column;gap:8px;margin:0 0 4px 10px;padding:10px 0 10px 12px;border-left:1px solid var(--color1-800)}
+#tab-timeline .review-comments .comment-item {border-left-color:var(--neutral-600)}
+#tab-timeline .review-comments .ca-row {margin-bottom:6px}
+#tab-timeline .review-comments textarea {min-height:60px;width:100%}
+#tab-timeline .review-add {display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+#tab-timeline .review-file-input {position:absolute;width:1px;height:1px;opacity:0;overflow:hidden;clip:rect(0 0 0 0)}
+/* URL field */
+#tab-timeline .review-url {display:flex;flex-direction:column;gap:6px;margin-top:2px}
+#tab-timeline .review-url .ru-row {display:flex;gap:8px;align-items:stretch}
+#tab-timeline .review-url .ru-row input {flex:1 1 auto;min-width:0}
+#tab-timeline .review-url .ru-row button {white-space:nowrap}
+#tab-timeline .review-links {display:flex;flex-direction:column;gap:8px}
+#tab-timeline .review-links:not(:empty) {margin-top:2px}
+#tab-timeline .review-upload-btn {cursor:pointer}
+
+/* ============ DRAWER TYPE: Inter throughout ============
+   Size and line height for the controls themselves are set once in
+   forms.css, on the token, so they are not restated here. */
+#tab-timeline .drawer-body {font-family:var(--face-sec)}
+#tab-timeline .drawer-body input, #tab-timeline .drawer-body textarea, #tab-timeline .drawer-body select, #tab-timeline .drawer-body button {font-family:var(--face-sec)}
+
+/* ============ FILE PREVIEW ============ */
+#tab-timeline .preview-modal {
+  position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.98);
+  width:90vw;height:90vh;max-width:90vw;max-height:90vh;
+  background:var(--color1-800);border:1px solid var(--color1-700);box-shadow:var(--shadow);
+  z-index:70;display:flex;flex-direction:column;
+  opacity:0;pointer-events:none;transition:opacity .18s,transform .18s;
+}
+#tab-timeline .preview-modal.open {opacity:1;pointer-events:auto;transform:translate(-50%,-50%) scale(1)}
+#tab-timeline .preview-head {flex:0 0 auto;display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--color1-800)}
+#tab-timeline .preview-head .pv-name {flex:1 1 auto;min-width:0;color:var(--color5-100);
+  font-size:var(--body-base-sec);line-height:var(--lh-body-base-sec);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#tab-timeline .preview-head .btn-inline {flex:0 0 auto;text-decoration:none}
+#tab-timeline .preview-body {flex:1 1 auto;overflow:auto;background:var(--color1-900);display:flex;align-items:center;justify-content:center;padding:12px}
+#tab-timeline .preview-body img {max-width:100%;max-height:100%;object-fit:contain;display:block}
+#tab-timeline .preview-body iframe {width:100%;height:100%;border:0;background:var(--white)}
+#tab-timeline .pv-fallback {text-align:center;color:var(--neutral-200);font-size:var(--body-base-sec);line-height:var(--lh-body-base-sec);padding:24px}
+#tab-timeline .pv-fallback .pv-kind {display:block;font-family:var(--face-sec);
+  font-size:var(--body-xs-sec);line-height:var(--lh-body-xs-sec);letter-spacing:var(--ls-btn-compact);text-transform:uppercase;
+  color:var(--neutral-600);margin-bottom:8px}
+
+/* ============ MESSAGE BOARD ============ */
+#tab-timeline .board-modal {
+  position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.98);
+  width:90vw;height:90vh;max-width:90vw;max-height:90vh;
+  background:var(--color1-800);border:1px solid var(--color1-700);box-shadow:var(--shadow);
+  z-index:60;display:flex;flex-direction:column;
+  opacity:0;pointer-events:none;transition:opacity .18s,transform .18s;
+}
+#tab-timeline .board-modal.open {opacity:1;pointer-events:auto;transform:translate(-50%,-50%) scale(1)}
+#tab-timeline .board-head {flex:0 0 auto;padding:18px 22px 14px;border-bottom:1px solid var(--color1-800);display:flex;justify-content:space-between;align-items:center;gap:12px}
+#tab-timeline .board-head h4 {margin:0;color:var(--color5-100)}
+#tab-timeline .board-list {flex:1 1 auto;overflow-y:auto;padding:18px 22px;display:flex;flex-direction:column;gap:12px}
+#tab-timeline .board-empty {font-size:var(--body-base-sec);line-height:var(--lh-body-base-sec);color:var(--neutral-600);font-style:italic}
+#tab-timeline .board-msg {background:rgba(255,255,255,.03);border-left:2px solid var(--color4-600);padding:12px 14px}
+#tab-timeline .board-msg .bm-head {display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:5px}
+#tab-timeline .board-msg .bm-author {color:var(--color4-400);font-weight:var(--weight-body-sec-normal);font-size:var(--body-base-sec);line-height:var(--lh-body-base-sec)}
+#tab-timeline .board-msg .bm-when {font-size:var(--body-xs-sec);line-height:var(--lh-body-xs-sec);color:var(--neutral-400)}
+#tab-timeline .board-msg .bm-edited {font-size:var(--body-xs-sec);line-height:var(--lh-body-xs-sec);color:var(--neutral-600);font-style:italic;margin-left:6px}
+#tab-timeline .board-msg .bm-text {font-size:var(--body-base-sec);line-height:var(--lh-body-base-sec);color:var(--color5-200);white-space:pre-wrap;word-wrap:break-word}
+#tab-timeline .board-msg .bm-actions {display:flex;gap:6px;margin-top:8px}
+#tab-timeline .board-msg .bm-act {background:transparent;border:none;color:var(--neutral-400);
+  font-size:var(--body-xs-sec);letter-spacing:var(--ls-btn-compact);padding:2px 0;margin-right:12px;cursor:pointer}
+#tab-timeline .board-msg .bm-act:hover {color:var(--neutral-50)}
+#tab-timeline .board-msg .bm-act.del:hover {color:var(--color2-400)}
+#tab-timeline .board-msg .bm-edit {display:flex;flex-direction:column;gap:8px}
+#tab-timeline .board-msg .bm-edit textarea {width:100%;min-height:80px}
+#tab-timeline .board-foot {flex:0 0 auto;padding:14px 22px 18px;border-top:1px solid var(--color1-800);display:flex;flex-direction:column;gap:8px}
+#tab-timeline .board-foot .ca-row {display:flex;gap:8px;align-items:stretch}
+#tab-timeline .board-foot .ca-row select {flex:0 1 260px;min-width:0}
+#tab-timeline .board-foot textarea {width:100%;min-height:78px;resize:vertical}
+
+/* ============ MEETING NOTES ============
+   A table of notes, with a single-note editor on top of it. */
+#tab-timeline .notes-tbl {width:100%;border-collapse:collapse;font-size:var(--body-base-sec);line-height:var(--lh-body-base-sec)}
+#tab-timeline .notes-tbl th {text-align:left;font-family:var(--face-sec);font-weight:var(--weight-body-sec-strong);
+  font-size:var(--body-xs-sec);line-height:var(--lh-body-xs-sec);letter-spacing:var(--ls-btn-compact);text-transform:uppercase;
+  color:var(--neutral-400);padding:0 12px 8px;border-bottom:1px solid var(--color1-800)}
+#tab-timeline .notes-tbl td {padding:14px 12px;border-bottom:1px solid var(--color1-800);vertical-align:top;color:var(--color5-200)}
+#tab-timeline .notes-tbl tr[data-note] {cursor:pointer;transition:background .12s}
+#tab-timeline .notes-tbl tr[data-note]:hover td {background:rgba(255,255,255,.04)}
+#tab-timeline .notes-tbl .nt-date {white-space:nowrap;color:var(--color4-400);font-size:var(--body-sm-sec);line-height:var(--lh-body-sm-sec)}
+#tab-timeline .notes-tbl .nt-text {line-height:var(--lh-body-base-sec)}
+/* When the notes were uploaded. Quieter than the meeting date beside it:
+   the meeting date is what the row is filed under, this is provenance.
+   nowrap keeps "Aug 6, 2026 11:04am" on one line at the 170px column. */
+#tab-timeline .notes-tbl .nt-up {white-space:nowrap;color:var(--neutral-400);
+  font-size:var(--body-sm-sec);line-height:var(--lh-body-sm-sec)}
+/* The phase a note was uploaded from, sitting under the preview. */
+#tab-timeline .notes-tbl .nt-src {margin-top:4px;color:var(--color5-400);
+  font-family:var(--face-sec);font-size:var(--body-xs-sec);line-height:var(--lh-body-xs-sec)}
+#tab-timeline .notes-tbl .nt-open {text-align:right;color:var(--neutral-600)}
+#tab-timeline .notes-tbl .nt-chev {display:inline-flex;align-items:center;justify-content:center;font-size:var(--heading)}
+#tab-timeline #notesModal .board-foot {flex-direction:row}
+#tab-timeline #notesModal .board-foot .btn-inline {align-self:flex-start}
+/* The single-note popup can now be opened from inside the edit drawer
+   (the "Meeting notes" button in its footer), so its scrim has to clear
+   the drawer's z-index:50 as well as the panel behind it. */
+#tab-timeline .note-modal {z-index:65}
+#tab-timeline #noteScrim {z-index:64}
+#tab-timeline .note-modal .note-date {flex:0 0 auto;font-family:var(--face-sec);
+  font-size:var(--body-xs-sec);line-height:var(--lh-body-xs-sec);letter-spacing:var(--ls-btn-compact);text-transform:uppercase;color:var(--color4-400)}
+/* Source phase, beside the date in the note head. Same small tracked
+   setting as .note-date but in the tan rather than the tobacco, so the
+   two read as a pair without competing. Truncates instead of pushing
+   the close button: a phase name can be 50 characters. */
+#tab-timeline .note-modal .note-src {flex:0 1 auto;min-width:0;font-family:var(--face-sec);
+  font-size:var(--body-xs-sec);line-height:var(--lh-body-xs-sec);letter-spacing:var(--ls-btn-compact);
+  text-transform:uppercase;color:var(--color5-400);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#tab-timeline .note-modal .board-head {align-items:center;gap:14px}
+#tab-timeline .note-modal .board-head h4 {flex:1 1 auto}
+#tab-timeline .note-body {flex:1 1 auto;display:flex;padding:16px 22px;overflow:hidden}
+#tab-timeline .note-body textarea {flex:1 1 auto;width:100%;resize:none;font-size:var(--body-base-sec);line-height:var(--lh-body-base-sec)}
+#tab-timeline .note-foot {flex-direction:row;align-items:center;gap:10px}
+#tab-timeline .note-foot .note-del {margin-left:auto;color:var(--color2-400)}
+#tab-timeline .note-foot .note-del:hover {background:var(--color2-700);color:var(--white)}
+
+/* ============ RESPONSIVE ============
+   The type scale is already responsive: every step in tokens.css
+   moves at 1023px and again at 767px. So the blocks below carry
+   layout only, and restate a size token only where the element
+   genuinely changes role at that width — never to re-tune a size the
+   scale has already handled. */
+#tab-timeline .only-mobile {display:none}
+
+@media (max-width:900px) {
+  #tab-timeline header.masthead {flex-direction:column;align-items:flex-start;gap:12px}
+  #tab-timeline .launch-card {margin-left:0;width:100%;text-align:left;min-width:0}
+  #tab-timeline .masthead-copy {align-items:flex-start;width:100%}
+  #tab-timeline .masthead-copy .launch-card, #tab-timeline .masthead-copy .resources-card {align-self:flex-start}
+  #tab-timeline .tbl .c-detail {max-width:none}
+}
+
+@media (max-width:768px) {
+  #tab-timeline .drawer {width:100vw}
+  #tab-timeline .launch-card {width:100%;min-width:0}
+  #tab-timeline .gantt {--glabel:150px}
+}
+
+@media (max-width:700px) {
+  #tab-timeline .wrap {padding-left:0;padding-right:0}
+
+  /* Header */
+  #tab-timeline header.masthead {flex-direction:column;align-items:stretch;gap:16px;padding-bottom:22px}
+  #tab-timeline .masthead-brand {gap:0;align-items:center}
+  #tab-timeline .brand-logo {height:58px;padding-right:16px;margin-bottom:0}
+  #tab-timeline .brand-text {padding-left:16px;gap:8px}
+  #tab-timeline .brand-text .text-base-italic {color:var(--neutral-200)}
+  #tab-timeline .masthead-copy {width:100%;gap:12px}
+  #tab-timeline .launch-card {width:100%;min-width:0;padding:18px 20px 16px}
+  #tab-timeline .launch-card .lc-row {gap:2px}
+  #tab-timeline .resources-card {min-width:0;width:100%;margin:16px 0 0;padding-top:14px;border-top:1px solid rgba(255,255,255,.22)}
+  #tab-timeline .resources-card ul {gap:2px}
+  #tab-timeline .resources-card li a {min-height:38px;padding:2px 0}
+
+  /* Top navigation */
+  #tab-timeline .masthead-actions {padding:6px 0 12px;margin-bottom:14px}
+  #tab-timeline .masthead-actions .nav-link {padding:8px 2px;letter-spacing:var(--ls-btn-sec)}
+
+  /* View switch + navigation: full width, easy to tap, pinned while scrolling */
+  #tab-timeline .viewbar {gap:8px;margin:4px 0 14px;position:sticky;top:0;z-index:20;
+    background:var(--color1-900);margin-left:-16px;margin-right:-16px;padding:10px 16px 12px;
+    box-shadow:0 10px 16px -12px rgba(4,5,16,.9)}
+  #tab-timeline .segmented {display:flex;width:100%;padding:3px}
+  #tab-timeline .segmented button {flex:1;padding:0 .3em;min-height:42px;letter-spacing:var(--ls-btn-sec)}
+  #tab-timeline .navgroup {flex:1 1 auto;justify-content:space-between;gap:6px}
+  #tab-timeline .period-title {flex:1;min-width:0}
+  #tab-timeline .viewbar .btn-sm {min-height:40px;min-width:40px;justify-content:center;padding:.45em .8em}
+  #tab-timeline .spacer {display:none}
+
+  /* Calendar */
+  #tab-timeline .desktop-cal {display:none}
+  #tab-timeline .only-mobile {display:block}
+  #tab-timeline .calendar {padding:8px 10px 10px;border-radius:12px}
+  #tab-timeline .week-view {grid-template-columns:1fr;gap:10px}
+  #tab-timeline .wv-col {min-height:0}
+  #tab-timeline .wv-head {display:flex;align-items:baseline;gap:8px;text-align:left;padding:8px 10px}
+  #tab-timeline .wv-body {padding:8px;gap:8px}
+  #tab-timeline .wv-item {padding:10px 12px}
+
+  /* Agenda (mobile month view). The bar is the primary target here
+     rather than a chip inside a grid cell, so it takes the base
+     secondary step instead of the small one. */
+  #tab-timeline .agenda-day {grid-template-columns:52px 1fr;gap:12px;padding:12px 2px}
+  #tab-timeline .agenda-date {font-size:var(--body-xs-sec);line-height:var(--lh-body-xs-sec);letter-spacing:var(--ls-btn-compact);text-transform:uppercase}
+  #tab-timeline .agenda-items {gap:8px;padding-right:3px}
+  #tab-timeline .agenda-items .bar {font-size:var(--body-base-sec);border-radius:8px;margin:0}
+
+  /* Gantt: keep labels readable, let the track scroll */
+  #tab-timeline .gantt {--glabel:132px;padding:10px 0 0}
+  #tab-timeline .gantt-inner {min-width:760px}
+  #tab-timeline .gantt-scroll {-webkit-overflow-scrolling:touch}
+  #tab-timeline .gantt-hint {font-family:var(--face-sec);font-size:var(--body-xs-sec);line-height:var(--lh-body-xs-sec);
+    letter-spacing:var(--ls-btn-compact);text-transform:uppercase;color:var(--neutral-600);padding:0 12px 8px}
+
+  /* Full Schedule -> stacked cards */
+  #tab-timeline .listview {margin-top:26px}
+  #tab-timeline .tbl {display:block}
+  #tab-timeline .tbl thead {display:none}
+  #tab-timeline .tbl tbody {display:block}
+  #tab-timeline .tbl tr {display:block;border:1px solid var(--color1-800);border-radius:12px;padding:16px;margin-bottom:12px;background:rgba(255,255,255,.025);
+    position:relative;padding-right:30px}
+  #tab-timeline .tbl tr:hover td {background:transparent}
+  #tab-timeline .tbl tr:active {background:rgba(255,255,255,.06)}
+  #tab-timeline .tbl td {display:block;width:100%;border:none;padding:0}
+  /* chevron: the whole card opens the phase, so say so */
+  #tab-timeline .tbl tr::after {content:"\203A";position:absolute;top:14px;right:14px;color:var(--neutral-600);font-size:var(--heading)}
+  #tab-timeline .tbl .c-phase {font-size:var(--body-pri);line-height:var(--lh-body-pri);color:var(--neutral-50);margin-bottom:12px;padding-right:6px}
+  #tab-timeline .tbl .c-meta {display:block;margin:-4px 0 12px}
+  #tab-timeline .tbl .c-meta:empty {display:none}
+  #tab-timeline .tbl .c-assignee.hide-sm {display:block;margin-bottom:12px}
+  #tab-timeline .tbl .row-assignee {display:inline-block;width:auto;max-width:100%;border-radius:999px;border-color:transparent}
+  #tab-timeline .tbl .row-assignee[open] {border-radius:14px}
+  #tab-timeline .tbl .row-assignee>summary {padding:5px 14px;letter-spacing:var(--ls-btn-sec)}
+
+  /* Start and Due stack as two labelled date selectors. The label is
+     the ::before on the cell, because the column head is gone. */
+  #tab-timeline .tbl .c-date, #tab-timeline .tbl .c-date.hide-sm {display:block;width:auto;color:var(--color5-200);white-space:nowrap;margin:0 0 10px}
+  #tab-timeline .tbl .c-date.hide-sm::before {content:"START ";color:var(--neutral-400);font-family:var(--face-sec);
+    font-size:var(--body-xs-sec);line-height:var(--lh-body-xs-sec);letter-spacing:var(--ls-btn-compact);display:block;margin-bottom:4px}
+  #tab-timeline .tbl .c-date:not(.hide-sm)::before {content:"DUE ";color:var(--neutral-400);font-family:var(--face-sec);
+    font-size:var(--body-xs-sec);line-height:var(--lh-body-xs-sec);letter-spacing:var(--ls-btn-compact);display:block;margin-bottom:4px}
+  #tab-timeline .tbl .row-date {display:inline-block;width:auto;max-width:100%;border-radius:999px;border-color:transparent;padding:6px 14px;min-height:var(--btn-touch)}
+
+  #tab-timeline .tbl .c-status {display:block;margin-top:12px}
+  #tab-timeline .tbl .row-status {display:inline-block;width:auto;max-width:100%;border-radius:999px;border-color:transparent;padding:6px 14px;min-height:var(--btn-touch)}
+
+  /* Edit drawer */
+  #tab-timeline .drawer {width:100vw;height:100%;border-left:none}
+  #tab-timeline .drawer-head {padding:8px 14px}
+  #tab-timeline .drawer-body {padding:16px 16px 22px;gap:18px}
+  #tab-timeline .drawer-foot {padding:12px 16px calc(12px + env(safe-area-inset-bottom))}
+  #tab-timeline .drawer-body textarea {min-height:90px}
+
+  /* file + link rows: name on its own line so it is never chopped mid-word */
+  #tab-timeline .review-item {flex-wrap:wrap;row-gap:4px;padding:10px 12px}
+  #tab-timeline .review-item .review-name {flex:1 1 100%;white-space:normal;overflow-wrap:anywhere}
+  #tab-timeline .review-item .review-meta {margin-right:auto}
+  #tab-timeline .review-item .review-del {font-size:var(--heading);padding:0 4px}
+  #tab-timeline .review-comments {margin-left:4px;padding-left:10px}
+  #tab-timeline .review-comments textarea {min-height:72px}
+  #tab-timeline .review-url .ru-row {flex-wrap:wrap}
+  #tab-timeline .review-url .ru-row input {flex:1 1 100%}
+  #tab-timeline .review-url .ru-row button {flex:1 1 100%;justify-content:center;min-height:var(--btn-touch)}
+  #tab-timeline .comment-add .ca-row {flex-wrap:wrap}
+  #tab-timeline .comment-add .ca-row select {flex:1 1 100%}
+  #tab-timeline .comment-add .ca-row button {flex:1 1 100%;justify-content:center;min-height:var(--btn-touch)}
+
+  /* Meeting notes + board */
+  #tab-timeline .notes-tbl th:nth-child(1) {width:96px}
+  #tab-timeline .notes-tbl td {padding:12px 8px}
+  #tab-timeline .notes-tbl .nt-date {white-space:normal}
+  /* Four columns will not fit a phone. The Uploaded column is dropped
+     here rather than squeezed — the meeting date it duplicates to the
+     day is already the first column, and the full stamp is still on the
+     note itself. Header and cell go together or the row shifts. */
+  #tab-timeline .notes-tbl th:nth-child(3),
+  #tab-timeline .notes-tbl .nt-up {display:none}
+  #tab-timeline .note-body {padding:12px 16px}
+  #tab-timeline .note-foot {flex-wrap:wrap}
+  #tab-timeline .note-foot .note-del {margin-left:0;width:100%;justify-content:center;min-height:var(--btn-touch)}
+  #tab-timeline .board-head {padding:14px 16px 12px}
+  #tab-timeline .board-list {padding:14px 16px;gap:10px}
+  #tab-timeline .board-foot {padding:12px 16px 16px}
+  #tab-timeline .board-foot .ca-row {flex-wrap:wrap}
+  #tab-timeline .board-foot .ca-row select {flex:1 1 100%}
+  #tab-timeline .board-foot .ca-row button {flex:1 1 100%;justify-content:center;min-height:var(--btn-touch)}
+}
+
+/* ============ TYPE REFINEMENTS ============
+   Display accents inherit the header treatment: Kepler Std Display,
+   uppercase. Size, line height and tracking already came from the
+   heading step each one is set on, so only the case is stated here.
+
+   The blanket h1–h6 tracking overrides that used to sit at the bottom
+   of this file are gone: they fought the per-step --ls-heading-*
+   ladder, which is graduated for exactly this reason. */
+#tab-timeline .launch-card .lc-date, #tab-timeline .period-title, #tab-timeline .wv-head .d2, #tab-timeline .agenda-date .ad-day, #tab-timeline .gantt-phase .gantt-label-col {
+  text-transform:var(--case-heading);
+}
+/* Small caps labels: Kepler Std Medium */
+#tab-timeline upper-lg, #tab-timeline upper-md, #tab-timeline upper-sm {font-weight:var(--weight-btn)}
+
+/* Tablet: narrower date columns, roomier assignee column */
+@media (min-width:701px) and (max-width:1024px) {
+  #tab-timeline .tbl th:nth-child(3) {width:200px !important}
+  #tab-timeline .tbl th:nth-child(4), #tab-timeline .tbl th:nth-child(5) {width:120px !important}
+}
+
+/* ============ DUE STILL AHEAD ============
+   A Due selector whose date is after today swaps its white fill for the
+   --color2-200 wash, so the work that has not come round yet reads down
+   the column without each date being checked against the calendar. The
+   control carries the highlight, not the cell around it.
+
+   renderList() puts the class on the input; changing a date re-renders,
+   so it re-evaluates on the spot.
+
+   Stated last on purpose: the mobile pill rule sets the same properties
+   at lower specificity but appears later in the file, and would
+   otherwise take the fill back to white. Text goes to --color2-900,
+   because the base --color1-700 is a navy on a pink. */
+#tab-timeline .tbl .row-date.is-due-reached {background:var(--color2-100);color:var(--color2-900)}
+#tab-timeline .tbl .row-date.is-due-reached:hover {border-color:var(--color2-600)}

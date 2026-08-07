@@ -1,0 +1,463 @@
+/* ============================================================
+   BRAND GUIDELINES
+   Every selector is scoped to #tab-brand so the two documents in
+   main.html cannot reach into each other. Tokens live in tokens.css.
+   ============================================================ */
+
+/* ============================================================
+   SIGNATURE SOCIETY · BRAND GUIDELINES
+   Stylesheet. Extracted from brand-guidelines.html, unchanged
+   apart from the font paths, which gained one ../ because this
+   file sits one folder deeper than the original document did.
+   ============================================================ */
+/* ============================================================
+   PP PLAYGROUND · self-hosted
+   Pangram Pangram, not on a CDN, so it is loaded from the client
+   font folder by relative path. Paths resolve from THIS file, not
+   from the HTML, so they must stay correct relative to
+   SIG_SOCIETY/2026/WD/ADMIN/SIG_2026_Brand_Guidelines-v01/.
+   Move the folder and the hero face silently falls back to
+   Kepler Display.
+   ============================================================ */
+/* ============================================================
+   SIGNATURE SOCIETY · TYPE + COLOR TOKENS
+   Everything below is the live system. This document is set
+   in its own tokens, so the specimens are the real thing.
+   ============================================================ */
+/* ============================================================
+   RESPONSIVE SCALE
+   Three ratios: desktop 18 x 1.25, tablet 17 x 1.2, mobile
+   17 x 1.125. Every step moves, including the body steps, so
+   the whole system compresses rather than only the headings.
+   The secondary and interface scales never change.
+   ============================================================ */
+/* TABLET · 768px to 1023px · base 17, ratio 1.2 */
+/* MOBILE · below 768px · base 17, ratio 1.125 */
+/* ============================================================
+   TEXT STYLE CLASSES · the shipping API
+   ============================================================ */
+/* Hero · PP Playground. Sits above the Kepler ceiling and is the only
+   primary style that is never uppercase: the face is a script, and its
+   capitals lose the swashes and joins that make it worth using.
+   Three weights, self-hosted: Thin 100, Light 300, Medium 500. */
+#tab-brand .hero, #tab-brand .hero-light, #tab-brand .hero-thin, #tab-brand .hero-1x, #tab-brand .hero-1x-light, #tab-brand .hero-1x-thin {
+  font-family: var(--face-hero);
+  text-transform: none;
+  letter-spacing: var(--ls-hero);
+}
+#tab-brand .hero, #tab-brand .hero-1x { font-weight: 500; }
+#tab-brand .hero-light, #tab-brand .hero-1x-light { font-weight: 300; }
+#tab-brand .hero-thin, #tab-brand .hero-1x-thin { font-weight: 100; }
+#tab-brand .hero, #tab-brand .hero-light, #tab-brand .hero-thin {
+  font-size: var(--hero); line-height: var(--lh-hero);
+}
+#tab-brand .hero-1x, #tab-brand .hero-1x-light, #tab-brand .hero-1x-thin {
+  font-size: var(--hero-1x); line-height: var(--lh-hero-1x);
+}
+/* Headings · all uppercase.
+   Optical size follows rendered px, not step name. The Display cut
+   starts at 32px, so the boundary moves as the scale compresses:
+   2x on desktop, 3x on tablet, 5x on mobile. Tracking is per step and
+   does not move with it. */
+#tab-brand .heading, #tab-brand .heading-1x, #tab-brand .heading-2x, #tab-brand .heading-3x, #tab-brand .heading-4x, #tab-brand .heading-5x, #tab-brand .heading-6x {
+  font-weight: 400;
+  text-transform: uppercase;
+}
+/* Display cut · 32px and up */
+#tab-brand .heading-2x, #tab-brand .heading-3x, #tab-brand .heading-4x, #tab-brand .heading-5x, #tab-brand .heading-6x {
+  font-family: var(--face-display);
+}
+/* Subhead cut · 19px to 32px */
+#tab-brand .heading, #tab-brand .heading-1x {
+  font-family: var(--face-subhead);
+}
+#tab-brand .heading { font-size: var(--heading);    line-height: var(--lh-heading);    letter-spacing: var(--ls-heading); }
+#tab-brand .heading-1x { font-size: var(--heading-1x); line-height: var(--lh-heading-1x); letter-spacing: var(--ls-heading-1x); }
+#tab-brand .heading-2x { font-size: var(--heading-2x); line-height: var(--lh-heading-2x); letter-spacing: var(--ls-heading-2x); }
+#tab-brand .heading-3x { font-size: var(--heading-3x); line-height: var(--lh-heading-3x); letter-spacing: var(--ls-heading-3x); }
+#tab-brand .heading-4x { font-size: var(--heading-4x); line-height: var(--lh-heading-4x); letter-spacing: var(--ls-heading-4x); }
+#tab-brand .heading-5x { font-size: var(--heading-5x); line-height: var(--lh-heading-5x); letter-spacing: var(--ls-heading-5x); }
+#tab-brand .heading-6x { font-size: var(--heading-6x); line-height: var(--lh-heading-6x); letter-spacing: var(--ls-heading-6x); }
+/* Light Display · weight 300 of kepler-std-display, published in kit
+   hqq5dii as fvd=n3. Each is identical to its base step apart from weight.
+   kepler-std-subhead has no weight 300, so wherever a step drops below
+   32px and moves to Subhead, the light variant renders at 400. */
+#tab-brand .heading-6x-light, #tab-brand .heading-5x-light, #tab-brand .heading-4x-light, #tab-brand .heading-3x-light, #tab-brand .heading-2x-light {
+  font-family: var(--face-display); font-weight: 300;
+  text-transform: uppercase;
+}
+#tab-brand .heading-6x-light { font-size: var(--heading-6x); line-height: var(--lh-heading-6x); letter-spacing: var(--ls-heading-6x); }
+#tab-brand .heading-5x-light { font-size: var(--heading-5x); line-height: var(--lh-heading-5x); letter-spacing: var(--ls-heading-5x); }
+#tab-brand .heading-4x-light { font-size: var(--heading-4x); line-height: var(--lh-heading-4x); letter-spacing: var(--ls-heading-4x); }
+#tab-brand .heading-3x-light { font-size: var(--heading-3x); line-height: var(--lh-heading-3x); letter-spacing: var(--ls-heading-3x); }
+#tab-brand .heading-2x-light { font-size: var(--heading-2x); line-height: var(--lh-heading-2x); letter-spacing: var(--ls-heading-2x); }
+/* Face swaps at the optical boundary. 2x crosses at tablet; 3x and 4x at
+   mobile. The light variants restate weight 400 there, because Subhead has
+   no 300 and the browser would otherwise report a face it cannot draw. */
+@media (max-width: 1023px) {
+#tab-brand .heading-2x { font-family: var(--face-subhead); }
+#tab-brand .heading-2x-light { font-family: var(--face-subhead); font-weight: 400; }
+}
+@media (max-width: 767px) {
+#tab-brand .heading-2x, #tab-brand .heading-3x, #tab-brand .heading-4x { font-family: var(--face-subhead); }
+#tab-brand .heading-4x-light, #tab-brand .heading-3x-light { font-family: var(--face-subhead); font-weight: 400; }
+}
+/* Primary and secondary body classes are defined once, unscoped, in
+   the BODY TEXT CLASSES block of tokens.css. */
+#tab-brand .italic-sec { font-style: italic; font-weight: 400; }
+/* Any uppercase Inter takes weight 500. The form button is the
+   stated exception and stays sentence case. */
+#tab-brand .text-upper-sec {
+  font-family: var(--face-sec); font-weight: 500; text-transform: uppercase;
+}
+/* Interface · Kepler Std Medium */
+#tab-brand .btn-pri {
+  font-family: var(--face-regular); font-weight: var(--weight-btn);
+  font-size: var(--size-btn); line-height: 1;
+  text-transform: var(--case-btn); letter-spacing: var(--ls-btn);
+}
+#tab-brand .btn-sec {
+  font-family: var(--face-sec); font-weight: 500;
+  font-size: var(--size-btn-sec); line-height: 1;
+  letter-spacing: var(--ls-btn-sec);
+}
+#tab-brand .text-nav-1 {
+  font-family: var(--face-regular); font-weight: 500;
+  font-size: var(--size-nav); line-height: 1.2;
+  text-transform: uppercase; letter-spacing: var(--ls-nav);
+}
+@media (max-width: 767px) {
+#tab-brand .text-nav-1 {
+    font-family: var(--face-subhead); font-weight: 400;
+    font-size: 24px; line-height: 1.3;
+    text-transform: none; letter-spacing: 0;
+  }
+}
+/* Forms · all Inter.
+   Label and input are both 15px, so the legend is separated by case and
+   tracking, and the label from the value by weight alone. */
+/* Label and legend are one rule in forms.css. */
+#tab-brand .input-form, #tab-brand .placeholder-form {
+  font-family: var(--face-sec); font-weight: 400;
+  font-size: var(--size-form-label); line-height: 1.5;
+}
+#tab-brand .btn-form {
+  font-family: var(--face-sec); font-weight: var(--weight-btn-sec);
+  font-size: var(--size-form-btn); line-height: 1;
+  text-transform: var(--case-btn-sec); letter-spacing: var(--ls-text);
+}
+#tab-brand .helper-form {
+  font-family: var(--face-sec); font-weight: 400;
+  font-size: var(--body-sm-sec); line-height: 1.5;
+}
+#tab-brand .error-form {
+  font-family: var(--face-sec); font-weight: 500;
+  font-size: var(--body-sm-sec); line-height: 1.5;
+}
+#tab-brand .tag-form {
+  font-family: var(--face-sec); font-weight: 500;
+  font-size: var(--body-xs-sec); line-height: 1.4;
+  letter-spacing: 0.08em; text-transform: uppercase;
+}
+/* ============================================================
+   DOCUMENT
+   ============================================================ */
+/* Long tokens, hex values and font URLs break rather than push the page
+   wider than the viewport. No overflow-x guard is used, because it would
+   turn the root into a scroll container and break the sticky headers. */
+#tab-brand .face-css, #tab-brand .family-tag, #tab-brand .spec-facts { overflow-wrap: anywhere; }
+/* Faint warm grain so the ground is not a flat fill */
+#tab-brand .wrap { position: relative; z-index: 1; max-width: 1240px; margin: 0 auto; padding: 0 40px; }
+@media (max-width: 767px) {
+#tab-brand .wrap { padding: 0 20px; }
+}
+/* ---- Masthead ------------------------------------------- */
+#tab-brand .masthead { padding: 96px 0 64px; border-bottom: 1px solid var(--rule); }
+@media (max-width: 767px) {
+#tab-brand .masthead { padding: 56px 0 40px; }
+}
+#tab-brand .eyebrow-row {
+  display: flex; justify-content: space-between; align-items: baseline;
+  gap: 24px; flex-wrap: wrap; margin-bottom: 56px;
+}
+#tab-brand .internal-flag {
+  font-family: var(--face-caption); font-weight: 500;
+  font-size: 14px; letter-spacing: 0.084em; text-transform: uppercase;
+  color: var(--color2-800);
+}
+#tab-brand .doc-meta { color: var(--muted); }
+#tab-brand .masthead h1 { margin: 0; }
+#tab-brand .masthead .lede {
+  margin: 32px 0 0; max-width: 62ch; color: var(--neutral-900);
+}
+/* ---- Sections ------------------------------------------- */
+#tab-brand section { padding: 88px 0; border-bottom: 1px solid var(--rule); }
+@media (max-width: 767px) {
+#tab-brand section { padding: 56px 0; }
+}
+#tab-brand .sec-head { display: flex; gap: 28px; align-items: baseline; margin-bottom: 48px; }
+#tab-brand .sec-head h2 { margin: 0; }
+/* Flush left with the heading. The old left indent cleared the section
+   numeral, which is no longer in the markup. */
+#tab-brand .sec-note { max-width: 68ch; color: var(--muted); margin: -24px 0 44px; }
+#tab-brand h3 {
+  margin: 56px 0 20px;
+  font-family: var(--face-subhead); font-weight: 400;
+  font-size: var(--heading); line-height: var(--lh-heading);
+  letter-spacing: var(--ls-subhead); text-transform: uppercase;
+}
+#tab-brand h3:first-of-type { margin-top: 0; }
+/* ---- Breakpoint indicator ------------------------------- */
+#tab-brand .bp-live {
+  position: sticky; top: 0; z-index: 20;
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 16px; padding: 10px 40px;
+  background: var(--color1-900); color: var(--color1-200);
+  font-family: var(--face-sec); font-weight: 500;
+  font-size: 11px; letter-spacing: 0.09em; text-transform: uppercase;
+}
+@media (max-width: 767px) {
+#tab-brand .bp-live { padding: 10px 20px; }
+}
+#tab-brand .bp-live b { color: var(--color5-300); font-weight: 500; }
+#tab-brand .bp-d, #tab-brand .bp-t, #tab-brand .bp-m { display: none; }
+@media (min-width: 1024px) {
+#tab-brand .bp-d { display: inline; }
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+#tab-brand .bp-t { display: inline; }
+}
+@media (max-width: 767px) {
+#tab-brand .bp-m { display: inline; }
+}
+/* ---- Specimen rows -------------------------------------- */
+#tab-brand .spec {
+  display: grid; grid-template-columns: 210px 1fr; gap: 32px;
+  padding: 34px 0; border-top: 1px solid var(--rule-faint);
+  align-items: start;
+}
+#tab-brand .spec:last-child { border-bottom: 1px solid var(--rule-faint); }
+@media (max-width: 767px) {
+#tab-brand .spec { grid-template-columns: 1fr; gap: 14px; padding: 26px 0; }
+}
+#tab-brand .spec-key { position: sticky; top: 56px; }
+#tab-brand .token {
+  font-family: var(--face-sec); font-weight: 500; font-size: 13px;
+  color: var(--color1-800); word-break: break-all;
+}
+#tab-brand .spec-facts {
+  margin: 8px 0 0; font-family: var(--face-sec); font-weight: 400;
+  font-size: 13px; line-height: 1.7; color: var(--muted);
+  letter-spacing: 0.01em;
+}
+#tab-brand .spec-facts .k { color: var(--neutral-500); font-size: 13px; }
+/* The value a chip can swap out. */
+#tab-brand .spec-facts .v { color: var(--muted); }
+#tab-brand .sizes { display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
+#tab-brand .size-chip {
+  font-family: var(--face-sec); font-weight: 500; font-size: 10px;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 4px 7px; border: 1px solid var(--rule);
+  color: var(--neutral-700); white-space: nowrap;
+  background: none; cursor: pointer;
+}
+#tab-brand .size-chip.on { background: var(--color1-900); border-color: var(--color1-900); color: var(--color5-200); }
+#tab-brand .size-chip i { font-style: normal; color: var(--neutral-500); }
+#tab-brand .size-chip.on i { color: var(--color1-400); }
+/* A chip the reader has clicked. Overrides the automatic breakpoint
+   highlight, so the picked state always wins until it is cleared. */
+#tab-brand .size-chip.picked, #tab-brand .size-chip.picked.chip-t, #tab-brand .size-chip.picked.chip-m {
+  background: var(--color4-700); border-color: var(--color4-700); color: var(--white);
+}
+#tab-brand .size-chip.picked i { color: var(--color4-200); }
+/* Weight toggle. Its own class rather than .size-chip, because the size
+   chips carry a breakpoint highlight that would fight the active state. */
+#tab-brand .weights { display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
+#tab-brand .wt-chip {
+  font-family: var(--face-sec); font-weight: 500; font-size: 10px;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 4px 7px; border: 1px solid var(--rule);
+  color: var(--neutral-700); white-space: nowrap;
+  background: none; cursor: pointer;
+}
+#tab-brand .wt-chip.on { background: var(--color1-900); border-color: var(--color1-900); color: var(--color5-200); }
+#tab-brand .spec-render { min-width: 0; overflow-wrap: anywhere; }
+/* Highlight the live chip per breakpoint */
+@media (max-width: 1023px) {
+#tab-brand .size-chip.on { background: transparent; border-color: var(--rule); color: var(--neutral-700); }
+#tab-brand .size-chip.on i { color: var(--neutral-500); }
+#tab-brand .size-chip.chip-t { background: var(--color1-900); border-color: var(--color1-900); color: var(--color5-200); }
+#tab-brand .size-chip.chip-t i { color: var(--color1-400); }
+}
+@media (max-width: 767px) {
+#tab-brand .size-chip.chip-t { background: transparent; border-color: var(--rule); color: var(--neutral-700); }
+#tab-brand .size-chip.chip-t i { color: var(--neutral-500); }
+#tab-brand .size-chip.chip-m { background: var(--color1-900); border-color: var(--color1-900); color: var(--color5-200); }
+#tab-brand .size-chip.chip-m i { color: var(--color1-400); }
+}
+/* ---- Typeface cards ------------------------------------- */
+/* Hairlines are drawn per card, not by gap bleed, so a short final row
+   leaves ground color rather than a slab of rule color. */
+#tab-brand .faces {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(216px, 1fr));
+  gap: 0; background: var(--ground);
+  border-top: 1px solid var(--rule); border-left: 1px solid var(--rule);
+}
+#tab-brand .face-card {
+  padding: 30px 24px 26px;
+  border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+}
+#tab-brand .face-card .glyphs { font-size: 52px; line-height: 1.1; margin-bottom: 22px; color: var(--color1-900); }
+#tab-brand .face-name { font-family: var(--face-sec); font-weight: 500; font-size: 13px; letter-spacing: 0.02em; }
+#tab-brand .face-css { font-family: var(--face-sec); font-weight: 400; font-size: 11px; color: var(--muted); margin-top: 6px; line-height: 1.7; }
+#tab-brand .face-use { font-family: var(--face-sec); font-weight: 400; font-size: 12px; color: var(--neutral-800); margin-top: 14px; line-height: 1.6; }
+/* ---- Callout -------------------------------------------- */
+#tab-brand .callout {
+  border-left: 3px solid var(--color4-600);
+  background: var(--color4-100);
+  padding: 20px 24px; margin: 28px 0;
+}
+#tab-brand .callout-title {
+  font-family: var(--face-sec); font-weight: 500; font-size: 11px;
+  letter-spacing: 0.09em; text-transform: uppercase; color: var(--color4-800);
+  margin-bottom: 8px;
+}
+#tab-brand .callout p {
+  margin: 0; font-family: var(--face-sec); font-weight: 400; font-size: 14px;
+  line-height: 1.65; color: var(--neutral-900); overflow-wrap: anywhere;
+}
+#tab-brand .callout p + p { margin-top: 10px; }
+#tab-brand .callout code {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12.5px;
+  background: var(--color4-200); padding: 1px 5px; overflow-wrap: anywhere;
+}
+#tab-brand .callout.note { border-left-color: var(--color1-600); background: var(--color1-100); }
+#tab-brand .callout.note .callout-title { color: var(--color1-800); }
+#tab-brand .callout.note code { background: var(--color1-200); }
+/* ---- Buttons -------------------------------------------- */
+#tab-brand .btn-row { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; margin-bottom: 8px; }
+/* Box, size and type come from the component in css/buttons.css.
+   Only the two fills are the guidelines document's own. */
+#tab-brand .btn-primary { background: var(--color2-900); color: var(--color5-100); border-color: var(--color2-900); }
+#tab-brand .btn-primary:hover { background: var(--color2-800); border-color: var(--color2-800); }
+#tab-brand .btn-primary:active, #tab-brand .btn-primary:focus-visible { background: var(--color2-900); border-color: var(--color2-900); }
+#tab-brand .btn-secondary { background: transparent; color: var(--color1-900); border-color: var(--color1-900); }
+#tab-brand .btn-secondary:hover { background: var(--color1-900); color: var(--color5-100); }
+/* ---- Form demo ------------------------------------------ */
+#tab-brand .form-demo { max-width: 460px; margin-top: 8px; border: 0; padding: 0; }
+#tab-brand .form-demo legend { padding: 0; margin-bottom: 22px; color: var(--color1-900); }
+#tab-brand .field { margin-bottom: 26px; }
+#tab-brand .field-label-row { display: flex; align-items: baseline; gap: 10px; margin-bottom: 6px; }
+/* Overrides the uppercase in .tag-form for this instance only.
+   Equal specificity, so source order decides and this rule must stay after
+   the text style classes. */
+#tab-brand .optional { color: var(--neutral-500); text-transform: none; }
+/* Hint sits between the label and the control, so it is read before the
+   field is filled in rather than after. */
+#tab-brand .helper { color: var(--neutral-700); margin-bottom: 8px; }
+/* Controls do not inherit font by default, so the family, size and weight
+   are all restated. min-height keeps the touch target at 44px. */
+#tab-brand .field input, #tab-brand .field select, #tab-brand .field textarea {
+  width: 100%; padding: 12px 15px; min-height: 44px;
+  border: 1px solid var(--neutral-300); background: var(--white);
+  color: var(--color1-900); border-radius: 0;
+  font-family: var(--face-sec); font-weight: 400;
+  font-size: var(--size-form-label); line-height: 1.5;
+}
+#tab-brand .field input:focus-visible, #tab-brand .field select:focus-visible, #tab-brand .field textarea:focus-visible {
+  outline: 2px solid var(--color1-600); outline-offset: 1px; border-color: var(--color1-900);
+}
+/* Error is marked by weight, color and a glyph, never by color alone. */
+#tab-brand .error-msg { color: var(--color2-800); margin-top: 7px; }
+#tab-brand .error-msg::before { content: "! "; font-weight: 500; }
+#tab-brand .field.is-error input { border-color: var(--color2-700); }
+/* ---- Color ---------------------------------------------- */
+#tab-brand .families { display: flex; flex-direction: column; gap: 46px; }
+#tab-brand .family-name {
+  display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap;
+  margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--rule);
+}
+#tab-brand .family-name h3 { margin: 0; }
+#tab-brand .family-tag {
+  font-family: var(--face-sec); font-weight: 400; font-size: 11px;
+  letter-spacing: 0.05em; text-transform: uppercase; color: var(--neutral-600);
+}
+#tab-brand .ramp { display: grid; grid-template-columns: repeat(10, 1fr); gap: 1px; }
+/* Neutral is the only family with a 950 step, so its ramp runs one wider. */
+#tab-brand .ramp[data-family="neutral"] { grid-template-columns: repeat(11, 1fr); }
+/* The neutral override carries an attribute selector, so it outranks a bare
+   .ramp rule at any width. The narrow layouts have to name it too, or the
+   neutral ramp keeps its full column count while every other family wraps. */
+@media (max-width: 1023px) {
+#tab-brand .ramp,
+#tab-brand .ramp[data-family="neutral"] { grid-template-columns: repeat(6, 1fr); gap: 2px; }
+}
+@media (max-width: 560px) {
+#tab-brand .ramp,
+#tab-brand .ramp[data-family="neutral"] { grid-template-columns: repeat(3, 1fr); gap: 2px; }
+}
+#tab-brand .swatch {
+  border: none; padding: 0; cursor: pointer; text-align: left;
+  display: flex; flex-direction: column; background: none; font: inherit;
+}
+#tab-brand .chip { height: 82px; width: 100%; position: relative; }
+/* The brand step carries an inset rule. Which step that is varies by
+   family, so the rule has to read on dark and light chips alike: .on-light
+   is set from the chip's own luminance when the ramp is built. */
+#tab-brand .chip.brand::after {
+  content: ""; position: absolute; inset: 6px;
+  border: 1px solid rgba(255,255,255,0.55);
+}
+#tab-brand .chip.brand.on-light::after { border-color: rgba(0,0,0,0.42); }
+#tab-brand .swatch-meta { display: block; padding: 9px 2px 0; }
+#tab-brand .step {
+  display: block;
+  font-family: var(--face-sec); font-weight: 500; font-size: 11px;
+  letter-spacing: 0.04em; color: var(--color1-900);
+}
+#tab-brand .step .brand-dot { color: var(--color4-700); }
+#tab-brand .hex {
+  display: block;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 10.5px;
+  color: var(--neutral-600); margin-top: 3px; text-transform: uppercase;
+}
+#tab-brand .swatch:hover .hex { color: var(--color1-800); }
+#tab-brand .swatch.copied .hex { color: var(--color3-800); }
+#tab-brand .swatch.copied .hex::after { content: " copied"; }
+/* ---- Token export --------------------------------------- */
+#tab-brand .tabs { display: flex; gap: 0; border-bottom: 1px solid var(--rule); margin-bottom: 0; }
+/* Panel tabs. Type follows the compact interface ladder; the box is
+   the underline, so no fill or padding token applies. */
+#tab-brand .tab {
+  border: none; background: none; cursor: pointer; padding: 12px 22px;
+  font-family: var(--face-sec); font-weight: var(--weight-btn-sec);
+  font-size: var(--btn-size-md);
+  letter-spacing: var(--ls-btn); text-transform: var(--case-btn);
+  color: var(--text-muted);
+  border-bottom: 2px solid transparent; margin-bottom: -1px;
+}
+#tab-brand .tab[aria-selected="true"] { color: var(--color1-900); border-bottom-color: var(--color1-900); }
+#tab-brand .code-wrap { position: relative; background: var(--color1-900); }
+#tab-brand .code-wrap pre {
+  margin: 0; padding: 28px 26px; overflow-x: auto; max-height: 520px;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 12px; line-height: 1.75; color: var(--color5-300);
+  tab-size: 2;
+}
+#tab-brand .copy-code {
+  position: absolute; top: 14px; right: 14px;
+  border: 1px solid var(--color1-700); background: var(--color1-900); color: var(--color5-200);
+  cursor: pointer; padding: 7px 13px;
+  font-family: var(--face-sec); font-weight: 500; font-size: 10px;
+  letter-spacing: 0.08em; text-transform: uppercase;
+}
+#tab-brand .copy-code:hover { background: var(--color1-800); }
+#tab-brand [hidden] { display: none !important; }
+/* ---- Footer --------------------------------------------- */
+#tab-brand footer { padding: 56px 0 88px; color: var(--muted); }
+#tab-brand footer p { margin: 0 0 8px; }
+/* ---- Print ---------------------------------------------- */
+@media print {
+#tab-brand .bp-live, #tab-brand .copy-code, #tab-brand .tabs, #tab-brand .sizes { display: none; }
+#tab-brand section { break-inside: avoid; }
+}
