@@ -33,8 +33,14 @@
   <img class="doc-tabs-mark" src="assets/SIG_LOGO_LOGOMARK_WHITE.svg" alt="Signature Society">
   <button class="doc-tab" type="button" role="tab" id="doctab-timeline"
           aria-controls="tab-timeline" aria-selected="true">Project timeline</button>
+  <!-- Brand guidelines is hidden, not deleted: the panel, its styles and
+       its deep link all still exist, so restoring it is removing this one
+       attribute. [hidden] is display:none !important in base.css.
+       The tab script refuses to activate a hidden tab, so neither a
+       #brand hash nor a remembered tab can strand someone on a panel
+       whose tab is gone. -->
   <button class="doc-tab" type="button" role="tab" id="doctab-brand"
-          aria-controls="tab-brand" aria-selected="false">Brand guidelines</button>
+          aria-controls="tab-brand" aria-selected="false" hidden>Brand guidelines</button>
 </nav>
 
 <section id="tab-timeline" role="tabpanel" aria-labelledby="doctab-timeline">
@@ -1442,7 +1448,21 @@
   var KEY  = "sig-wbd-active-tab";
   var tabs = Array.prototype.slice.call(document.querySelectorAll(".doc-tab"));
 
+  function tabFor(id) {
+    for (var i = 0; i < tabs.length; i++) {
+      if (tabs[i].getAttribute("aria-controls") === id) return tabs[i];
+    }
+    return null;
+  }
+
   function show(id) {
+    /* One choke point for every route into a tab: click, #hash, and the
+       tab remembered from a previous visit. A hidden tab is refused
+       here, so someone whose last session ended on Brand guidelines
+       lands on the timeline instead of on a panel with no tab to leave
+       by. Refusing leaves the markup's default showing. */
+    var target = tabFor(id);
+    if (!target || target.hidden) return;
     tabs.forEach(function (t) {
       var on = t.getAttribute("aria-controls") === id;
       t.setAttribute("aria-selected", on ? "true" : "false");
@@ -2190,7 +2210,7 @@ function openEditor(id, focusComments){
         '<label for="rUrl">URL</label>'+
         '<div class="ru-row">'+
           '<input type="url" class="form-field-text" id="rUrl" placeholder="Paste link">'+
-          '<button type="button" class="btn btn-sans btn-md btn-inline" id="rUrlBtn">submit</button>'+
+          '<button type="button" class="btn btn-sans btn-md btn-inline" id="rUrlBtn">Submit</button>'+
         '</div>'+
         '<div class="review-links" id="reviewLinks"></div>'+
       '</div></div>'+
