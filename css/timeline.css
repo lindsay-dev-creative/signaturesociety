@@ -451,10 +451,13 @@
    --neutral-50 and #4D4B40 is --neutral-900, exactly.
 
    TYPE SIZE IS A DELIBERATE DEPARTURE FROM THE FRAME. Figma draws the
-   label at 11px; it is set here at --body-pri-sm (15px), which is the
-   size the sibling .bar.meeting-checkin marker already uses. The face
-   is Kepler either way, so 15px takes its proper mate --lh-body-pri-sm
-   rather than the tight ratio an 11px line needed.
+   label at 11px; it is set here at --body-pri-xs (13px), paired with
+   its own --lh-body-pri-xs rather than a hand-picked ratio.
+
+   The face stays --face-regular. Note the system pairs --body-pri-xs
+   with --face-caption, the Kepler cut drawn for 13px and below — see
+   .body-pri-xs in tokens.css. Switching it here would be the on-system
+   choice; it is left alone because only the size was asked for.
 
    Specificity is the whole point of the selector. .bar.milestone and
    .bar.checkin both already exist at (1,2,0) and both set a
@@ -474,7 +477,7 @@
   justify-content:center;
   height:auto;min-height:22px;padding:8px 16px;
   font-family:var(--face-regular);font-weight:var(--weight-regular);
-  font-size:var(--body-pri-sm);line-height:var(--lh-body-pri-sm);letter-spacing:var(--ls-text);
+  font-size:var(--body-pri-xs);line-height:var(--lh-body-pri-xs);letter-spacing:var(--ls-text);
   text-transform:var(--case-body-pri);
   color:var(--neutral-900);
 }

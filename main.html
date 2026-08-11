@@ -133,12 +133,11 @@
     <div>
       <h4 id="dTitle" style="margin-top:4px;display:none">Edit phase</h4>
     </div>
-    <!-- Meeting notes sits in the head, hard right, 24px clear of the
-         close button. margin-left:auto pushes the pair away from the
-         title. The margin is 12px, not 24: .drawer-head is a flex row
-         with gap:12px, and the two add up to the 24px asked for. -->
-    <button type="button" class="btn btn-sans btn-sm btn-pri-fill" id="noteFromPhaseBtn"
-            style="margin-left:auto;margin-right:12px;flex:none;align-self:center">Meeting notes</button>
+    <!-- The "Meeting notes" button used to sit here. Removed along with
+         its handler in the bindings block — leaving that getElementById
+         behind would throw on load and take every binding after it with
+         it. Notes are now added from the Meeting Notes nav page only;
+         the drawer still LISTS any already attached to this item. -->
     <button class="drawer-close" id="drawerClose" aria-label="Close">&times;</button>
   </div>
   <div class="drawer-body" id="drawerBody"></div>
@@ -2198,6 +2197,15 @@ function openEditor(id, focusComments){
   var body=document.getElementById("drawerBody");
   body.innerHTML =
     '<div class="field"><label for="fName">Name</label><input type="text" class="form-field-text" id="fName" value="'+escAttr(t.name)+'"></div>'+
+    /* Start and due, seeded from the derived schedule rather than from
+       the raw record: a task stores a start and a LENGTH in business
+       days, not an end date, so taskEnd() is where "due" actually comes
+       from. saveEdit writes back through setTaskStart / setTaskDue,
+       which convert due back into days. */
+    '<div class="field"><label for="fStart">Start date</label>'+
+      '<input type="date" class="form-field-date" id="fStart" value="'+escAttr(toISO(taskStart(t)))+'"></div>'+
+    '<div class="field"><label for="fDue">Due date</label>'+
+      '<input type="date" class="form-field-date" id="fDue" value="'+escAttr(toISO(taskEnd(t)))+'"></div>'+
     '<div class="field"><label for="fAssignee">Assignee</label>'+nameSelectHTML("fAssignee", t.assignee)+'</div>'+
     '<div class="field review-wrap"><label>For review</label>'+
       '<div class="review-list" id="reviewList"></div>'+
@@ -2231,6 +2239,45 @@ function openEditor(id, focusComments){
   document.getElementById("rUrlBtn").onclick=function(){ addReviewLink(t); };
   document.getElementById("rUrl").onkeydown=function(e){ if(e.key==="Enter"){ e.preventDefault(); addReviewLink(t); } };
   document.getElementById("cAddBtn").onclick=function(){ addComment(t); };
+
+  /* ---- Auto-save -------------------------------------------------
+     The schedule table already writes on every interaction: setAssignee,
+     setStatus, setTaskStart/Due and the complete checkbox all call
+     save(). The drawer did not — it held everything until "Save
+     changes", so closing it, pressing Escape or clicking the scrim
+     discarded the edit silently.
+
+     Each field now writes through the SAME setter the table uses, so
+     there is one code path per kind of change and no second way for the
+     two to disagree.
+
+     Bound to `change`, not `input`: change fires on blur or commit, so
+     renaming a phase rerenders the timeline once instead of on every
+     keystroke. */
+  var fNameEl=document.getElementById("fName");
+  if(fNameEl) fNameEl.onchange=function(){
+    var v=fNameEl.value.trim();
+    if(!v){ fNameEl.value=t.name; return; }   /* refuse to blank a name */
+    t.name=v; clearMemo(); save(); rerender();
+  };
+  var fStartEl=document.getElementById("fStart");
+  if(fStartEl) fStartEl.onchange=function(){
+    if(!fStartEl.value) return;
+    setTaskStart(t, fStartEl.value); syncDrawerDates(t);
+  };
+  var fDueEl=document.getElementById("fDue");
+  if(fDueEl) fDueEl.onchange=function(){
+    if(!fDueEl.value) return;
+    setTaskDue(t, fDueEl.value); syncDrawerDates(t);
+  };
+  var fAsgEl=document.getElementById("fAssignee");
+  /* addEventListener, not onchange: bindNameSelects already owns the
+     onchange-equivalent listener on .name-select for the "+ Add name"
+     flow, and assigning .onchange here would not remove it but would
+     sit alongside it — using the same mechanism keeps both. */
+  if(fAsgEl) fAsgEl.addEventListener("change", function(){
+    if(fAsgEl.value && fAsgEl.value!=="__add__") setAssignee(t, fAsgEl.value.trim());
+  });
   /* Delete sits last and hard right, away from Save, so the
      destructive action is never the one reached for by muscle memory.
      It carries the .btn-danger fill and a trash glyph, because a
@@ -2644,12 +2691,35 @@ function createTask(){
   draftTask = null;
   reindex(); save(); rerender(); closeEditor();
 }
+/* Re-seed both date inputs from the derived schedule after either one
+   changes. A task stores a start and a LENGTH, so moving the start moves
+   the due date with it — without this the due field would keep showing
+   the old date until the drawer was reopened. defaultValue is updated
+   too, because saveEdit compares against it to decide what changed. */
+function syncDrawerDates(t){
+  var s=document.getElementById("fStart"), d=document.getElementById("fDue");
+  if(s){ s.value=toISO(taskStart(t)); s.defaultValue=s.value; }
+  if(d){ d.value=toISO(taskEnd(t));   d.defaultValue=d.value; }
+}
 function saveEdit(){
   var t=byId[editingId]; if(!t) return;
   t.name=document.getElementById("fName").value.trim()||t.name;
   var fd=document.getElementById("fDesc"); if(fd) t.description=fd.value;
   var avSel=document.getElementById("fAssignee");
   if(avSel && avSel.value!=="__add__") setAssignee(t, avSel.value.trim());
+  /* Dates go through the existing setters, which know that a milestone
+     writes fixedDate while a task writes startOverride and recomputes
+     days. Start is applied before due, because setTaskDue measures the
+     span from taskStart(t).
+
+     Each is applied only if the field actually CHANGED (value vs
+     defaultValue, which holds the rendered attribute). That matters for
+     a milestone: both setters write the same fixedDate, so applying an
+     untouched due field would immediately overwrite a start the user
+     had just edited. */
+  var fStart=document.getElementById("fStart"), fDue=document.getElementById("fDue");
+  if(fStart && fStart.value && fStart.value!==fStart.defaultValue) setTaskStart(t, fStart.value);
+  if(fDue   && fDue.value   && fDue.value  !==fDue.defaultValue)   setTaskDue(t, fDue.value);
   clearMemo(); save(); rerender(); closeEditor();
 }
 function showDrawer(){
@@ -2779,19 +2849,10 @@ if(resetBtn) resetBtn.onclick=function(){
   rerender();
 };
 document.getElementById("drawerClose").onclick=closeEditor;
-/* Meeting notes lives in the static drawer head, so it is bound once
-   here rather than on every openEditor(). */
-/* Uploading notes from inside a phase. editingId is read HERE, while the
-   drawer is still the thing in front of the user, and carried into
-   saveNote. The note then appears on the Meeting Notes page by itself —
-   saveNote re-renders that list on every save, open or not. */
-document.getElementById("noteFromPhaseBtn").onclick=function(){
-  /* drawerItemId, not editingId: this button sits in the shared drawer
-     head and is pressed from check-in drawers too, where editingId is
-     deliberately null. */
-  noteFromPhase = drawerItemId || null;
-  openNote(null);
-};
+/* The noteFromPhaseBtn handler was here. It went out with the button:
+   getElementById returns null for markup that no longer exists, and
+   setting .onclick on null throws, which would have stopped every
+   binding below this line from being attached. */
 document.getElementById("scrim").onclick=closeEditor;
 document.getElementById("newTaskBtn").onclick=openNewTask;
 document.addEventListener("keydown",function(e){

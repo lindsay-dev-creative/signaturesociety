@@ -139,6 +139,15 @@
           appearance: none;
 }
 
+/* Text inputs run a flat 12px box. Done here rather than by changing
+   --field-pad-y / --field-pad-x, because the shell above shares those
+   two across select, multi-select, file, date and textarea as well —
+   re-padding every control in the system is not what was asked for.
+
+   Position matters: same (0,1,0) specificity as the shell rule, so this
+   only wins by being declared AFTER it. */
+.form-field-text { padding: 12px; }
+
 /* ---- Placeholder --------------------------------------------
    Same face and size as the value, separated from it by weight and
    colour. opacity:1 because Firefox dims placeholders by default,
