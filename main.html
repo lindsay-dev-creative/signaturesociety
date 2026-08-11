@@ -2802,6 +2802,34 @@ var activeBoard=null;      // one of POST_BOARDS
 var BOARD=[];              // the active board's items
 var editingMsgId=null;
 function saveBoard(){ return activeBoard ? writeStore(activeBoard.key, BOARD) : false; }
+
+/* ---- Unposted drafts ------------------------------------------------
+   "Add suggestion" refuses the post if no name is selected. The typed
+   text survives in the textarea, but openBoard used to blank it on the
+   way in — so anyone who hit that alert, closed the modal and came back
+   found their suggestion gone. It was never stored anywhere.
+
+   The draft is now kept per board, keyed off the board's own storage
+   key, and restored on open. Cleared only when the post actually
+   succeeds. Each board keeps its own, so a half-written suggestion is
+   not clobbered by opening the message board. */
+function boardDraftKey(){ return activeBoard ? activeBoard.key+"_draft" : ""; }
+function saveBoardDraft(){
+  if(!activeBoard) return;
+  var ta=document.getElementById("bText"); if(!ta) return;
+  try{
+    if(ta.value.trim()) localStorage.setItem(boardDraftKey(), ta.value);
+    else localStorage.removeItem(boardDraftKey());
+  }catch(e){}
+}
+function clearBoardDraft(){
+  if(!activeBoard) return;
+  try{ localStorage.removeItem(boardDraftKey()); }catch(e){}
+}
+function readBoardDraft(){
+  if(!activeBoard) return "";
+  try{ return localStorage.getItem(boardDraftKey()) || ""; }catch(e){ return ""; }
+}
 function boardAuthor(){
   var s=document.getElementById("bAuthor");
   var v=s && s.value && s.value!=="__add__" ? s.value.trim() : "";
@@ -2844,7 +2872,11 @@ function renderBoard(){
     b.onclick=function(){ editingMsgId=null; renderBoard(); };
   });
 }
-function postMessage(){
+/* NOT named postMessage. A top-level `function postMessage(){}` creates an
+   own property on window that shadows the built-in window.postMessage,
+   which browsers, embedded frames and extensions all call. Renamed so
+   this board handler cannot be invoked by something else's message. */
+function postToBoard(){
   var ta=document.getElementById("bText");
   var author=boardAuthor();
   if(!author){ alert("Please select your name before posting."); var s=document.getElementById("bAuthor"); if(s) s.focus(); return; }
@@ -2853,7 +2885,10 @@ function postMessage(){
   commentAuthor=author; try{localStorage.setItem("ss_comment_author",author);}catch(e){}
   BOARD.push({id:"m"+Date.now()+"-"+Math.round(Math.random()*1e6), author:author, text:text, when:commentStamp()});
   if(!saveBoard()){ BOARD.pop(); return; }
+  /* Posted, so the draft is spent. Cleared only on the success path —
+     both early returns above leave it saved, which is the point. */
   ta.value="";
+  clearBoardDraft();
   editingMsgId=null;
   renderBoard();
   var list=document.getElementById("boardList"); if(list) list.scrollTop=list.scrollHeight;
@@ -2886,12 +2921,16 @@ function openBoard(kind){
   BOARD=readStore(activeBoard.key);
   document.getElementById("boardTitle").textContent=activeBoard.title;
   var ta=document.getElementById("bText");
-  ta.value=""; ta.setAttribute("placeholder", activeBoard.placeholder);
+  /* Restore rather than blank: an unposted draft is the one thing in
+     this modal that exists nowhere else. */
+  ta.value=readBoardDraft(); ta.setAttribute("placeholder", activeBoard.placeholder);
+  ta.oninput=saveBoardDraft;   /* assignment, not addEventListener — openBoard
+                                  runs on every open and must not stack handlers */
   var row=document.getElementById("boardAuthorRow");
   row.innerHTML = nameSelectHTML("bAuthor", commentAuthor, "Select your name")+
     '<button type="button" class="btn btn-sans btn-md btn-inline" id="bPostBtn">'+esc(activeBoard.cta)+'</button>';
   bindNameSelects();
-  document.getElementById("bPostBtn").onclick=postMessage;
+  document.getElementById("bPostBtn").onclick=postToBoard;
   // switching names re-evaluates which posts you can edit or delete
   document.getElementById("bAuthor").addEventListener("change",function(){ editingMsgId=null; renderBoard(); });
   editingMsgId=null;
