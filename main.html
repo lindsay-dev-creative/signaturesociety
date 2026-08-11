@@ -2151,12 +2151,27 @@ function snippet2(s){s=s||"";return s.length>120? s.slice(0,118)+"…" : s;}
 
 /* ============ EDIT DRAWER ============ */
 var editingId=null;
+/* WHICH item the drawer is currently showing — a phase OR a check-in.
+   Deliberately separate from editingId, which means "a phase whose
+   fields are being edited and can be saved". openCheckin clears
+   editingId (a check-in has no editable fields), so before this existed
+   a note uploaded from a check-in drawer had nothing to attach to and
+   was filed loose. Meeting notes attach to this, not to editingId. */
+var drawerItemId=null;
+/* Phases live in byId; check-ins live in CHECKINS and are absent from
+   it. Anything resolving a drawer item by id has to look in both. */
+function findDrawerItem(id){
+  if(!id) return null;
+  if(byId[id]) return byId[id];
+  for(var i=0;i<CHECKINS.length;i++){ if(CHECKINS[i].id===id) return CHECKINS[i]; }
+  return null;
+}
 function openEditor(id, focusComments){
   var t=byId[id]; if(!t){ // maybe checkin
     var c=CHECKINS.filter(function(x){return x.id===id;})[0];
     if(c){ openCheckin(c); } return;
   }
-  editingId=id;
+  editingId=id; drawerItemId=id;
   if(!t.comments) t.comments=[];
   var dPhaseEl=document.getElementById("dPhase"); if(dPhaseEl) dPhaseEl.textContent = PHASE_NAMES[t.phase];
   document.getElementById("dTitle").textContent = t.milestone?"Milestone":(t.type==="hard-date"?"Fixed deadline":"Edit phase");
@@ -2184,7 +2199,9 @@ function openEditor(id, focusComments){
       '<div class="comment-add">'+
         '<div class="ca-row">'+authorSelectHTML()+'<button type="button" class="btn btn-sans btn-md btn-inline" id="cAddBtn">Add comment</button></div>'+
         '<textarea class="form-field-textarea" id="cAdd" placeholder="Leave a comment..."></textarea>'+
-      '</div></div>';
+      '</div></div>'+
+    drawerNotesFieldHTML();
+  renderDrawerNotes(id);
   renderReviewFiles(t);
   renderReviewLinks(t);
   renderComments(t);
@@ -2469,13 +2486,18 @@ function addComment(t){
   renderList();
 }
 function openCheckin(c){
-  editingId=null;
+  /* editingId stays null — a check-in has no editable fields — but
+     drawerItemId is set, so notes uploaded here attach to this check-in
+     and come back when it is reopened. */
+  editingId=null; drawerItemId=c.id;
   var dPhaseC=document.getElementById("dPhase"); if(dPhaseC) dPhaseC.textContent="Standing meeting";
   document.getElementById("dTitle").textContent="Check-In";
   document.getElementById("drawerBody").innerHTML=
-    '<div class="drawer-meta"><b>'+esc(c.name)+'</b><br>'+fmtNice(parseISO(c.fixedDate))+'<br><br>'+esc(c.description)+'</div>';
+    '<div class="drawer-meta"><b>'+esc(c.name)+'</b><br>'+fmtNice(parseISO(c.fixedDate))+'<br><br>'+esc(c.description)+'</div>'+
+    drawerNotesFieldHTML();
   document.getElementById("drawerFoot").innerHTML='<button class="btn btn-sans btn-md btn-inline" id="cancelBtn">Close</button>';
   document.getElementById("cancelBtn").onclick=closeEditor;
+  renderDrawerNotes(c.id);
   showDrawer();
 }
 var AUTHOR_OPTIONS = (function(){
@@ -2613,7 +2635,7 @@ function closeEditor(){
   document.getElementById("drawer").classList.remove("open");
   document.getElementById("drawer").setAttribute("aria-hidden","true");
   document.getElementById("scrim").classList.remove("open");
-  editingId=null; draftTask=null;
+  editingId=null; draftTask=null; drawerItemId=null;
 }
 
 /* ============ BINDINGS ============ */
@@ -2738,7 +2760,10 @@ document.getElementById("drawerClose").onclick=closeEditor;
    saveNote. The note then appears on the Meeting Notes page by itself —
    saveNote re-renders that list on every save, open or not. */
 document.getElementById("noteFromPhaseBtn").onclick=function(){
-  noteFromPhase = editingId || null;
+  /* drawerItemId, not editingId: this button sits in the shared drawer
+     head and is pressed from check-in drawers too, where editingId is
+     deliberately null. */
+  noteFromPhase = drawerItemId || null;
   openNote(null);
 };
 document.getElementById("scrim").onclick=closeEditor;
@@ -2949,16 +2974,62 @@ function notePreview(s){ s=(s||"").replace(/\s+/g," ").trim(); return s.length>1
    deliberately NOT consulted: this column answers "when did this arrive",
    which a later edit does not change. */
 function noteUploaded(n){ return n.added || n.date || ""; }
+/* Sort key. Prefer the numeric ts written on every new note. Notes saved
+   before ts existed still carry the same number inside their id
+   ("n"+Date.now()+"-"+random), so parse that rather than falling back to
+   the display strings — "Aug 6, 2026" sorts alphabetically, which would
+   put August above December. */
+function noteTime(n){
+  if(typeof n.ts==="number") return n.ts;
+  var m=/^n(\d+)/.exec(n.id||"");
+  return m ? +m[1] : 0;
+}
+function noteNewestFirst(a,b){ return noteTime(b)-noteTime(a); }
+
+/* ---- Meeting notes attached to a drawer item ----------------------
+   The empty shell. Rendered by openCheckin and openEditor, filled by
+   renderDrawerNotes — both rebuild drawerBody wholesale, so the list
+   has to be re-rendered and re-bound every time the drawer opens. */
+function drawerNotesFieldHTML(){
+  return '<div class="field"><label>Meeting notes</label>'+
+           '<div class="drawer-notes" id="drawerNotes"></div>'+
+         '</div>';
+}
+/* Every note filed against this phase or check-in, newest first, each
+   one a button that opens the full note. Reads NOTES, which is loaded
+   from localStorage at page load — so notes uploaded in an earlier
+   session are still here after the page is closed and reopened. */
+function renderDrawerNotes(itemId){
+  var host=document.getElementById("drawerNotes"); if(!host) return;
+  var mine=NOTES.filter(function(n){ return n.phaseId===itemId; }).sort(noteNewestFirst);
+  if(!mine.length){
+    host.innerHTML='<div class="dn-empty">No meeting notes yet. Use "Meeting notes" above to add one.</div>';
+    return;
+  }
+  host.innerHTML=mine.map(function(n){
+    return '<button type="button" class="dn-item" data-note="'+escAttr(n.id)+'">'+
+             '<span class="dn-when">'+esc(noteUploaded(n))+'</span>'+
+             '<span class="dn-text">'+esc(notePreview(n.text))+'</span>'+
+           '</button>';
+  }).join("");
+  Array.prototype.forEach.call(host.querySelectorAll("[data-note]"),function(b){
+    b.onclick=function(){ openNote(b.getAttribute("data-note")); };
+  });
+}
 function renderNotes(){
   var wrap=document.getElementById("notesList"); if(!wrap) return;
   if(!NOTES.length){
     wrap.innerHTML='<div class="board-empty">No meeting notes yet. Use "New meeting note" below.</div>';
     return;
   }
+  /* Newest first, sorted explicitly rather than relying on the unshift
+     order. Sorting NOTES itself (not a copy) keeps the stored array and
+     the table in agreement, so deleteNote's index lookup stays honest. */
+  NOTES.sort(noteNewestFirst);
   var rows=NOTES.map(function(n){
-    /* Notes uploaded from a phase drawer name that phase under the
-       preview rather than in a column of their own — a fifth column
-       would not survive the narrow breakpoint. */
+    /* Notes uploaded from a phase or check-in drawer name their source
+       under the preview rather than in a column of their own — a fifth
+       column would not survive the narrow breakpoint. */
     var src = n.phase ? '<div class="nt-src">'+esc(n.phase)+'</div>' : '';
     return '<tr data-note="'+escAttr(n.id)+'">'+
       '<td class="nt-date">'+esc(n.date||"")+'</td>'+
@@ -2991,13 +3062,16 @@ function openNote(id){
   var n = id ? NOTES.filter(function(x){return x.id===id;})[0] : null;
   editingNoteId = n ? n.id : "";
   document.getElementById("noteTitle").textContent = n ? "Meeting note" : "New meeting note";
-  document.getElementById("noteDate").textContent = n ? n.date : noteDateStamp();
+  /* Date AND time on an existing note, so the header matches the Uploaded
+     column in the Meeting Notes tab. A new note has no upload stamp yet,
+     so it shows today's date. */
+  document.getElementById("noteDate").textContent = n ? noteUploaded(n) : noteDateStamp();
   /* Source phase: stored on an existing note, live from the drawer on a
      new one. Blank hides the slot rather than leaving a stray label. */
   var srcEl=document.getElementById("noteSrc");
   if(srcEl){
-    var srcName = n ? (n.phase||"")
-                    : (noteFromPhase && byId[noteFromPhase] ? byId[noteFromPhase].name : "");
+    var live = noteFromPhase ? findDrawerItem(noteFromPhase) : null;
+    var srcName = n ? (n.phase||"") : (live ? live.name : "");
     srcEl.textContent = srcName ? "From: "+srcName : "";
     srcEl.style.display = srcName ? "" : "none";
   }
@@ -3025,12 +3099,17 @@ function saveNote(){
   }else{
     // Meeting Date is set automatically from the day the note is added;
     // `added` is the upload stamp the Uploaded column reads.
-    var item={id:"n"+Date.now()+"-"+Math.round(Math.random()*1e6), date:noteDateStamp(), added:commentStamp(), text:text};
-    /* Uploaded from a phase drawer: file it against that phase. The name
-       is snapshotted alongside the id so the note still reads correctly
-       if the phase is later renamed or deleted. */
+    /* ts is the sort key — a number, unlike `date` and `added`, which are
+       display strings. Written once here and never changed by an edit. */
+    var item={id:"n"+Date.now()+"-"+Math.round(Math.random()*1e6), ts:Date.now(),
+              date:noteDateStamp(), added:commentStamp(), text:text};
+    /* Uploaded from a drawer: file it against that phase OR check-in.
+       findDrawerItem resolves both — check-ins are not in byId, which is
+       why a check-in note used to save with no source. The name is
+       snapshotted alongside the id so the note still reads correctly if
+       the item is later renamed or deleted. */
     if(noteFromPhase){
-      var p=byId[noteFromPhase];
+      var p=findDrawerItem(noteFromPhase);
       item.phaseId=noteFromPhase;
       item.phase=p ? p.name : "";
     }
@@ -3043,6 +3122,10 @@ function saveNote(){
   }
   closeNote();
   renderNotes();
+  /* The drawer is still open behind the note modal, so refresh its list
+     too — otherwise a new or edited note only shows up after the drawer
+     is closed and reopened. No-ops when no drawer is open. */
+  renderDrawerNotes(drawerItemId);
 }
 function deleteNote(){
   if(!editingNoteId) return;
@@ -3054,6 +3137,7 @@ function deleteNote(){
   if(!saveNotes()){ NOTES.splice(i,0,gone); return; }
   closeNote();
   renderNotes();
+  renderDrawerNotes(drawerItemId);
 }
 document.getElementById("notesOpenBtn").onclick=openNotes;
 document.getElementById("notesClose").onclick=closeNotes;

@@ -767,6 +767,28 @@
 #tab-timeline .drawer-meta {font-size:var(--body-sm-sec);line-height:var(--lh-body-sm-sec);color:var(--neutral-400);background:rgba(255,255,255,.03);border-radius:var(--radius-sm);padding:12px 14px}
 #tab-timeline .drawer-meta b {color:var(--color5-200);font-weight:var(--weight-body-sec-normal)}
 #tab-timeline .drawer-foot {padding:16px 22px;border-top:1px solid var(--color1-800);display:flex;gap:10px}
+
+/* ---- Meeting notes attached to a drawer item ------------------
+   The list inside the phase / check-in drawer. Each row is a real
+   <button>, not a div: these are keyboard-reachable and Enter-
+   activatable for free, which a clickable div is not. Buttons carry a
+   UA font and centred text, so both are reset here.
+
+   Laid out as a two-line stack — timestamp over preview — because the
+   drawer is only ~420px wide and a side-by-side row would leave the
+   preview about ten characters. */
+#tab-timeline .drawer-notes {display:flex;flex-direction:column;gap:6px}
+#tab-timeline .dn-item {display:flex;flex-direction:column;align-items:flex-start;gap:3px;
+  width:100%;text-align:left;cursor:pointer;
+  background:rgba(255,255,255,.03);border:none;border-left:2px solid var(--color4-600);
+  padding:8px 10px;font-family:inherit;transition:background .12s}
+#tab-timeline .dn-item:hover {background:rgba(255,255,255,.07)}
+#tab-timeline .dn-when {font-family:var(--face-sec);font-size:var(--body-xs-sec);
+  line-height:var(--lh-body-xs-sec);color:var(--color4-400)}
+#tab-timeline .dn-text {font-family:var(--face-sec);font-size:var(--body-sm-sec);
+  line-height:var(--lh-body-sm-sec);color:var(--neutral-100)}
+#tab-timeline .dn-empty {font-family:var(--face-sec);font-size:var(--body-sm-sec);
+  line-height:var(--lh-body-sm-sec);color:var(--neutral-400)}
 #tab-timeline .readonly-note {font-size:var(--body-sm-sec);line-height:var(--lh-body-sm-sec);color:var(--neutral-400);font-style:italic}
 
 /* comments in drawer */
