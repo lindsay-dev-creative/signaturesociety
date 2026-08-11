@@ -278,7 +278,16 @@
 #tab-timeline .header-card li a {display:inline-flex;align-items:center;gap:8px;color:var(--color2-50);text-decoration:none;
   font-family:var(--face-sec);font-size:var(--body-sm-sec);line-height:1;}
 #tab-timeline .header-card li a:hover {color:var(--color2-300);text-decoration:underline}
+/* Pressed. Declared AFTER :hover deliberately — the two carry equal
+   specificity and a pressed link is also a hovered one, so order is the
+   only thing deciding which wins while the button is held down. */
+#tab-timeline .header-card li a:active {color:var(--neutral-50);text-decoration:underline}
 #tab-timeline .header-card li a::before {content:"\2197";color:var(--color2-100)}
+/* The ↗ sets its own colour, so it does not follow the label. Without
+   this it would stay burgundy while the text went near-white, which
+   reads as a half-pressed link. currentColor ties it to whatever the
+   :active rule above resolved to. */
+#tab-timeline .header-card li a:active::before {color:currentColor}
 
 /* View controls row */
 #tab-timeline .viewbar {display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin:8px 0 16px}
@@ -475,9 +484,9 @@
   box-shadow:none;
   border-radius:2px;
   justify-content:center;
-  height:auto;min-height:22px;padding:8px 16px;
+  height:auto;min-height:22px;padding:4px 12px;
   font-family:var(--face-regular);font-weight:var(--weight-regular);
-  font-size:var(--body-pri-xs);line-height:var(--lh-body-pri-xs);letter-spacing:var(--ls-text);
+  font-size:var(--body-pri-xs);line-height:1;letter-spacing:var(--ls-text);
   text-transform:var(--case-body-pri);
   color:var(--neutral-900);
 }
