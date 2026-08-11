@@ -645,7 +645,18 @@
 
 /* Danger is a fill variant only. Box, size and type come from
    .btn .btn-sans .btn-md on the element. */
-#tab-timeline .btn-danger {background:transparent;color:var(--field-error-text);border-color:var(--field-error);letter-spacing:var(--ls-btn-compact);text-transform:var(--case-btn);gap:.5em}
+/* Sentence case. The markup has always said "Delete phase"; it rendered
+   as DELETE PHASE because this rule set --case-btn (uppercase), and at
+   (1,1,0) it outranks .btn-sans, which is already --case-btn-sec (none).
+
+   The tracking moves with it. --ls-btn-compact is 0.12em, chosen to give
+   uppercase letters air; left on sentence case it reads as spaced-out
+   rather than deliberate. --ls-btn-sec is 0, which is what every other
+   sentence-case button in the system uses.
+
+   deletePhaseBtn is the only .btn-danger in the document, so this is
+   scoped in practice even though the selector is not. */
+#tab-timeline .btn-danger {background:transparent;color:var(--field-error-text);border-color:var(--field-error);letter-spacing:var(--ls-btn-sec);text-transform:var(--case-btn-sec);gap:.5em}
 #tab-timeline .btn-danger:hover {background:var(--color2-700);color:var(--white)}
 #tab-timeline .btn-danger svg {width:15px;height:15px}
 /* Pushed to the far end of the drawer footer, so the destructive
