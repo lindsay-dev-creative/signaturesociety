@@ -2253,7 +2253,10 @@ function openEditor(id, focusComments){
 function renderComments(t){
   var wrap=document.getElementById("commentsList"); if(!wrap) return;
   var cs=t.comments||[];
-  if(!cs.length){ wrap.innerHTML='<div class="comments-empty">No comments yet.</div>'; return; }
+  /* No empty state — an empty comments area just shows nothing. Still
+     clears the container rather than returning early, so comments from a
+     previously rendered phase cannot be left behind. */
+  if(!cs.length){ wrap.innerHTML=''; return; }
   wrap.innerHTML = cs.map(function(c){
     return '<div class="comment-item"><div class="cm-head"><span class="cm-author">'+esc(c.author||"Anonymous")+'</span><span>'+esc(c.when||"")+'</span></div><div class="cm-text">'+esc(c.text)+'</div></div>';
   }).join("");
@@ -2269,7 +2272,10 @@ var openReviewIdx=-1;   // which file's comment thread is expanded
 function renderReviewFiles(t){
   var wrap=document.getElementById("reviewList"); if(!wrap) return;
   var fs=t.reviewFiles||[];
-  if(!fs.length){ wrap.innerHTML='<div class="review-empty">No files yet.</div>'; openReviewIdx=-1; return; }
+  /* No empty state. The container is still cleared and openReviewIdx
+     still reset — deleting the last file lands here, and a stale index
+     would leave a thread pointing at a file that no longer exists. */
+  if(!fs.length){ wrap.innerHTML=''; openReviewIdx=-1; return; }
   if(openReviewIdx>=fs.length) openReviewIdx=-1;
   wrap.innerHTML = fs.map(function(f,i){
     var cs=f.comments||[], open=(i===openReviewIdx);
