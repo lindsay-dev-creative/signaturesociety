@@ -82,7 +82,7 @@
                takes from --weight-display: this date is the Display roman,
                not the Light. 400 is a real published cut of
                kepler-std-display, so nothing is synthesised. -->
-          <div class="header-card date" style="padding:0px;margin:0;font-weight:400;">NOV 4, 2026</div>
+          <div class="header-card date" style="padding:0px;margin:0;font-weight:400;">OCT 29, 2026</div>
         </div>
         <div class="header-card inner">
           <span class="body-pri-sm" style="color:var(--neutral-100)">Resources & Links</span>
@@ -3129,7 +3129,9 @@ function renderDrawerNotes(itemId){
   var host=document.getElementById("drawerNotes"); if(!host) return;
   var mine=NOTES.filter(function(n){ return n.phaseId===itemId; }).sort(noteNewestFirst);
   if(!mine.length){
-    host.innerHTML='<div class="dn-empty">No meeting notes yet. Use "Meeting notes" above to add one.</div>';
+    /* Was "Use \"Meeting notes\" above to add one" — that button no
+       longer exists, so the instruction pointed at nothing. */
+    host.innerHTML='<div class="dn-empty">No meeting notes attached.</div>';
     return;
   }
   host.innerHTML=mine.map(function(n){
