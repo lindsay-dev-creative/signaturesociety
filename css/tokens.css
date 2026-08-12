@@ -132,10 +132,7 @@
   --size-form-label:            15px;
   --size-form-placeholder:      15px;
 
-  /* ---- Brand bases · the swatches in the 'brand colors' frame ----
-     The anchor step differs by family, because the six bases do not sit on
-     one shared lightness. Each ramp carries its own curve anchored exactly
-     on its base value. */
+/* ---- Brand bases ---- */
   --color1:  var(--color1-800);
   --color2:  var(--color2-800);
   --color3:  var(--color3-800);
@@ -149,11 +146,10 @@
   --color1-300: #B8CDF7;  --color1-200: #D1E1FF;  --color1-100: #E5EEFF;
   --color1-50:  #F8FAFF;
 
-  /* ---- Color 2 · burgundy ----
-     700 duplicates 800 in the Figma 'scales' frame. Carried as-is. */
-  --color2-900: #26070C;  --color2-800: #4D0F19;  --color2-700: #4D0F19;
-  --color2-600: #762330;  --color2-500: #9F3E4E;  --color2-400: #C76272;
-  --color2-300: #F08E9E;  --color2-200: #FFB6C2;  --color2-100: #FFD5DC;
+  /* ---- Color 2 · burgundy ---- */
+  --color2-900: #26070C;  --color2-800: #4D0F19;  --color2-700: #762330;
+  --color2-600: #9F3E4E;  --color2-500: #C76272;  --color2-400: #F08E9E;
+  --color2-300: #FFAEBB;  --color2-200: #FFC5CF;  --color2-100: #FFDDE2;
   --color2-50:  #FFF4F6;
 
   /* ---- Color 3 · forest ---- */
@@ -168,15 +164,13 @@
   --color4-300: #FFD3B4;  --color4-200: #FFE0CA;  --color4-100: #FFEDE1;
   --color4-50:  #FFFAF7;
 
-  /* ---- Color 5 · tan ----
-     The 900 and 800 layers are labelled the other way round in Figma.
-     Recorded here in lightness order to match every other family. */
+  /* ---- Color 5 · tan ---- */
   --color5-900: #221D11;  --color5-800: #4E4329;  --color5-700: #6C5D3B;
   --color5-600: #89774E;  --color5-500: #A69263;  --color5-400: #C3AD79;
   --color5-300: #E0C891;  --color5-200: #FDE4AA;  --color5-100: #FFF1D0;
   --color5-50:  #FFFCF6;
 
-  /* ---- Neutral · carries an extra 950 step below the 900 ---- */
+  /* ---- Neutral ---- */
   --neutral-950: #32312A;  --neutral-900: #4D4B40;  --neutral-800: #625F53;
   --neutral-700: #767366;  --neutral-600: #8A887A;  --neutral-500: #9F9C8F;
   --neutral-400: #B3B1A4;  --neutral-300: #C8C5BA;  --neutral-200: #DCDAD0;
