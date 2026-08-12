@@ -782,6 +782,20 @@
 #tab-timeline .drawer-close:hover {background:rgba(255,255,255,.08);color:var(--neutral-50)}
 #tab-timeline .drawer-body {padding:20px 22px;overflow-y:auto;flex:1;display:flex;flex-direction:column;gap:16px}
 #tab-timeline .drawer-body .field {display:flex;flex-direction:column;gap:7px}
+/* Field labels at the form-label size. Nothing set this before — they
+   simply inherited the drawer's body size, which left them larger than
+   the 15px controls they name.
+
+   forms.css carries this as .form-field-label, but the drawer markup is
+   rebuilt by script on every open and does not carry static classes, so
+   it is stated here as an id-scoped rule. That is the same arrangement
+   the note at the top of forms.css describes.
+
+   :not(.btn) is load-bearing. "Upload files" is a <label for="rFile">
+   dressed as a button, and this selector at (1,2,1) would otherwise
+   outrank .btn-sans (0,1,0) and resize the control. Covers the edit
+   drawer and the new-task form, which both render into #drawerBody. */
+#tab-timeline .drawer-body label:not(.btn) {font-size:var(--size-form-label)}
 #tab-timeline .drawer-body textarea {min-height:110px;resize:vertical;line-height:var(--lh-body-base-sec)}
 /* The Meeting notes button is the only direct .btn child of the body —
    everything else is wrapped in a .field. The body is a flex column, so
