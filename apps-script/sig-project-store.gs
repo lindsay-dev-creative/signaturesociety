@@ -399,7 +399,7 @@ function notifyMention(req) {
         author: author,
         text: text,
         link: link,
-        cta: "Open the " + where.ctaNoun
+        cta: where.cta
       }),
       name: MAIL_FROM_NAME
     });
@@ -435,7 +435,7 @@ function notifyUpdate(req) {
         author: author,
         text: text,
         link: link,
-        cta: "Open Project Updates"
+        cta: "View message"
       }),
       name: MAIL_FROM_NAME
     });
@@ -467,34 +467,41 @@ function buildLink(ctx) {
   return SITE_URL;
 }
 
-/** Human wording for the same context, used in subject lines and body. */
+/**
+ * Human wording for the same context: the subject line, the sentence
+ * under the heading, and the words on the link.
+ *
+ * `cta` says what you are about to look at, not where it lives. The link
+ * lands on the post itself, scrolled to and highlighted, so "View
+ * message" describes what happens and "Open Project Updates" does not.
+ */
 function describeContext(ctx) {
   ctx = ctx || {};
   if (ctx.kind === "board") {
     var boards = {
-      messages:    { short: "the Message Board",  noun: "Message Board" },
-      suggestions: { short: "Suggestions",        noun: "Suggestions board" },
-      updates:     { short: "Project Updates",    noun: "Project Updates board" }
+      messages:    "the Message Board",
+      suggestions: "Suggestions",
+      updates:     "Project Updates"
     };
-    var b = boards[ctx.board] || boards.messages;
-    return { short: b.short, ctaNoun: b.noun, longText: "Posted on " + b.short + "." };
+    var where = boards[ctx.board] || boards.messages;
+    return { short: where, cta: "View message", longText: "Posted on " + where + "." };
   }
   if (ctx.kind === "comment") {
     var task = ctx.taskName ? '"' + ctx.taskName + '"' : "a task";
     return {
       short: "a comment on " + task,
-      ctaNoun: "comment",
+      cta: "View comment",
       longText: "In the comments on " + task + "."
     };
   }
   if (ctx.kind === "note") {
     return {
       short: "a meeting note",
-      ctaNoun: "meeting note",
+      cta: "View meeting note",
       longText: "In the meeting notes" + (ctx.taskName ? " for " + ctx.taskName : "") + "."
     };
   }
-  return { short: "the project", ctaNoun: "project", longText: "" };
+  return { short: "the project", cta: "View message", longText: "" };
 }
 
 /**
@@ -660,9 +667,14 @@ function escapeHtml(s) {
 /* ---- Run these by hand to check things work ------------------------- */
 
 /**
- * Sends one real mention email to the first person in People who has an
- * address. Run this before wiring up the page, so a silent failure later
- * is known to be the page and not the mail.
+ * Sends one real email to the first person in People who has an address.
+ * Run this before wiring up the page, so a silent failure later is known
+ * to be the page and not the mail.
+ *
+ * The link deliberately carries no post id. There is no post to point at
+ * from the editor, and a made-up one would land on the board saying
+ * "that post has been deleted", which reads like a broken link when the
+ * mail is in fact working. Without an id it simply opens the board.
  */
 function sendTestEmail() {
   var rows = peopleRows().filter(function (p) { return p.email; });
@@ -673,8 +685,8 @@ function sendTestEmail() {
   notifyMention({
     names: [rows[0].name],
     author: "Test",
-    text: "This is a test of the mention notification. If the button below opens the Message Board, the links are working.",
-    context: { kind: "board", board: "messages", id: "test" }
+    text: "This is a test. If View message below opens Project Updates on the site, the mail and the links are both working.",
+    context: { kind: "board", board: "updates" }
   });
   Logger.log("Sent to: " + rows[0].name + " <" + rows[0].email + ">");
 }
