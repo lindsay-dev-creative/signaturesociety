@@ -47,8 +47,14 @@
 <div class="wrap">
   <nav class="masthead-actions" aria-label="Team spaces">
     <button type="button" class="nav-link" id="boardOpenBtn">Message Board</button>
+    <button type="button" class="nav-link" id="updatesOpenBtn">Project Updates</button>
     <button type="button" class="nav-link" id="notesOpenBtn">Meeting Notes</button>
     <button type="button" class="nav-link" id="suggestOpenBtn">Suggestions</button>
+    <!-- Shown only when the shared store cannot be reached. What is on
+         screen still works and still saves locally, but it may be out of
+         date and nobody else can see it yet, which is worth knowing
+         before acting on it. -->
+    <span class="sync-note" id="syncNote" role="status" hidden>Offline · changes are saved here but not shared yet</span>
   </nav>
   <header class="masthead">
     <div class="masthead-brand">
@@ -155,13 +161,23 @@
   <div class="preview-body" id="previewBody"></div>
 </div>
 
-<!-- MESSAGE BOARD / SUGGESTIONS (same modal, two boards) -->
+<!-- MESSAGE BOARD / PROJECT UPDATES / SUGGESTIONS (same modal, three boards)
+     The tabs switch between them without closing, so the header buttons and
+     these tabs are two ways into the same place. Project Updates is the one
+     board that emails the whole team on every post; the other two only mail
+     the people named in an @mention. -->
 <div class="scrim" id="boardScrim"></div>
 <div class="board-modal" id="boardModal" role="dialog" aria-modal="true" aria-labelledby="boardTitle" aria-hidden="true">
   <div class="board-head">
     <h4 id="boardTitle">Message Board</h4>
     <button class="drawer-close" id="boardClose" aria-label="Close">&times;</button>
   </div>
+  <div class="board-tabs" id="boardTabs" role="tablist" aria-label="Boards">
+    <button type="button" class="board-tab" role="tab" data-board="messages" aria-selected="true">Message Board</button>
+    <button type="button" class="board-tab" role="tab" data-board="updates" aria-selected="false">Project Updates</button>
+    <button type="button" class="board-tab" role="tab" data-board="suggestions" aria-selected="false">Suggestions</button>
+  </div>
+  <div class="board-note" id="boardNote" hidden></div>
   <div class="board-list" id="boardList"></div>
   <div class="board-foot">
     <div class="ca-row" id="boardAuthorRow"></div>
@@ -2305,7 +2321,7 @@ function renderComments(t){
      previously rendered phase cannot be left behind. */
   if(!cs.length){ wrap.innerHTML=''; return; }
   wrap.innerHTML = cs.map(function(c){
-    return '<div class="comment-item"><div class="cm-head"><span class="cm-author">'+esc(c.author||"Anonymous")+'</span><span>'+esc(c.when||"")+'</span></div><div class="cm-text">'+esc(c.text)+'</div></div>';
+    return '<div class="comment-item" data-id="'+escAttr(c.id||"")+'"><div class="cm-head"><span class="cm-author">'+esc(c.author||"Anonymous")+'</span><span>'+esc(c.when||"")+'</span></div><div class="cm-text">'+mentionHTML(c.text)+'</div></div>';
   }).join("");
 }
 function commentStamp(){
@@ -2331,8 +2347,8 @@ function renderReviewFiles(t){
       thread='<div class="review-comments">'+
         (cs.length
           ? cs.map(function(c){
-              return '<div class="comment-item"><div class="cm-head"><span class="cm-author">'+esc(c.author||"")+'</span><span>'+esc(c.when||"")+'</span></div>'+
-                     '<div class="cm-text">'+esc(c.text)+'</div></div>';
+              return '<div class="comment-item" data-id="'+escAttr(c.id||"")+'"><div class="cm-head"><span class="cm-author">'+esc(c.author||"")+'</span><span>'+esc(c.when||"")+'</span></div>'+
+                     '<div class="cm-text">'+mentionHTML(c.text)+'</div></div>';
             }).join("")
           : '<div class="comments-empty">No comments on this file yet.</div>')+
         '<div class="comment-add">'+
@@ -2343,7 +2359,7 @@ function renderReviewFiles(t){
     }
     return '<div class="review-file'+(open?' open':'')+'">'+
       '<div class="review-item">'+
-        '<a href="'+f.data+'" download="'+escAttr(f.name)+'" class="review-name" data-prev="'+i+'" title="Preview">'+esc(f.name)+'</a>'+
+        '<a href="'+escAttr(fileHref(f))+'" download="'+escAttr(f.name)+'" class="review-name" data-prev="'+i+'" title="Preview">'+esc(f.name)+'</a>'+
         '<span class="review-meta">'+esc(fmtBytes(f.size||0))+' · '+esc(f.when||'')+'</span>'+
         '<button type="button" class="review-rep" data-r="'+i+'" title="Upload a new version of this file">Replace</button>'+
         '<button type="button" class="review-cmt'+(open?' on':'')+'" data-c="'+i+'" aria-expanded="'+(open?'true':'false')+'" '+
@@ -2389,11 +2405,19 @@ function addFileComment(t, i){
   if(!text){ alert("Please write a comment first."); if(ta) ta.focus(); return; }
   commentAuthor=author; try{localStorage.setItem("ss_comment_author",author);}catch(e){}
   if(!f.comments) f.comments=[];
-  f.comments.push({author:author, text:text, when:commentStamp()});
+  f.comments.push({id:"c"+Date.now()+"-"+Math.round(Math.random()*1e6), ts:Date.now(),
+                   author:author, text:text, when:commentStamp(), mentions:mentionsIn(text)});
   if(!save()){ f.comments.pop(); return; }
   if(ta) ta.value="";
   renderReviewFiles(t);
 }
+/* How big a file may be. Without the shared store a file has nowhere to
+   live but this browser's own storage, which is a few megabytes in
+   total for the whole project, hence the tight limit. With the store it
+   goes to Drive, and the ceiling is what Apps Script will accept in one
+   request rather than what a browser will hold. */
+function fileCap(){ return storeOn() ? 20*1048576 : 4*1048576; }
+
 function addReviewFile(t, input){
   var files=input.files ? Array.prototype.slice.call(input.files) : [];
   if(!files.length) return;
@@ -2408,25 +2432,61 @@ function addReviewFile(t, input){
   (function next(i){
     if(i>=files.length){ finish(); return; }
     var file=files[i];
-    if(file.size > 4*1048576){
-      skipped.push(file.name+' — '+fmtBytes(file.size)+' (keep review files under 4 MB; they are saved in the browser)');
+    if(file.size > fileCap()){
+      skipped.push(file.name+' — '+fmtBytes(file.size)+' (keep review files under '+fmtBytes(fileCap())+')');
       next(i+1); return;
     }
     var reader=new FileReader();
     reader.onload=function(){
       if(!t.reviewFiles) t.reviewFiles=[];
-      t.reviewFiles.push({name:file.name, size:file.size, type:file.type, data:reader.result, when:commentStamp()});
+      var entry={name:file.name, size:file.size, type:file.type, data:reader.result, when:commentStamp()};
+      t.reviewFiles.push(entry);
       if(!save()){
         t.reviewFiles.pop();
         skipped.push(file.name+' — not saved, this browser\'s storage is full');
         finish(); return;   // stop: everything after this would fail too
       }
       added++;
-      next(i+1);
+      /* Saved here first, then sent to Drive. Doing it in that order means
+         a failed upload leaves a file that works for the person who added
+         it, rather than losing it entirely. */
+      if(storeOn()){
+        uploadReviewFile(t, entry, function(err){
+          if(err) skipped.push(file.name+' — saved here, but not shared with the team: '+err);
+          next(i+1);
+        });
+      } else {
+        next(i+1);
+      }
     };
     reader.onerror=function(){ skipped.push(file.name+' — could not be read'); next(i+1); };
     reader.readAsDataURL(file);
   })(0);
+}
+
+/**
+ * Puts one already-saved file in the project Drive folder and swaps the
+ * base64 on the record for the link. The bytes have to go: a data URL is
+ * far past the 50,000 characters a single Sheet cell holds, so a file
+ * left as base64 would take the whole task's record down with it.
+ */
+function uploadReviewFile(t, entry, done){
+  var comma=(entry.data||"").indexOf(",");
+  if(comma<0){ done("unreadable"); return; }
+  storeCall({
+    action:"upload",
+    name:entry.name,
+    mime:entry.type||"application/octet-stream",
+    dataBase64:entry.data.slice(comma+1)
+  }, function(res){
+    entry.driveId=res.driveId;
+    entry.url=res.url;
+    entry.viewUrl=res.viewUrl;
+    delete entry.data;          // the link is the copy now
+    save();
+    renderReviewFiles(t);
+    done(null);
+  }, function(err){ done(err); });
 }
 /* ---- For review: in-page preview of an uploaded file ---- */
 var previewURL=null;
@@ -2440,8 +2500,27 @@ function dataURLToBlob(d){
   }
   return new Blob([decodeURIComponent(body)],{type:mime});
 }
+/* A review file is in one of two states. Either it was uploaded before
+   the shared store existed, or while it was unreachable, and lives as
+   base64 in this browser only. Or it is on Drive and everyone can open
+   it. These three build the right URL for whichever it is, so nothing
+   above them has to care. */
+function fileHref(f){
+  if(!f) return "";
+  if(f.driveId) return "https://drive.google.com/uc?export=download&id="+encodeURIComponent(f.driveId);
+  return f.data||"";
+}
+function fileImageSrc(f){
+  /* Not the uc? link: that one redirects, which <img> handles poorly for
+     larger files. This host serves the bytes directly. */
+  return f.driveId ? "https://lh3.googleusercontent.com/d/"+encodeURIComponent(f.driveId) : "";
+}
+function fileEmbedSrc(f){
+  return f.driveId ? "https://drive.google.com/file/d/"+encodeURIComponent(f.driveId)+"/preview" : "";
+}
+
 function openPreview(f){
-  if(!f || !f.data) return;
+  if(!f || (!f.data && !f.driveId)) return;
   var body=document.getElementById("previewBody");
   var type=f.type||"";
   if(!type){   // older uploads may not have stored a type; fall back to the extension
@@ -2451,11 +2530,17 @@ function openPreview(f){
   }
   /* blob: URLs render inline; a data: URL in an iframe is blocked by the browser */
   if(previewURL){ URL.revokeObjectURL(previewURL); previewURL=null; }
-  try{ previewURL=URL.createObjectURL(dataURLToBlob(f.data)); }catch(e){ previewURL=null; }
+  if(f.data){ try{ previewURL=URL.createObjectURL(dataURLToBlob(f.data)); }catch(e){ previewURL=null; } }
   document.getElementById("previewName").textContent=f.name||"File";
   var dl=document.getElementById("previewDownload");
-  dl.href=f.data; dl.setAttribute("download", f.name||"file");
-  if(previewURL && type.indexOf("image/")===0){
+  dl.href=fileHref(f); dl.setAttribute("download", f.name||"file");
+  if(f.driveId && type.indexOf("image/")===0){
+    body.innerHTML='<img src="'+escAttr(fileImageSrc(f))+'" alt="'+escAttr(f.name||"")+'">';
+  }else if(f.driveId){
+    /* Drive's own viewer, which handles PDFs, Office documents and the
+       rest. Anything it cannot show, it says so itself. */
+    body.innerHTML='<iframe src="'+escAttr(fileEmbedSrc(f))+'" title="'+escAttr(f.name||"")+'"></iframe>';
+  }else if(previewURL && type.indexOf("image/")===0){
     body.innerHTML='<img src="'+previewURL+'" alt="'+escAttr(f.name||"")+'">';
   }else if(previewURL && (type==="application/pdf" || type.indexOf("text/")===0)){
     body.innerHTML='<iframe src="'+previewURL+'" title="'+escAttr(f.name||"")+'"></iframe>';
@@ -2525,14 +2610,24 @@ function replaceReviewFile(t, input){
   var file=input.files && input.files[0];
   input.value=""; replaceIdx=-1;
   if(!f || !file) return;
-  if(file.size > 4*1048576){ alert('That file is '+fmtBytes(file.size)+'. Please keep review files under 4 MB (they are saved in the browser).'); return; }
+  if(file.size > fileCap()){ alert('That file is '+fmtBytes(file.size)+'. Please keep review files under '+fmtBytes(fileCap())+'.'); return; }
   var reader=new FileReader();
   reader.onload=function(){
-    var prev={name:f.name,size:f.size,type:f.type,data:f.data,when:f.when};
+    var prev={name:f.name,size:f.size,type:f.type,data:f.data,when:f.when,driveId:f.driveId,url:f.url,viewUrl:f.viewUrl};
     f.name=file.name; f.size=file.size; f.type=file.type; f.data=reader.result; f.when=commentStamp();
-    if(!save()){ f.name=prev.name; f.size=prev.size; f.type=prev.type; f.data=prev.data; f.when=prev.when; return; }
+    /* The old version's Drive link must go with the old version. Left in
+       place it would point the new row at the file it just replaced. */
+    delete f.driveId; delete f.url; delete f.viewUrl;
+    if(!save()){
+      f.name=prev.name; f.size=prev.size; f.type=prev.type; f.data=prev.data; f.when=prev.when;
+      f.driveId=prev.driveId; f.url=prev.url; f.viewUrl=prev.viewUrl;
+      return;
+    }
     renderReviewFiles(t);   // comments on this file are kept
     renderList();
+    if(storeOn()) uploadReviewFile(t, f, function(err){
+      if(err) alert('Saved here, but not shared with the team: '+err);
+    });
   };
   reader.onerror=function(){ alert('Could not read that file.'); };
   reader.readAsDataURL(file);
@@ -2552,7 +2647,13 @@ function addComment(t){
   var author=(au&&au.value&&au.value!=="__add__"?au.value:"").trim()||"Anonymous";
   commentAuthor=author; try{localStorage.setItem("ss_comment_author",author);}catch(e){}
   if(!t.comments) t.comments=[];
-  t.comments.push({author:author, text:text, when:commentStamp()});
+  /* id and ts are new. The id is what an emailed link scrolls to and what
+     the store matches on so the same comment cannot be added twice; ts is
+     the sort key, since `when` is a display string that sorts wrongly
+     across a year end. Comments written before this change have neither,
+     which every reader here allows for. */
+  t.comments.push({id:"c"+Date.now()+"-"+Math.round(Math.random()*1e6), ts:Date.now(),
+                   author:author, text:text, when:commentStamp(), mentions:mentionsIn(text)});
   if(!save()){ t.comments.pop(); return; }
   ta.value="";
   renderComments(t);
@@ -2877,11 +2978,24 @@ function writeStore(key, val){
   try{ localStorage.setItem(key, JSON.stringify(val)); return true; }
   catch(e){ alert("This browser's storage is full, so that could not be saved and would be lost when you close the page."); return false; }
 }
+/* `kind` is the name this board is known by everywhere else: in the tab
+   buttons, in the #board= part of a shared link, and in the payload the
+   Apps Script reads when it decides who to email. Changing one of these
+   strings breaks links already sitting in people's inboxes.
+
+   `notifyAll` is what separates Project Updates from the other two. A
+   post there mails everyone on the People tab. A post on the other
+   boards mails only the people named in an @mention. */
 var POST_BOARDS={
-  messages:{title:"Message Board", key:"ss_message_board_v1",
+  messages:{kind:"messages", title:"Message Board", key:"ss_message_board_v1",
             empty:"No messages yet. Post the first one below.",
             placeholder:"Write a message for the team...", cta:"Post message"},
-  suggestions:{title:"Project Website Suggestions", key:"ss_suggestions_v1",
+  updates:{kind:"updates", title:"Project Updates", key:"ss_project_updates_v1",
+            empty:"No updates yet. Post the first one below.",
+            placeholder:"Post an update for the team...", cta:"Post update",
+            notifyAll:true,
+            note:"Everyone on the project is emailed when you post here."},
+  suggestions:{kind:"suggestions", title:"Project Website Suggestions", key:"ss_suggestions_v1",
             empty:"No suggestions yet. Add the first one below.",
             placeholder:"Share a suggestion for the website...", cta:"Add suggestion"}
 };
@@ -2937,10 +3051,12 @@ function renderBoard(){
           '</div></div>';
       }
       var mine = me && m.author===me;
-      return '<div class="board-msg">'+
+      /* data-id is what a shared link scrolls to. Every post has carried
+         an id since the board was written; this just puts it in the DOM. */
+      return '<div class="board-msg" data-id="'+escAttr(m.id)+'">'+
         '<div class="bm-head"><span class="bm-author">'+esc(m.author)+'</span>'+
           '<span class="bm-when">'+esc(m.when||"")+(m.edited?'<span class="bm-edited">edited '+esc(m.edited)+'</span>':'')+'</span></div>'+
-        '<div class="bm-text">'+esc(m.text)+'</div>'+
+        '<div class="bm-text">'+mentionHTML(m.text)+'</div>'+
         (mine?'<div class="bm-actions"><button type="button" class="bm-act" data-editmsg="'+escAttr(m.id)+'">EDIT</button>'+
               '<button type="button" class="bm-act del" data-delmsg="'+escAttr(m.id)+'">DELETE</button></div>':'')+
       '</div>';
@@ -2970,7 +3086,12 @@ function postToBoard(){
   var text=(ta && ta.value || "").trim();
   if(!text){ alert("Please write something first."); if(ta) ta.focus(); return; }
   commentAuthor=author; try{localStorage.setItem("ss_comment_author",author);}catch(e){}
-  BOARD.push({id:"m"+Date.now()+"-"+Math.round(Math.random()*1e6), author:author, text:text, when:commentStamp()});
+  /* mentions are worked out here, at the moment of posting, and stored on
+     the post. Re-reading them from the text later would mail somebody a
+     second time every time the post was edited for a typo. */
+  BOARD.push({id:"m"+Date.now()+"-"+Math.round(Math.random()*1e6), ts:Date.now(),
+              board:activeBoard.kind, author:author, text:text,
+              when:commentStamp(), mentions:mentionsIn(text)});
   if(!saveBoard()){ BOARD.pop(); return; }
   /* Posted, so the draft is spent. Cleared only on the success path —
      both early returns above leave it saved, which is the point. */
@@ -3007,6 +3128,14 @@ function openBoard(kind){
   activeBoard=POST_BOARDS[kind]||POST_BOARDS.messages;
   BOARD=readStore(activeBoard.key);
   document.getElementById("boardTitle").textContent=activeBoard.title;
+  /* Which tab reads as current, and the standing warning on the board
+     that emails everybody. Both are set from POST_BOARDS rather than
+     written into the markup, so adding a board is a one-place change. */
+  Array.prototype.forEach.call(document.querySelectorAll("#boardTabs .board-tab"), function(b){
+    b.setAttribute("aria-selected", b.getAttribute("data-board")===activeBoard.kind ? "true" : "false");
+  });
+  var note=document.getElementById("boardNote");
+  if(note){ note.textContent=activeBoard.note||""; note.hidden=!activeBoard.note; }
   var ta=document.getElementById("bText");
   /* Restore rather than blank: an unposted draft is the one thing in
      this modal that exists nowhere else. */
@@ -3034,9 +3163,17 @@ function closeBoard(){
   editingMsgId=null;
 }
 document.getElementById("boardOpenBtn").onclick=function(){ openBoard("messages"); };
+document.getElementById("updatesOpenBtn").onclick=function(){ openBoard("updates"); };
 document.getElementById("suggestOpenBtn").onclick=function(){ openBoard("suggestions"); };
 document.getElementById("boardClose").onclick=closeBoard;
 document.getElementById("boardScrim").onclick=closeBoard;
+/* Switching tab is just reopening the modal on another board. Bound once
+   here rather than inside openBoard, which runs on every open and would
+   stack a fresh handler each time. The in-progress draft is safe: it is
+   written to its own board's key on every keystroke, before this runs. */
+Array.prototype.forEach.call(document.querySelectorAll("#boardTabs .board-tab"), function(b){
+  b.onclick=function(){ openBoard(b.getAttribute("data-board")); };
+});
 
 /* ============ MEETING-NOTE UPLOAD NOTIFICATION ============
    Emails the project team when a new meeting note is saved. The sending
@@ -3230,7 +3367,8 @@ function saveNote(){
     /* ts is the sort key — a number, unlike `date` and `added`, which are
        display strings. Written once here and never changed by an edit. */
     var item={id:"n"+Date.now()+"-"+Math.round(Math.random()*1e6), ts:Date.now(),
-              date:noteDateStamp(), added:commentStamp(), text:text};
+              date:noteDateStamp(), added:commentStamp(), text:text,
+              mentions:mentionsIn(text)};
     /* Uploaded from a drawer: file it against that phase OR check-in.
        findDrawerItem resolves both — check-ins are not in byId, which is
        why a check-in note used to save with no source. The name is
@@ -3283,6 +3421,727 @@ document.getElementById("noteDeleteBtn").onclick=deleteNote;
 isMobile.addEventListener?isMobile.addEventListener("change",rerender):isMobile.addListener(rerender);
 var rt;window.addEventListener("resize",function(){clearTimeout(rt);rt=setTimeout(rerender,150);});
 
+/* ============ SHARED PROJECT STORE ============
+   Everything above this line was written to work on its own, one private
+   copy per browser. This section makes those copies into one project:
+   every comment, post, note and schedule edit is written through to a
+   Google Apps Script web app backed by a Sheet, and pulled back down on
+   a timer. See apps-script/sig-project-store.gs for the other half.
+
+   IT IS DELIBERATELY ADDITIVE. Nothing above knows this exists. The
+   handful of functions that persist anything are wrapped at the bottom
+   of this section rather than rewritten, so the page still behaves
+   exactly as it always did if the store is unreachable or not yet
+   deployed, and so a change up there cannot quietly bypass sync.
+
+   PASTE THE /exec URL BELOW. While it is empty the whole section is
+   inert: the page runs locally, nothing is sent, no errors are raised,
+   and no email goes out. That is the intended state until the Apps
+   Script is deployed. */
+var STORE_URL = "";   /* e.g. "https://script.google.com/macros/s/AKfy.../exec" */
+
+/* How often to look for other people's changes. Polling is a compromise
+   Apps Script forces on us: it cannot push. Twenty seconds is slow
+   enough to stay far inside quota with everyone's tab open all day, and
+   a pull also runs on every board or drawer open and whenever the tab is
+   brought back to the front, which is when it actually matters. */
+var POLL_MS = 20000;
+
+/* The high-water mark. Everything on the server stamped later than this
+   has not been seen here yet, so a poll with nothing new returns an
+   empty list rather than the whole project. */
+var storeSince = 0;
+var storeLive = false;      // has one pull ever succeeded
+var storeWarned = false;    // so a flaky connection warns once, not every 20s
+
+function storeOn(){ return !!STORE_URL; }
+
+/* ---- Talking to the script -----------------------------------------
+   Content-Type is text/plain on purpose. It keeps this a "simple
+   request" in CORS terms, so the browser sends it straight through
+   instead of asking permission first with an OPTIONS call, which Apps
+   Script does not answer usefully. The real response comes from a
+   redirect to script.googleusercontent.com, which does allow us to read
+   it, so unlike the old fire-and-forget notifier these calls can be
+   checked. */
+function storeCall(body, ok, fail){
+  if(!storeOn()){ if(fail) fail("no store url"); return; }
+  fetch(STORE_URL, {
+    method:"POST",
+    headers:{"Content-Type":"text/plain;charset=utf-8"},
+    body:JSON.stringify(body)
+  }).then(function(r){ return r.json(); })
+    .then(function(res){
+      if(res && res.ok){ if(ok) ok(res); }
+      else { if(fail) fail((res&&res.error)||"refused"); }
+    })["catch"](function(err){ if(fail) fail(String(err)); });
+}
+
+/* One warning, then silence. A dropped connection mid-session must not
+   produce an alert every twenty seconds, but it also must not be
+   invisible: what is on screen may be out of date and the person needs
+   to know that before they act on it. */
+function storeTrouble(what){
+  if(storeWarned) return;
+  storeWarned = true;
+  console.warn("project store: " + what);
+  var el = document.getElementById("syncNote");
+  if(el){ el.hidden = false; }
+}
+function storeRecovered(){
+  storeWarned = false;
+  var el = document.getElementById("syncNote");
+  if(el) el.hidden = true;
+}
+
+/* ---- Reading -------------------------------------------------------- */
+
+/**
+ * Ask for everything newer than the last thing we saw, then fold it in.
+ * `now` comes from the server rather than this machine: a laptop whose
+ * clock is a few minutes fast would otherwise set the mark into the
+ * future and skip every change made in between.
+ */
+function storePull(done){
+  if(!storeOn()){ if(done) done(false); return; }
+  fetch(STORE_URL + "?action=pull&since=" + storeSince)
+    .then(function(r){ return r.json(); })
+    .then(function(res){
+      if(!res || !res.ok){ storeTrouble("pull refused"); if(done) done(false); return; }
+      storeSince = res.now;
+      storeLive = true;
+      storeRecovered();
+      if(res.people && res.people.length) mergeRoster(res.people);
+      if(res.records && res.records.length) storeApply(res.records);
+      if(done) done(true);
+    })["catch"](function(err){ storeTrouble(err); if(done) done(false); });
+}
+
+/**
+ * Fold incoming records into what is already on screen, then redraw only
+ * the parts that changed. Redrawing everything on every poll would fight
+ * with whoever is mid-edit: it would collapse open threads and drop
+ * focus out of a textarea twenty seconds into writing a comment.
+ */
+function storeApply(records){
+  var touched = {tasks:false, boards:{}, notes:false, maps:false};
+
+  records.forEach(function(rec){
+    if(rec.kind==="task")      applyTask(rec, touched);
+    else if(rec.kind==="message") applyMessage(rec, touched);
+    else if(rec.kind==="note")    applyNote(rec, touched);
+    else if(rec.kind==="map")     applyMap(rec, touched);
+  });
+
+  if(touched.tasks || touched.maps){
+    save();
+    reindexIfNeeded(); clearMemo(); rerender();
+    /* An open drawer is rebuilt from the task it is showing, so a comment
+       that arrived while it was open appears without closing it. */
+    var open=document.getElementById("drawer");
+    if(open && open.classList.contains("open") && editingId){
+      var t=byId[editingId];
+      if(t){ renderComments(t); renderReviewFiles(t); }
+    }
+  }
+  var modal=document.getElementById("boardModal");
+  if(modal && modal.classList.contains("open") && activeBoard && touched.boards[activeBoard.key]){
+    BOARD = readStore(activeBoard.key);
+    renderBoard();
+  }
+  if(touched.notes){
+    saveNotes();
+    var nm=document.getElementById("notesModal");
+    if(nm && nm.classList.contains("open")) renderNotes();
+    renderDrawerNotes(drawerItemId);
+  }
+}
+
+/**
+ * A task from the server replaces the local one, with one exception:
+ * uploaded file bytes. Before the Drive upload existed, files were held
+ * as base64 in this browser and nowhere else, so anything that still has
+ * only local bytes keeps them rather than being blanked by a copy of the
+ * record that was written from another machine.
+ */
+function applyTask(rec, touched){
+  var t = byId[rec.id];
+  if(!t) return;                       // a task this build does not have
+  var incoming = rec.payload || {};
+  var keepData = {};
+  (t.reviewFiles||[]).forEach(function(f){ if(f.data) keepData[f.name+"|"+f.when]=f.data; });
+
+  Object.keys(incoming).forEach(function(k){ t[k]=incoming[k]; });
+  (t.reviewFiles||[]).forEach(function(f){
+    var had=keepData[f.name+"|"+f.when];
+    if(had && !f.url) f.data=had;
+  });
+  /* Assignee, status and dates are also kept in their own stable maps,
+     which are what applySaved* reads on the next render. Writing only
+     the task would be undone the moment anything re-renders. */
+  if(incoming.assignee!==undefined) SAVED_ASSIGNEES[t.id]=incoming.assignee;
+  if(incoming.status!==undefined)   SAVED_STATUS[t.id]=incoming.status;
+  saveAssigneeMapLocal(); saveStatusMapLocal();
+  /* This task now matches the server, so the save that follows must not
+     count it as a local change and send it straight back up. */
+  markTaskSent(t);
+  touched.tasks=true;
+}
+
+/** A board post. Boards are plain arrays in their own storage keys. */
+function applyMessage(rec, touched){
+  var p = rec.payload||{};
+  var cfg = POST_BOARDS[p.board] || POST_BOARDS.messages;
+  var list = readStore(cfg.key);
+  var at = -1;
+  for(var i=0;i<list.length;i++){ if(list[i].id===rec.id){ at=i; break; } }
+
+  if(rec.deleted){ if(at>-1) list.splice(at,1); }
+  else if(at>-1){ list[at]=p; }
+  else {
+    list.push(p);
+    /* Posted order, not arrival order. Two people posting at once can
+       reach the sheet in either order, and older posts have no ts. */
+    list.sort(function(a,b){ return (a.ts||0)-(b.ts||0); });
+  }
+  writeStore(cfg.key, list);
+  touched.boards[cfg.key]=true;
+}
+
+function applyNote(rec, touched){
+  var at=-1;
+  for(var i=0;i<NOTES.length;i++){ if(NOTES[i].id===rec.id){ at=i; break; } }
+  if(rec.deleted){ if(at>-1) NOTES.splice(at,1); }
+  else if(at>-1) NOTES[at]=rec.payload;
+  else NOTES.push(rec.payload);
+  NOTES.sort(noteNewestFirst);
+  touched.notes=true;
+}
+
+/** The small side maps: assignees, statuses, dates, and the name list. */
+function applyMap(rec, touched){
+  var p=rec.payload||{};
+  if(rec.id==="assignees"){ SAVED_ASSIGNEES=p; saveAssigneeMapLocal(); applySavedAssignees(); }
+  if(rec.id==="status"){    SAVED_STATUS=p;    saveStatusMapLocal();   applySavedStatus(); }
+  if(rec.id==="dates"){     SAVED_DATES=p;     saveDateMapLocal();     applySavedDates(); }
+  if(rec.id==="names" && p.list){ mergeRoster(p.list); }
+  touched.maps=true;
+}
+
+/* ---- Writing --------------------------------------------------------
+   Every write is fire-and-check: the change is already saved locally and
+   drawn on screen by the time these run, so a failure here means "other
+   people cannot see this yet", not "your work is gone". That is what the
+   sync warning says, and why none of these roll anything back. */
+
+function storePut(kind, id, payload){
+  if(!storeOn()) return;
+  storeCall({action:"put", kind:kind, id:id, payload:payload, actor:commentAuthor},
+            storeRecovered, storeTrouble);
+}
+function storeDelete(kind, id){
+  if(!storeOn()) return;
+  storeCall({action:"del", kind:kind, id:id, actor:commentAuthor},
+            storeRecovered, storeTrouble);
+}
+/**
+ * Add one item to a list inside a record, merged on the server under a
+ * lock. Used for every comment, because a comment lives inside its task:
+ * writing the whole task back would erase any comment somebody else
+ * added in the last twenty seconds. See append() in the Apps Script.
+ */
+function storeAppend(kind, id, path, item, fallback, ok){
+  if(!storeOn()) return;
+  storeCall({action:"append", kind:kind, id:id, path:path, item:item,
+             fallback:fallback, actor:commentAuthor},
+            function(res){ storeRecovered(); if(ok) ok(res); }, storeTrouble);
+}
+
+/**
+ * What of a task is worth sending. File bytes are stripped: a base64
+ * image is far past the 50,000 character ceiling on a single Sheet cell,
+ * and uploads go to Drive now, so the record carries the link instead.
+ */
+function taskPayload(t){
+  var out={};
+  Object.keys(t).forEach(function(k){ out[k]=t[k]; });
+  if(out.reviewFiles){
+    out.reviewFiles = out.reviewFiles.map(function(f){
+      var g={}; Object.keys(f).forEach(function(k){ if(k!=="data") g[k]=f[k]; });
+      return g;
+    });
+  }
+  return out;
+}
+
+/* Only tasks that actually changed are sent. save() runs on every
+   keystroke-level change in the drawer, and pushing forty rows each time
+   would spend the whole Sheet write quota on unchanged data. */
+var taskSnapshot={};
+var pushTimer=null;
+function schedulePush(){
+  if(!storeOn()) return;
+  clearTimeout(pushTimer);
+  pushTimer=setTimeout(pushChangedTasks, 600);
+}
+function pushChangedTasks(){
+  if(!storeOn() || !storeLive) return;
+  var items=[];
+  state.tasks.forEach(function(t){
+    var json=JSON.stringify(taskPayload(t));
+    if(taskSnapshot[t.id]!==json){
+      taskSnapshot[t.id]=json;
+      items.push({kind:"task", id:t.id, payload:JSON.parse(json)});
+    }
+  });
+  if(!items.length) return;
+  storeCall({action:"putMany", items:items, actor:commentAuthor}, storeRecovered, storeTrouble);
+}
+/** Marks a task as already sent, so the diff above skips it. */
+function markTaskSent(t){ if(t) taskSnapshot[t.id]=JSON.stringify(taskPayload(t)); }
+
+/* ---- Mentions -------------------------------------------------------
+   The roster is the union of the names in this browser's dropdown and
+   the names on the People tab of the store. The Sheet is where addresses
+   live, so a name that only exists here can be typed and will simply
+   never be mailed, which is the same thing that happens to a name on the
+   People tab with the address column left blank. */
+function roster(){ return AUTHOR_OPTIONS.slice(); }
+function mergeRoster(names){
+  var added=false;
+  names.forEach(function(n){ if(n && AUTHOR_OPTIONS.indexOf(n)===-1){ AUTHOR_OPTIONS.push(n); added=true; } });
+  if(added) saveNameOptionsLocal();
+}
+function escRe(s){ return String(s).replace(/[.*+?^${}()|[\]\\]/g,"\\$&"); }
+
+/**
+ * Which roster names a piece of text mentions, in their canonical
+ * spelling, each at most once. Longest first, so "@Mary Beth" is one
+ * mention rather than a mention of "Mary" with stray text after it.
+ */
+function mentionsIn(text){
+  var out=[];
+  roster().sort(function(a,b){ return b.length-a.length; }).forEach(function(name){
+    var re=new RegExp("@"+escRe(name)+"(?![\\w'-])","i");
+    if(re.test(text||"") && out.indexOf(name)===-1) out.push(name);
+  });
+  return out;
+}
+
+/**
+ * Text with its mentions marked up. Escaped FIRST and matched second, so
+ * what gets wrapped is display text and nothing typed into a comment can
+ * introduce markup.
+ */
+function mentionHTML(text){
+  var html=esc(text);
+  roster().sort(function(a,b){ return b.length-a.length; }).forEach(function(name){
+    var re=new RegExp("@"+escRe(esc(name))+"(?![\\w'-])","gi");
+    html=html.replace(re, function(m){ return '<span class="mention">'+m+'</span>'; });
+  });
+  return html;
+}
+
+/* ---- The @ menu -----------------------------------------------------
+   Attached by delegation on focus rather than at render time: every one
+   of these textareas is built by innerHTML and replaced whenever its
+   modal reopens, so anything bound to the element itself would be lost. */
+var mentionMenu=null, mentionFor=null, mentionAt=-1, mentionPick=0, mentionList=[];
+
+function mentionMenuEl(){
+  if(!mentionMenu){
+    mentionMenu=document.createElement("div");
+    mentionMenu.className="mention-menu";
+    mentionMenu.setAttribute("role","listbox");
+    mentionMenu.hidden=true;
+    document.body.appendChild(mentionMenu);
+  }
+  return mentionMenu;
+}
+function closeMentionMenu(){
+  if(mentionMenu){ mentionMenu.hidden=true; }
+  mentionFor=null; mentionAt=-1; mentionList=[]; mentionPick=0;
+}
+/** The "@word" immediately before the caret, if there is one. */
+function mentionQuery(ta){
+  var upto=(ta.value||"").slice(0, ta.selectionStart);
+  var m=/(^|[\s(\[])@([\w'-]*)$/.exec(upto);
+  if(!m) return null;
+  return {at: upto.length-m[2].length-1, word: m[2]};
+}
+function openMentionMenu(ta){
+  var q=mentionQuery(ta);
+  if(!q){ closeMentionMenu(); return; }
+  var word=q.word.toLowerCase();
+  mentionList=roster().filter(function(n){ return n.toLowerCase().indexOf(word)===0; });
+  if(!mentionList.length){ closeMentionMenu(); return; }
+
+  mentionFor=ta; mentionAt=q.at; mentionPick=0;
+  var el=mentionMenuEl(), rect=ta.getBoundingClientRect();
+  /* Sits above the box rather than at the caret. A caret-accurate
+     position needs a mirrored copy of the textarea to measure, and these
+     boxes are only a few lines tall, so above is never far away and
+     never lands under the modal's own footer. */
+  el.style.left=Math.round(rect.left)+"px";
+  el.style.width=Math.round(Math.min(rect.width, 260))+"px";
+  el.style.bottom=Math.round(window.innerHeight-rect.top+6)+"px";
+  drawMentionMenu();
+  el.hidden=false;
+}
+function drawMentionMenu(){
+  var el=mentionMenuEl();
+  el.innerHTML=mentionList.map(function(n,i){
+    return '<button type="button" class="mention-opt'+(i===mentionPick?' on':'')+'" role="option" '+
+           'aria-selected="'+(i===mentionPick?'true':'false')+'" data-i="'+i+'">'+esc(n)+'</button>';
+  }).join("");
+  Array.prototype.forEach.call(el.querySelectorAll(".mention-opt"), function(b){
+    /* mousedown, not click: click fires after the textarea has already
+       lost focus, by which point the caret position this needs is gone. */
+    b.addEventListener("mousedown", function(e){
+      e.preventDefault();
+      chooseMention(parseInt(b.getAttribute("data-i"),10));
+    });
+  });
+}
+function chooseMention(i){
+  var ta=mentionFor, name=mentionList[i];
+  if(!ta || !name) return;
+  var before=ta.value.slice(0, mentionAt);
+  var after=ta.value.slice(ta.selectionStart);
+  var insert="@"+name+" ";
+  ta.value=before+insert+after;
+  var caret=before.length+insert.length;
+  ta.setSelectionRange(caret, caret);
+  closeMentionMenu();
+  ta.focus();
+  /* The board keeps an unposted draft per board, written on input. This
+     insertion is not an input event, so tell it by hand. */
+  if(ta.id==="bText") saveBoardDraft();
+}
+
+/* Any textarea in the project can take a mention. Bound on the document
+   so it covers boxes that do not exist yet, including the per-file
+   comment boxes that appear only when a thread is opened. */
+document.addEventListener("input", function(e){
+  var ta=e.target;
+  if(!ta || ta.tagName!=="TEXTAREA") return;
+  if(ta.id==="bText" || ta.id==="cAdd" || ta.id==="noteText" || /^rcText\d+$/.test(ta.id) || ta.id==="bEditText"){
+    openMentionMenu(ta);
+  }
+});
+document.addEventListener("keydown", function(e){
+  if(!mentionFor || !mentionMenu || mentionMenu.hidden) return;
+  if(e.key==="ArrowDown"){ e.preventDefault(); mentionPick=(mentionPick+1)%mentionList.length; drawMentionMenu(); }
+  else if(e.key==="ArrowUp"){ e.preventDefault(); mentionPick=(mentionPick-1+mentionList.length)%mentionList.length; drawMentionMenu(); }
+  else if(e.key==="Enter" || e.key==="Tab"){ e.preventDefault(); chooseMention(mentionPick); }
+  else if(e.key==="Escape"){ e.preventDefault(); closeMentionMenu(); }
+}, true);
+document.addEventListener("focusout", function(e){
+  if(e.target===mentionFor) setTimeout(closeMentionMenu, 120);
+});
+
+/* ---- Sending the mail ----------------------------------------------
+   The page sends names, never addresses. The Apps Script looks each name
+   up on the People tab, which is what stops a URL sitting in public page
+   source from being usable as a mail relay. */
+function notifyMention(names, context, author, text){
+  if(!storeOn() || !names || !names.length) return;
+  storeCall({action:"notifyMention", names:names, context:context, author:author, text:text},
+            null, function(err){ console.warn("mention mail: "+err); });
+}
+function notifyUpdate(id, author, text){
+  if(!storeOn()) return;
+  storeCall({action:"notifyUpdate", id:id, author:author, text:text},
+            null, function(err){ console.warn("update mail: "+err); });
+}
+/** Names in the new text that were not in the old. An edit to fix a typo
+    must not mail everyone the post already mentioned a second time. */
+function newMentions(oldText, newText){
+  var had=mentionsIn(oldText||"");
+  return mentionsIn(newText||"").filter(function(n){ return had.indexOf(n)===-1; });
+}
+
+/* ---- Wrapping the existing save points ------------------------------
+   Each of these keeps the original behaviour exactly and adds the write
+   through to the store afterwards. The local save still decides success:
+   if it fails, the original has already rolled the change back and
+   returned, and nothing is sent. */
+
+/* The three side maps keep a local-only writer, because applyMap has to
+   be able to save an incoming map without sending it straight back. */
+var saveAssigneeMapLocal=saveAssigneeMap;
+var saveStatusMapLocal=saveStatusMap;
+var saveDateMapLocal=saveDateMap;
+var saveNameOptionsLocal=saveNameOptions;
+
+saveAssigneeMap=function(){ saveAssigneeMapLocal(); storePut("map","assignees",SAVED_ASSIGNEES); };
+saveStatusMap=function(){   saveStatusMapLocal();   storePut("map","status",SAVED_STATUS); };
+saveDateMap=function(){     saveDateMapLocal();     storePut("map","dates",SAVED_DATES); };
+saveNameOptions=function(){ saveNameOptionsLocal(); storePut("map","names",{list:AUTHOR_OPTIONS}); };
+
+var saveLocal=save;
+save=function(){
+  var okLocal=saveLocal();
+  if(okLocal) schedulePush();
+  return okLocal;
+};
+
+var addCommentLocal=addComment;
+addComment=function(t){
+  var before=(t.comments||[]).length;
+  addCommentLocal(t);
+  var cs=t.comments||[];
+  if(cs.length===before) return;              // refused: empty box, or local save failed
+  var c=cs[cs.length-1];
+  /* Appended rather than written with the task, so a comment somebody
+     else added in the last few seconds is merged instead of erased. */
+  storeAppend("task", t.id, "comments", c, taskPayload(t), function(res){
+    if(res.list) t.comments=res.list;
+    markTaskSent(t);
+    renderComments(t);
+  });
+  notifyMention(c.mentions, {kind:"comment", id:c.id, taskId:t.id, taskName:t.name}, c.author, c.text);
+};
+
+var addFileCommentLocal=addFileComment;
+addFileComment=function(t, i){
+  var f=(t.reviewFiles||[])[i]; if(!f) return;
+  var before=(f.comments||[]).length;
+  addFileCommentLocal(t, i);
+  var cs=f.comments||[];
+  if(cs.length===before) return;
+  var c=cs[cs.length-1];
+  storeAppend("task", t.id, "reviewFiles/"+i+"/comments", c, taskPayload(t), function(){ markTaskSent(t); });
+  notifyMention(c.mentions, {kind:"comment", id:c.id, taskId:t.id, taskName:t.name}, c.author, c.text);
+};
+
+var postToBoardLocal=postToBoard;
+postToBoard=function(){
+  var before=BOARD.length;
+  var board=activeBoard;
+  postToBoardLocal();
+  if(BOARD.length===before) return;           // refused: no name, or nothing typed
+  var m=BOARD[BOARD.length-1];
+  storePut("message", m.id, m);
+  if(board && board.notifyAll) notifyUpdate(m.id, m.author, m.text);
+  else notifyMention(m.mentions, {kind:"board", board:board.kind, id:m.id}, m.author, m.text);
+};
+
+var saveMessageEditLocal=saveMessageEdit;
+saveMessageEdit=function(id){
+  var m=BOARD.filter(function(x){return x.id===id;})[0];
+  var wasText=m?m.text:"";
+  saveMessageEditLocal(id);
+  m=BOARD.filter(function(x){return x.id===id;})[0];
+  if(!m || m.text===wasText) return;          // refused, or nothing actually changed
+  var added=newMentions(wasText, m.text);
+  m.mentions=mentionsIn(m.text);
+  storePut("message", m.id, m);
+  /* An edit never re-mails the whole team, even on Project Updates.
+     Only somebody newly named in it hears about it. */
+  notifyMention(added, {kind:"board", board:(activeBoard&&activeBoard.kind)||"messages", id:m.id}, m.author, m.text);
+};
+
+var deleteMessageLocal=deleteMessage;
+deleteMessage=function(id){
+  var had=BOARD.some(function(x){ return x.id===id; });
+  deleteMessageLocal(id);
+  if(had && !BOARD.some(function(x){ return x.id===id; })) storeDelete("message", id);
+};
+
+var saveNoteLocal=saveNote;
+saveNote=function(){
+  var wasId=editingNoteId;
+  var wasText="";
+  if(wasId){ var prev=NOTES.filter(function(x){return x.id===wasId;})[0]; wasText=prev?prev.text:""; }
+  var countBefore=NOTES.length;
+  saveNoteLocal();
+  var n;
+  if(wasId){ n=NOTES.filter(function(x){return x.id===wasId;})[0]; }
+  else if(NOTES.length>countBefore){ n=NOTES[0]; }
+  if(!n) return;
+  if(wasId){ n.mentions=mentionsIn(n.text); }
+  storePut("note", n.id, n);
+  notifyMention(wasId ? newMentions(wasText, n.text) : n.mentions,
+                {kind:"note", id:n.id, taskName:n.phase||""}, commentAuthor||"Someone", n.text);
+};
+
+var deleteNoteLocal=deleteNote;
+deleteNote=function(){
+  var id=editingNoteId;
+  var had=NOTES.some(function(x){ return x.id===id; });
+  deleteNoteLocal();
+  if(had && !NOTES.some(function(x){ return x.id===id; })) storeDelete("note", id);
+};
+
+/* A board or drawer opening is the moment stale content is about to be
+   read, so each one pulls first. */
+var openBoardLocal=openBoard;
+openBoard=function(kind){ openBoardLocal(kind); storePull(); };
+var openNotesLocal=openNotes;
+openNotes=function(){ openNotesLocal(); storePull(); };
+
+/* A render replaces the linked-to element, so the highlight has to be
+   put back. Both lists are rebuilt wholesale by a poll landing. */
+var renderBoardLocal=renderBoard;
+renderBoard=function(){ renderBoardLocal(); applyFlash(document.getElementById("boardList")); };
+var renderCommentsLocal=renderComments;
+renderComments=function(t){ renderCommentsLocal(t); applyFlash(document.getElementById("commentsList")); };
+
+/* ---- Links into the page --------------------------------------------
+   The other end of the links the Apps Script puts in its emails. Keep
+   these two in step: a hash built there and not handled here lands
+   somebody on the timeline with no idea why.
+
+     #board=messages&post=m1755...   a post on any of the three boards
+     #task=ph7&comment=c1755...      a comment on a task
+     #note=n1755...                  a meeting note
+
+   Routing waits for the first pull to finish. Following a link into a
+   browser that has never opened this project is exactly the case that
+   used to fail, and it is the case where the target does not exist
+   locally yet. */
+function parseHash(){
+  var h=(location.hash||"").replace(/^#/,"");
+  if(!h) return null;
+  var out={};
+  h.split("&").forEach(function(pair){
+    var kv=pair.split("=");
+    if(kv[0]) out[decodeURIComponent(kv[0])]=decodeURIComponent(kv[1]||"");
+  });
+  return out;
+}
+/* The post being linked to may not have arrived yet: opening a board
+   starts a pull, and a link followed from an inbox is usually the first
+   time this browser has heard of the post at all. So this keeps looking
+   for a couple of seconds rather than giving up on the first miss, and
+   survives the re-render that the arriving pull triggers underneath it. */
+var ssFlashId=null, ssFlashTimer=null;
+function flashTarget(container, id, missingText){
+  /* Clear the previous one before claiming the id. Following a second
+     link while the first highlight is still fading used to leave that
+     highlight's timer running, and when it fired it wiped the id this
+     one was waiting on: the search stopped, silently, and a link to a
+     deleted post said nothing at all. */
+  clearTimeout(ssFlashTimer);
+  Array.prototype.forEach.call(document.querySelectorAll(".ss-flash"), function(el){ el.classList.remove("ss-flash"); });
+  ssFlashId=id;
+  var tries=0;
+  (function attempt(){
+    if(ssFlashId!==id) return;                 // a newer link took over
+    var el=findFlashTarget(container);
+    if(el){ markFlash(el); return; }
+    if(++tries<20){ setTimeout(attempt, 120); }
+    else { ssFlashId=null; showBoardNote(missingText); }
+  })();
+}
+function findFlashTarget(container){
+  if(!ssFlashId || !container) return null;
+  return container.querySelector('[data-id="'+ssFlashId.replace(/"/g,"")+'"]');
+}
+function markFlash(el){
+  var mine=ssFlashId;
+  el.scrollIntoView({block:"center"});
+  el.classList.add("ss-flash");
+  clearTimeout(ssFlashTimer);
+  ssFlashTimer=setTimeout(function(){
+    el.classList.remove("ss-flash");
+    if(ssFlashId===mine) ssFlashId=null;   // never clear a newer link's target
+  }, 2400);
+}
+/** Re-applied after a re-render, which replaces the element wholesale. */
+function applyFlash(container){
+  var el=findFlashTarget(container);
+  if(el) el.classList.add("ss-flash");
+}
+function showBoardNote(text){
+  var note=document.getElementById("boardNote");
+  if(!note) return;
+  note.textContent=text; note.hidden=false;
+}
+function routeFromHash(){
+  var p=parseHash();
+  if(!p) return;
+  if(p.board){
+    openBoard(POST_BOARDS[p.board] ? p.board : "messages");
+    if(p.post) flashTarget(document.getElementById("boardList"), p.post,
+                           "That post has been deleted.");
+  } else if(p.task){
+    var t=byId[p.task];
+    if(t){
+      openEditor(p.task, true);
+      if(p.comment) flashTarget(document.getElementById("commentsList"), p.comment,
+                                "That comment has been deleted.");
+    }
+  } else if(p.note){
+    openNotes();
+    var n=NOTES.filter(function(x){ return x.id===p.note; })[0];
+    if(n) setTimeout(function(){ openNote(p.note); }, 60);
+  }
+  /* Clear it once handled, so a refresh does not reopen the modal and
+     flash the same post again. */
+  if(history.replaceState) history.replaceState(null, "", location.pathname+location.search);
+}
+window.addEventListener("hashchange", routeFromHash);
+
+/* ---- Starting up, and the one-time seed ----------------------------- */
+
+/**
+ * Run ONCE, from the browser holding the project as it should start,
+ * by typing ssSeed() into the console. It pushes everything in this
+ * browser up to the empty store. Everyone else then pulls it down and
+ * their own local copy is left alone but no longer read.
+ *
+ * Deliberately manual. Doing this automatically on first load would mean
+ * whoever happened to open the page first decided what the project was.
+ */
+function ssSeed(){
+  if(!storeOn()){ alert("Paste the /exec URL into STORE_URL first."); return; }
+  var items=[];
+  state.tasks.forEach(function(t){
+    /* Comments predating this change have no id, so give them one now:
+       without it they cannot be linked to and the store cannot tell two
+       of them apart. */
+    (t.comments||[]).forEach(function(c,i){
+      if(!c.id) c.id="c-legacy-"+t.id+"-"+i;
+      if(!c.mentions) c.mentions=mentionsIn(c.text);
+    });
+    items.push({kind:"task", id:t.id, payload:taskPayload(t)});
+  });
+  Object.keys(POST_BOARDS).forEach(function(k){
+    var cfg=POST_BOARDS[k];
+    readStore(cfg.key).forEach(function(m){
+      if(!m.board) m.board=cfg.kind;
+      items.push({kind:"message", id:m.id, payload:m});
+    });
+  });
+  NOTES.forEach(function(n){ items.push({kind:"note", id:n.id, payload:n}); });
+  items.push({kind:"map", id:"assignees", payload:SAVED_ASSIGNEES});
+  items.push({kind:"map", id:"status",    payload:SAVED_STATUS});
+  items.push({kind:"map", id:"dates",     payload:SAVED_DATES});
+  items.push({kind:"map", id:"names",     payload:{list:AUTHOR_OPTIONS}});
+
+  storeCall({action:"putMany", items:items, actor:commentAuthor||"seed"}, function(res){
+    state.tasks.forEach(markTaskSent);
+    alert("Seeded "+res.count+" records. Check the Sheet, then tell the others to reload.");
+  }, function(err){ alert("Seed failed: "+err); });
+}
+window.ssSeed=ssSeed;
+
+function storeStart(){
+  if(!storeOn()){ routeFromHash(); return; }
+  storePull(function(){
+    state.tasks.forEach(markTaskSent);   // baseline, so the first save sends only real changes
+    routeFromHash();
+  });
+  setInterval(function(){
+    if(document.visibilityState==="visible") storePull();
+  }, POLL_MS);
+  document.addEventListener("visibilitychange", function(){
+    if(document.visibilityState==="visible") storePull();
+  });
+}
+
 /* ============ INIT ============ */
 /* Phases added to ORIGINAL_DATA after someone already has saved state get folded in here,
    in their scheduled position, without touching that person's edits, comments, or files. */
@@ -3307,6 +4166,11 @@ applySavedStatus();
 applySavedDates();
 clearMemo();
 rerender();
+/* Last, and only after the page is drawn from local state: connect to the
+   shared store, fold in anything newer, then follow whatever link brought
+   the person here. Draws once from what is on this machine so the page is
+   never blank while a request is in flight. */
+storeStart();
 </script>
 <script>
 (function () {

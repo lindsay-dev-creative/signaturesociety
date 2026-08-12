@@ -970,6 +970,48 @@
 #tab-timeline .board-foot .ca-row select {flex:0 1 260px;min-width:0}
 #tab-timeline .board-foot textarea {width:100%;min-height:78px;resize:vertical}
 
+/* Three boards share this modal, so the tabs say which one is open as
+   much as they switch between them. */
+#tab-timeline .board-tabs {flex:0 0 auto;display:flex;gap:2px;padding:0 22px;border-bottom:1px solid var(--color1-800)}
+#tab-timeline .board-tab {background:transparent;border:none;border-bottom:2px solid transparent;margin-bottom:-1px;
+  padding:10px 14px;cursor:pointer;font-family:var(--face-sec);font-size:var(--body-sm-sec);line-height:var(--lh-body-sm-sec);
+  letter-spacing:var(--ls-btn-compact);color:var(--neutral-400);transition:color .12s,border-color .12s}
+#tab-timeline .board-tab:hover {color:var(--neutral-50)}
+#tab-timeline .board-tab[aria-selected="true"] {color:var(--color5-100);border-bottom-color:var(--color4-400)}
+/* Standing warning on Project Updates, and where a dead link explains
+   itself. Sits between the tabs and the list so it is read before the
+   posts, not after them. */
+#tab-timeline .board-note {flex:0 0 auto;padding:10px 22px;background:rgba(255,255,255,.03);
+  border-bottom:1px solid var(--color1-800);font-size:var(--body-xs-sec);line-height:var(--lh-body-xs-sec);color:var(--color4-400)}
+
+/* A name someone typed with an @ in front of it. Marked in the text so a
+   mention is visible at a glance in a long thread. */
+#tab-timeline .mention {color:var(--color4-400);font-weight:var(--weight-body-sec-strong)}
+
+/* Where an emailed link lands. Long enough to catch the eye after the
+   scroll, then out of the way: it marks the post, it does not label it. */
+#tab-timeline .ss-flash {animation:ss-flash 2.4s ease-out}
+@keyframes ss-flash {
+  0%   {background:var(--color4-600);box-shadow:0 0 0 6px rgba(0,0,0,0)}
+  15%  {background:rgba(255,255,255,.10)}
+  100% {background:rgba(255,255,255,.03)}
+}
+
+/* Only visible when the shared store cannot be reached. */
+#tab-timeline .sync-note {font-family:var(--face-sec);font-size:var(--body-xs-sec);line-height:var(--lh-body-xs-sec);
+  color:var(--color2-400);align-self:center}
+
+/* The @ menu is appended to <body> so it can sit above a modal without
+   being clipped by it, which puts it outside #tab-timeline and out of
+   reach of every rule above. Hence the unscoped selectors. */
+.mention-menu {position:fixed;z-index:90;max-height:180px;overflow-y:auto;
+  background:var(--color1-700);border:1px solid var(--color1-600);box-shadow:var(--shadow);
+  display:flex;flex-direction:column;padding:4px}
+.mention-menu[hidden] {display:none}
+.mention-opt {background:transparent;border:none;text-align:left;cursor:pointer;padding:7px 10px;
+  font-family:var(--face-sec);font-size:var(--body-sm-sec);line-height:var(--lh-body-sm-sec);color:var(--color5-200)}
+.mention-opt:hover,.mention-opt.on {background:rgba(255,255,255,.08);color:var(--neutral-50)}
+
 /* ============ MEETING NOTES ============
    A table of notes, with a single-note editor on top of it. */
 #tab-timeline .notes-tbl {width:100%;border-collapse:collapse;font-size:var(--body-base-sec);line-height:var(--lh-body-base-sec)}
