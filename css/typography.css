@@ -1,0 +1,418 @@
+/* ============================================================
+   SIGNATURE SOCIETY · TYPOGRAPHY UTILITIES
+   ------------------------------------------------------------
+   One class per named text style in the Figma file. Every class
+   sets six properties and nothing else — family, size, weight,
+   line height, tracking, case — so a class can be combined with
+   any colour, margin or layout utility without fighting it.
+
+   Load AFTER css/tokens.css.
+
+       <h1 class="sig-heading1-h1">Considered by hand</h1>
+       <h2 class="sig-heading2-h3">The house style</h2>
+       <p  class="sig-body1-base">Running copy.</p>
+       <p  class="sig-body1-base sig-strong">Emphasis.</p>
+
+   Modifiers are set on the SAME element, never on a descendant:
+
+       <p class="sig-body2-sm sig-strong">          correct
+       <p class="sig-body2-sm"><b class="sig-strong">   not this
+
+   The classes carry no colour. Text colour comes from the
+   --sig-text-* roles through the utilities in utilities.css, so
+   one class works on both the light and the dark ground.
+   ============================================================ */
+
+
+/* ============================================================
+   HEADING 1 · PP Playground
+   The script. Used for hero moments and nothing else: one line,
+   two at most, never uppercase, never a paragraph.
+   ============================================================ */
+
+.sig-heading1-display,
+.sig-heading1-h1,
+.sig-heading1-h2,
+.sig-heading1-h3,
+.sig-heading1-h4,
+.sig-heading1-h5,
+.sig-heading1-h6 {
+  font-family: var(--sig-ff-heading1);
+  font-weight: var(--sig-fw-heading1);
+  letter-spacing: var(--sig-ls-heading1);
+  text-transform: var(--sig-tt-heading1);
+}
+
+.sig-heading1-display { font-size: var(--sig-fs-heading1-display); line-height: var(--sig-lh-heading1-display); }
+.sig-heading1-h1      { font-size: var(--sig-fs-heading1-h1);      line-height: var(--sig-lh-heading1-h1); }
+.sig-heading1-h2      { font-size: var(--sig-fs-heading1-h2);      line-height: var(--sig-lh-heading1-h2); }
+.sig-heading1-h3      { font-size: var(--sig-fs-heading1-h3);      line-height: var(--sig-lh-heading1-h3); }
+.sig-heading1-h4      { font-size: var(--sig-fs-heading1-h4);      line-height: var(--sig-lh-heading1-h4); }
+.sig-heading1-h5      { font-size: var(--sig-fs-heading1-h5);      line-height: var(--sig-lh-heading1-h5); }
+.sig-heading1-h6      { font-size: var(--sig-fs-heading1-h6);      line-height: var(--sig-lh-heading1-h6); }
+
+
+/* ============================================================
+   HEADING 2 · Kepler Std, uppercase
+   The working heading voice. The face is held per step rather
+   than on the group, because the ladder crosses the 32px optical
+   boundary — and crosses it at a different step on mobile.
+   ============================================================ */
+
+.sig-heading2-display,
+.sig-heading2-h1,
+.sig-heading2-h2,
+.sig-heading2-h3,
+.sig-heading2-h4,
+.sig-heading2-h5,
+.sig-heading2-h6 {
+  font-weight: var(--sig-fw-heading2);
+  text-transform: var(--sig-tt-heading2);
+}
+
+.sig-heading2-display {
+  font-family: var(--sig-ff-heading2-display);
+  font-size: var(--sig-fs-heading2-display);
+  line-height: var(--sig-lh-heading2-display);
+  letter-spacing: var(--sig-ls-heading2-display);
+}
+.sig-heading2-h1 {
+  font-family: var(--sig-ff-heading2-h1);
+  font-size: var(--sig-fs-heading2-h1);
+  line-height: var(--sig-lh-heading2-h1);
+  letter-spacing: var(--sig-ls-heading2-h1);
+}
+.sig-heading2-h2 {
+  font-family: var(--sig-ff-heading2-h2);
+  font-size: var(--sig-fs-heading2-h2);
+  line-height: var(--sig-lh-heading2-h2);
+  letter-spacing: var(--sig-ls-heading2-h2);
+}
+.sig-heading2-h3 {
+  font-family: var(--sig-ff-heading2-h3);
+  font-size: var(--sig-fs-heading2-h3);
+  line-height: var(--sig-lh-heading2-h3);
+  letter-spacing: var(--sig-ls-heading2-h3);
+}
+.sig-heading2-h4 {
+  font-family: var(--sig-ff-heading2-h4);
+  font-size: var(--sig-fs-heading2-h4);
+  line-height: var(--sig-lh-heading2-h4);
+  letter-spacing: var(--sig-ls-heading2-h4);
+}
+.sig-heading2-h5 {
+  font-family: var(--sig-ff-heading2-h5);
+  font-size: var(--sig-fs-heading2-h5);
+  line-height: var(--sig-lh-heading2-h5);
+  letter-spacing: var(--sig-ls-heading2-h5);
+}
+.sig-heading2-h6 {
+  font-family: var(--sig-ff-heading2-h6);
+  font-size: var(--sig-fs-heading2-h6);
+  line-height: var(--sig-lh-heading2-h6);
+  letter-spacing: var(--sig-ls-heading2-h6);
+}
+
+
+/* ============================================================
+   BODY 1 · Kepler Std
+   The primary voice: product stories, the journal, anything the
+   reader is meant to settle into.
+   ============================================================ */
+
+.sig-body1-lg,
+.sig-body1-base,
+.sig-body1-sm,
+.sig-body1-xs {
+  font-weight: var(--sig-fw-body1-normal);
+  letter-spacing: var(--sig-ls-body1);
+  text-transform: var(--sig-tt-body1);
+}
+
+.sig-body1-lg   { font-family: var(--sig-ff-body1-lg);   font-size: var(--sig-fs-body1-lg);   line-height: var(--sig-lh-body1-lg); }
+.sig-body1-base { font-family: var(--sig-ff-body1-base); font-size: var(--sig-fs-body1-base); line-height: var(--sig-lh-body1-base); }
+.sig-body1-sm   { font-family: var(--sig-ff-body1-sm);   font-size: var(--sig-fs-body1-sm);   line-height: var(--sig-lh-body1-sm); }
+.sig-body1-xs   { font-family: var(--sig-ff-body1-xs);   font-size: var(--sig-fs-body1-xs);   line-height: var(--sig-lh-body1-xs); }
+
+/* Uppercase cuts · eyebrows and small labels that should stay in
+   the Kepler voice rather than dropping to Inter. */
+.sig-body1-base-upper,
+.sig-body1-xs-upper {
+  font-weight: var(--sig-fw-body1-normal);
+  line-height: var(--sig-lh-body1-upper);
+  text-transform: uppercase;
+}
+.sig-body1-base-upper {
+  font-family: var(--sig-ff-body1-sm);
+  font-size: var(--sig-fs-body1-base-upper);
+  letter-spacing: var(--sig-ls-body1-base-upper);
+}
+.sig-body1-xs-upper {
+  font-family: var(--sig-ff-body1-xs);
+  font-size: var(--sig-fs-body1-xs-upper);
+  letter-spacing: var(--sig-ls-body1-xs-upper);
+}
+
+/* Emphasis in Kepler. Only the xs step has a real Medium in kit
+   hqq5dii (kepler-std-medium-caption); at base and sm the 500 is
+   synthesised until Kepler Std Medium is published to the kit. For
+   emphasis in running copy, prefer the real 400 italic. */
+.sig-body1-xs.sig-strong {
+  font-family: var(--sig-ff-kepler-medium-caption);
+  font-weight: var(--sig-fw-body1-strong);
+}
+.sig-body1-lg.sig-strong,
+.sig-body1-base.sig-strong,
+.sig-body1-sm.sig-strong { font-weight: var(--sig-fw-body1-strong); }
+
+.sig-body1-lg.sig-italic,
+.sig-body1-base.sig-italic,
+.sig-body1-sm.sig-italic,
+.sig-body1-xs.sig-italic { font-style: italic; }
+
+
+/* ============================================================
+   BODY 2 · Inter
+   The secondary voice: interface copy, captions, anywhere Kepler
+   would read too editorial. Fixed size at every breakpoint.
+   ============================================================ */
+
+.sig-body2-lg,
+.sig-body2-base,
+.sig-body2-sm,
+.sig-body2-xs {
+  font-family: var(--sig-ff-body2);
+  font-weight: var(--sig-fw-body2-normal);
+  letter-spacing: var(--sig-ls-body2);
+  text-transform: var(--sig-tt-body2);
+}
+
+.sig-body2-lg   { font-size: var(--sig-fs-body2-lg);   line-height: var(--sig-lh-body2-lg); }
+.sig-body2-base { font-size: var(--sig-fs-body2-base); line-height: var(--sig-lh-body2-base); }
+.sig-body2-sm   { font-size: var(--sig-fs-body2-sm);   line-height: var(--sig-lh-body2-sm); }
+.sig-body2-xs   { font-size: var(--sig-fs-body2-xs);   line-height: var(--sig-lh-body2-xs); }
+
+.sig-body2-lg.sig-strong,
+.sig-body2-base.sig-strong,
+.sig-body2-sm.sig-strong,
+.sig-body2-xs.sig-strong { font-weight: var(--sig-fw-body2-strong); }
+
+.sig-body2-lg.sig-italic,
+.sig-body2-base.sig-italic,
+.sig-body2-sm.sig-italic,
+.sig-body2-xs.sig-italic { font-style: italic; }
+
+/* body2-upper · the interface eyebrow. Always Medium: uppercase at
+   10px in a 400 goes grey on screen. */
+.sig-body2-upper-sm,
+.sig-body2-upper-xs {
+  font-family: var(--sig-ff-body2);
+  font-weight: var(--sig-fw-body2-upper);
+  line-height: var(--sig-lh-body2-upper);
+  text-transform: var(--sig-tt-body2-upper);
+}
+.sig-body2-upper-sm { font-size: var(--sig-fs-body2-upper-sm); letter-spacing: var(--sig-ls-body2-upper-sm); }
+.sig-body2-upper-xs { font-size: var(--sig-fs-body2-upper-xs); letter-spacing: var(--sig-ls-body2-upper-xs); }
+
+
+/* ============================================================
+   FORMS
+   Inter throughout. These are the type styles only; the field
+   surface, border and state colours live on the --sig-field-*
+   tokens and are applied by forms.css.
+   ============================================================ */
+
+.sig-form-label,
+.sig-form-input,
+.sig-form-placeholder,
+.sig-form-helper,
+.sig-form-error,
+.sig-form-button {
+  font-family: var(--sig-ff-form);
+  text-transform: var(--sig-tt-form);
+}
+
+.sig-form-label {
+  font-size: var(--sig-fs-form-label);
+  font-weight: var(--sig-fw-form-label);
+  line-height: var(--sig-lh-form-label);
+  letter-spacing: var(--sig-ls-form-label);
+}
+
+/* The value the reader types and the hint sitting behind it are
+   one style at two colours. Same size on purpose: a hint set
+   smaller than its own label starts to look like help text. */
+.sig-form-input,
+.sig-form-placeholder {
+  font-size: var(--sig-fs-form-input);
+  font-weight: var(--sig-fw-form-input);
+  line-height: var(--sig-lh-form-input);
+  letter-spacing: var(--sig-ls-form-input);
+}
+
+.sig-form-helper,
+.sig-form-error {
+  font-size: var(--sig-fs-form-helper);
+  font-weight: var(--sig-fw-form-helper);
+  line-height: var(--sig-lh-form-helper);
+  letter-spacing: var(--sig-ls-form-helper);
+}
+
+.sig-form-button {
+  font-size: var(--sig-fs-form-button);
+  font-weight: var(--sig-fw-form-button);
+  line-height: var(--sig-lh-form-button);
+  letter-spacing: var(--sig-ls-form-button);
+}
+
+/* Colour, for the cases where the class is used on its own rather
+   than inside a forms.css component. */
+.sig-form-label       { color: var(--sig-label-text); }
+.sig-form-placeholder { color: var(--sig-field-placeholder); }
+.sig-form-helper      { color: var(--sig-help-text); }
+.sig-form-error       { color: var(--sig-field-error-text); }
+
+
+/* ============================================================
+   INTERACTIVE
+   Nav, links and the brand button.
+   ============================================================ */
+
+.sig-nav-main {
+  font-family: var(--sig-ff-interactive-nav);
+  font-size: var(--sig-fs-interactive-nav-main);
+  font-weight: var(--sig-fw-interactive-nav);
+  line-height: var(--sig-lh-interactive-nav-main);
+  letter-spacing: var(--sig-ls-interactive-nav-main);
+  text-transform: var(--sig-tt-interactive-nav-main);
+}
+
+/* At phone width the nav is a stacked list rather than a row, so it
+   is set uppercase and opened right out to read as a different
+   object from the body copy under it. */
+.sig-nav-main-phone {
+  font-family: var(--sig-ff-interactive-nav);
+  font-size: var(--sig-fs-interactive-nav-main-phone);
+  font-weight: var(--sig-fw-interactive-nav);
+  line-height: var(--sig-lh-interactive-nav-main-phone);
+  letter-spacing: var(--sig-ls-interactive-nav-main-phone);
+  text-transform: var(--sig-tt-interactive-nav-main-phone);
+}
+
+.sig-nav-dropdown {
+  font-family: var(--sig-ff-interactive-nav);
+  font-size: var(--sig-fs-interactive-nav-dropdown);
+  font-weight: var(--sig-fw-interactive-nav);
+  line-height: var(--sig-lh-interactive-nav-dropdown);
+  letter-spacing: var(--sig-ls-interactive-nav-dropdown);
+  text-transform: var(--sig-tt-interactive-nav-dropdown);
+}
+
+.sig-footer-link {
+  font-family: var(--sig-ff-interactive-link);
+  font-size: var(--sig-fs-interactive-footer-link);
+  font-weight: var(--sig-fw-interactive-link);
+  line-height: var(--sig-lh-interactive-footer-link);
+  letter-spacing: var(--sig-ls-interactive-footer-link);
+  text-transform: var(--sig-tt-interactive-footer-link);
+}
+
+.sig-footer-sublink {
+  font-family: var(--sig-ff-body2);
+  font-size: var(--sig-fs-interactive-footer-sublink);
+  font-weight: var(--sig-fw-body2-normal);
+  line-height: var(--sig-lh-interactive-footer-sublink);
+  letter-spacing: var(--sig-ls-interactive-footer-sublink);
+}
+
+/* The brand button label. The one place the real Kepler Medium
+   Caption cut is used. */
+.sig-button {
+  font-family: var(--sig-ff-interactive-button);
+  font-size: var(--sig-fs-interactive-button);
+  font-weight: var(--sig-fw-interactive-button);
+  line-height: var(--sig-lh-interactive-button);
+  letter-spacing: var(--sig-ls-interactive-button);
+  text-transform: var(--sig-tt-interactive-button);
+}
+
+
+/* ============================================================
+   PRODUCT DETAILS
+   The four styles the PDP owns. Title and price are the only
+   Kepler Display in the system NOT set uppercase, so the product
+   name reads as a name and not as a section heading.
+   ============================================================ */
+
+.sig-product-title,
+.sig-product-price {
+  font-family: var(--sig-ff-kepler-display);
+  font-weight: var(--sig-fw-product-details);
+}
+.sig-product-select,
+.sig-product-subhead {
+  font-family: var(--sig-ff-kepler-subhead);
+  font-weight: var(--sig-fw-product-details);
+}
+
+.sig-product-title {
+  font-size: var(--sig-fs-product-title);
+  line-height: var(--sig-lh-product-title);
+  letter-spacing: var(--sig-ls-product-title);
+  text-transform: var(--sig-tt-product-title);
+}
+.sig-product-price {
+  font-size: var(--sig-fs-product-price);
+  line-height: var(--sig-lh-product-price);
+  letter-spacing: var(--sig-ls-product-price);
+  text-transform: var(--sig-tt-product-price);
+}
+.sig-product-select {
+  font-size: var(--sig-fs-product-select);
+  line-height: var(--sig-lh-product-select);
+  letter-spacing: var(--sig-ls-product-select);
+  text-transform: var(--sig-tt-product-select);
+}
+.sig-product-subhead {
+  font-size: var(--sig-fs-product-subhead);
+  line-height: var(--sig-lh-product-subhead);
+  letter-spacing: var(--sig-ls-product-subhead);
+  text-transform: var(--sig-tt-product-subhead);
+}
+
+
+/* ============================================================
+   MEASURE
+   Line-length caps. A 70ch measure is the point at which the eye
+   still finds the next line without a run-back.
+   ============================================================ */
+
+.sig-measure        { max-width: var(--sig-measure); }
+.sig-measure-narrow { max-width: var(--sig-measure-narrow); }
+
+
+/* ============================================================
+   LEGACY CLASS ALIASES
+   The class names main.html and the two document stylesheets were
+   already written against. Each one composes the new class rather
+   than restating its properties, so there is one definition of each
+   text style in this file and not two.
+
+   These moved here from the bottom of tokens.css, where they sat
+   above the token that defined them.
+   ============================================================ */
+
+.body-pri    { font-family: var(--sig-ff-body1-base); font-weight: var(--sig-fw-body1-normal); font-size: var(--sig-fs-body1-base); line-height: var(--sig-lh-body1-base); letter-spacing: var(--sig-ls-body1); text-transform: var(--sig-tt-body1); }
+.body-pri-sm { font-family: var(--sig-ff-body1-sm);   font-weight: var(--sig-fw-body1-normal); font-size: var(--sig-fs-body1-sm);   line-height: var(--sig-lh-body1-sm);   letter-spacing: var(--sig-ls-body1); text-transform: var(--sig-tt-body1); }
+.body-pri-xs { font-family: var(--sig-ff-body1-xs);   font-weight: var(--sig-fw-body1-normal); font-size: var(--sig-fs-body1-xs);   line-height: var(--sig-lh-body1-xs);   letter-spacing: var(--sig-ls-body1); text-transform: var(--sig-tt-body1); }
+
+.body-base-sec { font-family: var(--sig-ff-body2); font-weight: var(--sig-fw-body2-normal); font-size: var(--sig-fs-body2-base); line-height: var(--sig-lh-body2-base); letter-spacing: var(--sig-ls-body2); text-transform: var(--sig-tt-body2); }
+.body-sm-sec   { font-family: var(--sig-ff-body2); font-weight: var(--sig-fw-body2-normal); font-size: var(--sig-fs-body2-sm);   line-height: var(--sig-lh-body2-sm);   letter-spacing: var(--sig-ls-body2); text-transform: var(--sig-tt-body2); }
+.body-xs-sec   { font-family: var(--sig-ff-body2); font-weight: var(--sig-fw-body2-normal); font-size: var(--sig-fs-body2-xs);   line-height: var(--sig-lh-body2-xs);   letter-spacing: var(--sig-ls-body2); text-transform: var(--sig-tt-body2); }
+
+/* .strong is the older name for .sig-strong and behaves the same
+   way: a modifier on the same element, not on a descendant. */
+.body-pri-xs.strong { font-family: var(--sig-ff-kepler-medium-caption); font-weight: var(--sig-fw-body1-strong); }
+.body-base-sec.strong,
+.body-sm-sec.strong,
+.body-xs-sec.strong { font-weight: var(--sig-fw-body2-strong); }

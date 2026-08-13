@@ -19,60 +19,16 @@
 
 /* ============================================================
    BUTTON TOKENS
-   Burgundy is the action family. Hover steps to color2-600, not
-   color2-700: 700 and 800 hold the same hex in the Figma 'scales'
-   frame, so a 700 hover would not read as a state change at all.
-   (Same correction already applied to .form-btn in forms.css.)
+   Moved to css/tokens.css, section 16, where they are defined as
+   --sig-btn-* alongside the rest of the system. This file no
+   longer declares any :root block: a second declaration here
+   would load after tokens.css and silently shadow it, which is
+   exactly how the ramps drifted apart the last time.
+
+   The --btn-* names every rule below still reads are aliases of
+   the --sig-btn-* tokens, declared in the legacy block at the
+   bottom of tokens.css.
    ============================================================ */
-:root {
-  /* ---- Fill ----
-     Measured from the btn-sec-fill frame in Figma, node 6028-2073.
-     Its #3F1214 is an unbound raw hex in the design — get_variable_defs
-     returns no colour variable for it — and it sits between
-     --color2-900 (#26070C) and --color2-800 (#4D0F19), so there is no
-     ramp step it is meant to be. Recorded as the button's own value
-     rather than snapped to the nearest step, which read visibly lighter
-     against the frame side by side. The label is the frame's #F6F5F4
-     for the same reason.
-
-     Hover and active still come off the ramp, one step either side, so
-     the states read as a change. */
-  --btn-fill-bg:           #3F1214;
-  --btn-fill-bg-hover:     var(--color2-600);
-  --btn-fill-bg-active:    var(--color2-900);
-  --btn-fill-label:        #F6F5F4;
-  --btn-fill-label-active: #F6F5F4;
-
-  /* ---- Outline ----
-     The wash tints from the light end of the burgundy ramp. The old
-     file reached for color2-900 here, a near-black behind near-black
-     text, which left the hover state unreadable. */
-  --btn-outline-stroke:        var(--color2-800);
-  --btn-outline-stroke-hover:  var(--color2-600);
-  --btn-outline-stroke-active: var(--color2-900);
-  --btn-outline-wash:          transparent;
-  --btn-outline-wash-hover:    var(--color2-50);
-  --btn-outline-wash-active:   var(--color2-100);
-
-  /* ---- Disabled ---- */
-  --btn-disabled-bg:     var(--neutral-400);
-  --btn-disabled-stroke: var(--neutral-400);
-  --btn-disabled-label:  var(--neutral-50);
-
-  /* ---- Inline wash ----
-     A tint of the ink, not a grey, so the quiet control sits in the
-     same family as the surface it is drawn on. */
-  --btn-inline-wash:        rgba(15, 19, 64, 0.05);
-  --btn-inline-wash-hover:  rgba(15, 19, 64, 0.11);
-  --btn-inline-wash-active: rgba(15, 19, 64, 0.16);
-
-  /* ---- Shape · square, like the rest of the system ---- */
-  --btn-pad-y:    var(--btn-pad-y-lg);
-  --btn-pad-x:    var(--btn-pad-x-lg);
-  --btn-size:     var(--btn-size-lg);
-  --btn-radius:   var(--radius);
-  --btn-border-w: 1px;
-}
 
 /* ---- Box -------------------------------------------------- */
 
@@ -281,8 +237,7 @@
 }
 
 
-/* ---- Mobile ----------------------------------------------- */
-
-@media (max-width: 767px) {
-  :root { --btn-pad-x: 1.8em; }
-}
+/* ---- Mobile -----------------------------------------------
+   The wider phone-width padding is now --sig-btn-pad-x-lg in the
+   mobile block of tokens.css, so this file carries no breakpoint
+   rules at all. */

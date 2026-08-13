@@ -15,6 +15,7 @@
      Kept above the two document stylesheets so that where a generic
      rule and a scoped one carry equal weight, the document wins. -->
 <link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/typography.css">
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/buttons.css">
 <link rel="stylesheet" href="css/links.css">
@@ -237,10 +238,10 @@
   <header class="masthead">
     <div class="eyebrow-row">
       <span class="internal-flag">Internal use only</span>
-      <span class="doc-meta body-sm-sec">Version 1.0 · August 2026</span>
+      <span class="doc-meta sig-body2-sm">Version 1.0 · August 2026</span>
     </div>
-    <h1 class="heading-6x">Signature<br>Society</h1>
-    <p class="lede body-pri">
+    <h1 class="sig-heading2-h1">Signature<br>Society</h1>
+    <p class="lede sig-body1-base">
       Brand guidelines covering the typographic system and the color system. Every
       specimen on this page is rendered in the live token it documents, so what you
       see is what ships. Resize the window to watch the responsive scale change.
@@ -250,51 +251,53 @@
   <!-- ==================== 01 TYPEFACES ==================== -->
   <section id="typefaces">
     <div class="sec-head">
-      <h2 class="heading-3x">Typefaces</h2>
+      <h2 class="sig-heading2-h3">Typefaces</h2>
     </div>
-    <p class="sec-note body-base-sec">
+    <p class="sec-note sig-body2-base">
       Kepler Std carries the brand voice and is used at four optical sizes. Choosing
       the optical size by point size is not optional: it is what keeps the letterforms
-      correct at scale. PP Playground sits above all of it as the hero face. Inter is
-      the secondary face, used for interface copy, forms and the form button.
+      correct at scale, and the ramps below do it for you through
+      <code>--sig-ff-*</code> rather than leaving it to the person writing the markup.
+      PP Playground sits above all of it as <code>--sig-ff-heading1</code>. Inter is the
+      secondary face, used for interface copy, forms and the form button.
     </p>
 
     <div class="faces">
       <div class="face-card">
-        <div class="glyphs" style="font-family:var(--face-hero); font-weight:500;">Aa</div>
-        <div class="face-name">PP Playground Medium</div>
-        <div class="face-css">font-family: "PP Playground"<br>weight 100, 300 and 500 · self-hosted woff2</div>
-        <div class="face-use">Hero moments only, above 86px. Never uppercase.</div>
+        <div class="glyphs" style="font-family:var(--sig-ff-heading1);">Aa</div>
+        <div class="face-name">PP Playground Regular</div>
+        <div class="face-css">--sig-ff-heading1<br>"PP Playground" · weight 400 · self-hosted woff2</div>
+        <div class="face-use">The heading 1 ramp, 39px and above. Never uppercase, never a paragraph.</div>
       </div>
       <div class="face-card">
-        <div class="glyphs" style="font-family:var(--face-display); text-transform:uppercase; letter-spacing:-0.01em;">Aa</div>
+        <div class="glyphs" style="font-family:var(--sig-ff-kepler-display); text-transform:uppercase; letter-spacing:0.05em;">Aa</div>
         <div class="face-name">Kepler Std Display</div>
-        <div class="face-css">font-family: "kepler-std-display"<br>weight 300 and 400 · italic at 400</div>
-        <div class="face-use">Headings 32px and above. Always uppercase.</div>
+        <div class="face-css">--sig-ff-kepler-display<br>"kepler-std-display" · weight 400</div>
+        <div class="face-use">32px and above: heading 2 h1&ndash;h4 and the product title and price.</div>
       </div>
       <div class="face-card">
-        <div class="glyphs" style="font-family:var(--face-subhead); text-transform:uppercase; letter-spacing:0.01em;">Aa</div>
+        <div class="glyphs" style="font-family:var(--sig-ff-kepler-subhead); text-transform:uppercase; letter-spacing:0.06em;">Aa</div>
         <div class="face-name">Kepler Std Subhead</div>
-        <div class="face-css">font-family: "kepler-std-subhead"<br>weight 400 · roman and italic</div>
-        <div class="face-use">Headings 18px to 32px. Always uppercase.</div>
+        <div class="face-css">--sig-ff-kepler-subhead<br>"kepler-std-subhead" · weight 400 · roman and italic</div>
+        <div class="face-use">19px to 32px: heading 2 h5 and h6, body 1 lg, and the product detail subheads.</div>
       </div>
       <div class="face-card">
-        <div class="glyphs" style="font-family:var(--face-regular);">Aa</div>
+        <div class="glyphs" style="font-family:var(--sig-ff-kepler-text);">Aa</div>
         <div class="face-name">Kepler Std Regular</div>
-        <div class="face-css">font-family: "kepler-std"<br>weight 300 and 400 · roman and italic</div>
-        <div class="face-use">Primary body copy at 14px to 18px, plus the primary button and nav at weight 500.</div>
+        <div class="face-css">--sig-ff-kepler-text<br>"kepler-std" · weight 300 and 400 · roman and italic</div>
+        <div class="face-use">15px to 18px: the body 1 base and sm steps, and the nav.</div>
       </div>
       <div class="face-card">
-        <div class="glyphs" style="font-family:var(--face-caption);">Aa</div>
+        <div class="glyphs" style="font-family:var(--sig-ff-kepler-caption);">Aa</div>
         <div class="face-name">Kepler Std Caption</div>
-        <div class="face-css">font-family: "kepler-std-caption"<br>weight 400</div>
-        <div class="face-use">13px and below.</div>
+        <div class="face-css">--sig-ff-kepler-caption<br>"kepler-std-caption" · weight 400</div>
+        <div class="face-use">14px and below, plus the footer links. Medium Caption is the brand button.</div>
       </div>
       <div class="face-card">
-        <div class="glyphs" style="font-family:var(--face-sec); font-weight:400;">Aa</div>
+        <div class="glyphs" style="font-family:var(--sig-ff-inter); font-weight:400;">Aa</div>
         <div class="face-name">Inter</div>
-        <div class="face-css">font-family: "Inter"<br>weight 400, 500 and 600</div>
-        <div class="face-use">Secondary body, forms, form button.</div>
+        <div class="face-css">--sig-ff-inter<br>"Inter" · weight 400 and 500</div>
+        <div class="face-use">The whole of body 2, every form control, and the footer sublinks.</div>
       </div>
     </div>
 
@@ -321,497 +324,786 @@
     -->
   </section>
 
-  <!-- ==================== 02 HEADING + BODY SCALE ==================== -->
-  <section id="primary-scale">
+  <!-- ==================== 02 HEADING 1 ==================== -->
+  <section id="heading1-scale">
     <div class="sec-head">
-      <h2 class="heading-3x">Primary type scale</h2>
+      <h2 class="sig-heading2-h3">Heading 1 · PP Playground</h2>
     </div>
-    <p class="sec-note body-base-sec">
-      Kepler Std across seven heading steps and three body steps, with PP Playground
-      above it for hero moments. Three ratios rather than one: desktop is 18px base at
-      1.25, tablet 17px at 1.2, mobile 17px at 1.125. Only the headings, the hero steps
-      and the body base move; sm and xs are fixed everywhere. The highlighted chip is
-      the value in force at your current window width. Click any chip to preview that
-      breakpoint without resizing.
+    <p class="sec-note sig-body2-base">
+      Two heading ramps and one body ramp, all three anchored on the same base.
+      Three ratios rather than one: desktop 18px at 1.250, tablet 18px at 1.200,
+      mobile 17px at 1.125. The base <em>is</em> the root font size, so
+      <code>--sig-fs-body1-base</code> is 1rem at every width and the whole system
+      steps down together on mobile. The highlighted chip is the value in force at
+      your current window width. Click any chip to preview that breakpoint without
+      resizing.
     </p>
 
     <div class="spec">
       <div class="spec-key">
-        <div class="token">hero-1x</div>
+        <div class="token">sig-heading1-display</div>
         <div class="spec-facts">
-          <span class="k">Face</span> <span class="v v-face">PP Playground Medium</span><br>
-          <span class="k">Weight</span> <span class="v v-wt">500</span><br>
+          <span class="k">Face</span> <span class="v v-face">PP Playground Regular</span><br>
+          <span class="k">Weight</span> <span class="v v-wt">400</span><br>
           <span class="k">Case</span> Sentence<br>
-          <span class="k">Line height</span> 1.08<br>
-          <span class="k">Tracking</span> 0
-        </div>
-        <div class="weights">
-          <button type="button" class="wt-chip on" data-cls="hero-1x" data-face="PP Playground Medium" data-wt="500">Medium 500</button>
-          <button type="button" class="wt-chip" data-cls="hero-1x-light" data-face="PP Playground Light" data-wt="300">Light 300</button>
-          <button type="button" class="wt-chip" data-cls="hero-1x-thin" data-face="PP Playground Thin" data-wt="100">Thin 100</button>
-        </div>
-        <div class="sizes">
-          <button type="button" class="size-chip on" data-px="134"><i>D</i> 134</button>
-          <button type="button" class="size-chip chip-t" data-px="88"><i>T</i> 88</button>
-          <button type="button" class="size-chip chip-m" data-px="49"><i>M</i> 49</button>
-        </div>
-      </div>
-      <div class="spec-render"><div class="hero-1x">The quiet luxury</div></div>
-    </div>
-
-    <div class="spec">
-      <div class="spec-key">
-        <div class="token">hero</div>
-        <div class="spec-facts">
-          <span class="k">Face</span> <span class="v v-face">PP Playground Medium</span><br>
-          <span class="k">Weight</span> <span class="v v-wt">500</span><br>
-          <span class="k">Case</span> Sentence<br>
-          <span class="k">Line height</span> 1.10<br>
-          <span class="k">Tracking</span> 0
-        </div>
-        <div class="weights">
-          <button type="button" class="wt-chip on" data-cls="hero" data-face="PP Playground Medium" data-wt="500">Medium 500</button>
-          <button type="button" class="wt-chip" data-cls="hero-light" data-face="PP Playground Light" data-wt="300">Light 300</button>
-          <button type="button" class="wt-chip" data-cls="hero-thin" data-face="PP Playground Thin" data-wt="100">Thin 100</button>
-        </div>
-        <div class="sizes">
-          <button type="button" class="size-chip on" data-px="118"><i>D</i> 118</button>
-          <button type="button" class="size-chip chip-t" data-px="73"><i>T</i> 73</button>
-          <button type="button" class="size-chip chip-m" data-px="44"><i>M</i> 44</button>
-        </div>
-      </div>
-      <div class="spec-render"><div class="hero">Considered by hand</div></div>
-    </div>
-
-    <div class="spec">
-      <div class="spec-key">
-        <div class="token">heading-6x-light</div>
-        <div class="spec-facts">
-          <span class="k">Face</span> <span class="v v-face">Kepler Std Light Display</span><br>
-          <span class="k">Weight</span> <span class="v v-wt">300</span><br>
-          <span class="k">Case</span> Uppercase<br>
-          <span class="k">Line height</span> 1.04<br>
+          <span class="k">Line height</span> 1.20<br>
           <span class="k">Tracking</span> <span class="v v-ls">0</span>
         </div>
-        <div class="weights">
-          <button type="button" class="wt-chip" data-cls="heading-6x" data-face="Kepler Std Display" data-wt="400">Regular 400</button>
-          <button type="button" class="wt-chip on" data-cls="heading-6x-light" data-face="Kepler Std Light Display" data-wt="300">Light 300</button>
-        </div>
         <div class="sizes">
-          <button type="button" class="size-chip on" data-px="86"><i>D</i> 86</button>
-          <button type="button" class="size-chip chip-t" data-px="61"><i>T</i> 61</button>
-          <button type="button" class="size-chip chip-m" data-px="39"><i>M</i> 39</button>
+          <button type="button" class="size-chip on" data-px="150"><i>D</i> 150</button>
+          <button type="button" class="size-chip chip-t" data-px="116"><i>T</i> 116</button>
+          <button type="button" class="size-chip chip-m" data-px="75"><i>M</i> 75</button>
         </div>
       </div>
-      <div class="spec-render"><div class="heading-6x-light">The quiet luxury</div></div>
+      <div class="spec-render">
+        <div class="sig-heading1-display">The quiet luxury</div>
+      </div>
     </div>
-
     <div class="spec">
       <div class="spec-key">
-        <div class="token">heading-5x-light</div>
+        <div class="token">sig-heading1-h1</div>
         <div class="spec-facts">
-          <span class="k">Face</span> <span class="v v-face">Kepler Std Light Display</span><br>
-          <span class="k">Weight</span> <span class="v v-wt">300</span><br>
-          <span class="k">Case</span> Uppercase<br>
-          <span class="k">Line height</span> 1.06<br>
-          <span class="k">Tracking</span> <span class="v v-ls">0.005em</span>
-        </div>
-        <div class="weights">
-          <button type="button" class="wt-chip" data-cls="heading-5x" data-face="Kepler Std Display" data-wt="400">Regular 400</button>
-          <button type="button" class="wt-chip on" data-cls="heading-5x-light" data-face="Kepler Std Light Display" data-wt="300">Light 300</button>
+          <span class="k">Face</span> <span class="v v-face">PP Playground Regular</span><br>
+          <span class="k">Weight</span> <span class="v v-wt">400</span><br>
+          <span class="k">Case</span> Sentence<br>
+          <span class="k">Line height</span> 1.25<br>
+          <span class="k">Tracking</span> <span class="v v-ls">0</span>
         </div>
         <div class="sizes">
-          <button type="button" class="size-chip on" data-px="69"><i>D</i> 69</button>
-          <button type="button" class="size-chip chip-t" data-px="51"><i>T</i> 51</button>
-          <button type="button" class="size-chip chip-m" data-px="34"><i>M</i> 34</button>
+          <button type="button" class="size-chip on" data-px="120"><i>D</i> 120</button>
+          <button type="button" class="size-chip chip-t" data-px="97"><i>T</i> 97</button>
+          <button type="button" class="size-chip chip-m" data-px="66"><i>M</i> 66</button>
         </div>
       </div>
-      <div class="spec-render"><div class="heading-5x-light">Considered by hand</div></div>
+      <div class="spec-render">
+        <div class="sig-heading1-h1">Considered by hand</div>
+      </div>
     </div>
-
     <div class="spec">
       <div class="spec-key">
-        <div class="token">heading-4x-light</div>
+        <div class="token">sig-heading1-h2</div>
         <div class="spec-facts">
-          <span class="k">Face</span> <span class="v v-face">Kepler Std Light Display</span><br>
-          <span class="k">Weight</span> <span class="v v-wt">300</span><br>
-          <span class="k">Case</span> Uppercase<br>
-          <span class="k">Line height</span> 1.08<br>
-          <span class="k">Tracking</span> <span class="v v-ls">0.01em</span>
-        </div>
-        <div class="weights">
-          <button type="button" class="wt-chip" data-cls="heading-4x" data-face="Kepler Std Display" data-wt="400">Regular 400</button>
-          <button type="button" class="wt-chip on" data-cls="heading-4x-light" data-face="Kepler Std Light Display" data-wt="300">Light 300</button>
+          <span class="k">Face</span> <span class="v v-face">PP Playground Regular</span><br>
+          <span class="k">Weight</span> <span class="v v-wt">400</span><br>
+          <span class="k">Case</span> Sentence<br>
+          <span class="k">Line height</span> 1.25<br>
+          <span class="k">Tracking</span> <span class="v v-ls">0</span>
         </div>
         <div class="sizes">
-          <button type="button" class="size-chip on" data-px="55"><i>D</i> 55</button>
-          <button type="button" class="size-chip chip-t" data-px="42"><i>T</i> 42</button>
-          <button type="button" class="size-chip chip-m" data-px="31"><i>M</i> 31</button>
+          <button type="button" class="size-chip on" data-px="96"><i>D</i> 96</button>
+          <button type="button" class="size-chip chip-t" data-px="81"><i>T</i> 81</button>
+          <button type="button" class="size-chip chip-m" data-px="59"><i>M</i> 59</button>
         </div>
       </div>
-      <div class="spec-render"><div class="heading-4x-light">A signature is earned</div></div>
+      <div class="spec-render">
+        <div class="sig-heading1-h2">A signature is earned</div>
+      </div>
     </div>
-
     <div class="spec">
       <div class="spec-key">
-        <div class="token">heading-3x-light</div>
+        <div class="token">sig-heading1-h3</div>
         <div class="spec-facts">
-          <span class="k">Face</span> <span class="v v-face">Kepler Std Light Display</span><br>
-          <span class="k">Weight</span> <span class="v v-wt">300</span><br>
-          <span class="k">Case</span> Uppercase<br>
-          <span class="k">Line height</span> 1.10<br>
-          <span class="k">Tracking</span> <span class="v v-ls">0.015em</span>
-        </div>
-        <div class="weights">
-          <button type="button" class="wt-chip" data-cls="heading-3x" data-face="Kepler Std Display" data-wt="400">Regular 400</button>
-          <button type="button" class="wt-chip on" data-cls="heading-3x-light" data-face="Kepler Std Light Display" data-wt="300">Light 300</button>
+          <span class="k">Face</span> <span class="v v-face">PP Playground Regular</span><br>
+          <span class="k">Weight</span> <span class="v v-wt">400</span><br>
+          <span class="k">Case</span> Sentence<br>
+          <span class="k">Line height</span> 1.25<br>
+          <span class="k">Tracking</span> <span class="v v-ls">0</span>
         </div>
         <div class="sizes">
-          <button type="button" class="size-chip on" data-px="44"><i>D</i> 44</button>
-          <button type="button" class="size-chip chip-t" data-px="35"><i>T</i> 35</button>
-          <button type="button" class="size-chip chip-m" data-px="27"><i>M</i> 27</button>
+          <button type="button" class="size-chip on" data-px="77"><i>D</i> 77</button>
+          <button type="button" class="size-chip chip-t" data-px="67"><i>T</i> 67</button>
+          <button type="button" class="size-chip chip-m" data-px="53"><i>M</i> 53</button>
         </div>
       </div>
-      <div class="spec-render"><div class="heading-3x-light">Formulated in small batches</div></div>
+      <div class="spec-render">
+        <div class="sig-heading1-h3">Formulated in small batches</div>
+      </div>
     </div>
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">sig-heading1-h4</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> <span class="v v-face">PP Playground Regular</span><br>
+          <span class="k">Weight</span> <span class="v v-wt">400</span><br>
+          <span class="k">Case</span> Sentence<br>
+          <span class="k">Line height</span> 1.25<br>
+          <span class="k">Tracking</span> <span class="v v-ls">0</span>
+        </div>
+        <div class="sizes">
+          <button type="button" class="size-chip on" data-px="61"><i>D</i> 61</button>
+          <button type="button" class="size-chip chip-t" data-px="56"><i>T</i> 56</button>
+          <button type="button" class="size-chip chip-m" data-px="47"><i>M</i> 47</button>
+        </div>
+      </div>
+      <div class="spec-render">
+        <div class="sig-heading1-h4">Kept deliberately short</div>
+      </div>
+    </div>
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">sig-heading1-h5</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> <span class="v v-face">PP Playground Regular</span><br>
+          <span class="k">Weight</span> <span class="v v-wt">400</span><br>
+          <span class="k">Case</span> Sentence<br>
+          <span class="k">Line height</span> 1.30<br>
+          <span class="k">Tracking</span> <span class="v v-ls">0</span>
+        </div>
+        <div class="sizes">
+          <button type="button" class="size-chip on" data-px="49"><i>D</i> 49</button>
+          <button type="button" class="size-chip chip-t" data-px="47"><i>T</i> 47</button>
+          <button type="button" class="size-chip chip-m" data-px="41"><i>M</i> 41</button>
+        </div>
+      </div>
+      <div class="spec-render">
+        <div class="sig-heading1-h5">One line, never a paragraph</div>
+      </div>
+    </div>
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">sig-heading1-h6</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> <span class="v v-face">PP Playground Regular</span><br>
+          <span class="k">Weight</span> <span class="v v-wt">400</span><br>
+          <span class="k">Case</span> Sentence<br>
+          <span class="k">Line height</span> 1.35<br>
+          <span class="k">Tracking</span> <span class="v v-ls">0</span>
+        </div>
+        <div class="sizes">
+          <button type="button" class="size-chip on" data-px="39"><i>D</i> 39</button>
+          <button type="button" class="size-chip chip-t" data-px="39"><i>T</i> 39</button>
+          <button type="button" class="size-chip chip-m" data-px="37"><i>M</i> 37</button>
+        </div>
+      </div>
+      <div class="spec-render">
+        <div class="sig-heading1-h6">The floor of the script ramp</div>
+      </div>
+    </div>
+
+    <div class="callout note">
+      <div class="callout-title">Why the script has no tracking</div>
+      <p>PP Playground is a joining script set in sentence case. Opening the tracking
+         breaks the join between characters and tightening it collides the swashes, so
+         there is no step and no width at which a non-zero value is an improvement.
+         <code>--sig-ls-heading1</code> is held as a named token rather than writing 0 into
+         the classes, so the decision stays visible and reversible in one place.</p>
+    </div>
+  </section>
+
+  <!-- ==================== 03 HEADING 2 ==================== -->
+  <section id="heading2-scale">
+    <div class="sec-head">
+      <h2 class="sig-heading2-h3">Heading 2 · Kepler Std</h2>
+    </div>
+    <p class="sec-note sig-body2-base">
+      The working heading voice, always uppercase. Seven steps from a 24px h6 anchor.
+      Tracking opens as the type shrinks, because uppercase set small closes up:
+      0.05em at the display end, 0.08em at h6.
+    </p>
 
     <div class="spec">
       <div class="spec-key">
-        <div class="token">heading-2x</div>
+        <div class="token">sig-heading2-display</div>
         <div class="spec-facts">
           <span class="k">Face</span> <span class="v v-face">Kepler Std Display</span><br>
           <span class="k">Weight</span> <span class="v v-wt">400</span><br>
           <span class="k">Case</span> Uppercase<br>
-          <span class="k">Line height</span> 1.14<br>
-          <span class="k">Tracking</span> <span class="v v-ls">0.02em</span>
-        </div>
-        <div class="weights">
-          <button type="button" class="wt-chip on" data-cls="heading-2x" data-face="Kepler Std Display" data-wt="400">Regular 400</button>
-          <button type="button" class="wt-chip" data-cls="heading-2x-light" data-face="Kepler Std Light Display" data-wt="300">Light 300</button>
+          <span class="k">Line height</span> 1.15<br>
+          <span class="k">Tracking</span> <span class="v v-ls">0.05em</span>
         </div>
         <div class="sizes">
-          <button type="button" class="size-chip on" data-px="35"><i>D</i> 35</button>
-          <button type="button" class="size-chip chip-t" data-px="29"><i>T</i> 29</button>
-          <button type="button" class="size-chip chip-m" data-px="24"><i>M</i> 24</button>
+          <button type="button" class="size-chip on" data-px="91"><i>D</i> 91</button>
+          <button type="button" class="size-chip chip-t" data-px="72"><i>T</i> 72</button>
+          <button type="button" class="size-chip chip-m" data-px="46"><i>M</i> 46</button>
         </div>
       </div>
-      <div class="spec-render"><div class="heading-2x">The step that crosses the optical boundary</div></div>
+      <div class="spec-render">
+        <div class="sig-heading2-display">The quiet luxury</div>
+      </div>
     </div>
-
     <div class="spec">
       <div class="spec-key">
-        <div class="token">heading-1x</div>
+        <div class="token">sig-heading2-h1</div>
         <div class="spec-facts">
-          <span class="k">Face</span> <span class="v v-face">Kepler Std Subhead</span><br>
+          <span class="k">Face</span> <span class="v v-face">Kepler Std Display</span><br>
+          <span class="k">Weight</span> <span class="v v-wt">400</span><br>
           <span class="k">Case</span> Uppercase<br>
           <span class="k">Line height</span> 1.20<br>
-          <span class="k">Tracking</span> <span class="v v-ls">0.025em</span>
+          <span class="k">Tracking</span> <span class="v v-ls">0.05em</span>
         </div>
         <div class="sizes">
-          <button type="button" class="size-chip on" data-px="28"><i>D</i> 28</button>
-          <button type="button" class="size-chip chip-t" data-px="24"><i>T</i> 24</button>
-          <button type="button" class="size-chip chip-m" data-px="22"><i>M</i> 22</button>
+          <button type="button" class="size-chip on" data-px="73"><i>D</i> 73</button>
+          <button type="button" class="size-chip chip-t" data-px="60"><i>T</i> 60</button>
+          <button type="button" class="size-chip chip-m" data-px="41"><i>M</i> 41</button>
         </div>
       </div>
-      <div class="spec-render"><div class="heading-1x">Section headings and category titles</div></div>
+      <div class="spec-render">
+        <div class="sig-heading2-h1">Considered by hand</div>
+      </div>
     </div>
-
     <div class="spec">
       <div class="spec-key">
-        <div class="token">heading</div>
+        <div class="token">sig-heading2-h2</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> <span class="v v-face">Kepler Std Display</span><br>
+          <span class="k">Weight</span> <span class="v v-wt">400</span><br>
+          <span class="k">Case</span> Uppercase<br>
+          <span class="k">Line height</span> 1.25<br>
+          <span class="k">Tracking</span> <span class="v v-ls">0.05em</span>
+        </div>
+        <div class="sizes">
+          <button type="button" class="size-chip on" data-px="59"><i>D</i> 59</button>
+          <button type="button" class="size-chip chip-t" data-px="50"><i>T</i> 50</button>
+          <button type="button" class="size-chip chip-m" data-px="36"><i>M</i> 36</button>
+        </div>
+      </div>
+      <div class="spec-render">
+        <div class="sig-heading2-h2">A signature is earned</div>
+      </div>
+    </div>
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">sig-heading2-h3</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> <span class="v v-face">Kepler Std Display</span><br>
+          <span class="k">Weight</span> <span class="v v-wt">400</span><br>
+          <span class="k">Case</span> Uppercase<br>
+          <span class="k">Line height</span> 1.30<br>
+          <span class="k">Tracking</span> <span class="v v-ls">0.05em</span>
+        </div>
+        <div class="sizes">
+          <button type="button" class="size-chip on" data-px="47"><i>D</i> 47</button>
+          <button type="button" class="size-chip chip-t" data-px="41"><i>T</i> 41</button>
+          <button type="button" class="size-chip chip-m" data-px="32"><i>M</i> 32</button>
+        </div>
+      </div>
+      <div class="spec-render">
+        <div class="sig-heading2-h3">Formulated in small batches</div>
+      </div>
+    </div>
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">sig-heading2-h4</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> <span class="v v-face">Kepler Std Display, Subhead on mobile</span><br>
+          <span class="k">Weight</span> <span class="v v-wt">400</span><br>
+          <span class="k">Case</span> Uppercase<br>
+          <span class="k">Line height</span> 1.35<br>
+          <span class="k">Tracking</span> <span class="v v-ls">0.07em</span>
+        </div>
+        <div class="sizes">
+          <button type="button" class="size-chip on" data-px="38"><i>D</i> 38</button>
+          <button type="button" class="size-chip chip-t" data-px="35"><i>T</i> 35</button>
+          <button type="button" class="size-chip chip-m" data-px="29"><i>M</i> 29</button>
+        </div>
+      </div>
+      <div class="spec-render">
+        <div class="sig-heading2-h4">The step that crosses the optical boundary</div>
+      </div>
+    </div>
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">sig-heading2-h5</div>
         <div class="spec-facts">
           <span class="k">Face</span> <span class="v v-face">Kepler Std Subhead</span><br>
+          <span class="k">Weight</span> <span class="v v-wt">400</span><br>
           <span class="k">Case</span> Uppercase<br>
-          <span class="k">Line height</span> 1.26<br>
-          <span class="k">Tracking</span> <span class="v v-ls">0.03em</span>
+          <span class="k">Line height</span> 1.40<br>
+          <span class="k">Tracking</span> <span class="v v-ls">0.06em</span>
         </div>
         <div class="sizes">
-          <button type="button" class="size-chip on" data-px="22"><i>D</i> 22</button>
-          <button type="button" class="size-chip chip-t" data-px="20"><i>T</i> 20</button>
-          <button type="button" class="size-chip chip-m" data-px="19"><i>M</i> 19</button>
+          <button type="button" class="size-chip on" data-px="30"><i>D</i> 30</button>
+          <button type="button" class="size-chip chip-t" data-px="29"><i>T</i> 29</button>
+          <button type="button" class="size-chip chip-m" data-px="26"><i>M</i> 26</button>
         </div>
       </div>
-      <div class="spec-render"><div class="heading">The smallest heading step, one above the base</div></div>
+      <div class="spec-render">
+        <div class="sig-heading2-h5">Section headings and category titles</div>
+      </div>
     </div>
-
     <div class="spec">
       <div class="spec-key">
-        <div class="token">body-pri</div>
+        <div class="token">sig-heading2-h6</div>
         <div class="spec-facts">
-          <span class="k">Face</span> <span class="v v-face">Kepler Std Regular</span><br>
-          <span class="k">Case</span> Sentence<br>
-          <span class="k">Line height</span> 1.60<br>
-          <span class="k">Tracking</span> <span class="v v-ls">0</span>
+          <span class="k">Face</span> <span class="v v-face">Kepler Std Subhead</span><br>
+          <span class="k">Weight</span> <span class="v v-wt">400</span><br>
+          <span class="k">Case</span> Uppercase<br>
+          <span class="k">Line height</span> 1.45<br>
+          <span class="k">Tracking</span> <span class="v v-ls">0.08em</span>
         </div>
         <div class="sizes">
-          <button type="button" class="size-chip on" data-px="18"><i>D</i> 18</button>
-          <button type="button" class="size-chip chip-t" data-px="17"><i>T</i> 17</button>
-          <button type="button" class="size-chip chip-m" data-px="17"><i>M</i> 17</button>
+          <button type="button" class="size-chip on" data-px="24"><i>D</i> 24</button>
+          <button type="button" class="size-chip chip-t" data-px="24"><i>T</i> 24</button>
+          <button type="button" class="size-chip chip-m" data-px="23"><i>M</i> 23</button>
         </div>
       </div>
       <div class="spec-render">
-        <p class="body-pri" style="margin:0; max-width:60ch;">
-          The primary body style. Every long-form passage on the site is set here:
-          product stories, ingredient notes, the journal. Eighteen pixels of Kepler
-          Std Regular reads warm and unhurried, which is the point.
-        </p>
-      </div>
-    </div>
-
-    <div class="spec">
-      <div class="spec-key">
-        <div class="token">body-pri-sm</div>
-        <div class="spec-facts">
-          <span class="k">Face</span> <span class="v v-face">Kepler Std Regular</span><br>
-          <span class="k">Case</span> Sentence<br>
-          <span class="k">Line height</span> 1.60<br>
-          <span class="k">Tracking</span> <span class="v v-ls">0</span>
-        </div>
-        <div class="sizes"><span class="size-chip on"><i>All</i> 15</span></div>
-      </div>
-      <div class="spec-render">
-        <p class="body-pri-sm" style="margin:0; max-width:64ch;">
-          One step below the base, for supporting copy and secondary detail. Fixed at
-          15px on every breakpoint, so it never runs larger on mobile than on desktop.
-        </p>
-      </div>
-    </div>
-
-    <div class="spec">
-      <div class="spec-key">
-        <div class="token">body-pri-xs</div>
-        <div class="spec-facts">
-          <span class="k">Face</span> <span class="v v-face">Kepler Std Caption</span><br>
-          <span class="k">Case</span> Sentence<br>
-          <span class="k">Line height</span> 1.55<br>
-          <span class="k">Tracking</span> <span class="v v-ls">0</span>
-        </div>
-        <div class="sizes"><span class="size-chip on"><i>All</i> 13</span></div>
-      </div>
-      <div class="spec-render">
-        <p class="body-pri-xs" style="margin:0; max-width:70ch;">
-          Two steps below the base and fixed at 13px. Thirteen pixels sits in the Caption
-          optical size, drawn with the open counters and sturdier strokes that hold up
-          small. Captions, footnotes, ingredient lists.
-        </p>
+        <div class="sig-heading2-h6">The smallest heading step</div>
       </div>
     </div>
 
     <div class="callout note">
       <div class="callout-title">Where the optical size changes</div>
-      <p>The 32px boundary does not sit between two fixed steps, because all three ratios
-         differ. <code>heading-2x</code> is 35px on desktop and 24px on mobile, so it starts in
-         Display and ends in Subhead. <code>heading-3x</code> and <code>heading-4x</code> cross the same line
-         at mobile only. The CSS handles this with family overrides in the breakpoints,
-         so the class name stays the same and the correct cut is chosen for you.</p>
+      <p>Kepler Std is an optical-size family: Display above 32px, Subhead from 19px to
+         32px. Because all three ratios differ, the 32px boundary does not sit between
+         two fixed steps. <code>sig-heading2-h4</code> is 38px on desktop and 29px on mobile,
+         so it starts in Display and ends in Subhead. The swap is a token
+         (<code>--sig-ff-heading2-h4</code>) overridden in the mobile block, so the class name
+         never changes and the correct cut is chosen for you.</p>
     </div>
   </section>
 
-  <!-- ==================== 03 SECONDARY SCALE ==================== -->
-  <section id="secondary-scale">
+  <!-- ==================== 04 BODY 1 ==================== -->
+  <section id="body1-scale">
     <div class="sec-head">
-      <h2 class="heading-3x">Secondary type scale</h2>
+      <h2 class="sig-heading2-h3">Body 1 · Kepler Std</h2>
     </div>
-    <p class="sec-note body-base-sec">
-      Inter at weight 400, base 15px. There are no steps above the base: anything
-      larger belongs to Kepler Std. This scale does not change across breakpoints.
-      Use it for interface copy that should recede, and anywhere Kepler would feel
-      too editorial.
+    <p class="sec-note sig-body2-base">
+      The primary reading voice. Four steps, all of them ratios of the 1rem base, so
+      the whole ramp moves together when the root steps down to 17px on mobile.
     </p>
 
     <div class="spec">
       <div class="spec-key">
-        <div class="token">body-base-sec</div>
+        <div class="token">sig-body1-lg</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> <span class="v v-face">Kepler Std Subhead</span><br>
+          <span class="k">Weight</span> <span class="v v-wt">400</span><br>
+          <span class="k">Case</span> Sentence<br>
+          <span class="k">Line height</span> 1.385<br>
+          <span class="k">Tracking</span> <span class="v v-ls">0.005em</span>
+        </div>
+        <div class="sizes">
+          <button type="button" class="size-chip on" data-px="22"><i>D</i> 22</button>
+          <button type="button" class="size-chip chip-t" data-px="22"><i>T</i> 22</button>
+          <button type="button" class="size-chip chip-m" data-px="21"><i>M</i> 21</button>
+        </div>
+      </div>
+      <div class="spec-render">
+        <p class="sig-body1-lg" style="margin:0; max-width:64ch;">
+          The lead-in step. A standfirst under a heading, or the opening paragraph of a product story. At 22px it sits in the Subhead optical size, not Regular.
+        </p>
+      </div>
+    </div>
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">sig-body1-base</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> <span class="v v-face">Kepler Std Regular</span><br>
+          <span class="k">Weight</span> <span class="v v-wt">400</span><br>
+          <span class="k">Case</span> Sentence<br>
+          <span class="k">Line height</span> 1.5<br>
+          <span class="k">Tracking</span> <span class="v v-ls">0.005em</span>
+        </div>
+        <div class="sizes">
+          <button type="button" class="size-chip on" data-px="18"><i>D</i> 18</button>
+          <button type="button" class="size-chip chip-t" data-px="18"><i>T</i> 18</button>
+          <button type="button" class="size-chip chip-m" data-px="17"><i>M</i> 17</button>
+        </div>
+      </div>
+      <div class="spec-render">
+        <p class="sig-body1-base" style="margin:0; max-width:64ch;">
+          The primary body style and the anchor of the whole system: 1rem, 18px on desktop and tablet, 17px on mobile. Every long-form passage on the site is set here — product stories, ingredient notes, the journal.
+        </p>
+      </div>
+    </div>
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">sig-body1-sm</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> <span class="v v-face">Kepler Std Regular</span><br>
+          <span class="k">Weight</span> <span class="v v-wt">400</span><br>
+          <span class="k">Case</span> Sentence<br>
+          <span class="k">Line height</span> 1.6<br>
+          <span class="k">Tracking</span> <span class="v v-ls">0.005em</span>
+        </div>
+        <div class="sizes">
+          <button type="button" class="size-chip on" data-px="16"><i>D</i> 16</button>
+          <button type="button" class="size-chip chip-t" data-px="16"><i>T</i> 16</button>
+          <button type="button" class="size-chip chip-m" data-px="15"><i>M</i> 15</button>
+        </div>
+      </div>
+      <div class="spec-render">
+        <p class="sig-body1-sm" style="margin:0; max-width:64ch;">
+          One step below the base, for supporting copy and secondary detail.
+        </p>
+      </div>
+    </div>
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">sig-body1-xs</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> <span class="v v-face">Kepler Std Caption</span><br>
+          <span class="k">Weight</span> <span class="v v-wt">400</span><br>
+          <span class="k">Case</span> Sentence<br>
+          <span class="k">Line height</span> 1.4<br>
+          <span class="k">Tracking</span> <span class="v v-ls">0.005em</span>
+        </div>
+        <div class="sizes">
+          <button type="button" class="size-chip on" data-px="14"><i>D</i> 14</button>
+          <button type="button" class="size-chip chip-t" data-px="14"><i>T</i> 14</button>
+          <button type="button" class="size-chip chip-m" data-px="13"><i>M</i> 13</button>
+        </div>
+      </div>
+      <div class="spec-render">
+        <p class="sig-body1-xs" style="margin:0; max-width:64ch;">
+          The floor of the primary ramp. Fourteen pixels sits in the Caption optical size, drawn with the open counters and sturdier strokes that hold up small. Captions, footnotes, ingredient lists.
+        </p>
+      </div>
+    </div>
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">sig-body1-base-upper</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> Kepler Std Regular<br>
+          <span class="k">Weight</span> 400<br>
+          <span class="k">Case</span> Uppercase<br>
+          <span class="k">Line height</span> 1.2<br>
+          <span class="k">Tracking</span> 0.038em
+        </div>
+        <div class="sizes">
+          <button type="button" class="size-chip on" data-px="16"><i>D</i> 16</button>
+          <button type="button" class="size-chip chip-t" data-px="16"><i>T</i> 16</button>
+          <button type="button" class="size-chip chip-m" data-px="15"><i>M</i> 15</button>
+        </div>
+      </div>
+      <div class="spec-render">
+        <div class="sig-body1-base-upper">Formulated in small batches</div>
+        <p class="sig-body2-sm" style="margin:14px 0 0; color:var(--sig-text-muted); max-width:62ch;">
+          The uppercase cut of the primary voice. Use it where an eyebrow should stay in
+          Kepler rather than dropping to Inter — above a section heading, or as a
+          category line on a card. <code>sig-body1-xs-upper</code> is the same style at 14px.
+        </p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-title">Action required · Kepler Std Medium</div>
+      <p>Figma sets <code>body1/base/strong</code> in a real Kepler Std Medium, but kit
+         <code>hqq5dii</code> publishes <code>kepler-std</code> at weights 300 and 400 only. Until
+         Medium is added to the kit, <code>sig-strong</code> at the base and sm steps will be
+         synthesised by the browser rather than drawn. The only real Medium in the kit is
+         <code>kepler-std-medium-caption</code>, which is what <code>sig-body1-xs.sig-strong</code>
+         and the brand button already point at. For emphasis in running copy, prefer the
+         real 400 italic.</p>
+    </div>
+
+  </section>
+
+  <!-- ==================== 05 BODY 2 ==================== -->
+  <section id="body2-scale">
+    <div class="sec-head">
+      <h2 class="sig-heading2-h3">Body 2 · Inter</h2>
+    </div>
+    <p class="sec-note sig-body2-base">
+      The secondary voice, base 15px. There are no steps above lg: anything larger than
+      17px belongs to Kepler. This ramp holds the same rendered size at every
+      breakpoint — the mobile block restates it against the 17px root rather than
+      letting it shrink, because scaled down with the primary ramp its xs step lands
+      under 10.5px.
+    </p>
+
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">sig-body2-lg</div>
         <div class="spec-facts">
           <span class="k">Face</span> Inter<br>
           <span class="k">Weight</span> 400<br>
-          <span class="k">Line height</span> 1.70<br>
-          <span class="k">Tracking</span> 0
+          <span class="k">Case</span> Sentence<br>
+          <span class="k">Line height</span> 1.7<br>
+          <span class="k">Tracking</span> 0.007em
         </div>
-        <div class="sizes"><span class="size-chip on"><i>All</i> 15</span></div>
+        <div class="sizes">
+          <button type="button" class="size-chip on" data-px="17"><i>All</i> 17</button>
+        </div>
       </div>
       <div class="spec-render">
-        <p class="body-base-sec" style="margin:0; max-width:62ch;">
-          The secondary body style. Interface copy, navigation, order summaries,
-          shipping detail and anything else that should stay quiet and legible
-          without carrying the brand voice.
+        <p class="sig-body2-lg" style="margin:0; max-width:66ch;">
+          The top of the secondary ramp. A lead-in for an interface panel, or the one paragraph in a checkout flow that has to carry more weight than the rest.
         </p>
       </div>
     </div>
-
     <div class="spec">
       <div class="spec-key">
-        <div class="token">body-sm-sec</div>
+        <div class="token">sig-body2-base</div>
         <div class="spec-facts">
           <span class="k">Face</span> Inter<br>
           <span class="k">Weight</span> 400<br>
-          <span class="k">Line height</span> 1.65<br>
-          <span class="k">Tracking</span> 0
+          <span class="k">Case</span> Sentence<br>
+          <span class="k">Line height</span> 1.7<br>
+          <span class="k">Tracking</span> 0.007em
         </div>
-        <div class="sizes"><span class="size-chip on"><i>All</i> 13</span></div>
+        <div class="sizes">
+          <button type="button" class="size-chip on" data-px="15"><i>All</i> 15</button>
+        </div>
       </div>
       <div class="spec-render">
-        <p class="body-sm-sec" style="margin:0; max-width:68ch;">
-          Supporting interface text. Helper copy under a field, table cells, metadata,
-          timestamps and inline notes.
+        <p class="sig-body2-base" style="margin:0; max-width:66ch;">
+          The secondary body style. Interface copy, navigation, order summaries, shipping detail and anything else that should stay quiet and legible without carrying the brand voice.
         </p>
       </div>
     </div>
-
     <div class="spec">
       <div class="spec-key">
-        <div class="token">body-xs-sec</div>
+        <div class="token">sig-body2-sm</div>
         <div class="spec-facts">
           <span class="k">Face</span> Inter<br>
           <span class="k">Weight</span> 400<br>
-          <span class="k">Line height</span> 1.55<br>
-          <span class="k">Tracking</span> 0
+          <span class="k">Case</span> Sentence<br>
+          <span class="k">Line height</span> 1.6<br>
+          <span class="k">Tracking</span> 0.007em
         </div>
-        <div class="sizes"><span class="size-chip on"><i>All</i> 11</span></div>
+        <div class="sizes">
+          <button type="button" class="size-chip on" data-px="13"><i>All</i> 13</button>
+        </div>
       </div>
       <div class="spec-render">
-        <p class="body-xs-sec" style="margin:0; max-width:80ch;">
-          The floor of the system. Legal lines, disclaimers, optional-field markers
-          and badge text. Never set a full sentence of reading copy at this size.
+        <p class="sig-body2-sm" style="margin:0; max-width:66ch;">
+          Supporting interface text. Helper copy under a field, table cells, metadata, timestamps and inline notes.
         </p>
       </div>
     </div>
-
     <div class="spec">
       <div class="spec-key">
-        <div class="token">italic-sec</div>
+        <div class="token">sig-body2-xs</div>
         <div class="spec-facts">
           <span class="k">Face</span> Inter<br>
-          <span class="k">Weight</span> 400 italic<br>
-          <span class="k">Size</span> 15px, 13px or 11px<br>
-          <span class="k">Note</span> Modifier, composes with any secondary step
+          <span class="k">Weight</span> 400<br>
+          <span class="k">Case</span> Sentence<br>
+          <span class="k">Line height</span> 1.6<br>
+          <span class="k">Tracking</span> 0.007em
+        </div>
+        <div class="sizes">
+          <button type="button" class="size-chip on" data-px="11"><i>All</i> 11</button>
         </div>
       </div>
       <div class="spec-render">
-        <p class="body-base-sec italic-sec" style="margin:0; max-width:62ch;">
-          Italic is a modifier rather than a step. Add it to any secondary size.
+        <p class="sig-body2-xs" style="margin:0; max-width:66ch;">
+          The floor of the system. Legal lines, disclaimers, optional-field markers and badge text. Never set a full sentence of reading copy at this size.
         </p>
       </div>
     </div>
-
     <div class="spec">
       <div class="spec-key">
-        <div class="token">text-upper-sec</div>
+        <div class="token">sig-body2-upper-sm</div>
         <div class="spec-facts">
           <span class="k">Face</span> Inter<br>
           <span class="k">Weight</span> 500<br>
-          <span class="k">Size</span> 15px, 13px or 11px<br>
+          <span class="k">Case</span> Uppercase<br>
+          <span class="k">Line height</span> 1.4<br>
+          <span class="k">Tracking</span> 0.033em
+        </div>
+        <div class="sizes">
+          <button type="button" class="size-chip on" data-px="12"><i>All</i> 12</button>
+        </div>
+      </div>
+      <div class="spec-render">
+        <div class="sig-body2-upper-sm">Free shipping over one hundred</div>
+        <p class="sig-body2-sm" style="margin:14px 0 0; color:var(--sig-text-muted); max-width:62ch;">
+          The interface eyebrow. Always Medium, never Regular: uppercase Inter at this size
+          in a 400 goes grey on screen and stops reading as a label.
+        </p>
+      </div>
+    </div>
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">sig-body2-upper-xs</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> Inter<br>
+          <span class="k">Weight</span> 500<br>
+          <span class="k">Case</span> Uppercase<br>
+          <span class="k">Line height</span> 1.4<br>
+          <span class="k">Tracking</span> 0.06em
+        </div>
+        <div class="sizes">
+          <button type="button" class="size-chip on" data-px="10"><i>All</i> 10</button>
+        </div>
+      </div>
+      <div class="spec-render">
+        <div class="sig-body2-upper-xs">In stock &nbsp;·&nbsp; Ships Monday</div>
+        <p class="sig-body2-sm" style="margin:14px 0 0; color:var(--sig-text-muted); max-width:62ch;">
+          The smallest label in the system. Tracking opens to 0.06em because at 10px the
+          letterforms need the air to stay separable.
+        </p>
+      </div>
+    </div>
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">sig-strong · sig-italic</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> Inter<br>
+          <span class="k">Weight</span> 500 · 400 italic<br>
+          <span class="k">Note</span> Modifiers. Compose with any body step,<br>
+          on the same element, never on a child.
+        </div>
+      </div>
+      <div class="spec-render">
+        <p class="sig-body2-base sig-strong" style="margin:0; max-width:62ch;">Weight 500 is emphasis inside secondary copy.</p>
+        <p class="sig-body2-base sig-italic" style="margin:8px 0 0; max-width:62ch;">Italic is a modifier rather than a step.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 06 INTERACTIVE ==================== -->
+  <section id="interactive">
+    <div class="sec-head">
+      <h2 class="sig-heading2-h3">Interactive type</h2>
+    </div>
+    <p class="sec-note sig-body2-base">
+      Buttons and navigation. The brand button and the whole nav are Kepler; the form
+      button is Inter, and lives in the next section with the rest of the form styles.
+      Nav is the only place in the system where a style changes character rather than
+      just size between breakpoints.
+    </p>
+
+    <div class="btn-row">
+      <button type="button" class="btn sig-button btn-pri-fill">Add to ritual</button>
+      <button type="button" class="btn sig-button btn-pri-outline">View details</button>
+    </div>
+
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">sig-button</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> Kepler Std Medium Caption<br>
+          <span class="k">Weight</span> 500<br>
+          <span class="k">Size</span> 15px<br>
+          <span class="k">Line height</span> 1<br>
+          <span class="k">Tracking</span> 0.06em<br>
           <span class="k">Case</span> Uppercase
         </div>
       </div>
       <div class="spec-render">
-        <div class="body-sm-sec text-upper-sec">Free shipping over one hundred</div>
-        <p class="body-sm-sec" style="margin:12px 0 0; color:var(--muted); max-width:62ch;">
-          All uppercase Inter takes weight 500, at whatever size it is composed with.
-          The form button is the one exception and stays sentence case at weight 500.
+        <div class="sig-button" style="color:var(--sig-ink);">Add to ritual &nbsp;·&nbsp; Checkout &nbsp;·&nbsp; Subscribe</div>
+        <p class="sig-body2-sm" style="margin:14px 0 0; color:var(--sig-text-muted); max-width:62ch;">
+          The single most branded piece of interface type, and the one place the real Kepler
+          Medium Caption cut is used. The 0.06em tracking is what makes it read as considered
+          rather than generic, so it must not be reduced.
         </p>
       </div>
     </div>
-  </section>
-
-  <!-- ==================== 04 INTERFACE ==================== -->
-  <section id="buttons">
-    <div class="sec-head">
-      <h2 class="heading-3x">Interface type</h2>
-    </div>
-    <p class="sec-note body-base-sec">
-      Buttons and navigation. The primary button and the nav carry Kepler Std at
-      weight 500; the form button carries Inter. All three sit at 14px and none of
-      them changes across breakpoints, except the nav, which becomes a Subhead
-      heading at mobile size.
-    </p>
-
-    <div class="btn-row">
-      <button type="button" class="btn btn-primary btn-pri">Add to ritual</button>
-      <button type="button" class="btn btn-secondary btn-form">View details</button>
-    </div>
-
-    <div class="spec" style="margin-top:36px;">
-      <div class="spec-key">
-        <div class="token">btn-pri</div>
-        <div class="spec-facts">
-          <span class="k">Face</span> Kepler Std Medium<br>
-          <span class="k">Weight</span> 500<br>
-          <span class="k">Size</span> 14px<br>
-          <span class="k">Tracking</span> 0.084em<br>
-          <span class="k">Case</span> Uppercase<br>
-          <span class="k">Line height</span> 1
-        </div>
-      </div>
-      <div class="spec-render">
-        <div class="btn-pri" style="color:var(--color1-900);">Add to ritual · Checkout · Subscribe</div>
-        <p class="body-sm-sec" style="margin:16px 0 0; color:var(--muted); max-width:62ch;">
-          The single most branded piece of interface type. The wide 0.084em tracking is
-          what makes it read as considered rather than generic, so it must not be reduced.
-          Rest is <code>color2/800</code>, hover <code>color2/700</code>, pressed <code>color2/900</code>.
-        </p>
-      </div>
-    </div>
-
     <div class="spec">
       <div class="spec-key">
-        <div class="token">btn-form</div>
+        <div class="token">sig-nav-main</div>
         <div class="spec-facts">
-          <span class="k">Face</span> Inter<br>
-          <span class="k">Weight</span> 500<br>
+          <span class="k">Face</span> Kepler Std Regular<br>
+          <span class="k">Weight</span> 400<br>
           <span class="k">Size</span> 14px<br>
-          <span class="k">Tracking</span> 0<br>
-          <span class="k">Case</span> Sentence<br>
-          <span class="k">Line height</span> 1
-        </div>
-      </div>
-      <div class="spec-render">
-        <div class="btn-form" style="color:var(--color1-900);">Continue · Save address · Cancel</div>
-        <p class="body-sm-sec" style="margin:16px 0 0; color:var(--muted); max-width:62ch;">
-          Deliberately plainer than the primary. Sentence case and Inter keep it
-          subordinate, so the primary action never has to compete. This is the one
-          uppercase-exempt Inter style in the system.
-        </p>
-      </div>
-    </div>
-
-    <div class="spec">
-      <div class="spec-key">
-        <div class="token">text-nav-1</div>
-        <div class="spec-facts">
-          <span class="k">Face</span> Kepler Std Medium, Subhead on mobile<br>
-          <span class="k">Weight</span> 500, 400 on mobile<br>
-          <span class="k">Size</span> 14px, 24px on mobile<br>
-          <span class="k">Tracking</span> 0.24em, 0 on mobile<br>
-          <span class="k">Case</span> Uppercase, sentence on mobile
+          <span class="k">Line height</span> 1<br>
+          <span class="k">Tracking</span> 0.004em<br>
+          <span class="k">Case</span> Title case
         </div>
         <div class="sizes">
           <span class="size-chip on"><i>D</i> 14</span>
           <span class="size-chip chip-t"><i>T</i> 14</span>
-          <span class="size-chip chip-m"><i>M</i> 24</span>
         </div>
       </div>
       <div class="spec-render">
-        <div class="text-nav-1" style="color:var(--color1-900);">Shop &nbsp; Journal &nbsp; About</div>
-        <p class="body-sm-sec" style="margin:16px 0 0; color:var(--muted); max-width:62ch;">
-          The only style in the system that changes character rather than just size.
-          On desktop it is a tracked-out uppercase rule across the top of the page.
-          On mobile it becomes a stacked drawer, so it drops the tracking, the case
-          and the Medium weight and reads as a list of headings instead.
+        <div class="sig-nav-main" style="color:var(--sig-ink);">Shop &nbsp;&nbsp; Journal &nbsp;&nbsp; About</div>
+        <p class="sig-body2-sm" style="margin:14px 0 0; color:var(--sig-text-muted); max-width:62ch;">
+          The desktop nav bar. Title case and near-zero tracking: a row of nav items is read
+          as a set of destinations, not as a tracked-out brand statement.
+        </p>
+      </div>
+    </div>
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">sig-nav-main-phone</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> Kepler Std Regular<br>
+          <span class="k">Weight</span> 400<br>
+          <span class="k">Size</span> 15px<br>
+          <span class="k">Line height</span> 1.5<br>
+          <span class="k">Tracking</span> 0.093em<br>
+          <span class="k">Case</span> Uppercase
+        </div>
+        <div class="sizes">
+          <span class="size-chip on"><i>M</i> 15</span>
+        </div>
+      </div>
+      <div class="spec-render">
+        <div class="sig-nav-main-phone" style="color:var(--sig-ink);">Shop</div>
+        <div class="sig-nav-main-phone" style="color:var(--sig-ink);">Journal</div>
+        <p class="sig-body2-sm" style="margin:14px 0 0; color:var(--sig-text-muted); max-width:62ch;">
+          The only style in the system that changes character rather than just size. At phone
+          width the nav becomes a stacked drawer, so it goes uppercase and opens right out to
+          read as a list of destinations instead of a row.
+        </p>
+      </div>
+    </div>
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">sig-nav-dropdown</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> Kepler Std Regular<br>
+          <span class="k">Weight</span> 400<br>
+          <span class="k">Size</span> 18px<br>
+          <span class="k">Line height</span> 1.25<br>
+          <span class="k">Tracking</span> 0<br>
+          <span class="k">Case</span> Title case
+        </div>
+      </div>
+      <div class="spec-render">
+        <div class="sig-nav-dropdown" style="color:var(--sig-ink);">Serums &nbsp;&nbsp; Cleansers &nbsp;&nbsp; Gift sets</div>
+        <p class="sig-body2-sm" style="margin:14px 0 0; color:var(--sig-text-muted); max-width:62ch;">
+          Second-level items inside an open nav panel. Larger than the bar above it, because
+          a dropdown is a list to be scanned rather than a rule to be glanced at.
+        </p>
+      </div>
+    </div>
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">sig-footer-link</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> Kepler Std Caption<br>
+          <span class="k">Weight</span> 400<br>
+          <span class="k">Size</span> 18px<br>
+          <span class="k">Line height</span> 1.5<br>
+          <span class="k">Tracking</span> 0.006em<br>
+          <span class="k">Case</span> Sentence
+        </div>
+      </div>
+      <div class="spec-render">
+        <div class="sig-footer-link" style="color:var(--sig-ink);">Stockists</div>
+        <div class="sig-footer-link" style="color:var(--sig-ink);">Care and refills</div>
+        <p class="sig-body2-sm" style="margin:14px 0 0; color:var(--sig-text-muted); max-width:62ch;">
+          Primary footer navigation. Caption at 18px is deliberate: the sturdier drawing holds
+          up against the dark ground the footer sits on.
+        </p>
+      </div>
+    </div>
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">sig-footer-sublink</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> Inter<br>
+          <span class="k">Weight</span> 400<br>
+          <span class="k">Size</span> 14px<br>
+          <span class="k">Line height</span> 1.4<br>
+          <span class="k">Tracking</span> 0<br>
+          <span class="k">Case</span> Sentence
+        </div>
+      </div>
+      <div class="spec-render">
+        <div class="sig-footer-sublink" style="color:var(--sig-ink);">Privacy &nbsp;·&nbsp; Terms &nbsp;·&nbsp; Accessibility</div>
+        <p class="sig-body2-sm" style="margin:14px 0 0; color:var(--sig-text-muted); max-width:62ch;">
+          The legal row under the footer proper. Inter, so it sits clearly below the Kepler
+          links above it without needing to be made smaller than 14px.
         </p>
       </div>
     </div>
   </section>
 
-  <!-- ==================== 05 FORMS ==================== -->
+  <!-- ==================== 07 FORMS ==================== -->
   <section id="forms">
     <div class="sec-head">
-      <h2 class="heading-3x">Form typography</h2>
+      <h2 class="sig-heading2-h3">Form type</h2>
     </div>
-    <p class="sec-note body-base-sec">
+    <p class="sec-note sig-body2-base">
       Forms are entirely Inter. Kepler Std is never used inside a form control:
-      checkout is a task, not a place for the brand voice. The form styles are built
-      from the secondary scale and do not change across breakpoints.
+      checkout is a task, not a place for the brand voice. Sizes hold across all three
+      breakpoints, with one exception — the input steps up to 16px on mobile, which is
+      the floor below which iOS Safari zooms the page when a field takes focus.
     </p>
 
     <form onsubmit="return false;">
@@ -848,164 +1140,250 @@
       </fieldset>
     </form>
 
-    <div class="spec" style="margin-top:44px;">
-      <div class="spec-key">
-        <div class="token">legend-form</div>
-        <div class="spec-facts">
-          <span class="k">Face</span> Inter<br>
-          <span class="k">Weight</span> 500<br>
-          <span class="k">Size</span> 15px<br>
-          <span class="k">Line height</span> 1.4<br>
-          <span class="k">Tracking</span> 0.06em<br>
-          <span class="k">Case</span> Uppercase
-        </div>
-      </div>
-      <div class="spec-render">
-        <div class="legend-form" style="color:var(--color1-900);">Shipping address</div>
-        <p class="body-sm-sec" style="margin:12px 0 0; color:var(--muted); max-width:62ch;">
-          Fieldset and step headings. It matches the label in size and weight, so case
-          and tracking are what separate them. Use a real <code>&lt;legend&gt;</code> inside a
-          <code>&lt;fieldset&gt;</code> so the grouping is announced, not just drawn.
-        </p>
-      </div>
-    </div>
-
     <div class="spec">
       <div class="spec-key">
-        <div class="token">label-form</div>
+        <div class="token">sig-form-label</div>
         <div class="spec-facts">
           <span class="k">Face</span> Inter<br>
           <span class="k">Weight</span> 500<br>
           <span class="k">Size</span> 15px<br>
           <span class="k">Line height</span> 1.45<br>
+          <span class="k">Tracking</span> 0.007em<br>
           <span class="k">Case</span> Sentence
         </div>
       </div>
       <div class="spec-render">
-        <div class="label-form" style="color:var(--color1-900);">Email address</div>
-        <p class="body-sm-sec" style="margin:12px 0 0; color:var(--muted); max-width:62ch;">
+        <div class="sig-form-label">Email address</div>
+        <p class="sig-body2-sm" style="margin:14px 0 0; color:var(--sig-text-muted); max-width:62ch;">
           Always visible, above the control, never replaced by a placeholder and never
-          collapsed into one. Matches the input at 15px so the pair reads as one unit;
+          collapsed into one. It matches the input at 15px so the pair reads as one unit;
           weight alone separates the question from the answer. Every label needs a
           <code>for</code> pointing at the control&rsquo;s <code>id</code>.
         </p>
       </div>
     </div>
-
     <div class="spec">
       <div class="spec-key">
-        <div class="token">input-form</div>
+        <div class="token">sig-form-input</div>
         <div class="spec-facts">
           <span class="k">Face</span> Inter<br>
           <span class="k">Weight</span> 400<br>
-          <span class="k">Size</span> 15px<br>
-          <span class="k">Line height</span> 1.5<br>
+          <span class="k">Size</span> 15px · 16px on mobile<br>
+          <span class="k">Line height</span> 1.45<br>
+          <span class="k">Tracking</span> 0.007em<br>
           <span class="k">Case</span> Sentence
         </div>
       </div>
       <div class="spec-render">
-        <div class="input-form" style="color:var(--color1-900);">you@example.com</div>
-        <p class="body-sm-sec" style="margin:12px 0 0; color:var(--muted); max-width:62ch;">
-          Value text in inputs, selects and textareas. Controls do not inherit type from
-          the page, so the family, size and weight have to be restated on the element.
-          Pair with a minimum 44px control height for the touch target.
+        <div class="sig-form-input" style="color:var(--sig-ink);">you@example.com</div>
+        <p class="sig-body2-sm" style="margin:14px 0 0; color:var(--sig-text-muted); max-width:62ch;">
+          Value text in inputs, selects and textareas. Controls do not inherit type from the
+          page, so family, size and weight all have to be restated on the element. The mobile
+          step up to 16px is the floor below which iOS Safari zooms the page on focus.
         </p>
       </div>
     </div>
-
     <div class="spec">
       <div class="spec-key">
-        <div class="token">placeholder-form</div>
+        <div class="token">sig-form-placeholder</div>
         <div class="spec-facts">
           <span class="k">Face</span> Inter<br>
           <span class="k">Weight</span> 400<br>
           <span class="k">Size</span> 15px<br>
-          <span class="k">Line height</span> 1.5<br>
-          <span class="k">Color</span> neutral-600
+          <span class="k">Line height</span> 1.45<br>
+          <span class="k">Tracking</span> 0.007em<br>
+          <span class="k">Case</span> Sentence
         </div>
       </div>
       <div class="spec-render">
-        <div class="placeholder-form" style="color:var(--neutral-600);">Unit 4B</div>
-        <p class="body-sm-sec" style="margin:12px 0 0; color:var(--muted); max-width:62ch;">
-          Same size and weight as the value, lightened to neutral-600 so an empty field is
-          obviously empty. It is an example of the format, never the label and never the
-          hint, because it disappears the moment typing starts.
+        <div class="sig-form-placeholder">Unit 4B</div>
+        <p class="sig-body2-sm" style="margin:14px 0 0; color:var(--sig-text-muted); max-width:62ch;">
+          The same size and weight as the value, lightened to <code>--sig-field-placeholder</code>
+          so an empty field is obviously empty. It is an example of the format — never the
+          label and never the hint, because it disappears the moment typing starts.
         </p>
       </div>
     </div>
-
     <div class="spec">
       <div class="spec-key">
-        <div class="token">helper-form</div>
-        <div class="spec-facts">
-          <span class="k">Face</span> Inter<br>
-          <span class="k">Weight</span> 400<br>
-          <span class="k">Size</span> 13px<br>
-          <span class="k">Line height</span> 1.5<br>
-          <span class="k">Color</span> Neutral/80
-        </div>
-      </div>
-      <div class="spec-render">
-        <div class="helper-form" style="color:var(--neutral-700);">Order confirmations and shipping updates only.</div>
-        <p class="body-sm-sec" style="margin:12px 0 0; color:var(--muted); max-width:62ch;">
-          Sits between the label and the control, so it is read before the field is filled
-          in rather than after it is got wrong. Wire it up with <code>aria-describedby</code>.
-        </p>
-      </div>
-    </div>
-
-    <div class="spec">
-      <div class="spec-key">
-        <div class="token">error-form</div>
+        <div class="token">sig-form-helper</div>
         <div class="spec-facts">
           <span class="k">Face</span> Inter<br>
           <span class="k">Weight</span> 500<br>
           <span class="k">Size</span> 13px<br>
-          <span class="k">Line height</span> 1.5<br>
-          <span class="k">Color</span> Secondary/90
+          <span class="k">Line height</span> 1.45<br>
+          <span class="k">Tracking</span> 0.008em<br>
+          <span class="k">Case</span> Sentence
         </div>
       </div>
       <div class="spec-render">
-        <div class="error-form" style="color:var(--color2-800);">Enter a valid postal code.</div>
-        <p class="body-sm-sec" style="margin:12px 0 0; color:var(--muted); max-width:62ch;">
-          Below the control. Weight, color and a leading glyph all carry the message, so it
-          survives for anyone who cannot separate Secondary/90 from Neutral/80. Say what to
-          do, not that something is invalid. Set <code>aria-invalid</code> and point
+        <div class="sig-form-helper">Order confirmations and shipping updates only.</div>
+        <p class="sig-body2-sm" style="margin:14px 0 0; color:var(--sig-text-muted); max-width:62ch;">
+          Sits between the label and the control, so it is read before the field is filled in
+          rather than after it is got wrong. Wire it up with <code>aria-describedby</code>.
+        </p>
+      </div>
+    </div>
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">sig-form-error</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> Inter<br>
+          <span class="k">Weight</span> 500<br>
+          <span class="k">Size</span> 13px<br>
+          <span class="k">Line height</span> 1.45<br>
+          <span class="k">Tracking</span> 0.008em<br>
+          <span class="k">Case</span> Sentence
+        </div>
+      </div>
+      <div class="spec-render">
+        <div class="sig-form-error">! Enter a valid postal code.</div>
+        <p class="sig-body2-sm" style="margin:14px 0 0; color:var(--sig-text-muted); max-width:62ch;">
+          Below the control. Weight, colour and a leading glyph all carry the message, so it
+          survives for anyone who cannot separate the error red from the neutral around it.
+          Say what to do, not that something is invalid. Set <code>aria-invalid</code> and point
           <code>aria-describedby</code> at it.
         </p>
       </div>
     </div>
-
     <div class="spec">
       <div class="spec-key">
-        <div class="token">tag-form</div>
+        <div class="token">sig-form-button</div>
         <div class="spec-facts">
           <span class="k">Face</span> Inter<br>
           <span class="k">Weight</span> 500<br>
-          <span class="k">Size</span> 11px<br>
-          <span class="k">Line height</span> 1.4<br>
-          <span class="k">Tracking</span> 0.08em<br>
-          <span class="k">Case</span> Uppercase
+          <span class="k">Size</span> 14px<br>
+          <span class="k">Line height</span> 1<br>
+          <span class="k">Tracking</span> 0<br>
+          <span class="k">Case</span> Sentence
         </div>
       </div>
       <div class="spec-render">
-        <div class="tag-form" style="color:var(--neutral-500);">Optional</div>
-        <p class="body-sm-sec" style="margin:12px 0 0; color:var(--muted); max-width:62ch;">
-          Sits beside the label. Mark what is optional rather than starring what is
-          required: on most forms it is the shorter list and it reads as an invitation
-          rather than a demand.
+        <div class="sig-form-button" style="color:var(--sig-ink);">Continue &nbsp;·&nbsp; Save address &nbsp;·&nbsp; Cancel</div>
+        <p class="sig-body2-sm" style="margin:14px 0 0; color:var(--sig-text-muted); max-width:62ch;">
+          Deliberately plainer than <code>sig-button</code>. Sentence case and Inter keep it
+          subordinate, so the brand action never has to compete with a form control. Figma
+          draws the label in a fixed 13px box on a 14px face; that is reproduced here as a
+          line height of 1 plus the control&rsquo;s own vertical padding.
         </p>
       </div>
     </div>
   </section>
 
-  <!-- ==================== 06 COLOR ====================
+  <!-- ==================== 08 PRODUCT DETAILS ==================== -->
+  <section id="product-details">
+    <div class="sec-head">
+      <h2 class="sig-heading2-h3">Product detail type</h2>
+    </div>
+    <p class="sec-note sig-body2-base">
+      The four styles the product page owns outright. They are not steps on either
+      heading ramp: a PDP sets its own hierarchy, and reusing <code>sig-heading2-h2</code>
+      for a product name would put the name in the same voice as a section heading.
+    </p>
+
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">sig-product-title</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> Kepler Std Display<br>
+          <span class="k">Weight</span> 400<br>
+          <span class="k">Size</span> 54px<br>
+          <span class="k">Line height</span> 1<br>
+          <span class="k">Tracking</span> 0.019em<br>
+          <span class="k">Case</span> Sentence
+        </div>
+        <div class="sizes">
+          <span class="size-chip on"><i>D</i> 54</span>
+          <span class="size-chip chip-t"><i>T</i> 54</span>
+          <span class="size-chip chip-m"><i>M</i> 40</span>
+        </div>
+      </div>
+      <div class="spec-render">
+        <div class="sig-product-title">Vetiver &amp; Oud</div>
+        <p class="sig-body2-sm" style="margin:14px 0 0; color:var(--sig-text-muted); max-width:62ch;">
+          The product name. One of only two places Kepler Display is set in sentence case
+          rather than uppercase, so the name reads as a name and not as a section heading.
+          The mobile step to 40px is derived rather than drawn: 54px runs past the measure on
+          a 360px screen even after the root drops to 17px.
+        </p>
+      </div>
+    </div>
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">sig-product-price</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> Kepler Std Display<br>
+          <span class="k">Weight</span> 400<br>
+          <span class="k">Size</span> 37px<br>
+          <span class="k">Line height</span> 1.09<br>
+          <span class="k">Tracking</span> 0.005em<br>
+          <span class="k">Case</span> Sentence
+        </div>
+        <div class="sizes">
+          <span class="size-chip on"><i>D</i> 37</span>
+          <span class="size-chip chip-t"><i>T</i> 37</span>
+          <span class="size-chip chip-m"><i>M</i> 30</span>
+        </div>
+      </div>
+      <div class="spec-render">
+        <div class="sig-product-price">$185</div>
+        <p class="sig-body2-sm" style="margin:14px 0 0; color:var(--sig-text-muted); max-width:62ch;">
+          Set one full step below the title, in the same cut. Price is the second thing read
+          on the page and it should not have to compete with the name above it.
+        </p>
+      </div>
+    </div>
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">sig-product-select</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> Kepler Std Subhead<br>
+          <span class="k">Weight</span> 400<br>
+          <span class="k">Size</span> 22px<br>
+          <span class="k">Line height</span> 0.886<br>
+          <span class="k">Tracking</span> 0.02em<br>
+          <span class="k">Case</span> Uppercase
+        </div>
+      </div>
+      <div class="spec-render">
+        <div class="sig-product-select">Select colour</div>
+        <p class="sig-body2-sm" style="margin:14px 0 0; color:var(--sig-text-muted); max-width:62ch;">
+          Variant pickers and swatch group labels. The tight 0.886 line height is Figma&rsquo;s
+          and is correct here: this is always a single line naming the row of controls
+          directly under it, so the leading is closed to keep the pair together.
+        </p>
+      </div>
+    </div>
+    <div class="spec">
+      <div class="spec-key">
+        <div class="token">sig-product-subhead</div>
+        <div class="spec-facts">
+          <span class="k">Face</span> Kepler Std Subhead<br>
+          <span class="k">Weight</span> 400<br>
+          <span class="k">Size</span> 22px<br>
+          <span class="k">Line height</span> 1.164<br>
+          <span class="k">Tracking</span> 0.11em<br>
+          <span class="k">Case</span> Sentence
+        </div>
+      </div>
+      <div class="spec-render">
+        <div class="sig-product-subhead">Details</div>
+        <p class="sig-body2-sm" style="margin:14px 0 0; color:var(--sig-text-muted); max-width:62ch;">
+          Section headings inside the product detail accordion — Details, Ingredients, Care.
+          The 0.11em tracking is wide for a sentence-case line and is carried through exactly
+          as drawn, because it reads as a deliberate letterspaced label rather than a slip.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 09 COLOR ====================
        Print will need CMYK and spot equivalents adding. -->
   <section id="color">
     <div class="sec-head">
-      <h2 class="heading-3x">Color system</h2>
+      <h2 class="sig-heading2-h3">Color system</h2>
     </div>
-    <p class="sec-note body-base-sec">
+    <p class="sec-note sig-body2-base">
       Six families running 900 at the darkest to 50 at the lightest. Five carry
       ten steps; Neutral carries eleven, with an extra 950 below the 900. The
       brand swatch is marked with an inset rule and a bullet, and it is not the
@@ -1089,15 +1467,18 @@
     </div>
   </section>
 
-  <!-- ==================== 07 TOKENS ====================
+  <!-- ==================== 10 TOKENS ====================
        Hidden for now. Remove the hidden attribute below to bring it back. -->
   <section id="tokens" hidden>
     <div class="sec-head">
-      <h2 class="heading-3x">Token export</h2>
+      <h2 class="sig-heading2-h3">Token export</h2>
     </div>
-    <p class="sec-note body-base-sec">
-      The full system, ready to paste. The CSS block mirrors css/tokens.css,
-      media queries included.
+    <p class="sec-note sig-body2-base">
+      The named text styles, ready to paste. The full token layer — colour ramps,
+      semantic roles, form and button tokens and the dark remap — is css/tokens.css;
+      the classes that compose these tokens are css/typography.css. A build of both,
+      stripped of the legacy alias layer, ships to the Shopify theme as
+      assets/sig-tokens.css.
     </p>
 
     <div class="tabs" role="tablist">
@@ -1107,349 +1488,515 @@
 
     <div class="code-wrap">
       <button class="copy-code" type="button">Copy</button>
-      <pre id="panel-css" role="tabpanel"><code>:root {
-  /* Typefaces */
-  --face-display: "kepler-std-display", Georgia, serif;
-  --face-subhead: "kepler-std-subhead", Georgia, serif;
-  --face-regular: "kepler-std", Georgia, serif;
-  --face-caption: "kepler-std-caption", Georgia, serif;
-  --face-sec:     "Inter", "inter-18pt", sans-serif;   /* weights 400, 500, 600 */
-  --face-hero:    "PP Playground", "kepler-std-display", Georgia, serif;
+      <pre id="panel-css" role="tabpanel"><code>/* The named text styles, ready to paste. The full token layer —
+   colour ramps, semantic roles, form and button tokens, the two
+   breakpoint blocks and the dark remap — is css/tokens.css, and the
+   classes that compose these are css/typography.css.
 
-  /* Hero scale: desktop. PP Playground Medium, above the Kepler ceiling. */
-  --hero:    118px;  --lh-hero:    1.10;
-  --hero-1x: 134px;  --lh-hero-1x: 1.08;
-  --ls-hero: 0;
-  /* Weights: .hero-thin 100, .hero-light 300, .hero 500. Same for 1x. */
+   1rem = 18px on desktop and tablet, 17px on mobile:
+       html { font-size: 112.5%; }
+       @media (max-width: 767px) { html { font-size: 106.25%; } }   */
 
-  /* Heading scale: desktop, 1024px and up */
-  --heading:    22px;  --lh-heading:    1.26;
-  --heading-1x: 28px;  --lh-heading-1x: 1.20;
-  --heading-2x: 35px;  --lh-heading-2x: 1.14;
-  --heading-3x: 44px;  --lh-heading-3x: 1.10;
-  --heading-4x: 55px;  --lh-heading-4x: 1.08;
-  --heading-5x: 69px;  --lh-heading-5x: 1.06;
-  --heading-6x: 86px;  --lh-heading-6x: 1.04;
-  /* .heading-2x-light through .heading-6x-light share these values;
-     weight 300 instead of 400. Subhead has no 300, so 2x falls back to
-     400 below 1024px, and 3x and 4x on mobile. */
-
-  /* Primary body scale. Only the base is responsive. */
-  --body-pri:    18px;  --lh-body-pri:    1.60;
-  --body-pri-sm: 15px;  --lh-body-pri-sm: 1.60;
-  --body-pri-xs: 13px;  --lh-body-pri-xs: 1.55;
-
-  /* Tracking. Headings run a graduated ladder anchored on 4x at 0.01em,
-     stepping 0.005em per position. Tracking belongs to the step, not the
-     optical cut, so it does not change at a breakpoint. Only the face
-     does. The hero steps are excluded and stay at 0. */
-  --ls-heading-6x: 0;
-  --ls-heading-5x: 0.005em;
-  --ls-heading-4x: 0.01em;
-  --ls-heading-3x: 0.015em;
-  --ls-heading-2x: 0.02em;
-  --ls-heading-1x: 0.025em;
-  --ls-heading:    0.03em;
-  --ls-text:     0;        /* sentence case */
-  --ls-btn:      0.084em;
-  --ls-btn-sec:  0.02em;
-  --ls-nav:      0.24em;
-
-  /* Secondary scale: all breakpoints */
-  --body-base-sec: 15px;  --lh-body-base-sec: 1.70;
-  --body-sm-sec:   13px;  --lh-body-sm-sec:   1.65;
-  --body-xs-sec:   11px;  --lh-body-xs-sec:   1.55;
-
-  /* Interface sizes: all breakpoints */
-  --size-btn: 14px;  --size-btn-sec: 14px;  --size-nav: 14px;
-  --size-form-btn: 14px;  --size-form-label: 15px;
-
-  /* Brand bases. The anchor step differs by family. */
-  --color1:  var(--color1-800);
-  --color2:  var(--color2-800);
-  --color3:  var(--color3-800);
-  --color4:  var(--color4-800);
-  --color5:  var(--color5-400);
-  --neutral: var(--neutral-200);
-
-  /* Color 1 · navy */
-  --color1-900: #030811;  --color1-800: #08142B;  --color1-700: #192D54;
-  --color1-600: #334C7D;  --color1-500: #5671A5;  --color1-400: #829CCE;
-  --color1-300: #B8CDF7;  --color1-200: #D1E1FF;  --color1-100: #E5EEFF;
-  --color1-50:  #F8FAFF;
-
-  /* Color 2 · burgundy */
-  --color2-900: #26070C;  --color2-800: #4D0F19;  --color2-700: #4D0F19;
-  --color2-600: #762330;  --color2-500: #9F3E4E;  --color2-400: #C76272;
-  --color2-300: #F08E9E;  --color2-200: #FFB6C2;  --color2-100: #FFD5DC;
-  --color2-50:  #FFF4F6;
-
-  /* Color 3 · forest */
-  --color3-900: #07220B;  --color3-800: #0C4015;  --color3-700: #1F692B;
-  --color3-600: #3A9249;  --color3-500: #5DBB6D;  --color3-400: #89E398;
-  --color3-300: #B4FFC1;  --color3-200: #CBFFD3;  --color3-100: #E1FFE6;
-  --color3-50:  #F7FFF9;
-
-  /* Color 4 · tobacco */
-  --color4-900: #221206;  --color4-800: #40220C;  --color4-700: #693D1F;
-  --color4-600: #925E3A;  --color4-500: #BB845D;  --color4-400: #E4AE89;
-  --color4-300: #FFD3B4;  --color4-200: #FFE0CA;  --color4-100: #FFEDE1;
-  --color4-50:  #FFFAF7;
-
-  /* Color 5 · tan */
-  --color5-900: #221D11;  --color5-800: #4E4329;  --color5-700: #6C5D3B;
-  --color5-600: #89774E;  --color5-500: #A69263;  --color5-400: #C3AD79;
-  --color5-300: #E0C891;  --color5-200: #FDE4AA;  --color5-100: #FFF1D0;
-  --color5-50:  #FFFCF6;
-
-  /* Neutral, plus an extra 950 step below the 900 */
-  --neutral-950: #32312A;  --neutral-900: #4D4B40;  --neutral-800: #625F53;
-  --neutral-700: #767366;  --neutral-600: #8A887A;  --neutral-500: #9F9C8F;
-  --neutral-400: #B3B1A4;  --neutral-300: #C8C5BA;  --neutral-200: #DCDAD0;
-  --neutral-100: #F0EFE7;  --neutral-50:  #FFFEF9;
-  --white: #FFFFFF;
-
-  /* Document surface */
-  --ink:    var(--color1);      --ground:     var(--neutral-50);
-  --rule:   var(--color5-300);  --rule-faint: var(--color5-200);
-  --muted:  var(--neutral-700);
-}
-
-/* SEMANTIC ROLES. Components name a role, never a ramp step, so a
-   surface can be re-themed by re-pointing these alone. */
 :root {
-  --text-heading:   var(--ink);          --text-heading-accent: var(--color5-700);
-  --text-body:      var(--ink);          --text-secondary:      var(--neutral-700);
-  --text-muted:     var(--neutral-600);  --text-accent:         var(--color5-700);
-  --text-light:     var(--neutral-50);
+  /* ---- Families ---- */
+  --sig-ff-heading1:       "PP Playground", "kepler-std-display", Georgia, serif;
+  --sig-ff-kepler-display: "kepler-std-display", Georgia, serif;   /* 32px and up  */
+  --sig-ff-kepler-subhead: "kepler-std-subhead", Georgia, serif;   /* 19px – 32px  */
+  --sig-ff-kepler-text:    "kepler-std", Georgia, serif;           /* 15px – 18px  */
+  --sig-ff-kepler-caption: "kepler-std-caption", Georgia, serif;   /* up to 14px   */
+  --sig-ff-inter:          "Inter", "inter-18pt", sans-serif;
 
-  --surface-page:   var(--ground);  --surface-raised: var(--white);
-  --surface-sunken: var(--neutral-100);
+  /* ---- Weights ---- */
+  --sig-fw-heading1: 400;        --sig-fw-heading2: 400;
+  --sig-fw-body1-normal: 400;    --sig-fw-body1-strong: 500;
+  --sig-fw-body2-normal: 400;    --sig-fw-body2-strong: 500;
+  --sig-fw-form-label: 500;      --sig-fw-form-input:   400;
+  --sig-fw-interactive-button: 500;
 
-  --rule-strong: var(--color5-500);  --rule-subtle: var(--rule-faint);
+  /* ---- Line height · semantic trio ---- */
+  --sig-lh-tight: 1.15;   --sig-lh-normal: 1.5;   --sig-lh-loose: 1.7;
 
-  --measure: 70ch;  --measure-narrow: 56ch;
-  --ease-ui: 160ms ease;
-  --radius:  0;     --radius-sm: 0;     /* the system is square throughout */
+  /* ---- Heading 1 · PP Playground · desktop 1.250, tracking 0 ---- */
+  --sig-fs-heading1-display: 8.333rem;  --sig-lh-heading1-display: 1.20;   /* 150px */
+  --sig-fs-heading1-h1:      6.667rem;  --sig-lh-heading1-h1:      1.25;   /* 120px */
+  --sig-fs-heading1-h2:      5.333rem;  --sig-lh-heading1-h2:      1.25;   /*  96px */
+  --sig-fs-heading1-h3:      4.278rem;  --sig-lh-heading1-h3:      1.25;   /*  77px */
+  --sig-fs-heading1-h4:      3.389rem;  --sig-lh-heading1-h4:      1.25;   /*  61px */
+  --sig-fs-heading1-h5:      2.722rem;  --sig-lh-heading1-h5:      1.30;   /*  49px */
+  --sig-fs-heading1-h6:      2.167rem;  --sig-lh-heading1-h6:      1.35;   /*  39px */
+  --sig-ls-heading1: 0;
+  --sig-tt-heading1: none;
 
-  /* Weights */
-  --weight-display: 300;  --weight-subhead: 400;  --weight-regular: 400;
-  --weight-caption: 400;  --weight-btn:     500;  --weight-btn-sec: 500;
-  --weight-body-sec-normal: 400;  --weight-body-sec-strong: 500;
-  --weight-hero: 400;
+  /* ---- Heading 2 · Kepler Std · desktop 1.250, uppercase ---- */
+  --sig-fs-heading2-display: 5.056rem;  --sig-lh-heading2-display: 1.15;  --sig-ls-heading2-display: 0.05em;  /* 91px */
+  --sig-fs-heading2-h1:      4.056rem;  --sig-lh-heading2-h1:      1.20;  --sig-ls-heading2-h1:      0.05em;  /* 73px */
+  --sig-fs-heading2-h2:      3.278rem;  --sig-lh-heading2-h2:      1.25;  --sig-ls-heading2-h2:      0.05em;  /* 59px */
+  --sig-fs-heading2-h3:      2.611rem;  --sig-lh-heading2-h3:      1.30;  --sig-ls-heading2-h3:      0.05em;  /* 47px */
+  --sig-fs-heading2-h4:      2.111rem;  --sig-lh-heading2-h4:      1.35;  --sig-ls-heading2-h4:      0.07em;  /* 38px */
+  --sig-fs-heading2-h5:      1.667rem;  --sig-lh-heading2-h5:      1.40;  --sig-ls-heading2-h5:      0.06em;  /* 30px */
+  --sig-fs-heading2-h6:      1.333rem;  --sig-lh-heading2-h6:      1.45;  --sig-ls-heading2-h6:      0.08em;  /* 24px */
+  --sig-tt-heading2: uppercase;
+  /* The face is per step: Display for display–h4, Subhead for h5–h6.
+     On mobile h4 falls to 28.7px and moves down to Subhead with it. */
 
-  /* Casing */
-  --case-heading: uppercase;  --case-btn:     uppercase;
-  --case-body-pri: none;      --case-body-sec: none;
-  --case-btn-sec:  none;      --case-nav:      none;
+  /* ---- Body 1 · Kepler Std · the base IS 1rem ---- */
+  --sig-fs-body1-lg:   1.222rem;  --sig-lh-body1-lg:   1.385;   /* 22px, Subhead */
+  --sig-fs-body1-base: 1rem;      --sig-lh-body1-base: 1.5;     /* 18px, Regular */
+  --sig-fs-body1-sm:   0.889rem;  --sig-lh-body1-sm:   1.6;     /* 16px, Regular */
+  --sig-fs-body1-xs:   0.778rem;  --sig-lh-body1-xs:   1.4;     /* 14px, Caption */
+  --sig-ls-body1: 0.005em;
+  --sig-fs-body1-base-upper: 0.889rem;  --sig-ls-body1-base-upper: 0.038em;
+  --sig-fs-body1-xs-upper:   0.778rem;  --sig-ls-body1-xs-upper:   0.043em;
+
+  /* ---- Body 2 · Inter · fixed px at every breakpoint ---- */
+  --sig-fs-body2-lg:   0.944rem;  --sig-lh-body2-lg:   1.7;   /* 17px */
+  --sig-fs-body2-base: 0.833rem;  --sig-lh-body2-base: 1.7;   /* 15px */
+  --sig-fs-body2-sm:   0.722rem;  --sig-lh-body2-sm:   1.6;   /* 13px */
+  --sig-fs-body2-xs:   0.611rem;  --sig-lh-body2-xs:   1.6;   /* 11px */
+  --sig-ls-body2: 0.007em;
+  --sig-fs-body2-upper-sm: 0.667rem;  --sig-ls-body2-upper-sm: 0.033em;   /* 12px, 500 */
+  --sig-fs-body2-upper-xs: 0.556rem;  --sig-ls-body2-upper-xs: 0.06em;    /* 10px, 500 */
+  --sig-lh-body2-upper: 1.4;
+  --sig-tt-body2-upper: uppercase;
+
+  /* ---- Forms · Inter ---- */
+  --sig-fs-form-label:  0.833rem;  --sig-lh-form-label:  1.45;  /* 15px, 500 */
+  --sig-fs-form-input:  0.833rem;  --sig-lh-form-input:  1.45;  /* 15px, 400 · 16px on mobile */
+  --sig-fs-form-helper: 0.722rem;  --sig-lh-form-helper: 1.45;  /* 13px, 500 */
+  --sig-fs-form-button: 0.778rem;  --sig-lh-form-button: 1;     /* 14px, 500 */
+  --sig-ls-form-label: 0.007em;  --sig-ls-form-input: 0.007em;
+  --sig-ls-form-helper: 0.008em; --sig-ls-form-button: 0;
+
+  /* ---- Interactive ---- */
+  --sig-fs-interactive-button:         0.833rem;  /* 15px, Kepler Medium Caption, 0.06em, upper */
+  --sig-fs-interactive-nav-main:       0.778rem;  /* 14px, Kepler Regular, 0.004em, title case  */
+  --sig-fs-interactive-nav-main-phone: 0.833rem;  /* 15px, Kepler Regular, 0.093em, uppercase   */
+  --sig-fs-interactive-nav-dropdown:   1rem;      /* 18px, Kepler Regular, 0, title case        */
+  --sig-fs-interactive-footer-link:    1rem;      /* 18px, Kepler Caption, 0.006em              */
+  --sig-fs-interactive-footer-sublink: 0.778rem;  /* 14px, Inter, 0                             */
+
+  /* ---- Product details ---- */
+  --sig-fs-product-title:   3rem;      --sig-lh-product-title:   1;      --sig-ls-product-title:   0.019em;  /* 54px */
+  --sig-fs-product-price:   2.056rem;  --sig-lh-product-price:   1.09;   --sig-ls-product-price:   0.005em;  /* 37px */
+  --sig-fs-product-select:  1.222rem;  --sig-lh-product-select:  0.886;  --sig-ls-product-select:  0.02em;   /* 22px, upper */
+  --sig-fs-product-subhead: 1.222rem;  --sig-lh-product-subhead: 1.164;  --sig-ls-product-subhead: 0.11em;   /* 22px */
 }
 
-/* BUTTONS. Burgundy is the action family. Hover steps to color2-600,
-   not 700: 700 and 800 hold the same hex in the Figma 'scales' frame,
-   so a 700 hover would not read as a state change at all. */
-:root {
-  --btn-fill-bg:       var(--color2-800);  --btn-fill-bg-hover:  var(--color2-600);
-  --btn-fill-bg-active: var(--color2-900); --btn-fill-label:     var(--neutral-50);
-  --btn-fill-label-active: var(--neutral-50);
-
-  --btn-outline-stroke:        var(--color2-800);
-  --btn-outline-stroke-hover:  var(--color2-600);
-  --btn-outline-stroke-active: var(--color2-900);
-  --btn-outline-wash:          transparent;
-  --btn-outline-wash-hover:    var(--color2-50);
-  --btn-outline-wash-active:   var(--color2-100);
-
-  --btn-disabled-bg:     var(--neutral-400);
-  --btn-disabled-stroke: var(--neutral-400);
-  --btn-disabled-label:  var(--neutral-50);
-
-  --btn-pad-y: 1.15em;  --btn-pad-x: 2.2em;
-  --btn-radius: var(--radius);  --btn-border-w: 1px;
-}
-
-/* LINKS */
-:root {
-  --link-text:        var(--text-body);
-  --link-text-hover:  var(--color2-800);
-  --link-text-active: var(--color2-900);
-  --link-underline:       var(--color5-500);
-  --link-underline-hover: var(--color2-800);
-  --link-offset: 0.18em;  --link-thickness: 1px;
-}
-
-/* FORMS, light ground. Border steps are chosen against the 3:1 floor
-   for control boundaries, not for looks. */
-:root {
-  --field-bg:       var(--white);      --field-bg-hover:    var(--white);
-  --field-bg-focus: var(--white);      --field-bg-disabled: var(--neutral-100);
-  --field-bg-readonly: var(--neutral-100);
-
-  --field-border:       var(--neutral-600);  /* 3.5:1 on white */
-  --field-border-hover: var(--neutral-800);  --field-border-filled: var(--neutral-700);
-  --field-border-focus: var(--color1-600);   --field-border-disabled: var(--neutral-400);
-
-  --field-text:          var(--neutral-950);  --field-text-focus:    var(--neutral-950);
-  --field-placeholder:   var(--neutral-700);  --field-text-readonly: var(--neutral-800);
-  --field-text-disabled: var(--neutral-600);
-
-  --label-text:     var(--neutral-900);  --label-text-focus: var(--color1-700);
-  --label-disabled: var(--neutral-600);  --help-text:        var(--neutral-800);
-  --required-mark:  var(--color2-600);
-
-  --control-bg:           var(--white);       --control-border:        var(--neutral-600);
-  --control-border-hover: var(--neutral-800); --control-checked-bg:    var(--color1-700);
-  --control-checked-hover: var(--color1-600); --control-checked-mark:  var(--neutral-50);
-  --control-disabled-bg:  var(--neutral-300);
-
-  --focus-ring: var(--color1-600);  --focus-ring-soft: rgba(51, 76, 125, 0.22);
-
-  --field-error:   var(--color2-600);  --field-error-text: var(--color2-700);
-  --field-error-bg: var(--color2-50);  --field-error-ring: rgba(159, 62, 78, 0.22);
-  --field-success: var(--color3-600);  --field-success-text: var(--color3-700);
-  --field-success-bg: var(--color3-50);
-  --field-warning: var(--color4-600);  --field-warning-text: var(--color4-700);
-  --field-warning-bg: var(--color4-50);
-
-  --field-selection-bg: var(--color5-200);  --field-selection-text: var(--neutral-950);
-  --field-caret: var(--color1-700);
-
-  --field-radius: var(--radius);  --field-pad-y: 0.85em;  --field-pad-x: 1em;
-  --field-ease: var(--ease-ui);   --field-face: var(--face-sec);
-}
-
-/* DARK GROUND. A pure remap: no component is redefined, the tokens
-   change and the whole layer follows. Scope with
-   &lt;body data-surface="dark"&gt; or &lt;section class="on-dark"&gt;. */
-[data-surface="dark"], .on-dark {
-  --text-heading: var(--neutral-50);   --text-body:      var(--neutral-200);
-  --text-secondary: var(--neutral-400); --text-muted:    var(--neutral-500);
-  --text-accent:  var(--color5-300);   --text-heading-accent: var(--color5-300);
-
-  --surface-page: var(--color1-900);   --surface-raised: var(--color1-800);
-
-  --btn-fill-bg:  var(--color5-400);   --btn-fill-label: var(--color1-900);
-  --link-text:    var(--neutral-200);  --link-text-hover: var(--color5-300);
-
-  --field-bg:     var(--color1-800);   --field-border:   var(--color1-500);
-  --field-text:   var(--neutral-100);  --field-placeholder: var(--neutral-500);
-  --focus-ring:   var(--color1-300);   --focus-ring-soft: rgba(184, 205, 247, 0.24);
-  /* full set in css/tokens.css */
-}
-
-/* LOGOS. Ratios come from each file's viewBox. The optical
-   multipliers correct for the three lockups reading at different
-   visual weights at the same box height. */
-:root {
-  --logo-logotype: url("assets/SIG_LOGO_LOGOTYPE_WHITE.svg");
-  --logo-primary:  url("assets/SIG_LOGO_PRIMARY_WHITE.svg");
-  --logo-logomark: url("assets/SIG_LOGO_LOGOMARK_WHITE.svg");
-
-  --logo-logotype-ratio: 372.9 / 159.32;   --logo-logotype-optical: 1;
-  --logo-primary-ratio:  257.09 / 202.34;  --logo-primary-optical:  1.15;
-  --logo-logomark-ratio: 106.74 / 162.05;  --logo-logomark-optical: 1;
-
-  --logo-h-header: 1.75rem;  --logo-h-footer:  2.25rem;
-  --logo-h-hero:   6rem;     --logo-h-favicon: 1.25rem;
-  --logo-ease: 200ms ease;
-}
-
-/* TABLET: 768px to 1023px. Base 17, ratio 1.2. */
+/* ---- Tablet · 768–1023px · ratio 1.200. Same 18px base. ---- */
 @media (max-width: 1023px) {
   :root {
-    --hero: 73px; --hero-1x: 88px;
-    --heading: 20px;    --heading-1x: 24px; --heading-2x: 29px;
-    --heading-3x: 35px; --heading-4x: 42px; --heading-5x: 51px;
-    --heading-6x: 61px; --body-pri: 17px;
+    --sig-fs-heading1-display: 6.470rem;  --sig-fs-heading2-display: 3.982rem;
+    --sig-fs-heading1-h1: 5.391rem;       --sig-fs-heading2-h1: 3.318rem;
+    --sig-fs-heading1-h2: 4.493rem;       --sig-fs-heading2-h2: 2.765rem;
+    --sig-fs-heading1-h3: 3.744rem;       --sig-fs-heading2-h3: 2.304rem;
+    --sig-fs-heading1-h4: 3.120rem;       --sig-fs-heading2-h4: 1.920rem;
+    --sig-fs-heading1-h5: 2.600rem;       --sig-fs-heading2-h5: 1.600rem;
+    --sig-fs-heading1-h6: 2.167rem;       --sig-fs-heading2-h6: 1.333rem;
   }
 }
 
-/* MOBILE: below 768px. Base 17, ratio 1.125. */
+/* ---- Mobile · below 768px · ratio 1.125, base 17px ---- */
 @media (max-width: 767px) {
   :root {
-    --hero: 44px; --hero-1x: 49px;
-    --heading: 19px;    --heading-1x: 22px; --heading-2x: 24px;
-    --heading-3x: 27px; --heading-4x: 31px; --heading-5x: 34px;
-    --heading-6x: 39px; --body-pri: 17px;
+    --sig-fs-heading1-display: 4.394rem;  --sig-fs-heading2-display: 2.703rem;
+    --sig-fs-heading1-h1: 3.906rem;       --sig-fs-heading2-h1: 2.403rem;
+    --sig-fs-heading1-h2: 3.472rem;       --sig-fs-heading2-h2: 2.136rem;
+    --sig-fs-heading1-h3: 3.086rem;       --sig-fs-heading2-h3: 1.898rem;
+    --sig-fs-heading1-h4: 2.743rem;       --sig-fs-heading2-h4: 1.688rem;
+    --sig-fs-heading1-h5: 2.438rem;       --sig-fs-heading2-h5: 1.500rem;
+    --sig-fs-heading1-h6: 2.167rem;       --sig-fs-heading2-h6: 1.333rem;
+
+    --sig-ff-heading2-h4: var(--sig-ff-kepler-subhead);   /* 28.7px, below the 32px line */
+
+    /* body2 and forms are pinned to their desktop px against the 17px root */
+    --sig-fs-body2-lg: 1rem;          --sig-fs-body2-base: 0.882rem;
+    --sig-fs-body2-sm: 0.765rem;      --sig-fs-body2-xs:   0.647rem;
+    --sig-fs-body2-upper-sm: 0.706rem; --sig-fs-body2-upper-xs: 0.588rem;
+    --sig-fs-form-label: 0.882rem;    --sig-fs-form-input: 0.941rem;   /* 16px iOS floor */
+    --sig-fs-form-helper: 0.765rem;   --sig-fs-form-button: 0.824rem;
+
+    --sig-fs-product-title: 2.353rem; --sig-fs-product-price: 1.765rem;
   }
 }</code></pre>
 
       <pre id="panel-json" role="tabpanel" hidden><code>{
-  "typeface": {
-    "hero": "PP Playground",
-    "display": "kepler-std-display",
-    "subhead": "kepler-std-subhead",
-    "regular": "kepler-std",
-    "caption": "kepler-std-caption",
-    "secondary": "Inter"
+  "$meta": {
+    "source": "Figma NfEENGImbc8voFOOFPCOPS \u00b7 local text styles",
+    "prefix": "--sig-",
+    "rootFontSize": {
+      "desktop": 18,
+      "tablet": 18,
+      "mobile": 17
+    },
+    "ratio": {
+      "desktop": 1.25,
+      "tablet": 1.2,
+      "mobile": 1.125
+    },
+    "note": "Sizes are px as rendered. The CSS states them in rem against the root above."
   },
-  "typography": {
-    "primary": {
-      "base": 18,
-      "ratio": { "desktop": 1.25, "tablet": 1.2, "mobile": 1.125 },
-      "steps": {
-        "hero-1x":     { "desktop": 134, "tablet":  88, "mobile": 49, "lineHeight": 1.08, "face": "hero", "weight": 500, "weights": [100, 300, 500], "case": "sentence", "tracking": "0" },
-        "hero":        { "desktop": 118, "tablet":  73, "mobile": 44, "lineHeight": 1.10, "face": "hero", "weight": 500, "weights": [100, 300, 500], "case": "sentence", "tracking": "0" },
-        "heading-6x":  { "desktop":  86, "tablet": 61, "mobile": 39, "lineHeight": 1.04, "face": "display", "weight": 400, "case": "uppercase", "tracking": "0" },
-        "heading-6x-light": { "desktop": 86, "tablet": 61, "mobile": 39, "lineHeight": 1.04, "face": "display", "weight": 300, "case": "uppercase", "tracking": "0" },
-        "heading-5x":  { "desktop":  69, "tablet": 51, "mobile": 34, "lineHeight": 1.06, "face": "display", "weight": 400, "case": "uppercase", "tracking": "0.005em" },
-        "heading-5x-light": { "desktop": 69, "tablet": 51, "mobile": 34, "lineHeight": 1.06, "face": "display", "weight": 300, "case": "uppercase", "tracking": "0.005em" },
-        "heading-4x":  { "desktop":  55, "tablet": 42, "mobile": 31, "lineHeight": 1.08, "face": "display, subhead on mobile", "weight": 400, "case": "uppercase", "tracking": "0.01em" },
-        "heading-4x-light": { "desktop": 55, "tablet": 42, "mobile": 31, "lineHeight": 1.08, "face": "display, subhead on mobile", "weight": 300, "weightOnMobile": 400, "case": "uppercase", "tracking": "0.01em" },
-        "heading-3x":  { "desktop":  44, "tablet": 35, "mobile": 27, "lineHeight": 1.10, "face": "display, subhead on mobile", "weight": 400, "case": "uppercase", "tracking": "0.015em" },
-        "heading-3x-light": { "desktop": 44, "tablet": 35, "mobile": 27, "lineHeight": 1.10, "face": "display, subhead on mobile", "weight": 300, "weightOnMobile": 400, "case": "uppercase", "tracking": "0.015em" },
-        "heading-2x":  { "desktop":  35, "tablet": 29, "mobile": 24, "lineHeight": 1.14, "face": "display, subhead below 1024px", "weight": 400, "case": "uppercase", "tracking": "0.02em" },
-        "heading-2x-light": { "desktop": 35, "tablet": 29, "mobile": 24, "lineHeight": 1.14, "face": "display, subhead below 1024px", "weight": 300, "weightBelow1024": 400, "case": "uppercase", "tracking": "0.02em" },
-        "heading-1x":  { "desktop":  28, "tablet": 24, "mobile": 22, "lineHeight": 1.20, "face": "subhead", "weight": 400, "case": "uppercase", "tracking": "0.025em" },
-        "heading":     { "desktop":  22, "tablet": 20, "mobile": 19, "lineHeight": 1.26, "face": "subhead", "weight": 400, "case": "uppercase", "tracking": "0.03em" },
-        "body-pri":    { "desktop":  18, "tablet": 17, "mobile": 17, "lineHeight": 1.60, "face": "regular", "case": "sentence", "tracking": "0" },
-        "body-pri-sm": { "desktop":  15, "tablet": 15, "mobile": 15, "lineHeight": 1.60, "face": "regular", "case": "sentence", "tracking": "0" },
-        "body-pri-xs": { "desktop":  13, "tablet": 13, "mobile": 13, "lineHeight": 1.55, "face": "caption", "case": "sentence", "tracking": "0" }
+  "typeface": {
+    "heading1": "PP Playground",
+    "keplerDisplay": "kepler-std-display",
+    "keplerSubhead": "kepler-std-subhead",
+    "keplerText": "kepler-std",
+    "keplerCaption": "kepler-std-caption",
+    "keplerMediumCaption": "kepler-std-medium-caption",
+    "inter": "Inter"
+  },
+  "opticalSizeBands": {
+    "keplerCaption": "up to 14px",
+    "keplerText": "15px to 18px",
+    "keplerSubhead": "19px to 32px",
+    "keplerDisplay": "32px and up"
+  },
+  "heading1": {
+    "face": "heading1",
+    "weight": 400,
+    "case": "sentence",
+    "tracking": "0",
+    "steps": {
+      "display": {
+        "desktop": 150,
+        "tablet": 116,
+        "mobile": 75,
+        "lineHeight": 1.2
+      },
+      "h1": {
+        "desktop": 120,
+        "tablet": 97,
+        "mobile": 66,
+        "lineHeight": 1.25
+      },
+      "h2": {
+        "desktop": 96,
+        "tablet": 81,
+        "mobile": 59,
+        "lineHeight": 1.25
+      },
+      "h3": {
+        "desktop": 77,
+        "tablet": 67,
+        "mobile": 53,
+        "lineHeight": 1.25
+      },
+      "h4": {
+        "desktop": 61,
+        "tablet": 56,
+        "mobile": 47,
+        "lineHeight": 1.25
+      },
+      "h5": {
+        "desktop": 49,
+        "tablet": 47,
+        "mobile": 41,
+        "lineHeight": 1.3
+      },
+      "h6": {
+        "desktop": 39,
+        "tablet": 39,
+        "mobile": 37,
+        "lineHeight": 1.35
       }
-    },
-    "secondary": {
-      "base": 15,
-      "steps": {
-        "body-base-sec": { "size": 15, "weight": 400, "lineHeight": 1.70, "tracking": "0" },
-        "body-sm-sec":   { "size": 13, "weight": 400, "lineHeight": 1.65, "tracking": "0" },
-        "body-xs-sec":   { "size": 11, "weight": 400, "lineHeight": 1.55, "tracking": "0" },
-        "italic-sec":    { "weight": 400, "style": "italic", "note": "modifier, composes with any secondary step" },
-        "text-upper-sec":{ "weight": 500, "case": "uppercase", "note": "all uppercase Inter except btn-form" }
-      }
-    },
-    "interface": {
-      "btn-pri":    { "face": "regular",   "weight": 500, "size": 14, "tracking": "0.084em", "case": "uppercase", "lineHeight": 1, "bg": "color2-800", "bgHover": "color2-700", "bgPressed": "color2-900" },
-      "btn-form":   { "face": "secondary", "weight": 500, "size": 14, "tracking": "0", "case": "sentence", "lineHeight": 1 },
-      "text-nav-1": { "face": "regular",   "weight": 500, "size": 14, "tracking": "0.24em", "case": "uppercase", "lineHeight": 1.2, "mobile": { "face": "subhead", "weight": 400, "size": 24, "tracking": "0", "case": "sentence", "lineHeight": 1.3 } }
-    },
-    "form": {
-      "legend-form":      { "face": "secondary", "weight": 500, "size": 15, "lineHeight": 1.4,  "tracking": "0.06em", "case": "uppercase" },
-      "label-form":       { "face": "secondary", "weight": 500, "size": 15, "lineHeight": 1.45, "case": "sentence" },
-      "input-form":       { "face": "secondary", "weight": 400, "size": 15, "lineHeight": 1.5 },
-      "placeholder-form": { "face": "secondary", "weight": 400, "size": 15, "lineHeight": 1.5, "color": "neutral-600" },
-      "helper-form":      { "face": "secondary", "weight": 400, "size": 13, "lineHeight": 1.5, "color": "neutral-700" },
-      "error-form":       { "face": "secondary", "weight": 500, "size": 13, "lineHeight": 1.5, "color": "color2-800" },
-      "tag-form":         { "face": "secondary", "weight": 500, "size": 11, "lineHeight": 1.4, "tracking": "0.08em", "case": "uppercase", "color": "neutral-500" }
     }
   },
-  "breakpoints": { "desktop": "1024px and up", "tablet": "768px to 1023px", "mobile": "below 768px" },
-  "color": {
-    "color1":    { "900": "#030811", "800": "#08142B", "700": "#192D54", "600": "#334C7D", "500": "#5671A5", "400": "#829CCE", "300": "#B8CDF7", "200": "#D1E1FF", "100": "#E5EEFF", "50": "#F8FAFF" },
-    "color2":    { "900": "#26070C", "800": "#4D0F19", "700": "#4D0F19", "600": "#762330", "500": "#9F3E4E", "400": "#C76272", "300": "#F08E9E", "200": "#FFB6C2", "100": "#FFD5DC", "50": "#FFF4F6" },
-    "color3":    { "900": "#07220B", "800": "#0C4015", "700": "#1F692B", "600": "#3A9249", "500": "#5DBB6D", "400": "#89E398", "300": "#B4FFC1", "200": "#CBFFD3", "100": "#E1FFE6", "50": "#F7FFF9" },
-    "color4":    { "900": "#221206", "800": "#40220C", "700": "#693D1F", "600": "#925E3A", "500": "#BB845D", "400": "#E4AE89", "300": "#FFD3B4", "200": "#FFE0CA", "100": "#FFEDE1", "50": "#FFFAF7" },
-    "color5":    { "900": "#221D11", "800": "#4E4329", "700": "#6C5D3B", "600": "#89774E", "500": "#A69263", "400": "#C3AD79", "300": "#E0C891", "200": "#FDE4AA", "100": "#FFF1D0", "50": "#FFFCF6" },
-    "neutral":   { "950": "#32312A", "900": "#4D4B40", "800": "#625F53", "700": "#767366", "600": "#8A887A", "500": "#9F9C8F", "400": "#B3B1A4", "300": "#C8C5BA", "200": "#DCDAD0", "100": "#F0EFE7", "50": "#FFFEF9" },
-    "white": "#FFFFFF",
-    "brandStep": { "color1": 800, "color2": 800, "color3": 800, "color4": 800, "color5": 400, "neutral": 200 }
+  "heading2": {
+    "weight": 400,
+    "case": "uppercase",
+    "steps": {
+      "display": {
+        "desktop": 91,
+        "tablet": 72,
+        "mobile": 46,
+        "lineHeight": 1.15,
+        "tracking": "0.05em",
+        "face": "display"
+      },
+      "h1": {
+        "desktop": 73,
+        "tablet": 60,
+        "mobile": 41,
+        "lineHeight": 1.2,
+        "tracking": "0.05em",
+        "face": "display"
+      },
+      "h2": {
+        "desktop": 59,
+        "tablet": 50,
+        "mobile": 36,
+        "lineHeight": 1.25,
+        "tracking": "0.05em",
+        "face": "display"
+      },
+      "h3": {
+        "desktop": 47,
+        "tablet": 41,
+        "mobile": 32,
+        "lineHeight": 1.3,
+        "tracking": "0.05em",
+        "face": "display"
+      },
+      "h4": {
+        "desktop": 38,
+        "tablet": 35,
+        "mobile": 29,
+        "lineHeight": 1.35,
+        "tracking": "0.07em",
+        "face": "display, subhead on mobile"
+      },
+      "h5": {
+        "desktop": 30,
+        "tablet": 29,
+        "mobile": 26,
+        "lineHeight": 1.4,
+        "tracking": "0.06em",
+        "face": "subhead"
+      },
+      "h6": {
+        "desktop": 24,
+        "tablet": 24,
+        "mobile": 23,
+        "lineHeight": 1.45,
+        "tracking": "0.08em",
+        "face": "subhead"
+      }
+    }
+  },
+  "body1": {
+    "face": "kepler, by optical band",
+    "tracking": "0.005em",
+    "steps": {
+      "lg": {
+        "desktop": 22,
+        "tablet": 22,
+        "mobile": 21,
+        "lineHeight": 1.385,
+        "face": "keplerSubhead"
+      },
+      "base": {
+        "desktop": 18,
+        "tablet": 18,
+        "mobile": 17,
+        "lineHeight": 1.5,
+        "face": "keplerText",
+        "note": "1rem, the anchor of the system"
+      },
+      "sm": {
+        "desktop": 16,
+        "tablet": 16,
+        "mobile": 15,
+        "lineHeight": 1.6,
+        "face": "keplerText"
+      },
+      "xs": {
+        "desktop": 14,
+        "tablet": 14,
+        "mobile": 13,
+        "lineHeight": 1.4,
+        "face": "keplerCaption"
+      },
+      "base-upper": {
+        "size": 16,
+        "lineHeight": 1.2,
+        "tracking": "0.038em",
+        "case": "uppercase",
+        "face": "keplerText"
+      },
+      "xs-upper": {
+        "size": 14,
+        "lineHeight": 1.2,
+        "tracking": "0.043em",
+        "case": "uppercase",
+        "face": "keplerCaption"
+      }
+    },
+    "weights": {
+      "normal": 400,
+      "strong": 500,
+      "light": 300
+    },
+    "warning": "kit hqq5dii publishes kepler-std at 300 and 400 only; strong at base and sm is synthesised until Kepler Std Medium is added"
+  },
+  "body2": {
+    "face": "inter",
+    "tracking": "0.007em",
+    "note": "fixed rendered px at every breakpoint",
+    "steps": {
+      "lg": {
+        "size": 17,
+        "lineHeight": 1.7,
+        "weight": 400
+      },
+      "base": {
+        "size": 15,
+        "lineHeight": 1.7,
+        "weight": 400
+      },
+      "sm": {
+        "size": 13,
+        "lineHeight": 1.6,
+        "weight": 400
+      },
+      "xs": {
+        "size": 11,
+        "lineHeight": 1.6,
+        "weight": 400
+      }
+    },
+    "strong": 500,
+    "italic": "400 italic"
+  },
+  "body2Upper": {
+    "face": "inter",
+    "weight": 500,
+    "case": "uppercase",
+    "lineHeight": 1.4,
+    "steps": {
+      "sm": {
+        "size": 12,
+        "tracking": "0.033em"
+      },
+      "xs": {
+        "size": 10,
+        "tracking": "0.06em"
+      }
+    }
+  },
+  "forms": {
+    "face": "inter",
+    "label": {
+      "size": 15,
+      "weight": 500,
+      "lineHeight": 1.45,
+      "tracking": "0.007em"
+    },
+    "input": {
+      "size": 15,
+      "weight": 400,
+      "lineHeight": 1.45,
+      "tracking": "0.007em",
+      "mobile": 16,
+      "mobileReason": "iOS Safari zooms the page below 16px"
+    },
+    "placeholder": {
+      "size": 15,
+      "weight": 400,
+      "lineHeight": 1.45,
+      "tracking": "0.007em"
+    },
+    "helper": {
+      "size": 13,
+      "weight": 500,
+      "lineHeight": 1.45,
+      "tracking": "0.008em"
+    },
+    "error": {
+      "size": 13,
+      "weight": 500,
+      "lineHeight": 1.45,
+      "tracking": "0.008em"
+    },
+    "button": {
+      "size": 14,
+      "weight": 500,
+      "lineHeight": 1,
+      "tracking": "0",
+      "case": "sentence"
+    }
+  },
+  "interactive": {
+    "button": {
+      "face": "keplerMediumCaption",
+      "size": 15,
+      "weight": 500,
+      "lineHeight": 1,
+      "tracking": "0.06em",
+      "case": "uppercase"
+    },
+    "navMain": {
+      "face": "keplerText",
+      "size": 14,
+      "weight": 400,
+      "lineHeight": 1,
+      "tracking": "0.004em",
+      "case": "title"
+    },
+    "navMainPhone": {
+      "face": "keplerText",
+      "size": 15,
+      "weight": 400,
+      "lineHeight": 1.5,
+      "tracking": "0.093em",
+      "case": "uppercase"
+    },
+    "navDropdown": {
+      "face": "keplerText",
+      "size": 18,
+      "weight": 400,
+      "lineHeight": 1.25,
+      "tracking": "0",
+      "case": "title"
+    },
+    "footerLink": {
+      "face": "keplerCaption",
+      "size": 18,
+      "weight": 400,
+      "lineHeight": 1.5,
+      "tracking": "0.006em"
+    },
+    "footerSublink": {
+      "face": "inter",
+      "size": 14,
+      "weight": 400,
+      "lineHeight": 1.4,
+      "tracking": "0"
+    }
+  },
+  "productDetails": {
+    "title": {
+      "face": "keplerDisplay",
+      "size": 54,
+      "mobile": 40,
+      "lineHeight": 1,
+      "tracking": "0.019em",
+      "case": "sentence"
+    },
+    "price": {
+      "face": "keplerDisplay",
+      "size": 37,
+      "mobile": 30,
+      "lineHeight": 1.09,
+      "tracking": "0.005em",
+      "case": "sentence"
+    },
+    "select": {
+      "face": "keplerSubhead",
+      "size": 22,
+      "lineHeight": 0.886,
+      "tracking": "0.02em",
+      "case": "uppercase"
+    },
+    "subhead": {
+      "face": "keplerSubhead",
+      "size": 22,
+      "lineHeight": 1.164,
+      "tracking": "0.11em",
+      "case": "sentence"
+    }
+  },
+  "lineHeight": {
+    "tight": 1.15,
+    "normal": 1.5,
+    "loose": 1.7
   }
 }</code></pre>
     </div>
   </section>
 
   <footer>
-    <p class="body-sm-sec">Signature Society · Brand guidelines v1.0 · Internal use only.</p>
-    <p class="body-sm-sec">Color values sourced from the <em>brand colors</em> frame in the Signature Society Figma file.</p>
-    <p class="body-sm-sec">Kepler Std served from Adobe Fonts kit hqq5dii. Inter served from Google Fonts. PP Playground self-hosted from the brand font folder.</p>
+    <p class="sig-body2-sm">Signature Society · Brand guidelines v1.0 · Internal use only.</p>
+    <p class="sig-body2-sm">Color values sourced from the <em>brand colors</em> frame in the Signature Society Figma file.</p>
+    <p class="sig-body2-sm">Kepler Std served from Adobe Fonts kit hqq5dii. Inter served from Google Fonts. PP Playground self-hosted from the brand font folder.</p>
   </footer>
 
 </div>
@@ -4195,7 +4742,7 @@ storeStart();
     var vWt   = spec.querySelector('.v-wt');
 
     // Read live rather than caching: the weight toggle rewrites className.
-    function isHeading()  { return /(^|\s)heading(-\dx)?(-light)?(\s|$)/.test(target.className); }
+    function isHeading()  { return /(^|\s)sig-heading2-/.test(target.className); }
     function isLight()    { return /-light(\s|$)/.test(target.className); }
 
     // Remembered so a second click on the same chip restores the default.
@@ -4251,7 +4798,7 @@ storeStart();
 
         // Only the face and weight move with the breakpoint. Tracking
         // belongs to the step, so it is left alone.
-        target.style.fontFamily = 'var(' + (display ? '--face-display' : '--face-subhead') + ')';
+        target.style.fontFamily = 'var(' + (display ? '--sig-ff-kepler-display' : '--sig-ff-kepler-subhead') + ')';
         if (light) target.style.fontWeight = display ? '300' : '400';
 
         if (vFace) {

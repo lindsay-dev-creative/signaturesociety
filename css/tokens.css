@@ -1,15 +1,49 @@
 /* ============================================================
    SIGNATURE SOCIETY · DESIGN TOKENS
-   Single source of truth for both documents in main.html.
-   Colour values are pulled from the Figma 'scales' frame:
-   figma.com/design/NfEENGImbc8voFOOFPCOPS  node 5951-2167
+   ------------------------------------------------------------
+   Single source of truth for typography, colour and forms.
+
+   NAMING · every token is prefixed, in this order:
+
+       --sig-<category>-<role>-<step>
+
+       ff   font family        fs   font size
+       fw   font weight        lh   line height
+       ls   letter spacing     tt   text transform
+       color / text / surface / rule / field / control / btn /
+       link / logo / space
+
+   The prefix is what makes this file safe to drop into a Shopify
+   theme next to theme.css, which owns unprefixed names such as
+   --heading-font-family.
+
+   SOURCE · Figma file NfEENGImbc8voFOOFPCOPS, local text styles
+   heading1/*, heading2/*, body1/*, body2/*, body2-upper/*,
+   forms/*, interactive/* and product-details/*. Desktop values are
+   Figma's, unrounded. Tablet and mobile are derived from the same
+   h6 anchor at that breakpoint's ratio, because Figma only draws
+   the desktop mode of the type ramp.
+
+   RATIOS · desktop 1.250, tablet 1.200, mobile 1.125.
+   BASE    · desktop and tablet 18px, mobile 17px. That base IS the
+             root font size, so 1rem = 18px / 17px and the whole
+             ramp steps down at the mobile breakpoint for free.
+
+   A legacy alias block sits at the bottom of this file. It maps
+   every token name the older stylesheets and main.html still use
+   onto the tokens above, so nothing had to be renamed in
+   buttons.css, links.css, forms.css, utilities.css, timeline.css
+   or guidelines.css.
    ============================================================ */
 
-/* ---- PP Playground ---------------------------------------
-   Only the Regular cut is shipped in assets/, so every weight
-   resolves to it. .hero, .hero-light and .hero-thin therefore
-   render identically; the weight range stops the browser from
-   synthesising a faux bold or light. */
+
+/* ============================================================
+   1 · FONT LOADING
+   Kepler Std comes from the Adobe kit hqq5dii, Inter from Google
+   Fonts, PP Playground from assets/. The two <link> tags belong in
+   the document head; only the self-hosted face is declared here.
+   ============================================================ */
+
 @font-face {
   font-family: "PP Playground";
   src: url("../assets/PPPlayground-Regular.woff2") format("woff2");
@@ -18,809 +52,1351 @@
   font-display: swap;
 }
 
+
+/* ============================================================
+   2 · ROOT SIZE
+   1rem = the base of the scale, not the browser's 16px. Every size
+   token below is written in rem against this, so the mobile step
+   from 18px to 17px moves the whole system in one declaration.
+
+   Stated as a percentage rather than px so a reader who has raised
+   their browser's default text size still gets the increase.
+   ============================================================ */
+
+html { font-size: 112.5%; }                        /* 18px */
+@media (max-width: 767px) { html { font-size: 106.25%; } }  /* 17px */
+
+
 :root {
-  /* ---- Typefaces ---------------------------------------- */
-  --face-display:  "kepler-std-display", Georgia, "Times New Roman", serif;
-  --face-subhead:  "kepler-std-subhead", Georgia, "Times New Roman", serif;
-  --face-regular:  "kepler-std", Georgia, "Times New Roman", serif;
-  --face-caption:  "kepler-std-caption", Georgia, "Times New Roman", serif;
-  --face-btn:      "kepler-std-medium-caption", Georgia, "Times New Roman", serif;
-  --face-sec:      "Inter", "inter-18pt", -apple-system, BlinkMacSystemFont, sans-serif;
-  --face-hero:     "PP Playground", "kepler-std-display", Georgia, serif;
 
-  /* ---- HEADING 1 SCALE DESKTOP ------------------------------
-     PP Playground. Six steps, base 31px, ratio 1.25. The base is an
-     anchor, not a shipped step: 1x is the first rung above it, and
-     31 x 1.25^6 = 118.24, which lands on the 118px ceiling drawn in
-     Figma. Three weights are available: Thin 100, Light 300,
-     Medium 500. */
-  --size-heading1-1x:   39px;
-  --size-heading1-2x:   48px;
-  --size-heading1-3x:   61px;
-  --size-heading1-4x:   76px;
-  --size-heading1-5x:   95px;
-  --size-heading1-6x:  118px;
+  /* ==========================================================
+     3 · FONT FAMILIES
+     Kepler Std is an optical-size family: the cut is chosen by the
+     size it is set at, not by taste. Setting Display at 18px or
+     Caption at 60px is a bug, not a style.
 
-  /* ---- Heading 1 line heights DESKTOP ----
-     Tighter as the type grows: a 118px line needs far less leading
-     than a 39px one, and a script face set loose at display size
-     drifts apart. 0.02 per step, 1.18 down to 1.08. */
-  --lh-heading1-1x: 1.18;
-  --lh-heading1-2x: 1.16;
-  --lh-heading1-3x: 1.14;
-  --lh-heading1-4x: 1.12;
-  --lh-heading1-5x: 1.10;
-  --lh-heading1-6x: 1.08;
+         Caption    up to 14px
+         Regular    15px – 18px
+         Subhead    19px – 32px
+         Display    32px and up
+     ========================================================== */
 
-  /* ---- Heading 1 tracking · ALL STEPS, ALL BREAKPOINTS ----
-     One token, not a ladder, and not repeated in the media queries.
+  /* ---- Raw faces ---- */
+  --sig-ff-kepler-display:        "kepler-std-display", Georgia, "Times New Roman", serif;
+  --sig-ff-kepler-subhead:        "kepler-std-subhead", Georgia, "Times New Roman", serif;
+  --sig-ff-kepler-text:           "kepler-std", Georgia, "Times New Roman", serif;
+  --sig-ff-kepler-caption:        "kepler-std-caption", Georgia, "Times New Roman", serif;
+  --sig-ff-kepler-medium-caption: "kepler-std-medium-caption", Georgia, "Times New Roman", serif;
+  --sig-ff-inter: "Inter", "inter-18pt", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --sig-ff-playground: "PP Playground", "kepler-std-display", Georgia, serif;
 
-     PP Playground is a joining SCRIPT set in sentence case. Opening the
-     tracking breaks the join between characters and tightening it
-     collides the swashes, so there is no step and no width at which a
-     non-zero value is an improvement. The Kepler --ls-heading-* ladder
-     graduates because those headings are uppercase and need air between
-     letters at small sizes; none of that applies to a script.
+  /* ---- Role faces ----
+     heading1 is the script. heading2 is Kepler, and because its
+     ladder crosses the 32px optical boundary between h4 and h5, the
+     face is held per step rather than for the whole ramp. The mobile
+     block below moves h4 down to Subhead, which is where its 28.7px
+     lands. */
+  --sig-ff-heading1: var(--sig-ff-playground);
 
-     Held as a named token rather than writing 0 into the classes so the
-     decision stays visible and reversible in one place. Same value and
-     same reason as --ls-hero, which is the 6x step under its old name. */
-  --ls-heading1: 0;
+  --sig-ff-heading2-display: var(--sig-ff-kepler-display);
+  --sig-ff-heading2-h1:      var(--sig-ff-kepler-display);
+  --sig-ff-heading2-h2:      var(--sig-ff-kepler-display);
+  --sig-ff-heading2-h3:      var(--sig-ff-kepler-display);
+  --sig-ff-heading2-h4:      var(--sig-ff-kepler-display);
+  --sig-ff-heading2-h5:      var(--sig-ff-kepler-subhead);
+  --sig-ff-heading2-h6:      var(--sig-ff-kepler-subhead);
 
-  --ls-hero: 0;
+  /* body1 · Kepler. lg sits at 22px, inside the Subhead band. */
+  --sig-ff-body1-lg:   var(--sig-ff-kepler-subhead);
+  --sig-ff-body1-base: var(--sig-ff-kepler-text);
+  --sig-ff-body1-sm:   var(--sig-ff-kepler-text);
+  --sig-ff-body1-xs:   var(--sig-ff-kepler-caption);
 
-  /* ---- HEADING SERIF DESKTOP ----------
-     Base 18px, ratio 1.25. .heading is one step above base;
-     .heading-6x is seven steps up and is the ceiling.      */
-  --heading:    22px;
-  --heading-1x: 28px;
-  --heading-2x: 35px;
-  --heading-3x: 44px;
-  --heading-4x: 55px;
-  --heading-5x: 69px;
-  --heading-6x: 86px;
+  /* body2 · Inter at every step. */
+  --sig-ff-body2: var(--sig-ff-inter);
 
-  /* ---- Heading line heights ---- */
-  --lh-heading:    1.26;  --lh-heading-1x: 1.20;  --lh-heading-2x: 1.14;
-  --lh-heading-3x: 1.10;  --lh-heading-4x: 1.08;  --lh-heading-5x: 1.06;
-  --lh-heading-6x: 1.04;
+  /* Interface. The button is the one place the brand uses the real
+     Medium cut of Caption; everything else in forms is Inter. */
+  --sig-ff-form:              var(--sig-ff-inter);
+  --sig-ff-form-button:       var(--sig-ff-inter);
+  --sig-ff-interactive-nav:   var(--sig-ff-kepler-text);
+  --sig-ff-interactive-link:  var(--sig-ff-kepler-caption);
+  --sig-ff-interactive-button: var(--sig-ff-kepler-medium-caption);
 
-  /* ---- BODY PRIMARY 
-     Only the base is responsive. sm and xs are fixed at every
-     breakpoint, because the three ratios cross below the base
-     and would otherwise run larger on mobile than on desktop. */
-  --body-pri:    18px;
-  --body-pri-sm: 15px;
-  --body-pri-xs: 13px;
 
-  /* ---- Line Height ---- */
-  --lh-body-pri: 1.60;  --lh-body-pri-sm: 1.60;  --lh-body-pri-xs: 1.55;
+  /* ==========================================================
+     4 · FONT WEIGHTS
+     Kepler ships Light 300 and Regular 400 in kit hqq5dii. It does
+     NOT publish a Medium for kepler-std, so --sig-fw-body1-strong
+     at 500 will be SYNTHESISED on the web even though Figma sets
+     body1/base/strong in a real Kepler Std Medium. The only real
+     Medium in the kit is kepler-std-medium-caption, which is why
+     the button points at that family. Publish Kepler Std Medium in
+     the kit before launch, or use the real 400 italic for emphasis
+     in running Kepler copy.
+     ========================================================== */
 
-  /* ---- Tracking ---- */
-  --ls-heading-6x: 0;
-  --ls-heading-5x: 0.005em;
-  --ls-heading-4x: 0.01em;
-  --ls-heading-3x: 0.015em;
-  --ls-heading-2x: 0.02em;
-  --ls-heading-1x: 0.025em;
-  --ls-heading:    0.03em;
+  --sig-fw-heading1: 400;   /* PP Playground Regular          */
+  --sig-fw-heading2: 400;   /* Kepler Display / Subhead       */
 
-  --ls-display: -0.01em;   /* specimen cards only           */
-  --ls-subhead:  0.01em;   /* specimen cards only           */
-  --ls-text:     0;        /* sentence case                 */
-  --ls-btn:      0.084em;
-  --ls-btn-sec:  0;
-  --ls-btn-sec-upper: .096em;
-  --ls-nav:      0.24em;
+  --sig-fw-body1-light:  300;
+  --sig-fw-body1-normal: 400;
+  --sig-fw-body1-strong: 500;   /* see the caveat above       */
 
-  /* ---- Secondary scale (Inter) --------------------------
-     Base 15px. No steps above base, fixed at all breakpoints. */
-  --body-base-sec: 15px;  --lh-body-base-sec: 1.70;
-  --body-sm-sec:   13px;  --lh-body-sm-sec:   1.65;
-  --body-xs-sec:   11px;  --lh-body-xs-sec:   1.55;
+  --sig-fw-body2-normal: 400;
+  --sig-fw-body2-strong: 500;
+  --sig-fw-body2-upper:  500;
 
-  /* ---- Interface sizes · fixed at all breakpoints -------
-     The placeholder matches the label deliberately: a hint that sits
-     inside the control has to read at the same size as the thing
-     naming it, or it starts to look like help text. */
-  --size-btn:                   14px;
-  --size-btn-sec:               14px;
-  --size-btn-base-sec-upper:    12px;
-  --size-btn-sm-sec-upper:      10px;
-  --size-nav:                   14px;
-  --size-form-btn:              14px;
-  --size-form-label:            15px;
-  --size-form-placeholder:      15px;
+  --sig-fw-form-label:  500;
+  --sig-fw-form-input:  400;
+  --sig-fw-form-helper: 500;
+  --sig-fw-form-button: 500;
 
-/* ---- Brand bases ---- */
-  --color1:  var(--color1-800);
-  --color2:  var(--color2-800);
-  --color3:  var(--color3-800);
-  --color4:  var(--color4-800);
-  --color5:  var(--color5-400);
-  --neutral: var(--neutral-200);
+  --sig-fw-interactive-nav:    400;
+  --sig-fw-interactive-link:   400;
+  --sig-fw-interactive-button: 500;
+
+  --sig-fw-product-details: 400;
+
+
+  /* ==========================================================
+     5 · LINE HEIGHT · semantic trio
+     The three values a component reaches for when it is not one of
+     the named type styles below. Unitless so they multiply the
+     element's own size rather than an inherited px.
+     ========================================================== */
+
+  --sig-lh-tight:  1.15;   /* display type, one or two words      */
+  --sig-lh-normal: 1.5;    /* running copy, the body1 base        */
+  --sig-lh-loose:  1.7;    /* long measure and secondary copy     */
+
+
+  /* ==========================================================
+     6 · TYPE SCALE · HEADING 1 · PP Playground
+     Desktop 1.250 from a 39px h6 anchor. A joining script set in
+     sentence case, so tracking is 0 at every step and every width:
+     opening it breaks the join, tightening it collides the swashes.
+     Leading closes as the type grows, 1.35 down to 1.20.
+     ========================================================== */
+
+  --sig-fs-heading1-h6:      2.167rem;   /*  39px */
+  --sig-fs-heading1-h5:      2.722rem;   /*  49px */
+  --sig-fs-heading1-h4:      3.389rem;   /*  61px */
+  --sig-fs-heading1-h3:      4.278rem;   /*  77px */
+  --sig-fs-heading1-h2:      5.333rem;   /*  96px */
+  --sig-fs-heading1-h1:      6.667rem;   /* 120px */
+  --sig-fs-heading1-display: 8.333rem;   /* 150px · one rung above
+                                            Figma's h1, on the ratio */
+
+  --sig-lh-heading1-h6:      1.35;
+  --sig-lh-heading1-h5:      1.30;
+  --sig-lh-heading1-h4:      1.25;
+  --sig-lh-heading1-h3:      1.25;
+  --sig-lh-heading1-h2:      1.25;
+  --sig-lh-heading1-h1:      1.25;
+  --sig-lh-heading1-display: 1.20;
+
+  --sig-ls-heading1: 0;
+  --sig-tt-heading1: none;
+
+
+  /* ==========================================================
+     7 · TYPE SCALE · HEADING 2 · Kepler Std, uppercase
+     Desktop 1.250 from a 24px h6 anchor. Tracking opens as the type
+     shrinks, because uppercase set small closes up: .05em at the
+     display end, .08em at h6.
+     ========================================================== */
+
+  --sig-fs-heading2-h6:      1.333rem;   /* 24px */
+  --sig-fs-heading2-h5:      1.667rem;   /* 30px */
+  --sig-fs-heading2-h4:      2.111rem;   /* 38px */
+  --sig-fs-heading2-h3:      2.611rem;   /* 47px */
+  --sig-fs-heading2-h2:      3.278rem;   /* 59px */
+  --sig-fs-heading2-h1:      4.056rem;   /* 73px */
+  --sig-fs-heading2-display: 5.056rem;   /* 91px · one rung above
+                                            Figma's h1, on the ratio.
+                                            Figma's 104px display sits
+                                            in the DON'T USE group and
+                                            is deliberately not used. */
+
+  --sig-lh-heading2-h6:      1.45;
+  --sig-lh-heading2-h5:      1.40;
+  --sig-lh-heading2-h4:      1.35;
+  --sig-lh-heading2-h3:      1.30;
+  --sig-lh-heading2-h2:      1.25;
+  --sig-lh-heading2-h1:      1.20;
+  --sig-lh-heading2-display: 1.15;
+
+  /* h4 carries .07em in Figma, one notch wider than the .06em its
+     position in the ladder would suggest. Kept as drawn rather than
+     smoothed, so the CSS and the file agree. */
+  --sig-ls-heading2-h6:      0.08em;
+  --sig-ls-heading2-h5:      0.06em;
+  --sig-ls-heading2-h4:      0.07em;
+  --sig-ls-heading2-h3:      0.05em;
+  --sig-ls-heading2-h2:      0.05em;
+  --sig-ls-heading2-h1:      0.05em;
+  --sig-ls-heading2-display: 0.05em;
+
+  --sig-tt-heading2: uppercase;
+
+
+  /* ==========================================================
+     8 · TYPE SCALE · BODY 1 · Kepler Std
+     The base IS the scale base: 1rem, 18px on desktop and tablet,
+     17px on mobile. Everything else is a ratio of it, so the whole
+     primary voice moves together.
+     ========================================================== */
+
+  --sig-fs-body1-lg:   1.222rem;   /* 22px */
+  --sig-fs-body1-base: 1rem;       /* 18px · 1rem, the anchor */
+  --sig-fs-body1-sm:   0.889rem;   /* 16px */
+  --sig-fs-body1-xs:   0.778rem;   /* 14px */
+
+  --sig-lh-body1-lg:   1.385;
+  --sig-lh-body1-base: 1.5;
+  --sig-lh-body1-sm:   1.6;
+  --sig-lh-body1-xs:   1.4;
+
+  --sig-ls-body1: 0.005em;
+  --sig-tt-body1: none;
+
+  /* Uppercase cuts of the same voice · eyebrows, table headers,
+     small labels set in Kepler rather than Inter. */
+  --sig-fs-body1-base-upper: 0.889rem;   /* 16px */
+  --sig-fs-body1-xs-upper:   0.778rem;   /* 14px */
+  --sig-lh-body1-upper:      1.2;
+  --sig-ls-body1-base-upper: 0.038em;
+  --sig-ls-body1-xs-upper:   0.043em;
+
+
+  /* ==========================================================
+     9 · TYPE SCALE · BODY 2 · Inter
+     The secondary voice. Base 15px, and there is no step above lg:
+     anything larger than 17px belongs to Kepler. Held at a fixed px
+     size across all three breakpoints — see the mobile block, where
+     the rem values are restated against the 17px root so the
+     rendered size does not move. A secondary scale that shrinks with
+     the primary one lands under 10px and stops being readable.
+     ========================================================== */
+
+  --sig-fs-body2-lg:   0.944rem;   /* 17px */
+  --sig-fs-body2-base: 0.833rem;   /* 15px */
+  --sig-fs-body2-sm:   0.722rem;   /* 13px */
+  --sig-fs-body2-xs:   0.611rem;   /* 11px */
+
+  --sig-lh-body2-lg:   1.7;
+  --sig-lh-body2-base: 1.7;
+  --sig-lh-body2-sm:   1.6;
+  --sig-lh-body2-xs:   1.6;
+
+  --sig-ls-body2: 0.007em;
+  --sig-tt-body2: none;
+
+  /* body2-upper · the interface eyebrow. Medium, never Regular:
+     uppercase at 10px in a 400 goes grey on screen. */
+  --sig-fs-body2-upper-sm: 0.667rem;   /* 12px */
+  --sig-fs-body2-upper-xs: 0.556rem;   /* 10px */
+  --sig-lh-body2-upper:    1.4;
+  --sig-ls-body2-upper-sm: 0.033em;
+  --sig-ls-body2-upper-xs: 0.06em;
+  --sig-tt-body2-upper:    uppercase;
+
+
+  /* ==========================================================
+     10 · TYPE · FORMS
+     Inter throughout. Label and placeholder are the same size on
+     purpose: a hint sitting inside the control has to read at the
+     same size as the thing naming it, or it starts to look like
+     help text. Sizes hold across breakpoints, with a 16px floor on
+     mobile inputs — below that, iOS Safari zooms the page on focus.
+     ========================================================== */
+
+  --sig-fs-form-label:       0.833rem;   /* 15px */
+  --sig-fs-form-input:       0.833rem;   /* 15px · placeholder + value */
+  --sig-fs-form-helper:      0.722rem;   /* 13px */
+  --sig-fs-form-error:       0.722rem;   /* 13px */
+  --sig-fs-form-button:      0.778rem;   /* 14px */
+  --sig-fs-form-input-touch: 16px;       /* iOS zoom floor, mobile only */
+
+  --sig-lh-form-label:  1.45;
+  --sig-lh-form-input:  1.45;
+  --sig-lh-form-helper: 1.45;
+  /* Figma draws the button label in a fixed 13px box on a 14px face.
+     Reproduced as a line-height of 1 plus the control's own vertical
+     padding, which is the same optical result without clipping a
+     descender. */
+  --sig-lh-form-button: 1;
+
+  --sig-ls-form-label:  0.007em;
+  --sig-ls-form-input:  0.007em;
+  --sig-ls-form-helper: 0.008em;
+  --sig-ls-form-button: 0;
+  --sig-tt-form:        none;
+
+
+  /* ==========================================================
+     11 · TYPE · INTERACTIVE
+     Nav, links and the brand button. The desktop nav is Kepler in
+     title case at 14px; the phone nav is the same face uppercase and
+     opened right out, because at phone width the nav is a stacked
+     list and needs to read as a different object from body copy.
+     ========================================================== */
+
+  --sig-fs-interactive-nav-main:       0.778rem;   /* 14px · desktop  */
+  --sig-fs-interactive-nav-main-phone: 0.833rem;   /* 15px           */
+  --sig-fs-interactive-nav-dropdown:   1rem;       /* 18px           */
+  --sig-fs-interactive-footer-link:    1rem;       /* 18px           */
+  --sig-fs-interactive-footer-sublink: 0.778rem;   /* 14px           */
+  --sig-fs-interactive-button:         0.833rem;   /* 15px           */
+
+  --sig-lh-interactive-nav-main:       1;
+  --sig-lh-interactive-nav-main-phone: 1.5;
+  --sig-lh-interactive-nav-dropdown:   1.25;
+  --sig-lh-interactive-footer-link:    1.5;
+  --sig-lh-interactive-footer-sublink: 1.4;
+  --sig-lh-interactive-button:         1;
+
+  --sig-ls-interactive-nav-main:       0.004em;
+  --sig-ls-interactive-nav-main-phone: 0.093em;
+  --sig-ls-interactive-nav-dropdown:   0;
+  --sig-ls-interactive-footer-link:    0.006em;
+  --sig-ls-interactive-footer-sublink: 0;
+  --sig-ls-interactive-button:         0.06em;
+
+  --sig-tt-interactive-nav-main:       capitalize;
+  --sig-tt-interactive-nav-main-phone: uppercase;
+  --sig-tt-interactive-nav-dropdown:   capitalize;
+  --sig-tt-interactive-footer-link:    none;
+  --sig-tt-interactive-button:         uppercase;
+
+
+  /* ==========================================================
+     12 · TYPE · PRODUCT DETAILS
+     The four styles the PDP owns outright. The item title and the
+     price are Kepler Display in sentence case — the one place the
+     Display cut is not set uppercase — so the product name reads as
+     a name rather than a section heading.
+     ========================================================== */
+
+  --sig-fs-product-title:        3rem;       /* 54px */
+  --sig-fs-product-price:        2.056rem;   /* 37px */
+  --sig-fs-product-select:       1.222rem;   /* 22px */
+  --sig-fs-product-subhead:      1.222rem;   /* 22px */
+
+  --sig-lh-product-title:   1;
+  --sig-lh-product-price:   1.09;
+  --sig-lh-product-select:  0.886;
+  --sig-lh-product-subhead: 1.164;
+
+  /* .11em on the details subhead is Figma's, and it is wide for a
+     sentence-case line. It reads as a deliberate letterspaced label
+     rather than a typo, so it is carried through as drawn. */
+  --sig-ls-product-title:   0.019em;
+  --sig-ls-product-price:   0.005em;
+  --sig-ls-product-select:  0.02em;
+  --sig-ls-product-subhead: 0.11em;
+
+  --sig-tt-product-title:   none;
+  --sig-tt-product-price:   none;
+  --sig-tt-product-select:  uppercase;
+  --sig-tt-product-subhead: none;
+
+
+  /* ==========================================================
+     13 · COLOUR · primitive ramps
+     Five brand families and a warm neutral, ten steps each plus a 50
+     and — on neutral only — a 950. Pulled from the Figma scales
+     frame, node 5951-2167. Nothing outside this block holds a hex.
+     ========================================================== */
 
   /* ---- Color 1 · navy ---- */
-  --color1-900: #030811;  --color1-800: #08142B;  --color1-700: #192D54;
-  --color1-600: #334C7D;  --color1-500: #5671A5;  --color1-400: #829CCE;
-  --color1-300: #B8CDF7;  --color1-200: #D1E1FF;  --color1-100: #E5EEFF;
-  --color1-50:  #F8FAFF;
+  --sig-color-1-900: #030811;  --sig-color-1-800: #08142B;  --sig-color-1-700: #192D54;
+  --sig-color-1-600: #334C7D;  --sig-color-1-500: #5671A5;  --sig-color-1-400: #829CCE;
+  --sig-color-1-300: #B8CDF7;  --sig-color-1-200: #D1E1FF;  --sig-color-1-100: #E5EEFF;
+  --sig-color-1-50:  #F8FAFF;
 
   /* ---- Color 2 · burgundy ---- */
-  --color2-900: #26070C;  --color2-800: #4D0F19;  --color2-700: #762330;
-  --color2-600: #9F3E4E;  --color2-500: #C76272;  --color2-400: #F08E9E;
-  --color2-300: #FFAEBB;  --color2-200: #FFC5CF;  --color2-100: #FFDDE2;
-  --color2-50:  #FFF4F6;
+  --sig-color-2-900: #26070C;  --sig-color-2-800: #4D0F19;  --sig-color-2-700: #762330;
+  --sig-color-2-600: #9F3E4E;  --sig-color-2-500: #C76272;  --sig-color-2-400: #F08E9E;
+  --sig-color-2-300: #FFAEBB;  --sig-color-2-200: #FFC5CF;  --sig-color-2-100: #FFDDE2;
+  --sig-color-2-50:  #FFF4F6;
 
   /* ---- Color 3 · forest ---- */
-  --color3-900: #07220B;  --color3-800: #0C4015;  --color3-700: #1F692B;
-  --color3-600: #3A9249;  --color3-500: #5DBB6D;  --color3-400: #89E398;
-  --color3-300: #B4FFC1;  --color3-200: #CBFFD3;  --color3-100: #E1FFE6;
-  --color3-50:  #F7FFF9;
+  --sig-color-3-900: #07220B;  --sig-color-3-800: #0C4015;  --sig-color-3-700: #1F692B;
+  --sig-color-3-600: #3A9249;  --sig-color-3-500: #5DBB6D;  --sig-color-3-400: #89E398;
+  --sig-color-3-300: #B4FFC1;  --sig-color-3-200: #CBFFD3;  --sig-color-3-100: #E1FFE6;
+  --sig-color-3-50:  #F7FFF9;
 
   /* ---- Color 4 · tobacco ---- */
-  --color4-900: #221206;  --color4-800: #40220C;  --color4-700: #693D1F;
-  --color4-600: #925E3A;  --color4-500: #BB845D;  --color4-400: #E4AE89;
-  --color4-300: #FFD3B4;  --color4-200: #FFE0CA;  --color4-100: #FFEDE1;
-  --color4-50:  #FFFAF7;
+  --sig-color-4-900: #221206;  --sig-color-4-800: #40220C;  --sig-color-4-700: #693D1F;
+  --sig-color-4-600: #925E3A;  --sig-color-4-500: #BB845D;  --sig-color-4-400: #E4AE89;
+  --sig-color-4-300: #FFD3B4;  --sig-color-4-200: #FFE0CA;  --sig-color-4-100: #FFEDE1;
+  --sig-color-4-50:  #FFFAF7;
 
   /* ---- Color 5 · tan ---- */
-  --color5-900: #221D11;  --color5-800: #4E4329;  --color5-700: #6C5D3B;
-  --color5-600: #89774E;  --color5-500: #A69263;  --color5-400: #C3AD79;
-  --color5-300: #E0C891;  --color5-200: #FDE4AA;  --color5-100: #FFF1D0;
-  --color5-50:  #FFFCF6;
+  --sig-color-5-900: #221D11;  --sig-color-5-800: #4E4329;  --sig-color-5-700: #6C5D3B;
+  --sig-color-5-600: #89774E;  --sig-color-5-500: #A69263;  --sig-color-5-400: #C3AD79;
+  --sig-color-5-300: #E0C891;  --sig-color-5-200: #FDE4AA;  --sig-color-5-100: #FFF1D0;
+  --sig-color-5-50:  #FFFCF6;
 
-  /* ---- Neutral ---- */
-  --neutral-950: #32312A;  --neutral-900: #4D4B40;  --neutral-800: #625F53;
-  --neutral-700: #767366;  --neutral-600: #8A887A;  --neutral-500: #9F9C8F;
-  --neutral-400: #B3B1A4;  --neutral-300: #C8C5BA;  --neutral-200: #DCDAD0;
-  --neutral-100: #F0EFE7;  --neutral-50:  #FFFEF9;
+  /* ---- Neutral · warm, not grey ---- */
+  --sig-color-neutral-950: #32312A;  --sig-color-neutral-900: #4D4B40;
+  --sig-color-neutral-800: #625F53;  --sig-color-neutral-700: #767366;
+  --sig-color-neutral-600: #8A887A;  --sig-color-neutral-500: #9F9C8F;
+  --sig-color-neutral-400: #B3B1A4;  --sig-color-neutral-300: #C8C5BA;
+  --sig-color-neutral-200: #DCDAD0;  --sig-color-neutral-100: #F0EFE7;
+  --sig-color-neutral-50:  #FFFEF9;
 
-  --white: #FFFFFF;
+  --sig-color-white: #FFFFFF;
 
-  /* ---- Document surface ---------------------------------
-     --ink points at the brand navy, which lives at color1-800.
-     color1-900 is a near-black #030811 and is not a text color.
+  /* ---- Brand steps ----
+     The one step in each family that IS the brand colour. */
+  --sig-color-1:       var(--sig-color-1-800);
+  --sig-color-2:       var(--sig-color-2-800);
+  --sig-color-3:       var(--sig-color-3-800);
+  --sig-color-4:       var(--sig-color-4-800);
+  --sig-color-5:       var(--sig-color-5-400);
+  --sig-color-neutral: var(--sig-color-neutral-200);
 
-     --ground is the lightest Neutral, the 50.
 
-     --muted inherits the Neutral ramp's warmth. */
-  --ink:     var(--color1);
-  --ground:  var(--neutral-50);
-  --rule:    var(--color5-300);
-  --rule-faint: var(--color5-200);
-  --muted:   var(--neutral-700);
-}
-@media (max-width: 1023px) {
-  :root {
-    /* ---- HEADING 1 SCALE TABLET · base 31, ratio 1.2 ----
-       Same 31px anchor, shallower ratio, so the ladder climbs to 93
-       instead of 118 and the top steps still fit the measure. */
-    --size-heading1-1x: 37px;
-    --size-heading1-2x: 45px;
-    --size-heading1-3x: 54px;
-    --size-heading1-4x: 64px;
-    --size-heading1-5x: 77px;
-    --size-heading1-6x: 93px;
+  /* ==========================================================
+     14 · COLOUR · semantic roles · light ground
+     Components read these, never the ramps. Re-pointing them is
+     what re-themes the system; see the dark block near the bottom.
+     ========================================================== */
 
-    /* Every step renders smaller here than it does on desktop, so the
-       whole leading ladder shifts one notch looser (+0.02). Same 0.02
-       spacing between steps. */
-    --lh-heading1-1x: 1.20;
-    --lh-heading1-2x: 1.18;
-    --lh-heading1-3x: 1.16;
-    --lh-heading1-4x: 1.14;
-    --lh-heading1-5x: 1.12;
-    --lh-heading1-6x: 1.10;
+  --sig-ink:    var(--sig-color-1);              /* brand navy. 1-900 is a
+                                                    near-black and is not
+                                                    a text colour. */
+  --sig-ground: var(--sig-color-neutral-50);
 
-    /* No tracking entry. --ls-heading1 is 0 at every width — see the
-       note on it in :root. */
+  --sig-text-heading:        var(--sig-ink);
+  --sig-text-heading-accent: var(--sig-color-5-700);
+  --sig-text-body:           var(--sig-ink);
+  --sig-text-secondary:      var(--sig-color-neutral-700);
+  --sig-text-muted:          var(--sig-color-neutral-600);
+  --sig-text-accent:         var(--sig-color-neutral-100);
+  --sig-text-light:          var(--sig-color-neutral-50);
 
-    --hero:    73px;
-    --hero-1x: 88px;
+  --sig-surface-page:   var(--sig-ground);
+  --sig-surface-raised: var(--sig-color-white);   /* a card lifts off the
+                                                    warm ground */
+  --sig-surface-sunken: var(--sig-color-neutral-100);
 
-    --heading:    20px;
-    --heading-1x: 24px;
-    --heading-2x: 29px;
-    --heading-3x: 35px;
-    --heading-4x: 42px;
-    --heading-5x: 51px;
-    --heading-6x: 61px;
+  --sig-rule:        var(--sig-color-5-300);
+  --sig-rule-strong: var(--sig-color-5-500);
+  --sig-rule-faint:  var(--sig-color-5-200);
+  --sig-rule-subtle: var(--sig-rule-faint);
 
-    --body-pri: 17px;
-    }
-}
-@media (max-width: 767px) {
-  :root {
-    /* ---- HEADING 1 SCALE MOBILE · base 31, ratio 1.125 ----
-       The shallowest ratio of the three. At this width a 1.25 ladder
-       would put 3x alone on four lines, so the whole scale compresses
-       into a 35–63px band. */
-    --size-heading1-1x: 35px;
-    --size-heading1-2x: 39px;
-    --size-heading1-3x: 44px;
-    --size-heading1-4x: 50px;
-    --size-heading1-5x: 56px;
-    --size-heading1-6x: 63px;
 
-    /* Looser again (+0.02 on tablet). Nothing here is display size —
-       63px is the ceiling — so the tight end of the ladder is not
-       needed and would cause ascender/descender clash on a script. */
-    --lh-heading1-1x: 1.22;
-    --lh-heading1-2x: 1.20;
-    --lh-heading1-3x: 1.18;
-    --lh-heading1-4x: 1.16;
-    --lh-heading1-5x: 1.14;
-    --lh-heading1-6x: 1.12;
+  /* ==========================================================
+     15 · FORM TOKENS · light ground
+     Border steps are chosen against the 3:1 floor for control
+     boundaries, not for looks. Field text and placeholder carry
+     their measured contrast in the comment.
+     ========================================================== */
 
-    /* No tracking entry. --ls-heading1 is 0 at every width — see the
-       note on it in :root. */
+  /* ---- Field surface ---- */
+  --sig-field-bg:          var(--sig-color-neutral-50);
+  --sig-field-bg-hover:    var(--sig-color-neutral-50);
+  --sig-field-bg-focus:    var(--sig-color-neutral-50);
+  --sig-field-bg-disabled: var(--sig-color-neutral-500);
+  --sig-field-bg-readonly: var(--sig-color-neutral-100);
 
-    --hero:    44px;
-    --hero-1x: 49px;
+  /* ---- Field border ---- */
+  --sig-field-border:          var(--sig-color-neutral-200);
+  --sig-field-border-hover:    var(--sig-color-neutral-200);
+  --sig-field-border-filled:   var(--sig-color-neutral-50);
+  --sig-field-border-focus:    var(--sig-color-1-300);
+  --sig-field-border-disabled: var(--sig-color-neutral-500);
 
-    --heading:    19px;
-    --heading-1x: 22px;
-    --heading-2x: 24px;
-    --heading-3x: 27px;
-    --heading-4x: 31px;
-    --heading-5x: 34px;
-    --heading-6x: 39px;
+  /* ---- Field text ---- */
+  --sig-field-text:          var(--sig-color-neutral-950);  /* 12.9:1 */
+  --sig-field-text-focus:    var(--sig-color-neutral-950);
+  --sig-field-placeholder:   var(--sig-color-neutral-700);  /*  4.7:1 */
+  --sig-field-text-readonly: var(--sig-color-neutral-800);
+  --sig-field-text-disabled: var(--sig-color-neutral-600);
 
-    --body-pri: 17px;
-    }
-}
+  /* ---- Label, help, required ---- */
+  --sig-label-text:       var(--sig-color-neutral-900);
+  --sig-label-text-focus: var(--sig-color-1-700);
+  --sig-label-disabled:   var(--sig-color-neutral-600);
+  --sig-help-text:        var(--sig-color-neutral-800);
+  --sig-required-mark:    var(--sig-color-2-600);
 
-/* ============================================================
-   BODY TEXT CLASSES
-   One definition for both documents. Top level, NOT nested inside
-   :root — nested they compile to `:root .body-base-sec`, a descendant
-   selector at (0,2,0) instead of the (0,1,0) a class should carry.
+  /* ---- Controls · checkbox, radio, switch ---- */
+  --sig-control-bg:            var(--sig-color-white);
+  --sig-control-border:        var(--sig-color-neutral-600);
+  --sig-control-border-hover:  var(--sig-color-neutral-800);
+  --sig-control-checked-bg:    var(--sig-color-1-700);
+  --sig-control-checked-hover: var(--sig-color-1-600);
+  --sig-control-checked-mark:  var(--sig-color-neutral-50);
+  --sig-control-disabled-bg:   var(--sig-color-neutral-300);
 
-   .strong is a modifier on the SAME element, not a descendant:
-       <p class="body-sm-sec strong">            correct
-       <p class="body-sm-sec"><b class="strong">     not this
+  /* ---- Focus ring · shared by buttons, links and controls ---- */
+  --sig-focus-ring:      var(--sig-color-1-600);
+  --sig-focus-ring-soft: rgba(51, 76, 125, 0.22);
 
-   PRIMARY · Kepler. The xs step uses the Caption cut, made for 13px
-   and below. SECONDARY · Inter, fixed at every breakpoint.
-   ============================================================ */
+  /* ---- Feedback ---- */
+  --sig-field-error:      var(--sig-color-2-500);
+  --sig-field-error-text: var(--sig-color-2-700);
+  --sig-field-error-bg:   var(--sig-color-2-50);
+  --sig-field-error-ring: rgba(159, 62, 78, 0.22);
 
-.body-pri,
-.body-pri-sm {
-  font-family: var(--face-regular);
-  font-weight: var(--weight-regular);
-  letter-spacing: var(--ls-text);
-  text-transform: var(--case-body-pri);
-}
-.body-pri-xs {
-  font-family: var(--face-caption);
-  font-weight: var(--weight-caption);
-  letter-spacing: var(--ls-text);
-  text-transform: var(--case-body-pri);
-}
-.body-pri    { font-size: var(--body-pri);    line-height: var(--lh-body-pri); }
-.body-pri-sm { font-size: var(--body-pri-sm); line-height: var(--lh-body-pri-sm); }
-.body-pri-xs { font-size: var(--body-pri-xs); line-height: var(--lh-body-pri-xs); }
+  --sig-field-success:      var(--sig-color-3-600);
+  --sig-field-success-text: var(--sig-color-3-700);
+  --sig-field-success-bg:   var(--sig-color-3-50);
 
-.body-base-sec,
-.body-sm-sec,
-.body-xs-sec {
-  font-family: var(--face-sec);
-  font-weight: var(--weight-body-sec-normal);
-  letter-spacing: var(--ls-text);
-  text-transform: var(--case-body-sec);
-}
-.body-base-sec { font-size: var(--body-base-sec); line-height: var(--lh-body-base-sec); }
-.body-sm-sec   { font-size: var(--body-sm-sec);   line-height: var(--lh-body-sm-sec); }
-.body-xs-sec   { font-size: var(--body-xs-sec);   line-height: var(--lh-body-xs-sec); }
+  --sig-field-warning:      var(--sig-color-4-600);
+  --sig-field-warning-text: var(--sig-color-4-700);
+  --sig-field-warning-bg:   var(--sig-color-4-50);
 
-/* Emphasis. Inter carries a real 500. Kepler does NOT: the Typekit kit
-   publishes kepler-std at 300 and 400 only, so .body-pri.strong and
-   .body-pri-sm.strong would be a synthetic bold and are deliberately
-   absent. Only kepler-std-caption has a real Medium — that is
-   --weight-btn, the weight paired with --face-btn
-   (kepler-std-medium-caption). For emphasis in running Kepler copy use
-   the real 400 italic instead. */
-.body-pri-xs.strong { font-weight: var(--weight-btn); }
+  /* ---- Selection and caret ---- */
+  --sig-field-selection-bg:   var(--sig-color-5-200);
+  --sig-field-selection-text: var(--sig-color-neutral-950);
+  --sig-field-caret:          var(--sig-color-1-700);
 
-.body-base-sec.strong,
-.body-sm-sec.strong,
-.body-xs-sec.strong { font-weight: var(--weight-body-sec-strong); }
+  /* ---- Shape and metrics ----
+     The control box is sized in em so it tracks the label beside it
+     at any step. --sig-field-scheme tells the browser which palette
+     to draw its OWN parts with — the date picker, the select arrow,
+     the scrollbar in a multi-select. Those follow color-scheme, not
+     the fill, so they have to be told separately. */
+  --sig-field-radius:       var(--sig-radius);
+  --sig-field-pad-y:        0.85em;
+  --sig-field-pad-x:        14px;
+  --sig-field-ease:         var(--sig-ease-ui);
+  --sig-field-scheme:       light;
+  --sig-field-box:          1.15em;
+  --sig-field-textarea-min: 7rem;
+  --sig-field-multi-min:    9rem;
 
-/* ============================================================
-   TIMELINE-LOCAL TOKENS
-   These have no equivalent in the brand system, so they are
-   defined here rather than left dangling as they were before.
-   ============================================================ */
-:root {
-  /* Gantt label gutter. */
-  --glabel: 420px;
 
-  /* The brand system is square throughout: the only border-radius
-     in styles.css is an explicit 0 on form controls. Both radius
-     tokens therefore resolve to 0 rather than inventing a curve. */
-  --radius:    0;
-  --radius-sm: 0;
+  /* ==========================================================
+     16 · BUTTON TOKENS
+     Burgundy is the action family. Hover steps to 2-600, not 2-700:
+     700 and 800 hold the same hex in the Figma scales frame, so a
+     700 hover would not read as a state change at all.
 
-  /* Elevation for drawers, popovers and cards. Tinted with
-     color1-900 (#030811) so the shadow sits in the navy family
-     instead of neutral black. */
-  --shadow: 0 2px 8px rgba(3, 8, 17, 0.10), 0 8px 24px rgba(3, 8, 17, 0.08);
+     The fill's #3F1214 and label #F6F5F4 are measured from the
+     btn-sec-fill frame, node 6028-2073. Both are unbound raw hexes
+     in the design, sitting between 2-900 and 2-800, so they are
+     recorded as the button's own values rather than snapped to a
+     ramp step that reads visibly lighter side by side.
+     ========================================================== */
 
-  /* Phase markers · one brand family each, at its brand step. */
-  --phase-01: var(--color1-800);   /* navy      */
-  --phase-02: var(--color2-800);   /* burgundy  */
-  --phase-03: var(--color3-800);   /* forest    */
-  --phase-04: var(--color4-800);   /* tobacco   */
-  --phase-05: var(--color5-400);   /* tan       */
-  --phase-06: var(--neutral-600);  /* neutral   */
-}
+  --sig-btn-fill-bg:           #3F1214;
+  --sig-btn-fill-bg-hover:     var(--sig-color-2-600);
+  --sig-btn-fill-bg-active:    var(--sig-color-2-900);
+  --sig-btn-fill-label:        #F6F5F4;
+  --sig-btn-fill-label-active: #F6F5F4;
 
-/* ============================================================
-   SEMANTIC ROLES
-   Merged in from the old styles.css. That file named these roles
-   throughout its component rules but never defined them, so every
-   .text-*, .surface-* and .rule-* utility resolved to nothing.
-   They are anchored on the ramps above rather than on raw hex.
+  --sig-btn-outline-stroke:        var(--sig-color-2-800);
+  --sig-btn-outline-stroke-hover:  var(--sig-color-2-600);
+  --sig-btn-outline-stroke-active: var(--sig-color-2-900);
+  --sig-btn-outline-wash:          transparent;
+  --sig-btn-outline-wash-hover:    var(--sig-color-2-50);
+  --sig-btn-outline-wash-active:   var(--sig-color-2-100);
 
-   Light ground is the default: the brand document sits on
-   --ground with --ink type. The dark remap is at the bottom.
-   ============================================================ */
-:root {
-  /* ---- Type roles ---------------------------------------- */
-  --text-heading:        var(--ink);
-  --text-heading-accent: var(--color5-700);
-  --text-body:           var(--ink);
-  --text-secondary:      var(--neutral-700);
-  --text-muted:          var(--neutral-600);
-  --text-accent:         var(--neutral-100);  /* 6.5:1 on --ground */
-  --text-light:          var(--neutral-50);
+  --sig-btn-disabled-bg:     var(--sig-color-neutral-400);
+  --sig-btn-disabled-stroke: var(--sig-color-neutral-400);
+  --sig-btn-disabled-label:  var(--sig-color-neutral-50);
 
-  /* ---- Surfaces -----------------------------------------
-     Raised is pure white so a card lifts off the warm ground;
-     sunken drops one Neutral step instead of adding a shadow. */
-  --surface-page:   var(--ground);
-  --surface-raised: var(--white);
-  --surface-sunken: var(--neutral-100);
+  /* A tint of the ink, not a grey, so the quiet inline control sits
+     in the same family as the surface it is drawn on. */
+  --sig-btn-inline-wash:        rgba(15, 19, 64, 0.05);
+  --sig-btn-inline-wash-hover:  rgba(15, 19, 64, 0.11);
+  --sig-btn-inline-wash-active: rgba(15, 19, 64, 0.16);
 
-  /* ---- Rules --------------------------------------------
-     --rule and --rule-faint are defined with the document
-     surface above. These are the two ends of the same ladder. */
-  --rule-strong: var(--color5-500);
-  --rule-subtle: var(--rule-faint);
+  /* ---- Size ladder · lg is the brand button, sm and md are the
+     compact controls inside toolbars, table rows and drawers.
+     md's 18/32 is measured from the btn-sec-fill frame and held in
+     px because that frame states absolutes, not ratios. */
+  --sig-btn-size-sm: var(--sig-fs-body2-sm);     /* 13px */
+  --sig-btn-size-md: var(--sig-fs-body2-sm);     /* 13px */
+  --sig-btn-size-lg: var(--sig-fs-body2-base);   /* 15px */
 
-  /* The button colour tokens are NOT here. Their base lives in the
-     BUTTON TOKENS block at the top of buttons.css, which loads after
-     this file and would shadow any copy written here. The dark remap
-     below is the only button entry this file carries. */
-
-  /* ---- Measure ------------------------------------------
-     Line length caps for running copy. */
-  --measure:        70ch;
-  --measure-narrow: 56ch;
-
-  /* ---- Motion -------------------------------------------
-     One duration for every interface state change, so buttons,
-     links and controls all settle together. */
-  --ease-ui: 160ms ease;
-
-  /* ---- Weights ------------------------------------------
-     Kepler ships Light through Medium; Inter carries 400/500/600. */
-  --weight-display:         300;
-  --weight-subhead:         400;
-  --weight-regular:         400;
-  --weight-caption:         400;
-  --weight-btn:             500;
-  --weight-btn-sec:         500;
-  --weight-body-sec-normal: 400;
-  --weight-body-sec-strong: 500;
-  --weight-hero:            400;
-
-  /* ---- Casing -------------------------------------------
-     Held as tokens so a casing decision is changed in one place
-     rather than hunted through the component rules. */
-  --case-heading:  uppercase;
-  --case-body-pri: none;
-  --case-body-sec: none;
-  --case-btn:      uppercase;
-  --case-btn-sec:  none;
-  --case-btn-sec-upper:  uppercase;
-  --case-nav:      none;
-
-  /* ---- Size ladder -------------------------------------
-     One ladder for every button in the system. A size variant
-     sets these three and nothing else, so a control changes size
-     without restating its type, weight, tracking or casing.
-
-     A stray closing brace used to sit immediately above this comment.
-     It shut :root early, which left every declaration in this ladder
-     orphaned outside any rule and thrown away by the parser. .btn-md
-     then set --btn-size and --btn-pad-* to nothing, so .btn's padding
-     collapsed to 0 and .btn-sans' font-size fell back to the inherited
-     18px — every compact button in the project rendered as bare text
-     on a fill. --ls-btn-compact and --btn-touch went with it.
-
-     md is measured from the btn-sec-fill frame in Figma
-     (node 6028-2073): 18px vertical, 32px horizontal, which is the
-     spacing/32 variable. Held in px rather than em because that frame
-     states them as absolute values, not as a ratio of the label.
-     lg is the brand button; sm and md are the compact controls that
-     sit inside toolbars, table rows and drawers. */
-  --btn-size-sm:  var(--body-sm-sec);   /* 13px */
-  --btn-size-md:  var(--body-sm-sec);   /* 13px */
-  --btn-size-lg:  var(--body-base-sec); /* 15px */
-
-  --btn-pad-y-sm: 10px;  --btn-pad-x-sm: 16px;
-  --btn-pad-y-md: 14px;  --btn-pad-x-md: 24px;
-  --btn-pad-y-lg: 18px;  --btn-pad-x-lg: 32px;
+  --sig-btn-pad-y-sm: 10px;  --sig-btn-pad-x-sm: 16px;
+  --sig-btn-pad-y-md: 14px;  --sig-btn-pad-x-md: 24px;
+  --sig-btn-pad-y-lg: 18px;  --sig-btn-pad-x-lg: 32px;
 
   /* Compact controls open their tracking further than the brand
      button: at 13px the label needs the air, and the wider setting
      is what separates a toolbar control from running copy. */
-  --ls-btn-compact: 0.12em;
+  --sig-ls-btn-compact: 0.12em;
 
-  /* Minimum touch target. Applied to compact controls at the
-     narrow breakpoints, where they are the primary hit areas. */
-  --btn-touch: 40px;
+  --sig-btn-touch:    40px;   /* minimum hit area at narrow widths */
+  --sig-btn-border-w: 1px;
+
+
+  /* ==========================================================
+     17 · LINK TOKENS
+     ========================================================== */
+
+  --sig-link-text:        var(--sig-text-body);
+  --sig-link-text-hover:  var(--sig-color-2-800);
+  --sig-link-text-active: var(--sig-color-2-900);
+
+  --sig-link-underline:       var(--sig-color-5-500);   /* quiet by default */
+  --sig-link-underline-hover: var(--sig-color-2-800);
+
+  --sig-link-offset:    0.18em;
+  --sig-link-thickness: 1px;
+
+
+  /* ==========================================================
+     18 · SHAPE, MOTION, MEASURE
+     The brand system is square throughout, so both radius tokens
+     resolve to 0 rather than inventing a curve.
+     ========================================================== */
+
+  --sig-radius:    0;
+  --sig-radius-sm: 0;
+
+  --sig-ease-ui: 160ms ease;   /* one duration for every state change */
+
+  --sig-measure:        70ch;
+  --sig-measure-narrow: 56ch;
+
+  /* Elevation tinted with 1-900 so the shadow sits in the navy
+     family instead of neutral black. */
+  --sig-shadow: 0 2px 8px rgba(3, 8, 17, 0.10), 0 8px 24px rgba(3, 8, 17, 0.08);
+
+
+  /* ==========================================================
+     19 · LOGO
+     Ratios come from each file's viewBox. The optical multipliers
+     correct for the three lockups reading at different visual
+     weights at the same box height: the logomark is densest, so it
+     is set smallest.
+     ========================================================== */
+
+  --sig-logo-logotype: url("../assets/SIG_LOGO_LOGOTYPE_WHITE.svg");
+  --sig-logo-primary:  url("../assets/SIG_LOGO_PRIMARY_WHITE.svg");
+  --sig-logo-logomark: url("../assets/SIG_LOGO_LOGOMARK_WHITE.svg");
+
+  --sig-logo-logotype-ratio: 372.9 / 159.32;   /* 2.341, landscape   */
+  --sig-logo-primary-ratio:  257.09 / 202.34;  /* 1.271, near square */
+  --sig-logo-logomark-ratio: 106.74 / 162.05;  /* 0.659, portrait    */
+
+  --sig-logo-logotype-optical: 1;
+  --sig-logo-primary-optical:  1.15;
+  --sig-logo-logomark-optical: 0.9;
+
+  --sig-logo-h-header:  1.75rem;
+  --sig-logo-h-footer:  2.25rem;
+  --sig-logo-h-hero:    6rem;
+  --sig-logo-h-favicon: 1.25rem;
+
+  --sig-logo-ease: 200ms ease;
 }
 
+
 /* ============================================================
-   LINK TOKENS
+   20 · TABLET · 768px to 1023px · ratio 1.200
+   Same 18px base, so 1rem does not move. Only the two heading
+   ladders re-climb at the shallower ratio from the same h6 anchor,
+   which keeps the top steps inside the measure at this width.
    ============================================================ */
-:root {
-  --link-text:        var(--text-body);
-  --link-text-hover:  var(--color2-800);
-  --link-text-active: var(--color2-900);
 
-  --link-underline:       var(--color5-500);  /* quiet by default */
-  --link-underline-hover: var(--color2-800);
+@media (max-width: 1023px) {
+  :root {
+    --sig-fs-heading1-h6:      2.167rem;   /*  39px */
+    --sig-fs-heading1-h5:      2.600rem;   /*  47px */
+    --sig-fs-heading1-h4:      3.120rem;   /*  56px */
+    --sig-fs-heading1-h3:      3.744rem;   /*  67px */
+    --sig-fs-heading1-h2:      4.493rem;   /*  81px */
+    --sig-fs-heading1-h1:      5.391rem;   /*  97px */
+    --sig-fs-heading1-display: 6.470rem;   /* 116px */
 
-  --link-offset:    0.18em;
-  --link-thickness: 1px;
+    --sig-fs-heading2-h6:      1.333rem;   /* 24px */
+    --sig-fs-heading2-h5:      1.600rem;   /* 29px */
+    --sig-fs-heading2-h4:      1.920rem;   /* 35px */
+    --sig-fs-heading2-h3:      2.304rem;   /* 41px */
+    --sig-fs-heading2-h2:      2.765rem;   /* 50px */
+    --sig-fs-heading2-h1:      3.318rem;   /* 60px */
+    --sig-fs-heading2-display: 3.982rem;   /* 72px */
+
+    /* Every step renders smaller here, so the whole leading ladder
+       shifts one notch looser. */
+    --sig-lh-heading1-h1:      1.28;
+    --sig-lh-heading1-display: 1.22;
+    --sig-lh-heading2-h1:      1.22;
+    --sig-lh-heading2-display: 1.18;
+  }
 }
 
+
 /* ============================================================
-   FORM TOKENS · light ground
-   Fields sit on --surface-raised, one step lighter than the page,
-   so they read as inset targets. Border steps are chosen against
-   the 3:1 floor for control boundaries, not for looks.
+   21 · MOBILE · below 768px · ratio 1.125
+   The root drops to 17px, which moves body1 and both heading
+   anchors down 5.6% on its own. On top of that the ladders re-climb
+   at the shallowest ratio: a 1.25 ramp at this width puts h3 alone
+   on four lines.
+
+   Two things are pinned back rather than allowed to shrink:
+     · the body2 ladder, restated against the 17px root so Inter
+       renders at the same px it does on desktop. Shrunk with the
+       primary scale, its xs step lands under 10.5px.
+     · the form ladder, for the same reason, with the input raised
+       to the 16px iOS zoom floor.
    ============================================================ */
-:root {
-  /* ---- Field surface ---- */
-  --field-bg:          var(--neutral-50);
-  --field-bg-hover:    var(--neutral-50);
-  --field-bg-focus:    var(--neutral-50);
-  --field-bg-disabled: var(--neutral-500);
-  --field-bg-readonly: var(--neutral-100);
 
-  /* ---- Field border ----
-     neutral-600 is the lightest step that clears 3:1 on white. */
-  --field-border:          var(--neutral-200);  /* #8A887A  3.5:1 */
-  --field-border-hover:    var(--neutral-200);
-  --field-border-filled:   var(--neutral-50);
-  --field-border-focus:    var(--color1-300);
-  --field-border-disabled: var(--neutral-500);
+@media (max-width: 767px) {
+  :root {
+    --sig-fs-heading1-h6:      2.167rem;   /* 36.8px */
+    --sig-fs-heading1-h5:      2.438rem;   /* 41.4px */
+    --sig-fs-heading1-h4:      2.743rem;   /* 46.6px */
+    --sig-fs-heading1-h3:      3.086rem;   /* 52.5px */
+    --sig-fs-heading1-h2:      3.472rem;   /* 59.0px */
+    --sig-fs-heading1-h1:      3.906rem;   /* 66.4px */
+    --sig-fs-heading1-display: 4.394rem;   /* 74.7px */
 
-  /* ---- Field text ---- */
-  --field-text:          var(--neutral-950);  /* 12.9:1 */
-  --field-text-focus:    var(--neutral-950);
-  --field-placeholder:   var(--neutral-700);  /* 4.7:1  */
-  --field-text-readonly: var(--neutral-800);
-  --field-text-disabled: var(--neutral-600);
+    --sig-fs-heading2-h6:      1.333rem;   /* 22.7px */
+    --sig-fs-heading2-h5:      1.500rem;   /* 25.5px */
+    --sig-fs-heading2-h4:      1.688rem;   /* 28.7px */
+    --sig-fs-heading2-h3:      1.898rem;   /* 32.3px */
+    --sig-fs-heading2-h2:      2.136rem;   /* 36.3px */
+    --sig-fs-heading2-h1:      2.403rem;   /* 40.9px */
+    --sig-fs-heading2-display: 2.703rem;   /* 46.0px */
 
-  /* ---- Label and help ----
-     The LIGHT ground values, so they stay dark: this block is the brand
-     document, which sits on --ground.
+    /* h4 drops to 28.7px here, which is under the 32px Display
+       boundary, so the cut moves down with it. This is the only
+       optical-size crossing in the system, and it is handled by the
+       token rather than by the class name. */
+    --sig-ff-heading2-h4: var(--sig-ff-kepler-subhead);
 
-     All five had been left defined ONLY in the dark remap at the bottom
-     of the file. A var() with no definition is invalid at computed-value
-     time, and colour inherits, so every label, hint and required mark in
-     #tab-brand silently fell back to whatever its parent happened to be
-     rather than to a chosen value.
+    /* Looser again: nothing at this width is display size, so the
+       tight end of the ladder is not needed and would clash
+       ascenders against descenders on the script. */
+    --sig-lh-heading1-h1:      1.30;
+    --sig-lh-heading1-display: 1.26;
+    --sig-lh-heading2-h1:      1.26;
+    --sig-lh-heading2-display: 1.22;
 
-     The timeline does not read these at all: its labels take
-     --color-form-label from the .form-field-* set above. */
-  --label-text:       var(--neutral-900);
-  --label-text-focus: var(--color1-700);
-  --label-disabled:   var(--neutral-600);
-  --help-text:        var(--neutral-800);
-  --required-mark:    var(--color2-600);
+    /* body2 · pinned to its desktop px against the 17px root. */
+    --sig-fs-body2-lg:       1rem;       /* 17px */
+    --sig-fs-body2-base:     0.882rem;   /* 15px */
+    --sig-fs-body2-sm:       0.765rem;   /* 13px */
+    --sig-fs-body2-xs:       0.647rem;   /* 11px */
+    --sig-fs-body2-upper-sm: 0.706rem;   /* 12px */
+    --sig-fs-body2-upper-xs: 0.588rem;   /* 10px */
 
-  /* ---- Controls · checkbox, radio, switch ---- */
-  --control-bg:            var(--white);
-  --control-border:        var(--neutral-600);
-  --control-border-hover:  var(--neutral-800);
-  --control-checked-bg:    var(--color1-700);
-  --control-checked-hover: var(--color1-600);
-  --control-checked-mark:  var(--neutral-50);
-  --control-disabled-bg:   var(--neutral-300);
+    /* forms · pinned, with the input at the 16px iOS floor. */
+    --sig-fs-form-label:  0.882rem;   /* 15px */
+    --sig-fs-form-input:  0.941rem;   /* 16px */
+    --sig-fs-form-helper: 0.765rem;   /* 13px */
+    --sig-fs-form-error:  0.765rem;   /* 13px */
+    --sig-fs-form-button: 0.824rem;   /* 14px */
 
-  /* ---- Focus ring · shared by buttons, links and controls ---- */
-  --focus-ring:      var(--color1-600);
-  --focus-ring-soft: rgba(51, 76, 125, 0.22);
+    /* Product title and price · derived, not drawn in Figma. 54px
+       runs past the measure on a 360px screen even after the root
+       drop, so both are stepped down explicitly. */
+    --sig-fs-product-title: 2.353rem;   /* 40px */
+    --sig-fs-product-price: 1.765rem;   /* 30px */
 
-  /* ---- Feedback ---- */
-  --field-error:      var(--color2-500);
-  --field-error-text: var(--color2-700);
-  --field-error-bg:   var(--color2-50);
-  --field-error-ring: rgba(159, 62, 78, 0.22);
-
-  --field-success:      var(--color3-600);
-  --field-success-text: var(--color3-700);
-  --field-success-bg:   var(--color3-50);
-
-  --field-warning:      var(--color4-600);
-  --field-warning-text: var(--color4-700);
-  --field-warning-bg:   var(--color4-50);
-
-  /* ---- Accent ---- */
-  --field-selection-bg:   var(--color5-200);
-  --field-selection-text: var(--neutral-950);
-  --field-caret:          var(--color1-700);
-
-  /* ---- Shape ---- */
-  --field-radius: var(--radius);
-  --field-pad-y:  0.85em;
-  --field-pad-x:  14px;
-  --field-ease:   var(--ease-ui);
-  --field-face:   var(--face-sec);
-
-  /* ---- Form field type · one style for label, placeholder and value --
-     Face, size, line height, tracking, case and the two weights, stated
-     in full so a form control is changed here rather than hunted through
-     forms.css and timeline.css.
-
-     Inter at 15px. --form-field-text-sm is the compact step for the
-     inline controls in the schedule table, where a 15px date selector
-     would not fit the row. The line height runs tighter than
-     --lh-body-base-sec (1.70) because a label is one line naming a
-     control, not running copy — 1.70 opened a gap between the label and
-     the field it belongs to and broke the pairing.
-
-     Legend is the same object at the group level, so it shares this
-     style and only adds its own inline padding.
-
-     The colours below are the timeline's, which is a dark document.
-     --color-form-input is the exception: it is the navy for the
-     white-filled row controls, and timeline.css remaps it to
-     --neutral-100 inside the drawer and the modals, where the field is
-     a 5% white wash over navy. */
-  --form-field-text-family: var(--face-sec);
-  --form-field-text-size: var(--body-base-sec);
-  --form-field-text-lh: 1.45;
-  --form-field-text-ls: 0;
-  --form-field-text-sm: var(--body-sm-sec);
-  --form-field-text-case: none;
-
-  --form-field-weight-normal: var(--weight-body-sec-normal);
-  --form-field-weight-strong: var(--weight-body-sec-strong);
-
-  --color-form-label: var(--neutral-50);
-  --color-form-label-disabled: var(--neutral-600);
-  --color-form-placeholder: var(--neutral-300);
-  --color-form-placeholder-focused: var(--color1-800);
-  --color-form-input: var(--color1-800);
-
-  /* Which palette the OS draws its own parts with — the date picker,
-     the select arrow, the scrollbar inside a multi-select. They follow
-     color-scheme, not the fill, so they have to be told separately. */
-  --form-field-scheme: light;
-
-  /* 16px is the floor that stops iOS Safari zooming the page when a
-     field takes focus. Only applied below the mobile breakpoint. */
-  --form-field-text-touch: 16px;
-
-  /* Box metrics for the controls. The checkbox is sized in em so it
-     tracks the label beside it at any step. */
-  --form-field-box: 1.15em;
-  --form-field-textarea-min: 7rem;
-  --form-field-multi-min: 9rem;
+    /* Wider hit area on the primary button at phone width. */
+    --sig-btn-pad-x-lg: 1.8em;
+  }
 }
 
 
 /* ============================================================
-   DARK GROUND
-   A pure token remap. No component is redefined here: every rule
-   in buttons.css, links.css and forms.css already reads a token,
-   so re-pointing the tokens re-themes the whole layer.
+   22 · DARK GROUND
+   A pure token remap. No component is redefined here: every rule in
+   buttons.css, links.css and forms.css already reads a token, so
+   re-pointing the tokens re-themes the whole layer.
 
    Scope it with either:
-     <body data-surface="dark">     whole page
-     <section class="on-dark">      one section
+       <body data-surface="dark">     whole page
+       <section class="on-dark">      one section
 
-   Fields sit on color1-800, one step UP from a color1-900 page.
-   On dark the border carries most of the definition, so it runs
-   brighter than its light counterpart.
+   #tab-timeline is listed because it IS a dark document: it sits on
+   1-900 with light type. Saying so once means its controls read the
+   dark tokens without every one of them carrying an .on-dark class.
 
-   #tab-timeline is listed here because it IS a dark document: it
-   sits on color1-900 with light type, as base.css sets up. Saying so
-   once means its controls read the dark tokens without every one of
-   them needing an .on-dark class in the markup.
+   Both the --sig-* roles AND their legacy aliases are restated here.
+   An alias declared only in :root computes against :root's value and
+   is then inherited as that fixed colour, so it would not follow the
+   remap on a descendant.
    ============================================================ */
+
 [data-surface="dark"],
 .on-dark,
 #tab-timeline {
   /* ---- Type roles ---- */
-  --text-heading:        var(--neutral-50);
-  --text-heading-accent: var(--neutral-50);
-  --text-body:           var(--neutral-100);
-  --text-secondary:      var(--neutral-300);
-  --text-muted:          var(--neutral-500);
-  --text-accent:         var(--neutral-300);
-  --text-light:          var(--neutral-50);
+  --sig-text-heading:        var(--sig-color-neutral-50);
+  --sig-text-heading-accent: var(--sig-color-neutral-50);
+  --sig-text-body:           var(--sig-color-neutral-100);
+  --sig-text-secondary:      var(--sig-color-neutral-300);
+  --sig-text-muted:          var(--sig-color-neutral-500);
+  --sig-text-accent:         var(--sig-color-neutral-300);
+  --sig-text-light:          var(--sig-color-neutral-50);
 
-  /* ---- Surfaces ---- */
-  --surface-page:   var(--color1-900);
-  --surface-raised: var(--color1-800);
-  --surface-sunken: var(--color1-900);
+  --sig-surface-page:   var(--sig-color-1-900);
+  --sig-surface-raised: var(--sig-color-1-800);
+  --sig-surface-sunken: var(--sig-color-1-900);
 
-  /* ---- Rules ---- */
-  --rule:        var(--color5-700);
-  --rule-strong: var(--color5-500);
-  --rule-faint:  var(--color1-700);
-  --rule-subtle: var(--color1-700);
+  --sig-rule:        var(--sig-color-5-700);
+  --sig-rule-strong: var(--sig-color-5-500);
+  --sig-rule-faint:  var(--sig-color-1-700);
+  --sig-rule-subtle: var(--sig-color-1-700);
 
   /* ---- Buttons ----
-     The fill is NOT remapped here. btn-sec-fill is one designed
-     object, so the dark ground inherits #3F1214 / #F6F5F4 from the
-     base rather than carrying a second copy that can drift from it.
-     The pair that used to sit here pointed at --color2-800 and
-     --color2-700, which hold the same hex in the Figma scales frame,
-     so hover was indistinguishable from rest.
+     The fill is NOT remapped: btn-sec-fill is one designed object,
+     so the dark ground inherits #3F1214 / #F6F5F4 rather than
+     carrying a second copy that can drift from it. Only the outline
+     stroke is restated, because a stroke has to be seen against the
+     ground it is drawn on and the fill's near-black burgundy
+     disappears into navy. */
+  --sig-btn-outline-stroke:        var(--sig-color-2-400);
+  --sig-btn-outline-stroke-hover:  var(--sig-color-2-300);
+  --sig-btn-outline-stroke-active: var(--sig-color-2-200);
+  --sig-btn-outline-wash:          transparent;
+  --sig-btn-outline-wash-hover:    rgba(195, 173, 121, 0.12);
+  --sig-btn-outline-wash-active:   rgba(195, 173, 121, 0.20);
 
-     Only the outline stroke is restated, because a stroke has to be
-     seen against the ground it is drawn on and the fill's near-black
-     burgundy disappears into navy. */
-  --btn-outline-stroke:        var(--color2-400);
-  --btn-outline-stroke-hover:  var(--color2-300);
-  --btn-outline-stroke-active: var(--color2-200);
-  --btn-outline-wash:          transparent;
-  --btn-outline-wash-hover:    rgba(195, 173, 121, 0.12);
-  --btn-outline-wash-active:   rgba(195, 173, 121, 0.20);
+  --sig-btn-disabled-bg:     var(--sig-color-neutral-700);
+  --sig-btn-disabled-stroke: var(--sig-color-neutral-700);
+  --sig-btn-disabled-label:  var(--sig-color-neutral-100);
 
-  --btn-disabled-bg:     var(--neutral-700);
-  --btn-disabled-stroke: var(--neutral-700);
-  --btn-disabled-label:  var(--neutral-100);
-
-  /* Inline wash lifts off the dark ground instead of into it. */
-  --btn-inline-wash:        rgba(255, 255, 255, 0.04);
-  --btn-inline-wash-hover:  rgba(255, 255, 255, 0.10);
-  --btn-inline-wash-active: rgba(255, 255, 255, 0.16);
+  --sig-btn-inline-wash:        rgba(255, 255, 255, 0.04);
+  --sig-btn-inline-wash-hover:  rgba(255, 255, 255, 0.10);
+  --sig-btn-inline-wash-active: rgba(255, 255, 255, 0.16);
 
   /* ---- Links ---- */
-  --link-text:            var(--neutral-200);  /* 14.3:1 */
-  --link-text-hover:      var(--color5-300);   /* 12.3:1 */
-  --link-text-active:     var(--color5-500);   /*  6.6:1 */
-  --link-underline:       var(--neutral-600);
-  --link-underline-hover: var(--color5-300);
+  --sig-link-text:            var(--sig-color-neutral-200);  /* 14.3:1 */
+  --sig-link-text-hover:      var(--sig-color-5-300);        /* 12.3:1 */
+  --sig-link-text-active:     var(--sig-color-5-500);        /*  6.6:1 */
+  --sig-link-underline:       var(--sig-color-neutral-600);
+  --sig-link-underline-hover: var(--sig-color-5-300);
 
   /* ---- Field surface ---- */
-  --field-bg:          var(--color1-800);
-  --field-bg-hover:    var(--color1-700);
-  --field-bg-focus:    var(--color1-700);
-  --field-bg-disabled: var(--color1-900);
-  --field-bg-readonly: var(--color1-900);
+  --sig-field-bg:          var(--sig-color-1-800);
+  --sig-field-bg-hover:    var(--sig-color-1-700);
+  --sig-field-bg-focus:    var(--sig-color-1-700);
+  --sig-field-bg-disabled: var(--sig-color-1-900);
+  --sig-field-bg-readonly: var(--sig-color-1-900);
 
-  /* ---- Field border ----
-     color1-600 only reaches 2.2:1 against the field and fails the
-     3:1 floor. 500 is the lowest step that passes. */
-  --field-border:          var(--color1-500);  /*  3.8:1 */
-  --field-border-hover:    var(--color1-400);  /*  6.7:1 */
-  --field-border-filled:   var(--color1-400);
-  --field-border-focus:    var(--color1-300);  /* 11.5:1 */
-  --field-border-disabled: var(--color1-700);
+  /* 1-600 only reaches 2.2:1 against the field and fails the 3:1
+     floor. 500 is the lowest step that passes. */
+  --sig-field-border:          var(--sig-color-1-500);  /*  3.8:1 */
+  --sig-field-border-hover:    var(--sig-color-1-400);  /*  6.7:1 */
+  --sig-field-border-filled:   var(--sig-color-1-400);
+  --sig-field-border-focus:    var(--sig-color-1-300);  /* 11.5:1 */
+  --sig-field-border-disabled: var(--sig-color-1-700);
 
-  /* ---- Field text ---- */
-  --field-text:          var(--neutral-100);  /* 16:1  */
-  --field-text-focus:    var(--neutral-50);   /* 17:1  */
-  --field-placeholder:   var(--neutral-500);  /* 6.7:1 */
-  --field-text-readonly: var(--neutral-400);
-  --field-text-disabled: var(--neutral-700);
+  --sig-field-text:          var(--sig-color-neutral-100);  /* 16:1  */
+  --sig-field-text-focus:    var(--sig-color-neutral-50);   /* 17:1  */
+  --sig-field-placeholder:   var(--sig-color-neutral-500);  /* 6.7:1 */
+  --sig-field-text-readonly: var(--sig-color-neutral-400);
+  --sig-field-text-disabled: var(--sig-color-neutral-700);
 
-  /* ---- Label and help ---- */
-  --label-text:       var(--neutral-300);
-  --label-text-focus: var(--color1-300);
-  --label-disabled:   var(--neutral-700);
-  --help-text:        var(--neutral-400);
-  --required-mark:    var(--color2-400);
+  --sig-label-text:       var(--sig-color-neutral-300);
+  --sig-label-text-focus: var(--sig-color-1-300);
+  --sig-label-disabled:   var(--sig-color-neutral-700);
+  --sig-help-text:        var(--sig-color-neutral-400);
+  --sig-required-mark:    var(--sig-color-2-400);
 
-  /* ---- Controls ---- */
-  --control-bg:            var(--color1-800);
-  --control-border:        var(--color1-500);
-  --control-border-hover:  var(--color1-400);
-  --control-checked-bg:    var(--color1-300);
-  --control-checked-hover: var(--color1-200);
-  --control-checked-mark:  var(--color1-900);
-  --control-disabled-bg:   var(--color1-600);
+  --sig-control-bg:            var(--sig-color-1-800);
+  --sig-control-border:        var(--sig-color-1-500);
+  --sig-control-border-hover:  var(--sig-color-1-400);
+  --sig-control-checked-bg:    var(--sig-color-1-300);
+  --sig-control-checked-hover: var(--sig-color-1-200);
+  --sig-control-checked-mark:  var(--sig-color-1-900);
+  --sig-control-disabled-bg:   var(--sig-color-1-600);
 
-  /* ---- Focus ring ---- */
-  --focus-ring:      var(--color1-300);
-  --focus-ring-soft: rgba(184, 205, 247, 0.24);
+  --sig-focus-ring:      var(--sig-color-1-300);
+  --sig-focus-ring-soft: rgba(184, 205, 247, 0.24);
 
-  /* ---- Feedback · tints come from the 900 steps, not the 50s ---- */
-  --field-error:      var(--color2-500);  /* 4.7:1 border */
-  --field-error-text: var(--color2-400);  /* 8.7:1 text   */
-  --field-error-bg:   var(--color2-900);
-  --field-error-ring: rgba(199, 98, 114, 0.26);
+  /* Tints come from the 900 steps, not the 50s. */
+  --sig-field-error:      var(--sig-color-2-500);  /* 4.7:1 border */
+  --sig-field-error-text: var(--sig-color-2-400);  /* 8.7:1 text   */
+  --sig-field-error-bg:   var(--sig-color-2-900);
+  --sig-field-error-ring: rgba(199, 98, 114, 0.26);
 
-  --field-success:      var(--color3-500);
-  --field-success-text: var(--color3-400);
-  --field-success-bg:   var(--color3-900);
+  --sig-field-success:      var(--sig-color-3-500);
+  --sig-field-success-text: var(--sig-color-3-400);
+  --sig-field-success-bg:   var(--sig-color-3-900);
 
-  --field-warning:      var(--color4-500);
-  --field-warning-text: var(--color4-400);
-  --field-warning-bg:   var(--color4-900);
+  --sig-field-warning:      var(--sig-color-4-500);
+  --sig-field-warning-text: var(--sig-color-4-400);
+  --sig-field-warning-bg:   var(--sig-color-4-900);
 
-  /* ---- Accent ---- */
-  --field-selection-bg:   var(--color5-700);
-  --field-selection-text: var(--neutral-50);
-  --field-caret:          var(--color1-300);
+  --sig-field-selection-bg:   var(--sig-color-5-700);
+  --sig-field-selection-text: var(--sig-color-neutral-50);
+  --sig-field-caret:          var(--sig-color-1-300);
+
+  /* ---- Legacy aliases, restated so the remap reaches them ---- */
+  --text-heading:        var(--sig-text-heading);
+  --text-heading-accent: var(--sig-text-heading-accent);
+  --text-body:           var(--sig-text-body);
+  --text-secondary:      var(--sig-text-secondary);
+  --text-muted:          var(--sig-text-muted);
+  --text-accent:         var(--sig-text-accent);
+  --text-light:          var(--sig-text-light);
+
+  --surface-page:   var(--sig-surface-page);
+  --surface-raised: var(--sig-surface-raised);
+  --surface-sunken: var(--sig-surface-sunken);
+
+  --rule:        var(--sig-rule);
+  --rule-strong: var(--sig-rule-strong);
+  --rule-faint:  var(--sig-rule-faint);
+  --rule-subtle: var(--sig-rule-subtle);
+
+  --btn-outline-stroke:        var(--sig-btn-outline-stroke);
+  --btn-outline-stroke-hover:  var(--sig-btn-outline-stroke-hover);
+  --btn-outline-stroke-active: var(--sig-btn-outline-stroke-active);
+  --btn-outline-wash:          var(--sig-btn-outline-wash);
+  --btn-outline-wash-hover:    var(--sig-btn-outline-wash-hover);
+  --btn-outline-wash-active:   var(--sig-btn-outline-wash-active);
+  --btn-disabled-bg:           var(--sig-btn-disabled-bg);
+  --btn-disabled-stroke:       var(--sig-btn-disabled-stroke);
+  --btn-disabled-label:        var(--sig-btn-disabled-label);
+  --btn-inline-wash:           var(--sig-btn-inline-wash);
+  --btn-inline-wash-hover:     var(--sig-btn-inline-wash-hover);
+  --btn-inline-wash-active:    var(--sig-btn-inline-wash-active);
+
+  --link-text:            var(--sig-link-text);
+  --link-text-hover:      var(--sig-link-text-hover);
+  --link-text-active:     var(--sig-link-text-active);
+  --link-underline:       var(--sig-link-underline);
+  --link-underline-hover: var(--sig-link-underline-hover);
+
+  --field-bg:          var(--sig-field-bg);
+  --field-bg-hover:    var(--sig-field-bg-hover);
+  --field-bg-focus:    var(--sig-field-bg-focus);
+  --field-bg-disabled: var(--sig-field-bg-disabled);
+  --field-bg-readonly: var(--sig-field-bg-readonly);
+
+  --field-border:          var(--sig-field-border);
+  --field-border-hover:    var(--sig-field-border-hover);
+  --field-border-filled:   var(--sig-field-border-filled);
+  --field-border-focus:    var(--sig-field-border-focus);
+  --field-border-disabled: var(--sig-field-border-disabled);
+
+  --field-text:          var(--sig-field-text);
+  --field-text-focus:    var(--sig-field-text-focus);
+  --field-placeholder:   var(--sig-field-placeholder);
+  --field-text-readonly: var(--sig-field-text-readonly);
+  --field-text-disabled: var(--sig-field-text-disabled);
+
+  --label-text:       var(--sig-label-text);
+  --label-text-focus: var(--sig-label-text-focus);
+  --label-disabled:   var(--sig-label-disabled);
+  --help-text:        var(--sig-help-text);
+  --required-mark:    var(--sig-required-mark);
+
+  --control-bg:            var(--sig-control-bg);
+  --control-border:        var(--sig-control-border);
+  --control-border-hover:  var(--sig-control-border-hover);
+  --control-checked-bg:    var(--sig-control-checked-bg);
+  --control-checked-hover: var(--sig-control-checked-hover);
+  --control-checked-mark:  var(--sig-control-checked-mark);
+  --control-disabled-bg:   var(--sig-control-disabled-bg);
+
+  --focus-ring:      var(--sig-focus-ring);
+  --focus-ring-soft: var(--sig-focus-ring-soft);
+
+  --field-error:      var(--sig-field-error);
+  --field-error-text: var(--sig-field-error-text);
+  --field-error-bg:   var(--sig-field-error-bg);
+  --field-error-ring: var(--sig-field-error-ring);
+  --field-success:      var(--sig-field-success);
+  --field-success-text: var(--sig-field-success-text);
+  --field-success-bg:   var(--sig-field-success-bg);
+  --field-warning:      var(--sig-field-warning);
+  --field-warning-text: var(--sig-field-warning-text);
+  --field-warning-bg:   var(--sig-field-warning-bg);
+
+  --field-selection-bg:   var(--sig-field-selection-bg);
+  --field-selection-text: var(--sig-field-selection-text);
+  --field-caret:          var(--sig-field-caret);
 }
 
-/* ---- The form colours on a dark ground ------------------------
-   Deliberately NOT folded into the block above, whose selector list
-   includes #tab-timeline. The timeline holds two grounds at once: its
-   drawer and modals are navy, but the row controls in the schedule
-   table sit on a white fill where --color-form-input's navy is correct.
-   Remapping it for the whole panel would put near-white text on those
-   white controls. timeline.css scopes the swap to .drawer, .board-modal
-   and .preview-modal instead. */
+/* Deliberately NOT folded into the block above, whose selector list
+   includes #tab-timeline. The timeline holds two grounds at once:
+   its drawer and modals are navy, but the row controls in the
+   schedule table sit on a white fill where the navy input colour is
+   correct. Remapping it for the whole panel would put near-white
+   text on those white controls; timeline.css scopes the swap to
+   .drawer, .board-modal and .preview-modal instead. */
 [data-surface="dark"],
 .on-dark {
-  --color-form-label:              var(--neutral-50);
-  --color-form-label-disabled:     var(--neutral-700);
-  --color-form-placeholder:        var(--neutral-500);
-  --color-form-placeholder-focused: var(--neutral-300);
-  --color-form-input:              var(--neutral-100);
-  --form-field-scheme:             dark;
+  --color-form-label:               var(--sig-color-neutral-50);
+  --color-form-label-disabled:      var(--sig-color-neutral-700);
+  --color-form-placeholder:         var(--sig-color-neutral-500);
+  --color-form-placeholder-focused: var(--sig-color-neutral-300);
+  --color-form-input:               var(--sig-color-neutral-100);
+  --form-field-scheme:              dark;
+  --sig-field-scheme:               dark;
 }
 
 /* Raises the field boundary to the brightest passing step when the
    reader has asked the OS for more contrast. */
 @media (prefers-contrast: more) {
   :root {
-    --field-border:      var(--neutral-900);
-    --field-placeholder: var(--neutral-900);
+    --sig-field-border:      var(--sig-color-neutral-900);
+    --sig-field-placeholder: var(--sig-color-neutral-900);
+    --field-border:          var(--sig-color-neutral-900);
+    --field-placeholder:     var(--sig-color-neutral-900);
   }
   [data-surface="dark"],
   .on-dark {
-    --field-border:      var(--color1-300);
-    --field-placeholder: var(--neutral-300);
+    --sig-field-border:      var(--sig-color-1-300);
+    --sig-field-placeholder: var(--sig-color-neutral-300);
+    --field-border:          var(--sig-color-1-300);
+    --field-placeholder:     var(--sig-color-neutral-300);
   }
 }
 
+
 /* ============================================================
-   LOGO TOKENS
-   Ratios come from each file's viewBox. The optical multipliers
-   correct for the three lockups reading at different visual
-   weights at the same box height: the logomark is the densest,
-   so it is set smallest.
+   23 · LEGACY ALIASES
+   Everything below maps a name the older stylesheets and main.html
+   still use onto a token above. Nothing new is defined here and no
+   value is stated twice — every declaration is a var() indirection.
 
-   Sources point at the copies in assets/, which is what main.html
-   already loads. The Shopify CDN mirrors are:
-     .../SIG_LOGO_LOGOTYPE_WHITE.svg?v=1785988734
-     .../SIG_LOGO_PRIMARY_WHITE.svg?v=1785988726
-     .../SIG_LOGO_LOGOMARK_WHITE.svg?v=1785988717
+   Delete a line only once nothing reads that name. `grep -r` for it
+   across css/, styles.css and main.html first.
    ============================================================ */
+
 :root {
-  --logo-logotype: url("../assets/SIG_LOGO_LOGOTYPE_WHITE.svg");
-  --logo-primary:  url("../assets/SIG_LOGO_PRIMARY_WHITE.svg");
-  --logo-logomark: url("../assets/SIG_LOGO_LOGOMARK_WHITE.svg");
+  /* ---- Faces ---- */
+  --face-display: var(--sig-ff-kepler-display);
+  --face-subhead: var(--sig-ff-kepler-subhead);
+  --face-regular: var(--sig-ff-kepler-text);
+  --face-caption: var(--sig-ff-kepler-caption);
+  --face-btn:     var(--sig-ff-kepler-medium-caption);
+  --face-sec:     var(--sig-ff-inter);
+  --face-hero:    var(--sig-ff-heading1);
 
-  --logo-logotype-ratio: 372.9 / 159.32;   /* 2.341, landscape   */
-  --logo-primary-ratio:  257.09 / 202.34;  /* 1.271, near square */
-  --logo-logomark-ratio: 106.74 / 162.05;  /* 0.659, portrait    */
+  /* ---- Heading 1 · the old 1x–6x ladder is now h6–h1 ---- */
+  --size-heading1-1x: var(--sig-fs-heading1-h6);
+  --size-heading1-2x: var(--sig-fs-heading1-h5);
+  --size-heading1-3x: var(--sig-fs-heading1-h4);
+  --size-heading1-4x: var(--sig-fs-heading1-h3);
+  --size-heading1-5x: var(--sig-fs-heading1-h2);
+  --size-heading1-6x: var(--sig-fs-heading1-h1);
 
-  --logo-logotype-optical: 1;
-  --logo-primary-optical:  1.15;
-  --logo-logomark-optical: 0.9;
+  --lh-heading1-1x: var(--sig-lh-heading1-h6);
+  --lh-heading1-2x: var(--sig-lh-heading1-h5);
+  --lh-heading1-3x: var(--sig-lh-heading1-h4);
+  --lh-heading1-4x: var(--sig-lh-heading1-h3);
+  --lh-heading1-5x: var(--sig-lh-heading1-h2);
+  --lh-heading1-6x: var(--sig-lh-heading1-h1);
 
-  --logo-h-header:  1.75rem;   /* nav bar                 */
-  --logo-h-footer:  2.25rem;
-  --logo-h-hero:    6rem;
-  --logo-h-favicon: 1.25rem;   /* logomark in tight spots */
+  --ls-heading1: var(--sig-ls-heading1);
 
-  --logo-ease: 200ms ease;
+  --hero:     var(--sig-fs-heading1-h1);
+  --hero-1x:  var(--sig-fs-heading1-display);
+  --lh-hero:     var(--sig-lh-heading1-h1);
+  --lh-hero-1x:  var(--sig-lh-heading1-display);
+  --ls-hero:  var(--sig-ls-heading1);
+
+  /* ---- Heading 2 · the old heading/1x–6x ladder ---- */
+  --heading:    var(--sig-fs-heading2-h6);
+  --heading-1x: var(--sig-fs-heading2-h5);
+  --heading-2x: var(--sig-fs-heading2-h4);
+  --heading-3x: var(--sig-fs-heading2-h3);
+  --heading-4x: var(--sig-fs-heading2-h2);
+  --heading-5x: var(--sig-fs-heading2-h1);
+  --heading-6x: var(--sig-fs-heading2-display);
+
+  --lh-heading:    var(--sig-lh-heading2-h6);
+  --lh-heading-1x: var(--sig-lh-heading2-h5);
+  --lh-heading-2x: var(--sig-lh-heading2-h4);
+  --lh-heading-3x: var(--sig-lh-heading2-h3);
+  --lh-heading-4x: var(--sig-lh-heading2-h2);
+  --lh-heading-5x: var(--sig-lh-heading2-h1);
+  --lh-heading-6x: var(--sig-lh-heading2-display);
+
+  --ls-heading:    var(--sig-ls-heading2-h6);
+  --ls-heading-1x: var(--sig-ls-heading2-h5);
+  --ls-heading-2x: var(--sig-ls-heading2-h4);
+  --ls-heading-3x: var(--sig-ls-heading2-h3);
+  --ls-heading-4x: var(--sig-ls-heading2-h2);
+  --ls-heading-5x: var(--sig-ls-heading2-h1);
+  --ls-heading-6x: var(--sig-ls-heading2-display);
+
+  /* ---- Body ---- */
+  --body-pri:    var(--sig-fs-body1-base);
+  --body-pri-sm: var(--sig-fs-body1-sm);
+  --body-pri-xs: var(--sig-fs-body1-xs);
+  --lh-body-pri:    var(--sig-lh-body1-base);
+  --lh-body-pri-sm: var(--sig-lh-body1-sm);
+  --lh-body-pri-xs: var(--sig-lh-body1-xs);
+
+  --body-base-sec: var(--sig-fs-body2-base);
+  --body-sm-sec:   var(--sig-fs-body2-sm);
+  --body-xs-sec:   var(--sig-fs-body2-xs);
+  --lh-body-base-sec: var(--sig-lh-body2-base);
+  --lh-body-sm-sec:   var(--sig-lh-body2-sm);
+  --lh-body-xs-sec:   var(--sig-lh-body2-xs);
+
+  /* ---- Interface sizes ---- */
+  --size-btn:                var(--sig-fs-interactive-button);
+  --size-btn-sec:            var(--sig-fs-form-button);
+  --size-btn-base-sec-upper: var(--sig-fs-body2-upper-sm);
+  --size-btn-sm-sec-upper:   var(--sig-fs-body2-upper-xs);
+  --size-nav:                var(--sig-fs-interactive-nav-main);
+  --size-form-btn:           var(--sig-fs-form-button);
+  --size-form-label:         var(--sig-fs-form-label);
+  --size-form-placeholder:   var(--sig-fs-form-input);
+
+  /* ---- Tracking ---- */
+  --ls-text:          var(--sig-ls-body1);
+  --ls-btn:           var(--sig-ls-interactive-button);
+  --ls-btn-sec:       var(--sig-ls-form-button);
+  --ls-btn-sec-upper: var(--sig-ls-body2-upper-sm);
+  --ls-btn-compact:   var(--sig-ls-btn-compact);
+  --ls-nav:           var(--sig-ls-interactive-nav-main-phone);
+  --ls-display:       var(--sig-ls-heading2-display);
+  --ls-subhead:       var(--sig-ls-heading2-h5);
+
+  /* ---- Weights ---- */
+  --weight-display:         var(--sig-fw-heading2);
+  --weight-subhead:         var(--sig-fw-heading2);
+  --weight-regular:         var(--sig-fw-body1-normal);
+  --weight-caption:         var(--sig-fw-body1-normal);
+  --weight-hero:            var(--sig-fw-heading1);
+  --weight-btn:             var(--sig-fw-interactive-button);
+  --weight-btn-sec:         var(--sig-fw-form-button);
+  --weight-body-sec-normal: var(--sig-fw-body2-normal);
+  --weight-body-sec-strong: var(--sig-fw-body2-strong);
+
+  /* ---- Casing ---- */
+  --case-heading:       var(--sig-tt-heading2);
+  --case-body-pri:      var(--sig-tt-body1);
+  --case-body-sec:      var(--sig-tt-body2);
+  --case-btn:           var(--sig-tt-interactive-button);
+  --case-btn-sec:       var(--sig-tt-form);
+  --case-btn-sec-upper: var(--sig-tt-body2-upper);
+  --case-nav:           var(--sig-tt-interactive-footer-link);
+
+  /* ---- Colour ramps ---- */
+  --color1-900: var(--sig-color-1-900);  --color1-800: var(--sig-color-1-800);
+  --color1-700: var(--sig-color-1-700);  --color1-600: var(--sig-color-1-600);
+  --color1-500: var(--sig-color-1-500);  --color1-400: var(--sig-color-1-400);
+  --color1-300: var(--sig-color-1-300);  --color1-200: var(--sig-color-1-200);
+  --color1-100: var(--sig-color-1-100);  --color1-50:  var(--sig-color-1-50);
+
+  --color2-900: var(--sig-color-2-900);  --color2-800: var(--sig-color-2-800);
+  --color2-700: var(--sig-color-2-700);  --color2-600: var(--sig-color-2-600);
+  --color2-500: var(--sig-color-2-500);  --color2-400: var(--sig-color-2-400);
+  --color2-300: var(--sig-color-2-300);  --color2-200: var(--sig-color-2-200);
+  --color2-100: var(--sig-color-2-100);  --color2-50:  var(--sig-color-2-50);
+
+  --color3-900: var(--sig-color-3-900);  --color3-800: var(--sig-color-3-800);
+  --color3-700: var(--sig-color-3-700);  --color3-600: var(--sig-color-3-600);
+  --color3-500: var(--sig-color-3-500);  --color3-400: var(--sig-color-3-400);
+  --color3-300: var(--sig-color-3-300);  --color3-200: var(--sig-color-3-200);
+  --color3-100: var(--sig-color-3-100);  --color3-50:  var(--sig-color-3-50);
+
+  --color4-900: var(--sig-color-4-900);  --color4-800: var(--sig-color-4-800);
+  --color4-700: var(--sig-color-4-700);  --color4-600: var(--sig-color-4-600);
+  --color4-500: var(--sig-color-4-500);  --color4-400: var(--sig-color-4-400);
+  --color4-300: var(--sig-color-4-300);  --color4-200: var(--sig-color-4-200);
+  --color4-100: var(--sig-color-4-100);  --color4-50:  var(--sig-color-4-50);
+
+  --color5-900: var(--sig-color-5-900);  --color5-800: var(--sig-color-5-800);
+  --color5-700: var(--sig-color-5-700);  --color5-600: var(--sig-color-5-600);
+  --color5-500: var(--sig-color-5-500);  --color5-400: var(--sig-color-5-400);
+  --color5-300: var(--sig-color-5-300);  --color5-200: var(--sig-color-5-200);
+  --color5-100: var(--sig-color-5-100);  --color5-50:  var(--sig-color-5-50);
+
+  --neutral-950: var(--sig-color-neutral-950);  --neutral-900: var(--sig-color-neutral-900);
+  --neutral-800: var(--sig-color-neutral-800);  --neutral-700: var(--sig-color-neutral-700);
+  --neutral-600: var(--sig-color-neutral-600);  --neutral-500: var(--sig-color-neutral-500);
+  --neutral-400: var(--sig-color-neutral-400);  --neutral-300: var(--sig-color-neutral-300);
+  --neutral-200: var(--sig-color-neutral-200);  --neutral-100: var(--sig-color-neutral-100);
+  --neutral-50:  var(--sig-color-neutral-50);
+
+  --white: var(--sig-color-white);
+
+  --color1:  var(--sig-color-1);   --color2:  var(--sig-color-2);
+  --color3:  var(--sig-color-3);   --color4:  var(--sig-color-4);
+  --color5:  var(--sig-color-5);   --neutral: var(--sig-color-neutral);
+
+  /* ---- Document surface and semantic roles ---- */
+  --ink:        var(--sig-ink);
+  --ground:     var(--sig-ground);
+  --muted:      var(--sig-text-muted);
+  --rule:       var(--sig-rule);
+  --rule-faint: var(--sig-rule-faint);
+
+  --text-heading:        var(--sig-text-heading);
+  --text-heading-accent: var(--sig-text-heading-accent);
+  --text-body:           var(--sig-text-body);
+  --text-secondary:      var(--sig-text-secondary);
+  --text-muted:          var(--sig-text-muted);
+  --text-accent:         var(--sig-text-accent);
+  --text-light:          var(--sig-text-light);
+
+  --surface-page:   var(--sig-surface-page);
+  --surface-raised: var(--sig-surface-raised);
+  --surface-sunken: var(--sig-surface-sunken);
+
+  --rule-strong: var(--sig-rule-strong);
+  --rule-subtle: var(--sig-rule-subtle);
+
+  --measure:        var(--sig-measure);
+  --measure-narrow: var(--sig-measure-narrow);
+  --ease-ui:        var(--sig-ease-ui);
+  --radius:         var(--sig-radius);
+  --radius-sm:      var(--sig-radius-sm);
+  --shadow:         var(--sig-shadow);
+
+  /* ---- Buttons ---- */
+  --btn-size-sm:  var(--sig-btn-size-sm);
+  --btn-size-md:  var(--sig-btn-size-md);
+  --btn-size-lg:  var(--sig-btn-size-lg);
+  --btn-pad-y-sm: var(--sig-btn-pad-y-sm);  --btn-pad-x-sm: var(--sig-btn-pad-x-sm);
+  --btn-pad-y-md: var(--sig-btn-pad-y-md);  --btn-pad-x-md: var(--sig-btn-pad-x-md);
+  --btn-pad-y-lg: var(--sig-btn-pad-y-lg);  --btn-pad-x-lg: var(--sig-btn-pad-x-lg);
+  --btn-touch:    var(--sig-btn-touch);
+
+  --btn-fill-bg:           var(--sig-btn-fill-bg);
+  --btn-fill-bg-hover:     var(--sig-btn-fill-bg-hover);
+  --btn-fill-bg-active:    var(--sig-btn-fill-bg-active);
+  --btn-fill-label:        var(--sig-btn-fill-label);
+  --btn-fill-label-active: var(--sig-btn-fill-label-active);
+
+  --btn-outline-stroke:        var(--sig-btn-outline-stroke);
+  --btn-outline-stroke-hover:  var(--sig-btn-outline-stroke-hover);
+  --btn-outline-stroke-active: var(--sig-btn-outline-stroke-active);
+  --btn-outline-wash:          var(--sig-btn-outline-wash);
+  --btn-outline-wash-hover:    var(--sig-btn-outline-wash-hover);
+  --btn-outline-wash-active:   var(--sig-btn-outline-wash-active);
+
+  --btn-disabled-bg:     var(--sig-btn-disabled-bg);
+  --btn-disabled-stroke: var(--sig-btn-disabled-stroke);
+  --btn-disabled-label:  var(--sig-btn-disabled-label);
+
+  --btn-inline-wash:        var(--sig-btn-inline-wash);
+  --btn-inline-wash-hover:  var(--sig-btn-inline-wash-hover);
+  --btn-inline-wash-active: var(--sig-btn-inline-wash-active);
+
+  --btn-border-w: var(--sig-btn-border-w);
+  --btn-radius:   var(--sig-radius);
+  --btn-pad-y:    var(--sig-btn-pad-y-lg);
+  --btn-pad-x:    var(--sig-btn-pad-x-lg);
+  --btn-size:     var(--sig-btn-size-lg);
+
+  /* ---- Links ---- */
+  --link-text:            var(--sig-link-text);
+  --link-text-hover:      var(--sig-link-text-hover);
+  --link-text-active:     var(--sig-link-text-active);
+  --link-underline:       var(--sig-link-underline);
+  --link-underline-hover: var(--sig-link-underline-hover);
+  --link-offset:          var(--sig-link-offset);
+  --link-thickness:       var(--sig-link-thickness);
+
+  /* ---- Fields ---- */
+  --field-bg:          var(--sig-field-bg);
+  --field-bg-hover:    var(--sig-field-bg-hover);
+  --field-bg-focus:    var(--sig-field-bg-focus);
+  --field-bg-disabled: var(--sig-field-bg-disabled);
+  --field-bg-readonly: var(--sig-field-bg-readonly);
+
+  --field-border:          var(--sig-field-border);
+  --field-border-hover:    var(--sig-field-border-hover);
+  --field-border-filled:   var(--sig-field-border-filled);
+  --field-border-focus:    var(--sig-field-border-focus);
+  --field-border-disabled: var(--sig-field-border-disabled);
+
+  --field-text:          var(--sig-field-text);
+  --field-text-focus:    var(--sig-field-text-focus);
+  --field-placeholder:   var(--sig-field-placeholder);
+  --field-text-readonly: var(--sig-field-text-readonly);
+  --field-text-disabled: var(--sig-field-text-disabled);
+
+  --label-text:       var(--sig-label-text);
+  --label-text-focus: var(--sig-label-text-focus);
+  --label-disabled:   var(--sig-label-disabled);
+  --help-text:        var(--sig-help-text);
+  --required-mark:    var(--sig-required-mark);
+
+  --control-bg:            var(--sig-control-bg);
+  --control-border:        var(--sig-control-border);
+  --control-border-hover:  var(--sig-control-border-hover);
+  --control-checked-bg:    var(--sig-control-checked-bg);
+  --control-checked-hover: var(--sig-control-checked-hover);
+  --control-checked-mark:  var(--sig-control-checked-mark);
+  --control-disabled-bg:   var(--sig-control-disabled-bg);
+
+  --focus-ring:      var(--sig-focus-ring);
+  --focus-ring-soft: var(--sig-focus-ring-soft);
+
+  --field-error:      var(--sig-field-error);
+  --field-error-text: var(--sig-field-error-text);
+  --field-error-bg:   var(--sig-field-error-bg);
+  --field-error-ring: var(--sig-field-error-ring);
+  --field-success:      var(--sig-field-success);
+  --field-success-text: var(--sig-field-success-text);
+  --field-success-bg:   var(--sig-field-success-bg);
+  --field-warning:      var(--sig-field-warning);
+  --field-warning-text: var(--sig-field-warning-text);
+  --field-warning-bg:   var(--sig-field-warning-bg);
+
+  --field-selection-bg:   var(--sig-field-selection-bg);
+  --field-selection-text: var(--sig-field-selection-text);
+  --field-caret:          var(--sig-field-caret);
+
+  --field-radius: var(--sig-field-radius);
+  --field-pad-y:  var(--sig-field-pad-y);
+  --field-pad-x:  var(--sig-field-pad-x);
+  --field-ease:   var(--sig-field-ease);
+  --field-face:   var(--sig-ff-form);
+
+  --form-field-text-family: var(--sig-ff-form);
+  --form-field-text-size:   var(--sig-fs-form-input);
+  --form-field-text-lh:     var(--sig-lh-form-input);
+  --form-field-text-ls:     var(--sig-ls-form-input);
+  --form-field-text-sm:     var(--sig-fs-form-helper);
+  --form-field-text-case:   var(--sig-tt-form);
+  --form-field-text-touch:  var(--sig-fs-form-input-touch);
+  --form-field-weight-normal: var(--sig-fw-form-input);
+  --form-field-weight-strong: var(--sig-fw-form-label);
+  --form-field-scheme:        var(--sig-field-scheme);
+  --form-field-box:           var(--sig-field-box);
+  --form-field-textarea-min:  var(--sig-field-textarea-min);
+  --form-field-multi-min:     var(--sig-field-multi-min);
+
+  /* The timeline's own form colours. Light-ground values; the dark
+     remap for these sits in its own block above. */
+  --color-form-label:               var(--sig-color-neutral-50);
+  --color-form-label-disabled:      var(--sig-color-neutral-600);
+  --color-form-placeholder:         var(--sig-color-neutral-300);
+  --color-form-placeholder-focused: var(--sig-color-1-800);
+  --color-form-input:               var(--sig-color-1-800);
+
+  /* ---- Logo ---- */
+  --logo-logotype: var(--sig-logo-logotype);
+  --logo-primary:  var(--sig-logo-primary);
+  --logo-logomark: var(--sig-logo-logomark);
+  --logo-logotype-ratio: var(--sig-logo-logotype-ratio);
+  --logo-primary-ratio:  var(--sig-logo-primary-ratio);
+  --logo-logomark-ratio: var(--sig-logo-logomark-ratio);
+  --logo-logotype-optical: var(--sig-logo-logotype-optical);
+  --logo-primary-optical:  var(--sig-logo-primary-optical);
+  --logo-logomark-optical: var(--sig-logo-logomark-optical);
+  --logo-h-header:  var(--sig-logo-h-header);
+  --logo-h-footer:  var(--sig-logo-h-footer);
+  --logo-h-hero:    var(--sig-logo-h-hero);
+  --logo-h-favicon: var(--sig-logo-h-favicon);
+  --logo-ease:      var(--sig-logo-ease);
+
+  /* ---- Timeline-local ----
+     No equivalent in the brand system, so they are defined here
+     rather than left dangling. */
+  --glabel: 420px;                        /* Gantt label gutter    */
+  --phase-01: var(--sig-color-1-800);     /* navy      */
+  --phase-02: var(--sig-color-2-800);     /* burgundy  */
+  --phase-03: var(--sig-color-3-800);     /* forest    */
+  --phase-04: var(--sig-color-4-800);     /* tobacco   */
+  --phase-05: var(--sig-color-5-400);     /* tan       */
+  --phase-06: var(--sig-color-neutral-600);
 }
-
-
