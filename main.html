@@ -2633,6 +2633,7 @@ function renderList(){
   bindRowAssignees();
   bindRowStatuses();
   bindRowDates();
+  lockDoneRows();
 }
 /* Start and Due are date selectors, not printed strings: this table is
    where the schedule is adjusted, so the cell holds the control. */
@@ -2671,8 +2672,34 @@ function bindRowStatuses(){
       // Fill and strike-through are CSS on these two attributes, so the
       // row updates on the spot rather than waiting for a re-render.
       var tr = sel.closest("tr");
-      if(tr) tr.setAttribute("data-row-status", sel.value);
+      if(tr){
+        tr.setAttribute("data-row-status", sel.value);
+        setRowLocked(tr, sel.value==="Done");
+      }
     };
+  });
+}
+/* Done settles the row: the phase is finished, so its schedule and its
+   assignment stop taking input and carry the field disabled surface.
+   Status itself stays live — it is the way back out of Done — and so do
+   Comment, Complete and Delete, which are all still fair after the work
+   has landed. */
+function setRowLocked(tr, locked){
+  Array.prototype.forEach.call(tr.querySelectorAll(".row-date"),function(inp){ inp.disabled=locked; });
+  var dd=tr.querySelector(".row-assignee"); if(!dd) return;
+  var t=byId[dd.getAttribute("data-asg")];
+  if(locked){ dd.open=false; dd.setAttribute("data-locked",""); }
+  else dd.removeAttribute("data-locked");
+  var summ=dd.querySelector(".ra-summary");
+  if(summ){ if(locked) summ.setAttribute("aria-disabled","true"); else summ.removeAttribute("aria-disabled"); }
+  Array.prototype.forEach.call(dd.querySelectorAll("input,button"),function(el){ el.disabled=locked; });
+  /* The assignee shell is painted inline from the name colour, so the
+     disabled fill has to be cleared onto and restored off it. */
+  dd.style.background = locked ? "" : assigneeColor(t?t.assignee:"", "#FEFCF9");
+}
+function lockDoneRows(){
+  Array.prototype.forEach.call(document.querySelectorAll("#listBody tr[data-row-status]"),function(tr){
+    setRowLocked(tr, tr.getAttribute("data-row-status")==="Done");
   });
 }
 /* Mobile cards hide the comment / file columns, so summarise what is attached instead. */
@@ -2713,7 +2740,11 @@ function updateRowAssignee(dd,t){
 function bindRowAssignees(){
   Array.prototype.forEach.call(document.querySelectorAll(".row-assignee"),function(dd){
     var t=byId[dd.getAttribute("data-asg")]; if(!t) return;
-    dd.onclick=function(e){ e.stopPropagation(); };
+    /* A <details> has no disabled attribute: while the row is locked the
+       default toggle is cancelled, which covers the pointer and the
+       keyboard alike, since Enter and Space on a summary both arrive as
+       a click. */
+    dd.onclick=function(e){ e.stopPropagation(); if(dd.hasAttribute("data-locked")) e.preventDefault(); };
     dd.addEventListener("change", function(e){
       if(!e.target || e.target.type!=="checkbox") return;
       setAssignee(t, checkedNames(dd).join(" / ")); updateRowAssignee(dd,t);

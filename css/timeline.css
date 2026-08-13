@@ -744,6 +744,16 @@
    the status saying the work is finished, so it marks the name only. */
 #tab-timeline .tbl tr[data-row-status="Done"] .c-phase {text-decoration:line-through;color:var(--neutral-400)}
 
+/* Done also settles the row. Start, Due and Assignee stop taking input,
+   so they read as disabled: the two dates get the attribute and pick the
+   surface up from .form-field-date:disabled, and the assignee — a
+   <details>, which cannot be disabled — is marked instead and matched to
+   the same three field tokens by hand. Status stays live, since it is
+   the way back out of Done, and so do Comment, Complete and Delete. */
+#tab-timeline .tbl .row-assignee[data-locked] {background:var(--field-bg-disabled);border-color:var(--field-border-disabled)}
+#tab-timeline .tbl .row-assignee[data-locked]:hover {border-color:var(--field-border-disabled)}
+#tab-timeline .tbl .row-assignee[data-locked]>summary {color:var(--field-text-disabled);cursor:default}
+
 /* ---- --color-form-input on the timeline's dark surfaces ----------
    The timeline holds two grounds at once. The row controls in the full
    schedule sit on a white fill, where the token's navy --color1-800 is
@@ -1154,6 +1164,10 @@
   #tab-timeline .tbl .c-assignee.hide-sm {display:block;margin-bottom:12px}
   #tab-timeline .tbl .row-assignee {display:inline-block;width:auto;max-width:100%;border-radius:999px;border-color:transparent}
   #tab-timeline .tbl .row-assignee[open] {border-radius:14px}
+  /* Locked by a Done status: on the cards every control is a borderless
+     pill, so the disabled fill carries the state on its own. */
+  #tab-timeline .tbl .row-assignee[data-locked],
+  #tab-timeline .tbl .row-assignee[data-locked]:hover {border-color:transparent}
   #tab-timeline .tbl .row-assignee>summary {padding:5px 14px;letter-spacing:var(--ls-btn-sec)}
 
   /* Start and Due stack as two labelled date selectors. The label is
@@ -1245,3 +1259,9 @@
    because the base --color1-700 is a navy on a pink. */
 #tab-timeline .tbl .row-date.is-due-reached {background:var(--color2-100);color:var(--color2-900)}
 #tab-timeline .tbl .row-date.is-due-reached:hover {border-color:var(--color2-600)}
+/* Except once the row is Done and the date is locked. The wash says the
+   date has come round and wants attention; a finished phase does not,
+   and the disabled surface has to reach a date that is almost always
+   past by then. */
+#tab-timeline .tbl .row-date.is-due-reached:disabled {background:var(--field-bg-disabled);color:var(--field-text-disabled)}
+#tab-timeline .tbl .row-date.is-due-reached:disabled:hover {border-color:var(--field-border-disabled)}
