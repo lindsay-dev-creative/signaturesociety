@@ -321,7 +321,7 @@
   .lightbox{
     position:fixed;inset:0;z-index:50;
     display:flex;flex-direction:column;align-items:center;justify-content:center;
-    gap:1rem;
+    gap:.65rem;
     padding:3rem 1.5rem;
     background:rgba(3,8,17,.94);
     cursor:zoom-out;
@@ -331,25 +331,38 @@
     object-fit:contain;
     border:1px solid var(--tan-700);
   }
+  .lightbox-name,
   .lightbox-caption{
     flex:none;
     max-width:60ch;
     font-family:var(--ff-inter);
-    font-size:.8125rem;
-    line-height:1.6;
-    letter-spacing:.02em;
-    text-transform:none;
     text-align:center;
-    color:var(--tan-300);
     cursor:text;
     outline:none;
-    padding:.25rem .5rem;
+    padding:.2rem .5rem;
     border-bottom:1px solid transparent;
     transition:border-color var(--ease-ui),color var(--ease-ui);
   }
+  .lightbox-name{
+    font-size:.875rem;
+    line-height:1.5;
+    letter-spacing:.02em;
+    color:var(--tan-300);
+  }
+  .lightbox-caption{
+    font-size:.6875rem;
+    line-height:1.7;
+    letter-spacing:.09em;
+    text-transform:uppercase;
+    color:var(--neutral-300);
+  }
+  .lightbox-name:hover,
+  .lightbox-name:focus,
   .lightbox-caption:hover,
   .lightbox-caption:focus{border-bottom-color:var(--tan-400);}
+  .lightbox-name:empty,
   .lightbox-caption:empty{border-bottom-color:var(--tan-700);}
+  .lightbox-name:empty::before,
   .lightbox-caption:empty::before{content:attr(data-placeholder);color:var(--tan-500);}
 
   footer{
@@ -449,8 +462,11 @@
       note: item.note || '',
       links: links,
       images: (item.images || []).map(function(img){
-        if (typeof img === 'string') return { src: img, caption: '' };
-        return { src: img.src || '', caption: img.caption || '' };
+        if (typeof img === 'string') return { src: img, name: '', caption: '' };
+        /* entries saved before descriptors split off kept the label in caption */
+        var name = img.name || (img.name === undefined ? (img.caption || '') : '');
+        var caption = img.name === undefined ? '' : (img.caption || '');
+        return { src: img.src || '', name: name, caption: caption };
       }).filter(function(img){ return img.src; })
     };
   }
@@ -467,7 +483,11 @@
               return a.getAttribute('href');
             }),
             images: Array.prototype.slice.call(li.querySelectorAll('.item-thumb')).map(function(img){
-              return { src: img.getAttribute('src'), caption: img.getAttribute('alt') || '' };
+              return {
+                src: img.getAttribute('src'),
+                name: img.getAttribute('alt') || '',
+                caption: img.getAttribute('data-descriptor') || ''
+              };
             })
           });
         })
@@ -517,7 +537,7 @@
     return b;
   }
 
-  function openLightbox(image, onCaption){
+  function openLightbox(image, onEdit){
     var overlay = document.createElement('div');
     overlay.className = 'lightbox';
     var img = document.createElement('img');
@@ -525,20 +545,28 @@
     img.alt = image.caption || '';
     overlay.appendChild(img);
 
-    var caption = document.createElement('div');
-    caption.className = 'lightbox-caption';
-    caption.setAttribute('contenteditable', 'true');
-    caption.setAttribute('data-placeholder', 'Add a label');
-    caption.textContent = image.caption || '';
-    caption.addEventListener('click', function(ev){ ev.stopPropagation(); });
-    caption.addEventListener('keydown', function(ev){
-      ev.stopPropagation();
-      if (ev.key === 'Enter') { ev.preventDefault(); caption.blur(); }
+    function editable(className, placeholder, value, onDone){
+      var el = document.createElement('div');
+      el.className = className;
+      el.setAttribute('contenteditable', 'true');
+      el.setAttribute('data-placeholder', placeholder);
+      el.textContent = value || '';
+      el.addEventListener('click', function(ev){ ev.stopPropagation(); });
+      el.addEventListener('keydown', function(ev){
+        ev.stopPropagation();
+        if (ev.key === 'Enter') { ev.preventDefault(); el.blur(); }
+      });
+      el.addEventListener('blur', function(){ onDone(el.textContent.trim()); });
+      overlay.appendChild(el);
+      return el;
+    }
+
+    editable('lightbox-name', 'Add an image name', image.name, function(text){
+      if (onEdit) onEdit('name', text);
     });
-    caption.addEventListener('blur', function(){
-      if (onCaption) onCaption(caption.textContent.trim());
+    editable('lightbox-caption', 'Add a descriptor', image.caption, function(text){
+      if (onEdit) onEdit('caption', text);
     });
-    overlay.appendChild(caption);
 
     function close(){
       overlay.remove();
@@ -585,9 +613,13 @@
     input.addEventListener('change', function(){
       var files = Array.prototype.slice.call(input.files || []);
       if (!files.length) { input.remove(); return; }
-      var captions = files.map(function(file){
-        var answer = window.prompt('Label for "' + file.name + '" (optional):', '');
-        return answer === null ? '' : answer.trim();
+      var labels = files.map(function(file){
+        var name = window.prompt('Image name for "' + file.name + '" (shown on the page, optional):', '');
+        var caption = window.prompt('Descriptor for "' + file.name + '" (shown in the image view, optional):', '');
+        return {
+          name: name === null ? '' : name.trim(),
+          caption: caption === null ? '' : caption.trim()
+        };
       });
       var results = new Array(files.length);
       var done = 0;
@@ -596,7 +628,11 @@
           results[k] = dataUrl;
           if (++done < files.length) return;
           results.forEach(function(src, n){
-            if (src) data[gi].items[ii].images.push({ src: src, caption: captions[n] });
+            if (src) data[gi].items[ii].images.push({
+              src: src,
+              name: labels[n].name,
+              caption: labels[n].caption
+            });
           });
           save();
           render();
@@ -666,12 +702,13 @@
       var pill = document.createElement('button');
       pill.type = 'button';
       pill.className = 'attachment-pill';
-      pill.textContent = image.caption || 'Image';
+      pill.textContent = image.name || 'Image';
       pill.title = 'View full size';
       pill.addEventListener('click', function(){
-        openLightbox(image, function(text){
-          if (text === data[gi].items[ii].images[img_i].caption) return;
-          data[gi].items[ii].images[img_i].caption = text;
+        openLightbox(image, function(field, text){
+          var stored = data[gi].items[ii].images[img_i];
+          if (stored[field] === text) return;
+          stored[field] = text;
           save();
           render();
         });
@@ -823,7 +860,8 @@
           return '<a class="item-link" href="' + esc(href) + '" target="_blank" rel="noopener">' + esc(linkLabel(href)) + ' ↗</a>';
         }).join('');
         var images = item.images.map(function(image){
-          return '<img class="item-thumb" src="' + esc(image.src) + '" alt="' + esc(image.caption) + '">';
+          return '<img class="item-thumb" src="' + esc(image.src) + '" alt="' + esc(image.name) +
+            '" data-descriptor="' + esc(image.caption) + '">';
         }).join('');
         var note = item.note ? '<div class="item-note">' + esc(item.note) + '</div>' : '';
         return '      <li><span class="item">' + esc(item.text) + '</span>' + note + links + images + '</li>';
