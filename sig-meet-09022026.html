@@ -162,9 +162,9 @@
   @media (min-width:700px){ .item{font-size:1.25rem;} }
 
   /* Editing */
+  .row-main{flex:1;min-width:0;}
   .item{
-    flex:1;
-    min-width:0;
+    display:block;
     outline:none;
     border-bottom:1px solid transparent;
     transition:border-color var(--ease-ui);
@@ -173,6 +173,11 @@
   .item:focus{border-bottom-color:var(--tan-400);}
   .item:empty::before{content:attr(data-placeholder);color:var(--neutral-500);}
 
+  /* Attachments */
+  .attach{display:flex;flex-wrap:wrap;align-items:center;gap:.625rem;margin-top:.75rem;}
+  .attach:empty{display:none;}
+
+  .chip{position:relative;display:inline-flex;align-items:center;}
   .item-link{
     font-family:var(--ff-inter);
     font-size:.75rem;
@@ -186,26 +191,58 @@
   .item-link:hover{color:var(--tan-300);border-bottom-color:var(--tan-300);}
   .item-link:focus-visible{outline:2px solid var(--tan-300);outline-offset:3px;}
 
-  .row-actions{display:flex;gap:.75rem;opacity:0;transition:opacity var(--ease-ui);}
+  .thumb{position:relative;display:inline-flex;}
+  .item-thumb{
+    display:block;
+    width:56px;height:56px;
+    object-fit:cover;
+    border:1px solid var(--tan-700);
+    cursor:zoom-in;
+    transition:border-color var(--ease-ui);
+  }
+  .item-thumb:hover{border-color:var(--tan-400);}
+
+  .chip-x{
+    -webkit-appearance:none;appearance:none;
+    position:absolute;top:-7px;right:-9px;
+    display:flex;align-items:center;justify-content:center;
+    width:18px;height:18px;padding:0;
+    background:var(--navy-900);
+    border:1px solid var(--tan-700);
+    border-radius:50%;
+    color:var(--neutral-300);
+    line-height:0;
+    cursor:pointer;
+    opacity:0;
+    transition:opacity var(--ease-ui),color var(--ease-ui),border-color var(--ease-ui);
+  }
+  .chip:hover .chip-x,
+  .thumb:hover .chip-x,
+  .chip-x:focus-visible{opacity:1;}
+  .chip-x:hover{color:var(--tan-300);border-color:var(--tan-400);}
+  @media (hover:none){ .chip-x{opacity:1;} }
+
+  /* Row controls */
+  .row-actions{display:flex;align-items:center;gap:.5rem;opacity:0;transition:opacity var(--ease-ui);}
   li:hover .row-actions,
   li:focus-within .row-actions{opacity:1;}
   @media (hover:none){ .row-actions{opacity:1;} }
 
   .row-btn{
     -webkit-appearance:none;appearance:none;
-    background:none;border:none;padding:.15rem .25rem;
-    font-family:var(--ff-inter);
-    font-size:.6875rem;
-    font-weight:500;
-    letter-spacing:.09em;
-    text-transform:uppercase;
+    display:flex;align-items:center;justify-content:center;
+    width:26px;height:26px;padding:0;
+    background:none;border:none;
     color:var(--neutral-500);
+    line-height:0;
     cursor:pointer;
     transition:color var(--ease-ui);
   }
+  .row-btn svg{display:block;width:16px;height:16px;}
   .row-btn:hover{color:var(--tan-300);}
   .row-btn.is-set{color:var(--tan-500);}
   .row-btn:focus-visible{outline:2px solid var(--tan-300);outline-offset:2px;}
+  .row-btn.is-delete:hover{color:#C97A6D;}
 
   .add-row{
     display:block;
@@ -224,6 +261,16 @@
   .add-row:hover{color:var(--tan-300);}
   .add-row:focus-visible{outline:2px solid var(--tan-300);outline-offset:3px;}
 
+  /* Full size image view */
+  .lightbox{
+    position:fixed;inset:0;z-index:50;
+    display:flex;align-items:center;justify-content:center;
+    padding:3rem 1.5rem;
+    background:rgba(3,8,17,.94);
+    cursor:zoom-out;
+  }
+  .lightbox img{max-width:100%;max-height:100%;border:1px solid var(--tan-700);}
+
   footer{
     margin-top:4rem;
     padding-top:2rem;
@@ -237,7 +284,7 @@
   .edit-note{margin:.75rem 0 0;color:var(--neutral-500);}
 
   @media print{
-    .files-bar,.row-actions,.add-row,.edit-note{display:none !important;}
+    .files-bar,.row-actions,.chip-x,.add-row,.edit-note{display:none !important;}
   }
 </style>
 </head>
@@ -286,10 +333,11 @@
       <li><span class="item">No phone number, day-of email</span></li>
     </ol>
   </section>
+  <!--ITEMS:END-->
 
   <footer>
     Signature Society · Launch Party, November 7, 2026
-    <p class="edit-note">Click any line to edit it. Enter adds a line, Backspace on an empty line removes it. Changes are kept in this browser; Export HTML downloads an updated copy of this file.</p>
+    <p class="edit-note">Click any line to edit it. Enter adds a line, Backspace on an empty line removes it. The icons on a row add a link, attach images from your computer, or delete the line. Changes are kept in this browser; Export HTML downloads an updated copy of this file.</p>
   </footer>
 
 </div>
@@ -300,19 +348,43 @@
   var START = '<!--ITEMS:START-->';
   var END = '<!--ITEMS:END-->';
   var ORIGINAL = '<!doctype html>\n' + document.documentElement.outerHTML;
+  var MAX_EDGE = 1200;      /* longest side kept when a picture is attached */
+  var JPEG_QUALITY = 0.82;
+
+  var ICONS = {
+    link: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.2 13.8a3.7 3.7 0 0 0 5.4.3l2.9-2.9a3.7 3.7 0 0 0-5.3-5.3l-1.7 1.7"/><path d="M13.8 10.2a3.7 3.7 0 0 0-5.4-.3l-2.9 2.9a3.7 3.7 0 0 0 5.3 5.3l1.7-1.7"/></svg>',
+    image: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="14" rx="1.5"/><circle cx="9" cy="10" r="1.5"/><path d="M4.5 16.5l4.2-4.2 3.3 3.3 2.8-2.4 4.7 4.3"/></svg>',
+    close: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></svg>'
+  };
 
   var sections = Array.prototype.slice.call(document.querySelectorAll('.group'));
+
+  function normalize(item){
+    item = item || {};
+    var links = [];
+    if (item.links && item.links.length) links = item.links.slice();
+    else if (item.href) links = [item.href];
+    return {
+      text: item.text || '',
+      links: links,
+      images: (item.images || []).slice()
+    };
+  }
 
   function readDOM(){
     return sections.map(function(sec){
       return {
         title: sec.querySelector('h2').textContent.trim(),
         items: Array.prototype.slice.call(sec.querySelectorAll('li')).map(function(li){
-          var link = li.querySelector('.item-link');
-          return {
+          return normalize({
             text: li.querySelector('.item').textContent.trim(),
-            href: link ? link.getAttribute('href') : ''
-          };
+            links: Array.prototype.slice.call(li.querySelectorAll('.item-link')).map(function(a){
+              return a.getAttribute('href');
+            }),
+            images: Array.prototype.slice.call(li.querySelectorAll('.item-thumb')).map(function(img){
+              return img.getAttribute('src');
+            })
+          });
         })
       };
     });
@@ -326,13 +398,22 @@
     if (saved && saved.length) {
       data = data.map(function(group){
         var match = saved.filter(function(s){ return s.title === group.title; })[0];
-        return match ? { title: group.title, items: match.items } : group;
+        return match ? { title: group.title, items: match.items.map(normalize) } : group;
       });
     }
   } catch (e) {}
 
+  var warnedFull = false;
   function save(){
-    try { localStorage.setItem(KEY, JSON.stringify(data)); } catch (e) {}
+    try {
+      localStorage.setItem(KEY, JSON.stringify(data));
+      warnedFull = false;
+    } catch (e) {
+      if (!warnedFull) {
+        warnedFull = true;
+        window.alert('This browser is out of local storage, so the last change was not saved. Remove a few images, or click Export HTML to keep your work in a file.');
+      }
+    }
   }
 
   function linkLabel(href){
@@ -341,50 +422,183 @@
     catch (e) { return 'link'; }
   }
 
+  function iconBtn(name, label, extraClass){
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'row-btn' + (extraClass ? ' ' + extraClass : '');
+    b.innerHTML = ICONS[name];
+    b.title = label;
+    b.setAttribute('aria-label', label);
+    return b;
+  }
+
+  function openLightbox(src){
+    var overlay = document.createElement('div');
+    overlay.className = 'lightbox';
+    var img = document.createElement('img');
+    img.src = src;
+    img.alt = '';
+    overlay.appendChild(img);
+    function close(){
+      overlay.remove();
+      document.removeEventListener('keydown', onKey);
+    }
+    function onKey(ev){ if (ev.key === 'Escape') close(); }
+    overlay.addEventListener('click', close);
+    document.addEventListener('keydown', onKey);
+    document.body.appendChild(overlay);
+  }
+
+  /* Scale a picked file down before it goes into storage. */
+  function shrink(file, done){
+    var reader = new FileReader();
+    reader.onerror = function(){ done(''); };
+    reader.onload = function(){
+      var img = new Image();
+      img.onerror = function(){ done(reader.result); };
+      img.onload = function(){
+        var scale = Math.min(1, MAX_EDGE / Math.max(img.width, img.height));
+        var canvas = document.createElement('canvas');
+        canvas.width = Math.max(1, Math.round(img.width * scale));
+        canvas.height = Math.max(1, Math.round(img.height * scale));
+        var ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        try { done(canvas.toDataURL('image/jpeg', JPEG_QUALITY)); }
+        catch (e) { done(reader.result); }
+      };
+      img.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function pickImages(gi, ii){
+    var input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.multiple = true;
+    input.style.display = 'none';
+    document.body.appendChild(input);
+
+    input.addEventListener('change', function(){
+      var files = Array.prototype.slice.call(input.files || []);
+      if (!files.length) { input.remove(); return; }
+      var results = new Array(files.length);
+      var done = 0;
+      files.forEach(function(file, k){
+        shrink(file, function(dataUrl){
+          results[k] = dataUrl;
+          if (++done < files.length) return;
+          results.forEach(function(src){
+            if (src) data[gi].items[ii].images.push(src);
+          });
+          save();
+          render();
+          input.remove();
+        });
+      });
+    });
+
+    input.click();
+  }
+
   function makeRow(gi, ii, item){
     var li = document.createElement('li');
+
+    var main = document.createElement('div');
+    main.className = 'row-main';
 
     var span = document.createElement('span');
     span.className = 'item';
     span.setAttribute('contenteditable', 'true');
     span.setAttribute('data-placeholder', 'New talking point');
     span.textContent = item.text;
-    li.appendChild(span);
+    main.appendChild(span);
 
-    if (item.href) {
+    var attach = document.createElement('div');
+    attach.className = 'attach';
+
+    item.links.forEach(function(href, li_i){
+      var chip = document.createElement('span');
+      chip.className = 'chip';
+
       var a = document.createElement('a');
       a.className = 'item-link';
-      a.href = item.href;
+      a.href = href;
       a.target = '_blank';
       a.rel = 'noopener';
-      a.textContent = linkLabel(item.href) + ' ↗';
-      li.appendChild(a);
-    }
+      a.textContent = linkLabel(href) + ' ↗';
+      chip.appendChild(a);
+
+      var x = document.createElement('button');
+      x.type = 'button';
+      x.className = 'chip-x';
+      x.innerHTML = ICONS.close;
+      x.title = 'Remove this link';
+      x.setAttribute('aria-label', 'Remove this link');
+      x.addEventListener('click', function(){
+        data[gi].items[ii].links.splice(li_i, 1);
+        save();
+        render();
+      });
+      chip.appendChild(x);
+
+      attach.appendChild(chip);
+    });
+
+    item.images.forEach(function(src, img_i){
+      var box = document.createElement('span');
+      box.className = 'thumb';
+
+      var img = document.createElement('img');
+      img.className = 'item-thumb';
+      img.src = src;
+      img.alt = '';
+      img.title = 'View full size';
+      img.addEventListener('click', function(){ openLightbox(src); });
+      box.appendChild(img);
+
+      var x = document.createElement('button');
+      x.type = 'button';
+      x.className = 'chip-x';
+      x.innerHTML = ICONS.close;
+      x.title = 'Remove this image';
+      x.setAttribute('aria-label', 'Remove this image');
+      x.addEventListener('click', function(){
+        data[gi].items[ii].images.splice(img_i, 1);
+        save();
+        render();
+      });
+      box.appendChild(x);
+
+      attach.appendChild(box);
+    });
+
+    main.appendChild(attach);
+    li.appendChild(main);
 
     var actions = document.createElement('div');
     actions.className = 'row-actions';
 
-    var linkBtn = document.createElement('button');
-    linkBtn.type = 'button';
-    linkBtn.className = 'row-btn' + (item.href ? ' is-set' : '');
-    linkBtn.textContent = item.href ? 'Edit link' : 'Add Link';
+    var linkBtn = iconBtn('link', 'Add a link', item.links.length ? 'is-set' : '');
     linkBtn.addEventListener('click', function(){
-      var current = data[gi].items[ii].href || '';
-      var next = window.prompt('Link for this item (leave blank to remove):', current);
+      var next = window.prompt('Link for this item:', '');
       if (next === null) return;
       next = next.trim();
-      if (next && !/^([a-z][a-z0-9+.-]*:|\/|#)/i.test(next)) next = 'https://' + next;
-      data[gi].items[ii].href = next;
+      if (!next) return;
+      if (!/^([a-z][a-z0-9+.-]*:|\/|#)/i.test(next)) next = 'https://' + next;
+      data[gi].items[ii].links.push(next);
       save();
       render();
-      focusItem(gi, ii);
     });
     actions.appendChild(linkBtn);
 
-    var delBtn = document.createElement('button');
-    delBtn.type = 'button';
-    delBtn.className = 'row-btn';
-    delBtn.textContent = 'Delete';
+    var imgBtn = iconBtn('image', 'Attach images', item.images.length ? 'is-set' : '');
+    imgBtn.addEventListener('click', function(){ pickImages(gi, ii); });
+    actions.appendChild(imgBtn);
+
+    var delBtn = iconBtn('close', 'Delete this item', 'is-delete');
     delBtn.addEventListener('click', function(){
       data[gi].items.splice(ii, 1);
       save();
@@ -410,7 +624,7 @@
       if (ev.key === 'Enter') {
         ev.preventDefault();
         data[gi].items[ii].text = span.textContent.trim();
-        data[gi].items.splice(ii + 1, 0, { text: '', href: '' });
+        data[gi].items.splice(ii + 1, 0, normalize({}));
         save();
         render();
         focusItem(gi, ii + 1);
@@ -457,7 +671,7 @@
     add.className = 'add-row';
     add.textContent = '+ Add item';
     add.addEventListener('click', function(){
-      data[gi].items.push({ text: '', href: '' });
+      data[gi].items.push(normalize({}));
       save();
       render();
       focusItem(gi, data[gi].items.length - 1);
@@ -476,10 +690,13 @@
   function markup(){
     return data.map(function(group){
       var rows = group.items.map(function(item){
-        var link = item.href
-          ? '<a class="item-link" href="' + esc(item.href) + '" target="_blank" rel="noopener">' + esc(linkLabel(item.href)) + ' ↗</a>'
-          : '';
-        return '      <li><span class="item">' + esc(item.text) + '</span>' + link + '</li>';
+        var links = item.links.map(function(href){
+          return '<a class="item-link" href="' + esc(href) + '" target="_blank" rel="noopener">' + esc(linkLabel(href)) + ' ↗</a>';
+        }).join('');
+        var images = item.images.map(function(src){
+          return '<img class="item-thumb" src="' + esc(src) + '" alt="">';
+        }).join('');
+        return '      <li><span class="item">' + esc(item.text) + '</span>' + links + images + '</li>';
       }).join('\n');
       return '  <section class="group">\n    <h2>' + esc(group.title) + '</h2>\n    <ol>\n' + rows + '\n    </ol>\n  </section>';
     }).join('\n\n');
