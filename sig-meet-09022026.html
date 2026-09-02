@@ -238,9 +238,13 @@
     background:transparent;
     color:var(--neutral-500);
     font-family:var(--ff-inter);
-    font-size:.625rem;
-    letter-spacing:.09em;
-    text-transform:uppercase;
+    font-size:.6875rem;
+    letter-spacing:.02em;
+    text-transform:none;
+    max-width:22ch;
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
     cursor:pointer;
     transition:color var(--ease-ui),opacity var(--ease-ui);
     opacity:.7;
@@ -331,10 +335,10 @@
     flex:none;
     max-width:60ch;
     font-family:var(--ff-inter);
-    font-size:.75rem;
+    font-size:.8125rem;
     line-height:1.6;
-    letter-spacing:.09em;
-    text-transform:uppercase;
+    letter-spacing:.02em;
+    text-transform:none;
     text-align:center;
     color:var(--tan-300);
     cursor:text;
@@ -524,7 +528,7 @@
     var caption = document.createElement('div');
     caption.className = 'lightbox-caption';
     caption.setAttribute('contenteditable', 'true');
-    caption.setAttribute('data-placeholder', 'Add a descriptor');
+    caption.setAttribute('data-placeholder', 'Add a label');
     caption.textContent = image.caption || '';
     caption.addEventListener('click', function(ev){ ev.stopPropagation(); });
     caption.addEventListener('keydown', function(ev){
@@ -582,7 +586,7 @@
       var files = Array.prototype.slice.call(input.files || []);
       if (!files.length) { input.remove(); return; }
       var captions = files.map(function(file){
-        var answer = window.prompt('Describe "' + file.name + '" (optional):', '');
+        var answer = window.prompt('Label for "' + file.name + '" (optional):', '');
         return answer === null ? '' : answer.trim();
       });
       var results = new Array(files.length);
@@ -662,7 +666,7 @@
       var pill = document.createElement('button');
       pill.type = 'button';
       pill.className = 'attachment-pill';
-      pill.textContent = 'Image';
+      pill.textContent = image.caption || 'Image';
       pill.title = 'View full size';
       pill.addEventListener('click', function(){
         openLightbox(image, function(text){
