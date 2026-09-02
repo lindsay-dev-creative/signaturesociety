@@ -75,14 +75,13 @@
     color:var(--neutral-500);
     line-height:0;
     cursor:pointer;
-    opacity:0;
+    opacity:.4;
     transition:opacity var(--ease-ui),color var(--ease-ui);
   }
   .files-edit svg{display:block;width:11px;height:11px;}
   .files-slot:hover .files-edit,
   .files-edit:focus-visible{opacity:1;}
   .files-edit:hover{color:var(--tan-300);}
-  @media (hover:none){ .files-edit{opacity:.6;} }
 
   /* Ghost buttons for the editing toolbar */
   .tools{display:flex;gap:.625rem;}
@@ -337,16 +336,17 @@
     letter-spacing:.09em;
     text-transform:uppercase;
     text-align:center;
-    color:var(--neutral-300);
+    color:var(--tan-300);
     cursor:text;
     outline:none;
-    padding-bottom:.2rem;
+    padding:.25rem .5rem;
     border-bottom:1px solid transparent;
-    transition:border-color var(--ease-ui);
+    transition:border-color var(--ease-ui),color var(--ease-ui);
   }
   .lightbox-caption:hover,
-  .lightbox-caption:focus{border-bottom-color:var(--tan-700);}
-  .lightbox-caption:empty::before{content:attr(data-placeholder);color:var(--neutral-500);}
+  .lightbox-caption:focus{border-bottom-color:var(--tan-400);}
+  .lightbox-caption:empty{border-bottom-color:var(--tan-700);}
+  .lightbox-caption:empty::before{content:attr(data-placeholder);color:var(--tan-500);}
 
   footer{
     margin-top:4rem;
