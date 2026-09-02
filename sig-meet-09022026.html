@@ -86,7 +86,7 @@
   .btn-ghost:focus-visible{outline:2px solid var(--tan-300);outline-offset:3px;}
 
   /* Header */
-  header{border-bottom:1px solid var(--tan-700);padding-bottom:2.25rem;margin-bottom:3rem;}
+  header{padding-bottom:1.25rem;margin-bottom:3rem;}
   h1{
     font-family:var(--ff-display);
     font-weight:400;
@@ -126,14 +126,13 @@
     align-items:baseline;
     gap:1rem;
   }
-  @media (min-width:700px){ .group h2{font-size:1.5rem;} }
   .group h2::after{
     content:"";
     flex:1;
     height:1px;
     background:var(--tan-700);
   }
-
+  @media (min-width:700px){ .group h2{font-size:1.5rem;} }
   ol{list-style:none;margin:0;padding:0;counter-reset:item;}
   li{
     counter-increment:item;
@@ -160,6 +159,18 @@
     color:var(--neutral-100);
   }
   @media (min-width:700px){ .item{font-size:1.25rem;} }
+
+  .item-note{
+    margin-top:.45rem;
+    font-family:var(--ff-inter);
+    font-size:.6875rem;
+    line-height:1.45;
+    letter-spacing:.02em;
+    color:var(--neutral-300);
+    border-left:1px solid var(--tan-700);
+    padding-left:.6rem;
+    opacity:.9;
+  }
 
   /* Editing */
   .row-main{flex:1;min-width:0;}
@@ -199,8 +210,25 @@
     border:1px solid var(--tan-700);
     cursor:zoom-in;
     transition:border-color var(--ease-ui);
+    display:none;
   }
   .item-thumb:hover{border-color:var(--tan-400);}
+
+  .attachment-pill{
+    display:inline-flex;align-items:center;gap:.35rem;
+    padding:0;
+    border:none;
+    background:transparent;
+    color:var(--neutral-500);
+    font-family:var(--ff-inter);
+    font-size:.625rem;
+    letter-spacing:.09em;
+    text-transform:uppercase;
+    cursor:pointer;
+    transition:color var(--ease-ui),opacity var(--ease-ui);
+    opacity:.7;
+  }
+  .attachment-pill:hover{color:var(--tan-300);opacity:1;}
 
   .chip-x{
     -webkit-appearance:none;appearance:none;
@@ -223,22 +251,29 @@
   @media (hover:none){ .chip-x{opacity:1;} }
 
   /* Row controls */
-  .row-actions{display:flex;align-items:center;gap:.5rem;opacity:0;transition:opacity var(--ease-ui);}
+  .row-actions{
+    display:flex;align-items:center;gap:.5rem;
+    opacity:0;visibility:hidden;pointer-events:none;
+    transition:opacity var(--ease-ui),visibility var(--ease-ui);
+  }
   li:hover .row-actions,
-  li:focus-within .row-actions{opacity:1;}
-  @media (hover:none){ .row-actions{opacity:1;} }
+  .row-main:hover ~ .row-actions,
+  li:focus-within .row-actions{
+    opacity:1;visibility:visible;pointer-events:auto;
+  }
+  @media (hover:none){ .row-actions{opacity:1;visibility:visible;pointer-events:auto;} }
 
   .row-btn{
     -webkit-appearance:none;appearance:none;
     display:flex;align-items:center;justify-content:center;
-    width:26px;height:26px;padding:0;
+    width:32px;height:32px;padding:0;
     background:none;border:none;
     color:var(--neutral-500);
     line-height:0;
     cursor:pointer;
     transition:color var(--ease-ui);
   }
-  .row-btn svg{display:block;width:16px;height:16px;}
+  .row-btn svg{display:block;width:18px;height:18px;}
   .row-btn:hover{color:var(--tan-300);}
   .row-btn.is-set{color:var(--tan-500);}
   .row-btn:focus-visible{outline:2px solid var(--tan-300);outline-offset:2px;}
@@ -306,8 +341,7 @@
     <ol>
       <li><span class="item">Will guests purchase products onsite?</span></li>
       <li><span class="item">Product room: preview or shop</span></li>
-      <li><span class="item">Take-home bags, wholesale options</span></li>
-      <li><span class="item">Quantities once guest count lands</span></li>
+      <li><span class="item">Guest favor bag</span></li>
     </ol>
   </section>
 
@@ -333,7 +367,6 @@
 
   <footer>
     Signature Society · Launch Party, November 7, 2026
-    <p class="edit-note">Click any line to edit it. Enter adds a line, Backspace on an empty line removes it. The icons on a row add a link, attach images from your computer, or delete the line. Changes are kept in this browser; Export HTML downloads an updated copy of this file.</p>
   </footer>
 
 </div>
@@ -350,6 +383,7 @@
   var ICONS = {
     link: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.2 13.8a3.7 3.7 0 0 0 5.4.3l2.9-2.9a3.7 3.7 0 0 0-5.3-5.3l-1.7 1.7"/><path d="M13.8 10.2a3.7 3.7 0 0 0-5.4-.3l-2.9 2.9a3.7 3.7 0 0 0 5.3 5.3l1.7-1.7"/></svg>',
     image: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="14" rx="1.5"/><circle cx="9" cy="10" r="1.5"/><path d="M4.5 16.5l4.2-4.2 3.3 3.3 2.8-2.4 4.7 4.3"/></svg>',
+    note: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 6.5A2.5 2.5 0 0 1 7.5 4h9A2.5 2.5 0 0 1 19 6.5v7A2.5 2.5 0 0 1 16.5 16H11l-4 4v-4H7.5A2.5 2.5 0 0 1 5 13.5z"/><path d="M8 8h8M8 11h8"/></svg>',
     close: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></svg>'
   };
 
@@ -362,6 +396,7 @@
     else if (item.href) links = [item.href];
     return {
       text: item.text || '',
+      note: item.note || '',
       links: links,
       images: (item.images || []).slice()
     };
@@ -374,6 +409,7 @@
         items: Array.prototype.slice.call(sec.querySelectorAll('li')).map(function(li){
           return normalize({
             text: li.querySelector('.item').textContent.trim(),
+            note: li.querySelector('.item-note') ? li.querySelector('.item-note').textContent.trim() : '',
             links: Array.prototype.slice.call(li.querySelectorAll('.item-link')).map(function(a){
               return a.getAttribute('href');
             }),
@@ -512,6 +548,13 @@
     span.textContent = item.text;
     main.appendChild(span);
 
+    if (item.note) {
+      var note = document.createElement('div');
+      note.className = 'item-note';
+      note.textContent = item.note;
+      main.appendChild(note);
+    }
+
     var attach = document.createElement('div');
     attach.className = 'attach';
 
@@ -547,13 +590,13 @@
       var box = document.createElement('span');
       box.className = 'thumb';
 
-      var img = document.createElement('img');
-      img.className = 'item-thumb';
-      img.src = src;
-      img.alt = '';
-      img.title = 'View full size';
-      img.addEventListener('click', function(){ openLightbox(src); });
-      box.appendChild(img);
+      var pill = document.createElement('button');
+      pill.type = 'button';
+      pill.className = 'attachment-pill';
+      pill.textContent = 'Image';
+      pill.title = 'View full size';
+      pill.addEventListener('click', function(){ openLightbox(src); });
+      box.appendChild(pill);
 
       var x = document.createElement('button');
       x.type = 'button';
@@ -593,6 +636,16 @@
     var imgBtn = iconBtn('image', 'Attach images', item.images.length ? 'is-set' : '');
     imgBtn.addEventListener('click', function(){ pickImages(gi, ii); });
     actions.appendChild(imgBtn);
+
+    var noteBtn = iconBtn('note', 'Add a note', item.note ? 'is-set' : '');
+    noteBtn.addEventListener('click', function(){
+      var next = window.prompt('Note for this item:', item.note || '');
+      if (next === null) return;
+      data[gi].items[ii].note = next.trim();
+      save();
+      render();
+    });
+    actions.appendChild(noteBtn);
 
     var delBtn = iconBtn('close', 'Delete this item', 'is-delete');
     delBtn.addEventListener('click', function(){
@@ -692,33 +745,40 @@
         var images = item.images.map(function(src){
           return '<img class="item-thumb" src="' + esc(src) + '" alt="">';
         }).join('');
-        return '      <li><span class="item">' + esc(item.text) + '</span>' + links + images + '</li>';
+        var note = item.note ? '<div class="item-note">' + esc(item.note) + '</div>' : '';
+        return '      <li><span class="item">' + esc(item.text) + '</span>' + note + links + images + '</li>';
       }).join('\n');
       return '  <section class="group">\n    <h2>' + esc(group.title) + '</h2>\n    <ol>\n' + rows + '\n    </ol>\n  </section>';
     }).join('\n\n');
   }
 
-  document.getElementById('exportBtn').addEventListener('click', function(){
-    var a = ORIGINAL.indexOf(START);
-    var b = ORIGINAL.indexOf(END);
-    if (a === -1 || b === -1) { window.alert('Could not find the item markers in this page.'); return; }
-    var html = ORIGINAL.slice(0, a) + START + '\n' + markup() + '\n  ' + ORIGINAL.slice(b);
-    var blob = new Blob([html], { type: 'text/html' });
-    var url = URL.createObjectURL(blob);
-    var link = document.createElement('a');
-    link.href = url;
-    link.download = 'sig-meet-09022026.html';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
-  });
+  var exportBtn = document.getElementById('exportBtn');
+  if (exportBtn) {
+    exportBtn.addEventListener('click', function(){
+      var a = ORIGINAL.indexOf(START);
+      var b = ORIGINAL.indexOf(END);
+      if (a === -1 || b === -1) { window.alert('Could not find the item markers in this page.'); return; }
+      var html = ORIGINAL.slice(0, a) + START + '\n' + markup() + '\n  ' + ORIGINAL.slice(b);
+      var blob = new Blob([html], { type: 'text/html' });
+      var url = URL.createObjectURL(blob);
+      var link = document.createElement('a');
+      link.href = url;
+      link.download = 'sig-meet-09022026.html';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
+    });
+  }
 
-  document.getElementById('resetBtn').addEventListener('click', function(){
-    if (!window.confirm('Discard your edits and go back to the original list?')) return;
-    try { localStorage.removeItem(KEY); } catch (e) {}
-    location.reload();
-  });
+  var resetBtn = document.getElementById('resetBtn');
+  if (resetBtn) {
+    resetBtn.addEventListener('click', function(){
+      if (!window.confirm('Discard your edits and go back to the original list?')) return;
+      try { localStorage.removeItem(KEY); } catch (e) {}
+      location.reload();
+    });
+  }
 
   render();
 })();
