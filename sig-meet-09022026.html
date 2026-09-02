@@ -66,6 +66,24 @@
   .btn:hover{background:var(--tan-400);border-color:var(--tan-400);color:var(--navy-900);}
   .btn:focus-visible{outline:2px solid var(--tan-300);outline-offset:3px;}
 
+  .files-slot{display:inline-flex;align-items:center;gap:.4rem;}
+  .files-edit{
+    -webkit-appearance:none;appearance:none;
+    display:flex;align-items:center;justify-content:center;
+    width:18px;height:18px;padding:0;
+    background:none;border:none;
+    color:var(--neutral-500);
+    line-height:0;
+    cursor:pointer;
+    opacity:0;
+    transition:opacity var(--ease-ui),color var(--ease-ui);
+  }
+  .files-edit svg{display:block;width:11px;height:11px;}
+  .files-slot:hover .files-edit,
+  .files-edit:focus-visible{opacity:1;}
+  .files-edit:hover{color:var(--tan-300);}
+  @media (hover:none){ .files-edit{opacity:.6;} }
+
   /* Ghost buttons for the editing toolbar */
   .tools{display:flex;gap:.625rem;}
   .btn-ghost{
@@ -299,12 +317,36 @@
   /* Full size image view */
   .lightbox{
     position:fixed;inset:0;z-index:50;
-    display:flex;align-items:center;justify-content:center;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:1rem;
     padding:3rem 1.5rem;
     background:rgba(3,8,17,.94);
     cursor:zoom-out;
   }
-  .lightbox img{max-width:100%;max-height:100%;border:1px solid var(--tan-700);}
+  .lightbox img{
+    max-width:100%;min-height:0;flex:0 1 auto;
+    object-fit:contain;
+    border:1px solid var(--tan-700);
+  }
+  .lightbox-caption{
+    flex:none;
+    max-width:60ch;
+    font-family:var(--ff-inter);
+    font-size:.75rem;
+    line-height:1.6;
+    letter-spacing:.09em;
+    text-transform:uppercase;
+    text-align:center;
+    color:var(--neutral-300);
+    cursor:text;
+    outline:none;
+    padding-bottom:.2rem;
+    border-bottom:1px solid transparent;
+    transition:border-color var(--ease-ui);
+  }
+  .lightbox-caption:hover,
+  .lightbox-caption:focus{border-bottom-color:var(--tan-700);}
+  .lightbox-caption:empty::before{content:attr(data-placeholder);color:var(--neutral-500);}
 
   footer{
     margin-top:4rem;
@@ -319,7 +361,7 @@
   .edit-note{margin:.75rem 0 0;color:var(--neutral-500);}
 
   @media print{
-    .files-bar,.row-actions,.chip-x,.add-row,.edit-note{display:none !important;}
+    .files-bar,.row-actions,.chip-x,.add-row,.edit-note,.files-edit{display:none !important;}
   }
 </style>
 </head>
@@ -327,7 +369,10 @@
 <div class="wrap">
 
   <div class="files-bar">
-    <a class="btn" href="file:///Users/lindsayyoung/Library/CloudStorage/GoogleDrive-lindsay@lindsaydev.com/.shortcut-targets-by-id/11f89GE-GjzKeZGo02tCF0q421uJmzuyP/Signature%20Society%20Website/Launch%20Party%20Bag">Meeting Files</a>
+    <span class="files-slot">
+    <a class="btn" id="filesBtn" href="file:///Users/lindsayyoung/Library/CloudStorage/GoogleDrive-lindsay@lindsaydev.com/.shortcut-targets-by-id/11f89GE-GjzKeZGo02tCF0q421uJmzuyP/Signature%20Society%20Website/Launch%20Party%20Bag">Meeting Files</a>
+      <button type="button" class="files-edit" id="filesEdit" title="Change where this button points" aria-label="Change where this button points"></button>
+    </span>
   </div>
 
   <header>
@@ -384,6 +429,7 @@
     link: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.2 13.8a3.7 3.7 0 0 0 5.4.3l2.9-2.9a3.7 3.7 0 0 0-5.3-5.3l-1.7 1.7"/><path d="M13.8 10.2a3.7 3.7 0 0 0-5.4-.3l-2.9 2.9a3.7 3.7 0 0 0 5.3 5.3l1.7-1.7"/></svg>',
     image: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="14" rx="1.5"/><circle cx="9" cy="10" r="1.5"/><path d="M4.5 16.5l4.2-4.2 3.3 3.3 2.8-2.4 4.7 4.3"/></svg>',
     note: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 6.5A2.5 2.5 0 0 1 7.5 4h9A2.5 2.5 0 0 1 19 6.5v7A2.5 2.5 0 0 1 16.5 16H11l-4 4v-4H7.5A2.5 2.5 0 0 1 5 13.5z"/><path d="M8 8h8M8 11h8"/></svg>',
+    pencil: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4l10-10a2.8 2.8 0 0 0-4-4L4 16z"/></svg>',
     close: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></svg>'
   };
 
@@ -398,7 +444,10 @@
       text: item.text || '',
       note: item.note || '',
       links: links,
-      images: (item.images || []).slice()
+      images: (item.images || []).map(function(img){
+        if (typeof img === 'string') return { src: img, caption: '' };
+        return { src: img.src || '', caption: img.caption || '' };
+      }).filter(function(img){ return img.src; })
     };
   }
 
@@ -414,7 +463,7 @@
               return a.getAttribute('href');
             }),
             images: Array.prototype.slice.call(li.querySelectorAll('.item-thumb')).map(function(img){
-              return img.getAttribute('src');
+              return { src: img.getAttribute('src'), caption: img.getAttribute('alt') || '' };
             })
           });
         })
@@ -464,13 +513,29 @@
     return b;
   }
 
-  function openLightbox(src){
+  function openLightbox(image, onCaption){
     var overlay = document.createElement('div');
     overlay.className = 'lightbox';
     var img = document.createElement('img');
-    img.src = src;
-    img.alt = '';
+    img.src = image.src;
+    img.alt = image.caption || '';
     overlay.appendChild(img);
+
+    var caption = document.createElement('div');
+    caption.className = 'lightbox-caption';
+    caption.setAttribute('contenteditable', 'true');
+    caption.setAttribute('data-placeholder', 'Add a descriptor');
+    caption.textContent = image.caption || '';
+    caption.addEventListener('click', function(ev){ ev.stopPropagation(); });
+    caption.addEventListener('keydown', function(ev){
+      ev.stopPropagation();
+      if (ev.key === 'Enter') { ev.preventDefault(); caption.blur(); }
+    });
+    caption.addEventListener('blur', function(){
+      if (onCaption) onCaption(caption.textContent.trim());
+    });
+    overlay.appendChild(caption);
+
     function close(){
       overlay.remove();
       document.removeEventListener('keydown', onKey);
@@ -516,14 +581,18 @@
     input.addEventListener('change', function(){
       var files = Array.prototype.slice.call(input.files || []);
       if (!files.length) { input.remove(); return; }
+      var captions = files.map(function(file){
+        var answer = window.prompt('Describe "' + file.name + '" (optional):', '');
+        return answer === null ? '' : answer.trim();
+      });
       var results = new Array(files.length);
       var done = 0;
       files.forEach(function(file, k){
         shrink(file, function(dataUrl){
           results[k] = dataUrl;
           if (++done < files.length) return;
-          results.forEach(function(src){
-            if (src) data[gi].items[ii].images.push(src);
+          results.forEach(function(src, n){
+            if (src) data[gi].items[ii].images.push({ src: src, caption: captions[n] });
           });
           save();
           render();
@@ -586,7 +655,7 @@
       attach.appendChild(chip);
     });
 
-    item.images.forEach(function(src, img_i){
+    item.images.forEach(function(image, img_i){
       var box = document.createElement('span');
       box.className = 'thumb';
 
@@ -595,7 +664,14 @@
       pill.className = 'attachment-pill';
       pill.textContent = 'Image';
       pill.title = 'View full size';
-      pill.addEventListener('click', function(){ openLightbox(src); });
+      pill.addEventListener('click', function(){
+        openLightbox(image, function(text){
+          if (text === data[gi].items[ii].images[img_i].caption) return;
+          data[gi].items[ii].images[img_i].caption = text;
+          save();
+          render();
+        });
+      });
       box.appendChild(pill);
 
       var x = document.createElement('button');
@@ -742,14 +818,40 @@
         var links = item.links.map(function(href){
           return '<a class="item-link" href="' + esc(href) + '" target="_blank" rel="noopener">' + esc(linkLabel(href)) + ' ↗</a>';
         }).join('');
-        var images = item.images.map(function(src){
-          return '<img class="item-thumb" src="' + esc(src) + '" alt="">';
+        var images = item.images.map(function(image){
+          return '<img class="item-thumb" src="' + esc(image.src) + '" alt="' + esc(image.caption) + '">';
         }).join('');
         var note = item.note ? '<div class="item-note">' + esc(item.note) + '</div>' : '';
         return '      <li><span class="item">' + esc(item.text) + '</span>' + note + links + images + '</li>';
       }).join('\n');
       return '  <section class="group">\n    <h2>' + esc(group.title) + '</h2>\n    <ol>\n' + rows + '\n    </ol>\n  </section>';
     }).join('\n\n');
+  }
+
+  /* Meeting Files button: its link is editable and remembered. */
+  var HREF_KEY = KEY + ':files-href';
+  var filesBtn = document.getElementById('filesBtn');
+  var filesEdit = document.getElementById('filesEdit');
+  var sourceHref = filesBtn ? filesBtn.getAttribute('href') : '';
+  var filesHref = sourceHref;
+
+  if (filesBtn && filesEdit) {
+    try {
+      var storedHref = localStorage.getItem(HREF_KEY);
+      if (storedHref) { filesHref = storedHref; filesBtn.setAttribute('href', storedHref); }
+    } catch (e) {}
+
+    filesEdit.innerHTML = ICONS.pencil;
+    filesEdit.addEventListener('click', function(){
+      var next = window.prompt('Link for the Meeting Files button:', filesHref);
+      if (next === null) return;
+      next = next.trim();
+      if (!next) return;
+      if (!/^([a-z][a-z0-9+.-]*:|\/|#)/i.test(next)) next = 'https://' + next;
+      filesHref = next;
+      filesBtn.setAttribute('href', next);
+      try { localStorage.setItem(HREF_KEY, next); } catch (e) {}
+    });
   }
 
   var exportBtn = document.getElementById('exportBtn');
@@ -759,6 +861,9 @@
       var b = ORIGINAL.indexOf(END);
       if (a === -1 || b === -1) { window.alert('Could not find the item markers in this page.'); return; }
       var html = ORIGINAL.slice(0, a) + START + '\n' + markup() + '\n  ' + ORIGINAL.slice(b);
+      if (sourceHref && filesHref !== sourceHref) {
+        html = html.replace('href="' + sourceHref + '"', 'href="' + esc(filesHref) + '"');
+      }
       var blob = new Blob([html], { type: 'text/html' });
       var url = URL.createObjectURL(blob);
       var link = document.createElement('a');
@@ -775,7 +880,7 @@
   if (resetBtn) {
     resetBtn.addEventListener('click', function(){
       if (!window.confirm('Discard your edits and go back to the original list?')) return;
-      try { localStorage.removeItem(KEY); } catch (e) {}
+      try { localStorage.removeItem(KEY); localStorage.removeItem(HREF_KEY); } catch (e) {}
       location.reload();
     });
   }
