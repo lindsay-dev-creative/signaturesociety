@@ -1,0 +1,514 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Signature Society · Launch Party Call · Sept 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://use.typekit.net/hqq5dii.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap">
+<style>
+  :root{
+    --navy-900:#030811; --navy-800:#08142B; --navy-700:#192D54;
+    --tan-700:#6C5D3B; --tan-500:#A69263; --tan-400:#C3AD79; --tan-300:#E0C891;
+    --neutral-50:#FFFEF9; --neutral-100:#F0EFE7; --neutral-300:#C8C5BA; --neutral-500:#9F9C8F;
+    --btn-bg:#3F1214; --btn-text:#F6F5F4;
+
+    --ff-display:"kepler-std-display",Georgia,"Times New Roman",serif;
+    --ff-subhead:"kepler-std-subhead",Georgia,"Times New Roman",serif;
+    --ff-text:"kepler-std",Georgia,"Times New Roman",serif;
+    --ff-inter:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+
+    --ease-ui:160ms ease;
+  }
+
+  *{box-sizing:border-box;}
+  html{-webkit-font-smoothing:antialiased;}
+  body{
+    margin:0;
+    background:var(--navy-900);
+    color:var(--neutral-100);
+    font-family:var(--ff-text);
+    font-size:1.0625rem;
+    line-height:1.5;
+    letter-spacing:.005em;
+  }
+
+  .wrap{max-width:64rem;margin:0 auto;padding:2rem 1.25rem 5rem;}
+  @media (min-width:700px){ .wrap{padding:3rem 2rem 6rem;} }
+  @media (min-width:1000px){ .wrap{padding:3.5rem 3rem 7rem;} }
+
+  /* Meeting Files button */
+  .files-bar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:1rem;
+    margin-bottom:3rem;
+  }
+  .btn{
+    display:inline-block;
+    background:var(--btn-bg);
+    color:var(--btn-text);
+    text-decoration:none;
+    font-family:"kepler-std-medium-caption",Georgia,serif;
+    font-weight:500;
+    font-size:.9375rem;
+    line-height:1;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    padding:1.15rem 2.25rem;
+    border:1px solid var(--btn-bg);
+    transition:background var(--ease-ui),border-color var(--ease-ui),color var(--ease-ui);
+  }
+  .btn:hover{background:var(--tan-400);border-color:var(--tan-400);color:var(--navy-900);}
+  .btn:focus-visible{outline:2px solid var(--tan-300);outline-offset:3px;}
+
+  /* Ghost buttons for the editing toolbar */
+  .tools{display:flex;gap:.625rem;}
+  .btn-ghost{
+    -webkit-appearance:none;appearance:none;
+    background:transparent;
+    color:var(--tan-300);
+    border:1px solid var(--tan-700);
+    font-family:var(--ff-inter);
+    font-size:.6875rem;
+    font-weight:500;
+    letter-spacing:.09em;
+    text-transform:uppercase;
+    padding:.7rem 1.05rem;
+    cursor:pointer;
+    transition:background var(--ease-ui),border-color var(--ease-ui),color var(--ease-ui);
+  }
+  .btn-ghost:hover{background:var(--tan-400);border-color:var(--tan-400);color:var(--navy-900);}
+  .btn-ghost:focus-visible{outline:2px solid var(--tan-300);outline-offset:3px;}
+
+  /* Header */
+  header{border-bottom:1px solid var(--tan-700);padding-bottom:2.25rem;margin-bottom:3rem;}
+  h1{
+    font-family:var(--ff-display);
+    font-weight:400;
+    text-transform:uppercase;
+    letter-spacing:.05em;
+    font-size:2.556rem;
+    line-height:1.26;
+    color:var(--neutral-50);
+    margin:0 0 1.25rem;
+  }
+  @media (min-width:700px){ h1{font-size:3.75rem;line-height:1.22;} }
+  @media (min-width:1000px){ h1{font-size:4.5625rem;line-height:1.2;} }
+
+  .meta{
+    font-family:var(--ff-inter);
+    font-size:.9375rem;
+    line-height:1.7;
+    letter-spacing:.007em;
+    color:var(--neutral-300);
+    margin:0;
+    max-width:56ch;
+  }
+  .meta strong{color:var(--tan-300);font-weight:500;}
+
+  /* Groups */
+  .group{margin-bottom:3.25rem;}
+  .group h2{
+    font-family:var(--ff-subhead);
+    font-weight:400;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    font-size:1.419rem;
+    line-height:1.45;
+    color:var(--tan-300);
+    margin:0 0 1.5rem;
+    display:flex;
+    align-items:baseline;
+    gap:1rem;
+  }
+  @media (min-width:700px){ .group h2{font-size:1.5rem;} }
+  .group h2::after{
+    content:"";
+    flex:1;
+    height:1px;
+    background:var(--tan-700);
+  }
+
+  ol{list-style:none;margin:0;padding:0;counter-reset:item;}
+  li{
+    counter-increment:item;
+    display:flex;
+    align-items:baseline;
+    gap:1.25rem;
+    padding:1rem 0 1rem .25rem;
+    border-bottom:1px solid var(--navy-700);
+  }
+  li:last-child{border-bottom:none;}
+  li::before{
+    content:counter(item,decimal-leading-zero);
+    font-family:var(--ff-inter);
+    font-size:.75rem;
+    font-weight:500;
+    letter-spacing:.033em;
+    color:var(--tan-500);
+    min-width:1.75rem;
+  }
+  .item{
+    font-family:var(--ff-text);
+    font-size:1.0625rem;
+    line-height:1.5;
+    color:var(--neutral-100);
+  }
+  @media (min-width:700px){ .item{font-size:1.25rem;} }
+
+  /* Editing */
+  .item{
+    flex:1;
+    min-width:0;
+    outline:none;
+    border-bottom:1px solid transparent;
+    transition:border-color var(--ease-ui);
+  }
+  .item:hover{border-bottom-color:var(--navy-700);}
+  .item:focus{border-bottom-color:var(--tan-400);}
+  .item:empty::before{content:attr(data-placeholder);color:var(--neutral-500);}
+
+  .item-link{
+    font-family:var(--ff-inter);
+    font-size:.75rem;
+    letter-spacing:.033em;
+    color:var(--tan-400);
+    text-decoration:none;
+    border-bottom:1px solid var(--tan-700);
+    white-space:nowrap;
+    transition:color var(--ease-ui),border-color var(--ease-ui);
+  }
+  .item-link:hover{color:var(--tan-300);border-bottom-color:var(--tan-300);}
+  .item-link:focus-visible{outline:2px solid var(--tan-300);outline-offset:3px;}
+
+  .row-actions{display:flex;gap:.75rem;opacity:0;transition:opacity var(--ease-ui);}
+  li:hover .row-actions,
+  li:focus-within .row-actions{opacity:1;}
+  @media (hover:none){ .row-actions{opacity:1;} }
+
+  .row-btn{
+    -webkit-appearance:none;appearance:none;
+    background:none;border:none;padding:.15rem .25rem;
+    font-family:var(--ff-inter);
+    font-size:.6875rem;
+    font-weight:500;
+    letter-spacing:.09em;
+    text-transform:uppercase;
+    color:var(--neutral-500);
+    cursor:pointer;
+    transition:color var(--ease-ui);
+  }
+  .row-btn:hover{color:var(--tan-300);}
+  .row-btn.is-set{color:var(--tan-500);}
+  .row-btn:focus-visible{outline:2px solid var(--tan-300);outline-offset:2px;}
+
+  .add-row{
+    display:block;
+    -webkit-appearance:none;appearance:none;
+    background:none;border:none;
+    padding:1rem 0 0 2.25rem;
+    font-family:var(--ff-inter);
+    font-size:.75rem;
+    font-weight:500;
+    letter-spacing:.09em;
+    text-transform:uppercase;
+    color:var(--tan-500);
+    cursor:pointer;
+    transition:color var(--ease-ui);
+  }
+  .add-row:hover{color:var(--tan-300);}
+  .add-row:focus-visible{outline:2px solid var(--tan-300);outline-offset:3px;}
+
+  footer{
+    margin-top:4rem;
+    padding-top:2rem;
+    border-top:1px solid var(--tan-700);
+    font-family:var(--ff-inter);
+    font-size:.8125rem;
+    line-height:1.6;
+    letter-spacing:.007em;
+    color:var(--neutral-500);
+  }
+  .edit-note{margin:.75rem 0 0;color:var(--neutral-500);}
+
+  @media print{
+    .files-bar,.row-actions,.add-row,.edit-note{display:none !important;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="files-bar">
+    <a class="btn" href="file:///Users/lindsayyoung/Library/CloudStorage/GoogleDrive-lindsay@lindsaydev.com/.shortcut-targets-by-id/11f89GE-GjzKeZGo02tCF0q421uJmzuyP/Signature%20Society%20Website/Launch%20Party%20Bag">Meeting Files</a>
+    <div class="tools">
+      <button type="button" class="btn-ghost" id="exportBtn">Export HTML</button>
+      <button type="button" class="btn-ghost" id="resetBtn">Reset</button>
+    </div>
+  </div>
+
+  <header>
+    <h1>Launch Party<br>Talking Points</h1>
+    <p class="meta">Wednesday, September 2 at <strong>12:30 PM ET</strong> with Angel and Morgan. Pulled from Morgan's 4:24 PM follow-up and the September 1 walk-through notes.</p>
+  </header>
+
+  <!--ITEMS:START-->
+  <section class="group">
+    <h2>Product experience</h2>
+    <ol>
+      <li><span class="item">Will guests purchase products onsite?</span></li>
+      <li><span class="item">Product room: preview or shop</span></li>
+      <li><span class="item">Take-home bags, wholesale options</span></li>
+      <li><span class="item">Quantities once guest count lands</span></li>
+    </ol>
+  </section>
+
+  <section class="group">
+    <h2>Printed pieces and signage</h2>
+    <ol>
+      <li><span class="item">Cocktail menu product guide concept</span></li>
+      <li><span class="item">Takeaway version guests keep</span></li>
+      <li><span class="item">Bar signs, napkins, and </span></li>
+      <li><span class="item">Cigar band artwork</span></li>
+      <li><span class="item">Which pieces ship to Angel</span></li>
+    </ol>
+  </section>
+
+  <section class="group">
+    <h2>Guest communications</h2>
+    <ol>
+      <li><span class="item">Preferred gate and written directions</span></li>
+      <li><span class="item">No phone number, day-of email</span></li>
+    </ol>
+  </section>
+
+  <footer>
+    Signature Society · Launch Party, November 7, 2026
+    <p class="edit-note">Click any line to edit it. Enter adds a line, Backspace on an empty line removes it. Changes are kept in this browser; Export HTML downloads an updated copy of this file.</p>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  var KEY = 'sig-meet-09022026';
+  var START = '<!--ITEMS:START-->';
+  var END = '<!--ITEMS:END-->';
+  var ORIGINAL = '<!doctype html>\n' + document.documentElement.outerHTML;
+
+  var sections = Array.prototype.slice.call(document.querySelectorAll('.group'));
+
+  function readDOM(){
+    return sections.map(function(sec){
+      return {
+        title: sec.querySelector('h2').textContent.trim(),
+        items: Array.prototype.slice.call(sec.querySelectorAll('li')).map(function(li){
+          var link = li.querySelector('.item-link');
+          return {
+            text: li.querySelector('.item').textContent.trim(),
+            href: link ? link.getAttribute('href') : ''
+          };
+        })
+      };
+    });
+  }
+
+  var data = readDOM();
+
+  /* Restore saved edits, matching groups by heading so the page can change later. */
+  try {
+    var saved = JSON.parse(localStorage.getItem(KEY) || 'null');
+    if (saved && saved.length) {
+      data = data.map(function(group){
+        var match = saved.filter(function(s){ return s.title === group.title; })[0];
+        return match ? { title: group.title, items: match.items } : group;
+      });
+    }
+  } catch (e) {}
+
+  function save(){
+    try { localStorage.setItem(KEY, JSON.stringify(data)); } catch (e) {}
+  }
+
+  function linkLabel(href){
+    if (!href) return '';
+    try { return new URL(href, location.href).hostname.replace(/^www\./, '') || 'link'; }
+    catch (e) { return 'link'; }
+  }
+
+  function makeRow(gi, ii, item){
+    var li = document.createElement('li');
+
+    var span = document.createElement('span');
+    span.className = 'item';
+    span.setAttribute('contenteditable', 'true');
+    span.setAttribute('data-placeholder', 'New talking point');
+    span.textContent = item.text;
+    li.appendChild(span);
+
+    if (item.href) {
+      var a = document.createElement('a');
+      a.className = 'item-link';
+      a.href = item.href;
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.textContent = linkLabel(item.href) + ' ↗';
+      li.appendChild(a);
+    }
+
+    var actions = document.createElement('div');
+    actions.className = 'row-actions';
+
+    var linkBtn = document.createElement('button');
+    linkBtn.type = 'button';
+    linkBtn.className = 'row-btn' + (item.href ? ' is-set' : '');
+    linkBtn.textContent = item.href ? 'Edit link' : 'Add Link';
+    linkBtn.addEventListener('click', function(){
+      var current = data[gi].items[ii].href || '';
+      var next = window.prompt('Link for this item (leave blank to remove):', current);
+      if (next === null) return;
+      next = next.trim();
+      if (next && !/^([a-z][a-z0-9+.-]*:|\/|#)/i.test(next)) next = 'https://' + next;
+      data[gi].items[ii].href = next;
+      save();
+      render();
+      focusItem(gi, ii);
+    });
+    actions.appendChild(linkBtn);
+
+    var delBtn = document.createElement('button');
+    delBtn.type = 'button';
+    delBtn.className = 'row-btn';
+    delBtn.textContent = 'Delete';
+    delBtn.addEventListener('click', function(){
+      data[gi].items.splice(ii, 1);
+      save();
+      render();
+      focusItem(gi, Math.max(0, ii - 1));
+    });
+    actions.appendChild(delBtn);
+
+    li.appendChild(actions);
+
+    span.addEventListener('input', function(){
+      data[gi].items[ii].text = span.textContent.trim();
+      save();
+    });
+
+    span.addEventListener('paste', function(ev){
+      ev.preventDefault();
+      var text = (ev.clipboardData || window.clipboardData).getData('text').replace(/\s+/g, ' ');
+      document.execCommand('insertText', false, text);
+    });
+
+    span.addEventListener('keydown', function(ev){
+      if (ev.key === 'Enter') {
+        ev.preventDefault();
+        data[gi].items[ii].text = span.textContent.trim();
+        data[gi].items.splice(ii + 1, 0, { text: '', href: '' });
+        save();
+        render();
+        focusItem(gi, ii + 1);
+      } else if (ev.key === 'Backspace' && span.textContent.trim() === '' && data[gi].items.length > 1) {
+        ev.preventDefault();
+        data[gi].items.splice(ii, 1);
+        save();
+        render();
+        focusItem(gi, Math.max(0, ii - 1));
+      } else if (ev.key === 'Escape') {
+        span.blur();
+      }
+    });
+
+    return li;
+  }
+
+  function render(){
+    sections.forEach(function(sec, gi){
+      var ol = sec.querySelector('ol');
+      ol.innerHTML = '';
+      data[gi].items.forEach(function(item, ii){
+        ol.appendChild(makeRow(gi, ii, item));
+      });
+    });
+  }
+
+  function focusItem(gi, ii){
+    var items = sections[gi].querySelectorAll('.item');
+    var el = items[Math.min(ii, items.length - 1)];
+    if (!el) return;
+    el.focus();
+    var range = document.createRange();
+    range.selectNodeContents(el);
+    range.collapse(false);
+    var sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+  }
+
+  sections.forEach(function(sec, gi){
+    var add = document.createElement('button');
+    add.type = 'button';
+    add.className = 'add-row';
+    add.textContent = '+ Add item';
+    add.addEventListener('click', function(){
+      data[gi].items.push({ text: '', href: '' });
+      save();
+      render();
+      focusItem(gi, data[gi].items.length - 1);
+    });
+    sec.appendChild(add);
+  });
+
+  function esc(s){
+    return String(s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function markup(){
+    return data.map(function(group){
+      var rows = group.items.map(function(item){
+        var link = item.href
+          ? '<a class="item-link" href="' + esc(item.href) + '" target="_blank" rel="noopener">' + esc(linkLabel(item.href)) + ' ↗</a>'
+          : '';
+        return '      <li><span class="item">' + esc(item.text) + '</span>' + link + '</li>';
+      }).join('\n');
+      return '  <section class="group">\n    <h2>' + esc(group.title) + '</h2>\n    <ol>\n' + rows + '\n    </ol>\n  </section>';
+    }).join('\n\n');
+  }
+
+  document.getElementById('exportBtn').addEventListener('click', function(){
+    var a = ORIGINAL.indexOf(START);
+    var b = ORIGINAL.indexOf(END);
+    if (a === -1 || b === -1) { window.alert('Could not find the item markers in this page.'); return; }
+    var html = ORIGINAL.slice(0, a) + START + '\n' + markup() + '\n  ' + ORIGINAL.slice(b);
+    var blob = new Blob([html], { type: 'text/html' });
+    var url = URL.createObjectURL(blob);
+    var link = document.createElement('a');
+    link.href = url;
+    link.download = 'sig-meet-09022026.html';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', function(){
+    if (!window.confirm('Discard your edits and go back to the original list?')) return;
+    try { localStorage.removeItem(KEY); } catch (e) {}
+    location.reload();
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
